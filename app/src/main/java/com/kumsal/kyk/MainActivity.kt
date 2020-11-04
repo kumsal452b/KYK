@@ -3,7 +3,8 @@ package com.kumsal.kyk
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TableLayout
-import android.widget.Toolbar
+import androidx.appcompat.widget.Toolbar
+
 
 import androidx.viewpager.widget.ViewPager
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
@@ -19,10 +20,14 @@ class MainActivity : AppCompatActivity() {
 
         toolbar=findViewById(R.id.main_appbar)
         mViewPager=findViewById(R.id.main_activity_pager_view)
-        sectionPagerAdapter= SectionPagerAdapter()
+        sectionPagerAdapter= SectionPagerAdapter(supportFragmentManager)
         mTableLayout=findViewById(R.id.main_activity_tabLayout)
-
         setSupportActionBar(toolbar)
+
+        mViewPager.adapter.apply { sectionPagerAdapter }
+
+
+
 
     }
 }
