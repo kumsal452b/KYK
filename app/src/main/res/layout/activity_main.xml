@@ -15,29 +15,34 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <include
-            android:id="@+id/appbar"
+            android:id="@+id/main_appbar"
             layout="@layout/custom_app_bar" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_activity_pager_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="418dp"
+        android:layout_height="630dp"
+        android:layout_marginTop="490dp"
+        android:layout_marginBottom="505dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomAppbar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintBottom_toTopOf="@id/bottomAppbar"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="170dp"
-      />
+        app:layout_constraintVertical_bias="0.498" />
 
     <com.google.android.material.appbar.AppBarLayout
 
         android:id="@+id/bottomAppbar"
-        android:layout_width="405dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main_activity_tabLayout"/>
     </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
