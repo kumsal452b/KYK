@@ -42,11 +42,11 @@ class SectionPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         return when(position){
             0->{
 
-                return "Ana Sayfa";
+                return "A.Sayfa";
             }
             1->{
 
-                return "Mesajlar"
+                return "Msjlar"
             }
             2->{
 

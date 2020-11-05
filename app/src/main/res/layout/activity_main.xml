@@ -10,9 +10,11 @@
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/main_activity_pager_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <include
             android:id="@+id/main_appbar"
@@ -21,16 +23,16 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_activity_pager_view"
-        android:layout_width="418dp"
-        android:layout_height="630dp"
-        android:layout_marginTop="490dp"
-        android:layout_marginBottom="505dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomAppbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-        app:layout_constraintVertical_bias="0.498" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.appbar.AppBarLayout
 
@@ -39,6 +41,8 @@
         android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/black"
+
         >
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"

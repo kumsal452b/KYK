@@ -1,6 +1,8 @@
 package com.kumsal.kyk
 
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 
 import com.google.android.material.tabs.TabLayout;
@@ -22,8 +24,9 @@ class MainActivity : AppCompatActivity() {
         mViewPager=findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter= SectionPagerAdapter(supportFragmentManager)
         mTableLayout=findViewById(R.id.main_activity_tabLayout)
-        setSupportActionBar(toolbar)
+//        setSupportActionBar(toolbar)
         mViewPager.adapter=sectionPagerAdapter
+        mTableLayout.setBackgroundColor(Color.BLACK)
 
         mTableLayout.setupWithViewPager(mViewPager)
 
