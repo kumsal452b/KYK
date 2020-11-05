@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         mViewPager.adapter=sectionPagerAdapter
         mTableLayout.setTabTextColors(Color.WHITE,Color.GRAY)
+        mTableLayout.getTabAt(0)?.setIcon(R.drawable.home);
         mTableLayout.setupWithViewPager(mViewPager)
 
 
