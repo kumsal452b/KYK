@@ -41,14 +41,13 @@
         android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/teal_200"
+        android:background="@color/black"
 
         >
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main_activity_tabLayout"
-            android:background="@drawable/radius_color"
-            />
+            android:outlineSpotShadowColor="@color/black"/>
     </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
