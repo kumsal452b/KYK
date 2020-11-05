@@ -4,6 +4,7 @@ package com.kumsal.kyk
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.CalendarContract
 
 import com.google.android.material.tabs.TabLayout;
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mViewPager: ViewPager
     private lateinit var sectionPagerAdapter: SectionPagerAdapter
     private lateinit var mTableLayout: TabLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -26,9 +28,12 @@ class MainActivity : AppCompatActivity() {
         mTableLayout=findViewById(R.id.main_activity_tabLayout)
         setSupportActionBar(toolbar)
         mViewPager.adapter=sectionPagerAdapter
-        mTableLayout.setTabTextColors(Color.WHITE,Color.GRAY)
-        mTableLayout.getTabAt(0)?.setIcon(R.drawable.home);
+
         mTableLayout.setupWithViewPager(mViewPager)
+        mTableLayout.getTabAt(0)?.setIcon(R.drawable.home3)
+        mTableLayout.setTabTextColors(Color.BLACK,Color.BLACK)
+        mTableLayout.setBackgroundColor(Color.MAGENTA)
+
 
 
     }

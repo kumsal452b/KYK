@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <corners android:radius="10dp"></corners>
-    <stroke android:color="@color/teal_200" android:dashGap="4dp" android:dashWidth="1dp" android:width="5dp">
+    <stroke android:color="@color/black" android:dashGap="1dp" android:dashWidth="3dp" android:width="2dp">
 
     </stroke>
-    <gradient android:type="sweep" android:startColor="#21D4F3"
-        android:centerColor="#20547E" android:endColor="#171257" ></gradient>
+
 </shape>

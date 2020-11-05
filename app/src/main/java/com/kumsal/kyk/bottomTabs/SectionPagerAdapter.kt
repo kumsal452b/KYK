@@ -53,7 +53,6 @@ class SectionPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
                 return "Arama"
             }
             3->{
-                val account:account_fragment=account_fragment()
                 return "Hesap"
             }
             else -> {
