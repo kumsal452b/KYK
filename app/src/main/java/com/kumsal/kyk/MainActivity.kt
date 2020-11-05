@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         mTableLayout=findViewById(R.id.main_activity_tabLayout)
         setSupportActionBar(toolbar)
         mViewPager.adapter=sectionPagerAdapter
-        mTableLayout.setTabTextColors(Color.BLUE,Color.GRAY)
+        mTableLayout.setTabTextColors(Color.WHITE,Color.GRAY)
         mTableLayout.setupWithViewPager(mViewPager)
 
 
