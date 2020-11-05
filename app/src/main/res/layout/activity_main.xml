@@ -41,7 +41,6 @@
         android:layout_height="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/teal_200"
 
         >
         <com.google.android.material.tabs.TabLayout
