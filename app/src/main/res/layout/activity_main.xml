@@ -57,21 +57,26 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:orientation="vertical"
-            android:gravity="bottom">
-
+           >
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab"
                 android:layout_width="53dp"
                 android:layout_height="70dp"
-                android:elevation="10dp"
-                android:src="@drawable/add"
-                android:layout_marginLeft="170dp"
-                android:paddingEnd=""/>
+                android:src="@drawable/add2"
+                android:layout_gravity="bottom|center"
+                android:layout_marginLeft="175dp"
+                app:elevation="10dp"
+                android:outlineSpotShadowColor="@color/black"
+                android:scaleType="matrix"
+
+                />
+
+
             <com.roughike.bottombar.BottomBar
                 android:id="@+id/main_activity_bottomBar"
                 android:layout_width="match_parent"
@@ -84,7 +89,9 @@
                 app:bb_tabXmlResource="@xml/bottom_tabs"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:scaleType="fitCenter"/>
+
 
         </LinearLayout>
 
