@@ -47,30 +47,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
+        <com.roughike.bottombar.BottomBar
+            android:id="@+id/main_activity_bottomBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <com.google.android.material.bottomappbar.BottomAppBar
-
-                android:id="@+id/bottomAppbar"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent">
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    />
-
-            </com.google.android.material.bottomappbar.BottomAppBar>
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:bb_tabXmlResource="@xml/bottom_tabs"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

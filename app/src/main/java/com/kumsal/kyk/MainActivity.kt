@@ -11,28 +11,32 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
+import com.roughike.bottombar.BottomBar
+import com.roughike.bottombar.OnTabSelectListener
 
 class MainActivity : AppCompatActivity() {
     private lateinit var toolbar: Toolbar
     private lateinit var mViewPager: ViewPager
     private lateinit var sectionPagerAdapter: SectionPagerAdapter
-    private lateinit var mTableLayout: TabLayout
-
+    private lateinit var mBottomBar: BottomBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        //initialzed
         toolbar=findViewById(R.id.main_appbar)
         mViewPager=findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter= SectionPagerAdapter(supportFragmentManager)
-        mTableLayout=findViewById(R.id.main_activity_tabLayout)
-        setSupportActionBar(toolbar)
+        mBottomBar=findViewById(R.id.main_activity_bottomBar)
         mViewPager.adapter=sectionPagerAdapter
+        setSupportActionBar(toolbar)
+        mBottomBar.setOnTabSelectListener(OnTabSelectListener { tabId: Int ->
+            run {
+                if (tabId == R.id.tab_favorites) {
+                  mBottomBar.getTabAtPosition(0).setBackgroundColor(Color.BLUE)
+                }
+            }
+        })
 
-        mTableLayout.setupWithViewPager(mViewPager)
-        mTableLayout.getTabAt(0)?.setIcon(R.drawable.home3)
-        mTableLayout.setTabTextColors(Color.BLACK,Color.BLACK)
-        mTableLayout.setBackgroundColor(Color.MAGENTA)
 
 
 
