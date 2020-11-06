@@ -38,7 +38,6 @@
             android:id="@+id/main_activity_pager_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_marginTop="54dp"
             android:layout_marginBottom="55dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,34 +45,48 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="1.0" >
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/add"
-            app:layout_anchor="@+id/main_activity_bottomBar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-            android:layout_marginTop="500dp"
-            android:elevation="10dp"/>
 
-        <com.roughike.bottombar.BottomBar
-            android:id="@+id/main_activity_bottomBar"
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+        </androidx.viewpager.widget.ViewPager>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
+            android:layout_height="100dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:bb_tabXmlResource="@xml/bottom_tabs"
-            app:bb_inActiveTabColor="@color/black"
-            app:bb_activeTabColor="@color/purple_500"
-            app:bb_behavior="shifting"
-            android:elevation="0dp"
-            />
+            android:orientation="vertical"
+            android:gravity="bottom">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="53dp"
+                android:layout_height="70dp"
+                android:elevation="10dp"
+                android:src="@drawable/add"
+                android:layout_marginLeft="170dp"
+                android:paddingEnd=""/>
+            <com.roughike.bottombar.BottomBar
+                android:id="@+id/main_activity_bottomBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:elevation="0dp"
+                app:bb_activeTabColor="@color/purple_500"
+                app:bb_behavior="shifting"
+                app:bb_inActiveTabColor="@color/black"
+                app:bb_tabXmlResource="@xml/bottom_tabs"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
