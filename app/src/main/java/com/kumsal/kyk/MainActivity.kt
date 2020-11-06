@@ -11,6 +11,8 @@ import com.google.android.material.tabs.TabLayout;
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.roughike.bottombar.BottomBar
 import com.roughike.bottombar.OnTabSelectListener
@@ -20,15 +22,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mViewPager: ViewPager
     private lateinit var sectionPagerAdapter: SectionPagerAdapter
     private lateinit var mBottomBar: BottomBar
+    private lateinit var mFloatingActionButton: FloatingActionButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //initialzed
-        toolbar=findViewById(R.id.main_appbar)
-        mViewPager=findViewById(R.id.main_activity_pager_view)
-        sectionPagerAdapter= SectionPagerAdapter(supportFragmentManager)
-        mBottomBar=findViewById(R.id.main_activity_bottomBar)
-        mViewPager.adapter=sectionPagerAdapter
+        toolbar = findViewById(R.id.main_appbar)
+        mViewPager = findViewById(R.id.main_activity_pager_view)
+        sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
+        mBottomBar = findViewById(R.id.main_activity_bottomBar)
+        mFloatingActionButton=findViewById(R.id.fab)
+
+
+        mViewPager.adapter = sectionPagerAdapter
         setSupportActionBar(toolbar)
         mBottomBar.setBackgroundColor(Color.BLUE)
         mBottomBar.setOnTabSelectListener(OnTabSelectListener { tabId: Int ->
@@ -38,11 +44,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-        mViewPager.setOnScrollChangeListener{ view: View, i: Int, i1: Int, i2: Int, i3: Int ->
+        mViewPager.setOnScrollChangeListener { view: View, i: Int, i1: Int, i2: Int, i3: Int ->
             println("selam")
         }
 
 
+        mFloatingActionButton.setOnClickListener(View.OnClickListener {
+            println("selammmbutton calist")
+        })
     }
 }
 
