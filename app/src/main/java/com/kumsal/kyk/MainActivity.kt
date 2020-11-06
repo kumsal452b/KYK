@@ -29,10 +29,11 @@ class MainActivity : AppCompatActivity() {
         mBottomBar=findViewById(R.id.main_activity_bottomBar)
         mViewPager.adapter=sectionPagerAdapter
         setSupportActionBar(toolbar)
+        mBottomBar.setBackgroundColor(Color.BLUE)
         mBottomBar.setOnTabSelectListener(OnTabSelectListener { tabId: Int ->
             run {
                 if (tabId == R.id.tab_favorites) {
-                  mBottomBar.getTabAtPosition(0).setBackgroundColor(Color.BLUE)
+
                 }
             }
         })

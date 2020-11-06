@@ -55,7 +55,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:bb_tabXmlResource="@xml/bottom_tabs"/>
+            app:bb_tabXmlResource="@xml/bottom_tabs"
+            app:bb_inActiveTabColor="@color/black"
+            app:bb_activeTabColor="@color/purple_500"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
