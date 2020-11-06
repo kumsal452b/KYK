@@ -57,7 +57,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appBarLayout"
-            android:layout_marginTop="500dp"/>
+            android:layout_marginTop="500dp"
+            android:elevation="10dp"/>
 
         <com.roughike.bottombar.BottomBar
             android:id="@+id/main_activity_bottomBar"
@@ -71,7 +72,7 @@
             app:bb_inActiveTabColor="@color/black"
             app:bb_activeTabColor="@color/purple_500"
             app:bb_behavior="shifting"
-
+            android:elevation="0dp"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

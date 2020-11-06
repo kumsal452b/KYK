@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.view.View
 
 import com.google.android.material.tabs.TabLayout;
 import androidx.appcompat.app.AppCompatActivity
@@ -37,12 +38,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-        mViewPager.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->  }
-
-
+        mViewPager.setOnScrollChangeListener{ view: View, i: Int, i1: Int, i2: Int, i3: Int ->
+            println("selam")
+        }
 
 
     }
 }
+
 
 
