@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         mBottomBar.setBackgroundColor(Color.BLUE)
         mBottomBar.setOnTabSelectListener(OnTabSelectListener { tabId: Int ->
             run {
-                if (tabId == R.id.tab_favorites) {
+                if (tabId == R.id.tab_home) {
 
                 }
             }

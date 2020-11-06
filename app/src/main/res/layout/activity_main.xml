@@ -58,7 +58,8 @@
             app:bb_tabXmlResource="@xml/bottom_tabs"
             app:bb_inActiveTabColor="@color/black"
             app:bb_activeTabColor="@color/purple_500"
-            app:bb_behavior="shifting"/>
+            app:bb_behavior="shifting"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
