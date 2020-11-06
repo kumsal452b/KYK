@@ -37,9 +37,12 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+        mViewPager.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->  }
 
 
 
 
     }
 }
+
+
