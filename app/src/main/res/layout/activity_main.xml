@@ -40,7 +40,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/appBarLayout"
                 >
-                <include layout="@layout/custom_app_bar"/>
+                <include layout="@layout/custom_app_bar"
+                    android:id="@+id/main_appbar"/>
             </com.google.android.material.appbar.AppBarLayout>
 
         </LinearLayout>
