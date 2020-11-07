@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:fitsSystemWindows="true"
+    tools:openDrawer="end"
     >
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
@@ -13,26 +14,36 @@
         android:layout_gravity="start"
         app:menu="@menu/menu_bar"
         android:id="@+id/nav_bar"
+        app:headerLayout="@layout/header"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:id="@+id/appBarLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:background="#CAC5C5"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             app:layout_constraintBottom_toTopOf="@+id/main_activity_pager_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/appBarLayout"
+                >
+                <include layout="@layout/custom_app_bar"/>
+            </com.google.android.material.appbar.AppBarLayout>
 
-            <include
-                android:id="@+id/main_appbar"
-                layout="@layout/custom_app_bar" />
-        </com.google.android.material.appbar.AppBarLayout>
+        </LinearLayout>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_activity_pager_view"
@@ -76,7 +87,7 @@
 
                 />
 
-
+            
             <com.roughike.bottombar.BottomBar
                 android:id="@+id/main_activity_bottomBar"
                 android:layout_width="match_parent"

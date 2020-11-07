@@ -5,9 +5,10 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="185dp"
-        android:layout_height="146dp"
-        android:src="@drawable/radius_color"/>
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:src="@drawable/persontwo"
+        />
 
 
 </LinearLayout>
