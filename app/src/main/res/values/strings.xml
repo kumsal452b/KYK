@@ -2,5 +2,8 @@
     <string name="app_name">KYK</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="kyk_home_name">Hello App</string>
+    <string name="kyk_home_name">Instagram</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
 </resources>
