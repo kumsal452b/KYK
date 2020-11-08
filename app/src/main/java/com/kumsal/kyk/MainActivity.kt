@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
         mDrawerLayout=findViewById(R.id.main_activity_drawer)
 
         setSupportActionBar(toolbar)
-        actionBarDrawerToggle= ActionBarDrawerToggle(this,mDrawerLayout,R.string.open,R.string.close)
+        actionBarDrawerToggle= ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.open,R.string.close)
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
