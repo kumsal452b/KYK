@@ -22,28 +22,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/main_activity_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#CAC5C5"
+            android:background="@color/design_default_color_primary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
+            android:background="#CAC5C5"
             app:layout_constraintBottom_toTopOf="@+id/main_activity_pager_view"
-            app:layout_constraintTop_toTopOf="parent">
-            <com.google.android.material.appbar.AppBarLayout
-                android:layout_marginTop="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/appBarLayout"
-                >
-                <include layout="@layout/custom_app_bar"
-                    android:id="@+id/main_appbar"/>
-            </com.google.android.material.appbar.AppBarLayout>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="5dp">
 
         </LinearLayout>
 
