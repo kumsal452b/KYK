@@ -54,9 +54,19 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-        mViewPager.setOnScrollChangeListener { view: View, i: Int, i1: Int, i2: Int, i3: Int ->
-            println("selam")
-        }
+        mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+                mBottomBar.setDefaultTab(1)
+            }
+            override fun onPageSelected(position: Int) {
+
+            }
+
+        })
 
 
         mFloatingActionButton.setOnClickListener(View.OnClickListener {
