@@ -53,6 +53,15 @@ class MainActivity : AppCompatActivity() {
                 if (tabId == R.id.tab_home) {
                     mViewPager.setCurrentItem(0)
                 }
+                if (tabId == R.id.tab_search) {
+                    mViewPager.setCurrentItem(1)
+                }
+                if (tabId == R.id.tab_message) {
+                    mViewPager.setCurrentItem(2)
+                }
+                if (tabId == R.id.tab_account) {
+                    mViewPager.setCurrentItem(3)
+                }
             }
         })
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
