@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 
@@ -60,6 +61,13 @@ class MainActivity : AppCompatActivity() {
         mFloatingActionButton.setOnClickListener(View.OnClickListener {
             println("selammmbutton calist")
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 
