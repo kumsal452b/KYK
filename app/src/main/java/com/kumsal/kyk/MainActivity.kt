@@ -36,21 +36,22 @@ class MainActivity : AppCompatActivity() {
         mViewPager = findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
-        mFloatingActionButton=findViewById(R.id.fab)
-        mDrawerLayout=findViewById(R.id.main_activity_drawer)
+        mFloatingActionButton = findViewById(R.id.fab)
+        mDrawerLayout = findViewById(R.id.main_activity_drawer)
 
         setSupportActionBar(toolbar)
-        actionBarDrawerToggle= ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.open,R.string.close)
+        actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
         actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
         mViewPager.adapter = sectionPagerAdapter
-        mBottomBar.setBackgroundColor(Color.BLUE)
+
         mBottomBar.setOnTabSelectListener(OnTabSelectListener { tabId: Int ->
             run {
                 if (tabId == R.id.tab_home) {
-
+                    mViewPager.setCurrentItem(0)
                 }
             }
         })
@@ -59,11 +60,17 @@ class MainActivity : AppCompatActivity() {
             override fun onPageScrollStateChanged(state: Int) {
             }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                mBottomBar.setDefaultTab(1)
-            }
-            override fun onPageSelected(position: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
 
+            }
+
+            override fun onPageSelected(position: Int) {
+                println(position)
+                mBottomBar.setDefaultTabPosition(position)
             }
 
         })
@@ -75,7 +82,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(actionBarDrawerToggle.onOptionsItemSelected(item)){
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true
         }
         return super.onOptionsItemSelected(item)
