@@ -4,20 +4,20 @@
         id="@+id/tab_home"
         icon="@drawable/ic_home"
         title="Favorites"
-        barColorWhenSelected="#2196F3"/>
+        barColorWhenSelected="#010684"/>
     <tab
         id="@+id/tab_search"
         icon="@drawable/ic_search"
         title="Search"
-        barColorWhenSelected="#5AB2F8"/>
+        barColorWhenSelected="#B4842E"/>
     <tab
         id="@+id/tab_message"
         icon="@drawable/ic_message"
         title="Message"
-        barColorWhenSelected="#81C1F4"/>
+        barColorWhenSelected="#FDFEFA"/>
     <tab
         id="@+id/tab_account"
         icon="@drawable/ic_account_circle"
         title="Account"
-        barColorWhenSelected="#B8DBF6"/>
+        barColorWhenSelected="#E70404"/>
 </tabs>

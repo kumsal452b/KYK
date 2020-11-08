@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
-        actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
@@ -52,15 +51,27 @@ class MainActivity : AppCompatActivity() {
             run {
                 if (tabId == R.id.tab_home) {
                     mViewPager.setCurrentItem(0)
+                    mBottomBar.setInActiveTabColor(Color.WHITE)
+                    mBottomBar.setActiveTabColor(Color.WHITE)
+                    
                 }
                 if (tabId == R.id.tab_search) {
                     mViewPager.setCurrentItem(1)
+                    mBottomBar.setInActiveTabColor(Color.WHITE)
+                    mBottomBar.setActiveTabColor(Color.WHITE)
+                    println("durak 2")
                 }
                 if (tabId == R.id.tab_message) {
                     mViewPager.setCurrentItem(2)
+                    mBottomBar.setInActiveTabColor(Color.BLACK)
+                    mBottomBar.setActiveTabColor(Color.BLACK)
+                    println("durak 3")
                 }
                 if (tabId == R.id.tab_account) {
                     mViewPager.setCurrentItem(3)
+                    mBottomBar.setInActiveTabColor(Color.WHITE)
+                    mBottomBar.setActiveTabColor(Color.WHITE)
+                    println("durak 4")
                 }
             }
         })
