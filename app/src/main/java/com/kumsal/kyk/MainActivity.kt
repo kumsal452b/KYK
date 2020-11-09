@@ -19,12 +19,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.roughike.bottombar.BottomBar
 import com.roughike.bottombar.OnTabSelectListener
+import me.ibrahimsn.lib.OnItemSelectedListener
+import me.ibrahimsn.lib.SmoothBottomBar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var toolbar: Toolbar
     private lateinit var mViewPager: ViewPager
     private lateinit var sectionPagerAdapter: SectionPagerAdapter
-    private lateinit var mBottomBar: BottomBar
+    private lateinit var mBottomBar: SmoothBottomBar
     private lateinit var mFloatingActionButton: FloatingActionButton
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
@@ -47,34 +49,13 @@ class MainActivity : AppCompatActivity() {
 
         mViewPager.adapter = sectionPagerAdapter
 
-        mBottomBar.setOnTabSelectListener(OnTabSelectListener { tabId: Int ->
-            run {
-                if (tabId == R.id.tab_home) {
-                    mViewPager.setCurrentItem(0)
-                    mBottomBar.setInActiveTabColor(Color.WHITE)
-                    mBottomBar.setActiveTabColor(Color.WHITE)
-                    
-                }
-                if (tabId == R.id.tab_search) {
-                    mViewPager.setCurrentItem(1)
-                    mBottomBar.setInActiveTabColor(Color.WHITE)
-                    mBottomBar.setActiveTabColor(Color.WHITE)
-                    println("durak 2")
-                }
-                if (tabId == R.id.tab_message) {
-                    mViewPager.setCurrentItem(2)
-                    mBottomBar.setInActiveTabColor(Color.BLACK)
-                    mBottomBar.setActiveTabColor(Color.BLACK)
-                    println("durak 3")
-                }
-                if (tabId == R.id.tab_account) {
-                    mViewPager.setCurrentItem(3)
-                    mBottomBar.setInActiveTabColor(Color.WHITE)
-                    mBottomBar.setActiveTabColor(Color.WHITE)
-                    println("durak 4")
-                }
+
+        mBottomBar.onItemSelectedListener = this
+        mBottomBar.setOnClickListener {
+            View.OnClickListener {
+                println(mBottomBar.onItemSelected)
             }
-        })
+        }
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -90,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPageSelected(position: Int) {
                 println(position)
-                mBottomBar.setDefaultTabPosition(position)
+                mBottomBar.itemActiveIndex = position
             }
 
         })
@@ -107,6 +88,24 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onItemSelect(pos: Int): Boolean {
+        if (pos == 0) {
+            mViewPager.setCurrentItem(0)
+        }
+        if (pos == 1) {
+            mViewPager.setCurrentItem(1)
+        }
+        if (pos == 2) {
+            mViewPager.setCurrentItem(2)
+        }
+        if (pos == 3) {
+            mViewPager.setCurrentItem(3)
+        }
+        return true
+    }
+
+
 }
 
 
