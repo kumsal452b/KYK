@@ -5,5 +5,9 @@
     <string name="kyk_home_name">Instagram</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="manu_title_one">App</string>
+    <string name="menu_support">Support</string>
+    <string name="help_and_feedback">Help and Feedback</string>
+    <string name="about_us">About us</string>
 
 </resources>
