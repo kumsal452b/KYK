@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_bar_option" android:title="Options"/>
-    <item android:title="Help and Feedback" android:id="@+id/menu_bar_feed"/>
-    <item android:id="@+id/menu_bar_about" android:title="About us"/>
+    <group android:checkableBehavior="single">
+        <item android:title="@string/manu_title_one">
+            <menu>
+                <item
+                    android:id="@+id/menu_bar_option"
+                    android:title="Options"
+                    />
+            </menu>
+        </item>
+    </group>
 
+    <group>
+       <item android:title="@string/menu_support">
+           <menu>
+               <item
+                   android:id="@+id/menu_bar_feed"
+                   android:title="@string/help_and_feedback"
+                   android:icon="@drawable/ic_feedback"/>
+               <item
+                   android:id="@+id/menu_bar_about"
+                   android:title="@string/about_us"
+                   />
+           </menu>
+       </item>
+    </group>
 </menu>
