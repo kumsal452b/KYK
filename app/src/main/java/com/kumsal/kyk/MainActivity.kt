@@ -1,6 +1,7 @@
 package com.kumsal.kyk
 
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -107,6 +108,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
     override fun onStart() {
+        val intent:Intent=Intent(this,StarterActivity::class.java ).apply {
+
+        }
+        startActivity(intent)
         super.onStart()
     }
 
