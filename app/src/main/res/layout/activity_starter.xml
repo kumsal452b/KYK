@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StarterActivity"
-    android:theme="@style/Theme.AppCompat.Dialog"
 
     >
 
@@ -18,7 +17,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible">
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -26,36 +26,42 @@
         android:id="@+id/button5"
         android:layout_width="138dp"
         android:layout_height="67dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/radius_color"
-        android:text="Button"
+        android:background="@drawable/layout_backgorund"
+        android:text="@string/create_account"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/collapsingToolbarLayout"
         app:layout_constraintEnd_toEndOf="@+id/button4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/button4"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="138dp"
         android:layout_height="67dp"
         android:background="@drawable/layout_backgorund_two"
-        android:text="Button"
+        android:text="@string/have_an_account"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collapsingToolbarLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/collapsingToolbarLayout2"
+        />
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsingToolbarLayout"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:layout_marginTop="250dp"
         android:background="@drawable/layout_backgorund"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/collapsingToolbarLayout2"
+        app:layout_constraintVertical_bias="1.0"
+        android:visibility="invisible">
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
