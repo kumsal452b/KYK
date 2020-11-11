@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         setSupportActionBar(toolbar)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
+        actionBarDrawerToggle.drawerArrowDrawable.color=Color.WHITE
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 

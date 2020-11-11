@@ -31,7 +31,7 @@
             android:layout_marginTop="22dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="10dp"
-            android:background="#E1DDDD"
+            android:background="@drawable/radius_color"
             app:layout_constraintBottom_toTopOf="@+id/main_activity_pager_view"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="5dp">
@@ -44,7 +44,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="2dp"
-                android:background="@color/white"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
