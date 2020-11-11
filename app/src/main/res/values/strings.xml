@@ -9,5 +9,7 @@
     <string name="menu_support">Support</string>
     <string name="help_and_feedback">Help and Feedback</string>
     <string name="about_us">About us</string>
+    <string name="have_an_account">have an account</string>
+    <string name="create_account">Create Account</string>
 
 </resources>
