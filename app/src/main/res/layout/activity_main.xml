@@ -93,7 +93,7 @@
                 android:layout_marginLeft="175dp"
                 android:outlineSpotShadowColor="@color/black"
                 android:scaleType="matrix"
-                android:src="@drawable/add2"
+                android:src="@drawable/ic_baseline_add_24"
                 app:elevation="10dp"
 
                 />
@@ -103,13 +103,14 @@
                 android:orientation="vertical"
 
                 app:cardCornerRadius="20dp"
-                
+                android:background="@color/black"
+
                 >
             <me.ibrahimsn.lib.SmoothBottomBar
                 android:id="@+id/main_activity_bottomBar"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                app:backgroundColor="@color/purple_500"
+                app:backgroundColor="#918A9A"
                 app:menu="@menu/bottom_bar_menu"
                 app:iconSize="25dp"/>
             </androidx.cardview.widget.CardView>
