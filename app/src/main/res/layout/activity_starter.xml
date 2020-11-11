@@ -5,7 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StarterActivity">
+    tools:context=".StarterActivity"
+    android:theme="@style/Theme.AppCompat.Dialog"
+
+    >
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
         android:id="@+id/collapsingToolbarLayout2"
