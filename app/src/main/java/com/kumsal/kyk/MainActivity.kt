@@ -106,6 +106,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         return true
     }
 
+    override fun onStart() {
+        super.onStart()
+    }
 
 }
 
