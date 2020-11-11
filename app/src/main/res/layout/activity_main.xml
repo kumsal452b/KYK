@@ -76,10 +76,12 @@
                 android:text="Button" />
         </androidx.viewpager.widget.ViewPager>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,25 +97,25 @@
                 android:scaleType="matrix"
                 android:src="@drawable/ic_baseline_add_24"
                 app:elevation="10dp"
-
+                android:layout_marginBottom="4dp"
                 />
-            <androidx.cardview.widget.CardView
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:orientation="vertical"
+                android:background="@drawable/radius_color"
 
-                app:cardCornerRadius="20dp"
-                android:background="@color/black"
 
                 >
-            <me.ibrahimsn.lib.SmoothBottomBar
-                android:id="@+id/main_activity_bottomBar"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:backgroundColor="#918A9A"
-                app:menu="@menu/bottom_bar_menu"
-                app:iconSize="25dp"/>
-            </androidx.cardview.widget.CardView>
+
+                <me.ibrahimsn.lib.SmoothBottomBar
+                    android:id="@+id/main_activity_bottomBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:backgroundColor="#00FFFFFF"
+                    app:iconSize="25dp"
+                    app:menu="@menu/bottom_bar_menu" />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </LinearLayout>
 
