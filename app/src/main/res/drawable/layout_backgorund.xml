@@ -3,5 +3,5 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="ExtraText">
     <corners android:topRightRadius="25dp" android:topLeftRadius="25dp"/>
-    <solid android:color="#5BC861"></solid>
+    <solid android:color="#ff4086"></solid>
 </shape>
