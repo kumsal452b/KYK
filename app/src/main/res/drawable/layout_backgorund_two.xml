@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" tools:ignore="ExtraText">
     <item android:state_pressed="false">
         <shape>
-            <corners android:bottomLeftRadius="25dp" android:bottomRightRadius="25dp" />
+            <corners android:topLeftRadius="25dp" android:bottomRightRadius="25dp" />
             <solid android:color="#00FFFFFF" />
             <stroke android:width="2dp" android:color="#03A9F4" />
         </shape>
@@ -10,7 +10,7 @@
     <item android:state_pressed="true">
 
         <shape>
-            <corners android:bottomLeftRadius="25dp" android:bottomRightRadius="25dp" />
+            <corners android:topLeftRadius="25dp" android:bottomRightRadius="25dp" />
             <solid android:color="#1A9191" />
             <stroke android:width="2dp" android:color="#225268" />
         </shape>
