@@ -6,63 +6,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StarterActivity"
+    android:background="@drawable/background_starter"
 
     >
 
-    <com.google.android.material.appbar.CollapsingToolbarLayout
-        android:id="@+id/collapsingToolbarLayout2"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/layout_backgorund_two"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginBottom="500dp"
->
-
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="138dp"
-        android:layout_height="67dp"
-        android:background="@drawable/layout_backgorund"
-        android:text="@string/create_account"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/collapsingToolbarLayout"
-        app:layout_constraintEnd_toEndOf="@+id/button4"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/button4"
-        app:layout_constraintVertical_bias="1.0" />
+        android:src="@drawable/kykpng" />
 
     <Button
         android:id="@+id/button4"
-        android:layout_width="138dp"
-        android:layout_height="67dp"
+        android:layout_width="137dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="300dp"
         android:background="@drawable/layout_backgorund_two"
         android:text="@string/have_an_account"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/collapsingToolbarLayout2"
-        />
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
 
-    <com.google.android.material.appbar.CollapsingToolbarLayout
-        android:id="@+id/collapsingToolbarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="483dp"
-
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="139dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="50dp"
         android:background="@drawable/layout_backgorund"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/collapsingToolbarLayout2"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/collapsingToolbarLayout2"
-        app:layout_constraintTop_toBottomOf="@+id/collapsingToolbarLayout2"
-        app:layout_constraintVertical_bias="1.0">
+        android:text="@string/create_account"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/button4"
+        app:layout_constraintStart_toStartOf="@+id/button4"
+        app:layout_constraintTop_toBottomOf="@+id/button4" />
 
-    </com.google.android.material.appbar.CollapsingToolbarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
