@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "211463230215",
+    "firebase_url": "https://kyk-f7865.firebaseio.com",
+    "project_id": "kyk-f7865",
+    "storage_bucket": "kyk-f7865.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:211463230215:android:2c44c1b333d7c253f72ba2",
+        "android_client_info": {
+          "package_name": "com.kumsal.kyk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "211463230215-j9mfuhtf3amph902uhquk5tpaio74pss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBU3FWJOJuLm4FAi7btILn-YyjpG0rpuCs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "211463230215-j9mfuhtf3amph902uhquk5tpaio74pss.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
