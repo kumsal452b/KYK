@@ -17,6 +17,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.roughike.bottombar.BottomBar
 import com.roughike.bottombar.OnTabSelectListener
@@ -31,6 +33,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var mFloatingActionButton: FloatingActionButton
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
+    private lateinit var mAuth:FirebaseAuth
+    private lateinit var mUser:FirebaseUser
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -41,6 +45,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
         mFloatingActionButton = findViewById(R.id.fab)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
+        mAuth = FirebaseAuth.getInstance().currentUser
+        val mUser1=mAuth.currentUser
 
         setSupportActionBar(toolbar)
         actionBarDrawerToggle =
@@ -108,10 +114,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
     override fun onStart() {
-        val intent:Intent=Intent(this,StarterActivity::class.java ).apply {
-
+        if (mAuth==null){
+            val intent:Intent=Intent(this,StarterActivity::class.java ).apply {
+            }
+            startActivity(intent)
         }
-        startActivity(intent)
         super.onStart()
     }
 
