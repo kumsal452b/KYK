@@ -6,6 +6,9 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.CalendarContract
+import android.transition.Fade
+import android.transition.Slide
+import android.transition.TransitionInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -34,7 +37,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var mAuth:FirebaseAuth
-    private lateinit var mUser:FirebaseUser
+    private var mUser: FirebaseUser? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,8 +49,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
         mFloatingActionButton = findViewById(R.id.fab)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
-        mAuth = FirebaseAuth.getInstance().currentUser
-        val mUser1=mAuth.currentUser
+        mAuth = FirebaseAuth.getInstance()
+        val mUser1:FirebaseUser?=mAuth.currentUser
+        mUser=mUser1
 
         setSupportActionBar(toolbar)
         actionBarDrawerToggle =
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
                 println(mBottomBar.onItemSelected)
             }
         }
-        mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
             }
@@ -88,6 +93,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mFloatingActionButton.setOnClickListener(View.OnClickListener {
             println("selammmbutton calist")
         })
+        setupWindowAnimations()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -114,12 +120,18 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
     override fun onStart() {
-        if (mAuth==null){
+        if (mUser==null){
             val intent:Intent=Intent(this,StarterActivity::class.java ).apply {
             }
             startActivity(intent)
+            setupWindowAnimations()
         }
         super.onStart()
+    }
+    fun setupWindowAnimations(){
+        val fade:Slide=Slide()
+        println(fade)
+            window.enterTransition=fade
     }
 
 }
