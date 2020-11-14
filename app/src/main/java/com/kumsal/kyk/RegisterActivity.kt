@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         password=findViewById(R.id.regıster_password)
         passwordTry=findViewById(R.id.register_password_try)
         register=findViewById(R.id.register_button)
-        
+
         register.setOnClickListener(View.OnClickListener {
             register()
         })
@@ -41,11 +41,22 @@ class RegisterActivity : AppCompatActivity() {
             if (!isMailValid(email.text)){
                 email.setError(getString(R.string.mail_valid))
             }else{
-                email.setError("Email address cannot be empty")
+                email.setError(getString(R.string.email_is_empty))
             }
         }
         if (TextUtils.isEmpty(password.text)){
-//            email.
+                if (password.text.length<password.maxLines){
+                    password.setError(getString(R.string.password_wrong))
+                }else{
+                    password.setError("Password cannot be empty")
+                }
+        }
+        if (TextUtils.isEmpty(passwordTry.text)){
+            if (passwordTry.text.length<passwordTry.maxLines){
+                passwordTry.setError(getString(R.string.password_wrong))
+            }else{
+                passwordTry.setError("Password cannot be empty")
+            }
         }
     }
     private fun isMailValid(mail:CharSequence):Boolean{
