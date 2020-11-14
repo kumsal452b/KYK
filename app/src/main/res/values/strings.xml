@@ -15,5 +15,7 @@
     <string name="name_and_surname">Name and Surname</string>
     <string name="ema_l">Emaıl</string>
     <string name="password">Password...</string>
+    <string name="mustbe_empy_email">Field must be not empty</string>
+    <string name="mail_valid">Mail is valid</string>
 
 </resources>
