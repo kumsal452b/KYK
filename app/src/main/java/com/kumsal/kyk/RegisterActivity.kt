@@ -33,30 +33,46 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun register() {
+        var troubleCount:Int=0
+
         if (TextUtils.isEmpty(name.text)){
 
             name.setError(getString(R.string.mustbe_empy_email))
+            troubleCount++
         }
         if (TextUtils.isEmpty(email.text)){
             if (!isMailValid(email.text)){
                 email.setError(getString(R.string.mail_valid))
+                troubleCount++
             }else{
                 email.setError(getString(R.string.email_is_empty))
+                troubleCount++
             }
         }
         if (TextUtils.isEmpty(password.text)){
                 if (password.text.length<password.maxLines){
                     password.setError(getString(R.string.password_wrong))
+                    troubleCount++
                 }else{
                     password.setError("Password cannot be empty")
+                    troubleCount++
                 }
         }
         if (TextUtils.isEmpty(passwordTry.text)){
             if (passwordTry.text.length<passwordTry.maxLines){
                 passwordTry.setError(getString(R.string.password_wrong))
+                troubleCount++
             }else{
                 passwordTry.setError("Password cannot be empty")
+                troubleCount++
             }
+        }
+        if (!password.text.equals(passwordTry.text)){
+            password.setError( "passwords must match")
+            passwordTry.setError("passwords must match")
+        }
+        if (troubleCount>0){
+            return
         }
     }
     private fun isMailValid(mail:CharSequence):Boolean{
