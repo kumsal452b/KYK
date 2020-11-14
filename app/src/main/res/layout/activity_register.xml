@@ -11,7 +11,7 @@
     <EditText
         android:id="@+id/register_password_try"
         android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_height="45dp"
         android:layout_marginTop="44dp"
         android:background="@drawable/bacground_edittext"
         android:hint="@string/password_try"
@@ -23,6 +23,7 @@
         app:layout_constraintTop_toBottomOf="@+id/regıster_password"
         android:drawableLeft="@drawable/ic_baseline_security_24"
         android:drawablePadding="5dp"
+        android:textColor="@color/white"
         />
 
     <EditText
@@ -40,7 +41,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
+        android:textColor="@color/white"
         />
 
     <EditText
@@ -58,6 +59,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_name_and_surname"
         app:layout_constraintTop_toBottomOf="@+id/register_name_and_surname"
         android:drawablePadding="5dp"
+        android:textColor="@color/white"
         />
 
     <EditText
@@ -74,14 +76,16 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/register_mail"
         app:layout_constraintTop_toBottomOf="@+id/register_mail"
-        android:drawablePadding="5dp"/>
+        android:drawablePadding="5dp"
+        android:textColor="@color/white"
+        android:minLines="6"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/register_button"
         android:layout_width="293dp"
         android:layout_height="40dp"
         android:layout_marginTop="44dp"
-        android:text="Button"
+        android:text="Register"
         app:layout_constraintEnd_toEndOf="@+id/register_password_try"
         app:layout_constraintStart_toStartOf="@+id/register_password_try"
         app:layout_constraintTop_toBottomOf="@+id/register_password_try"
