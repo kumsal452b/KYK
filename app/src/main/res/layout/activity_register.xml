@@ -24,6 +24,7 @@
         android:drawableLeft="@drawable/ic_baseline_security_24"
         android:drawablePadding="5dp"
         android:textColor="@color/white"
+        android:minLines="6"
         />
 
     <EditText
