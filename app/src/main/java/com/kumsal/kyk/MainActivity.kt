@@ -125,6 +125,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             }
             startActivity(intent)
             setupWindowAnimations()
+            super.finish()
         }
         super.onStart()
     }
