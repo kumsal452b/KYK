@@ -67,7 +67,10 @@ class RegisterActivity : AppCompatActivity() {
                 troubleCount++
             }
         }
-        if (!password.text.equals(passwordTry.text)){
+        println(password.text)
+        println(passwordTry.text)
+        
+        if (TextUtils.equals(passwordTry.text,password.text)){
             password.setError( "passwords must match")
             passwordTry.setError("passwords must match")
         }
