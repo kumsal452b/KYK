@@ -8,7 +8,7 @@
     android:background="@drawable/background_starter">
 
 
-    <com.rengwuxian.materialedittext.MaterialEditText
+    <EditText
         android:id="@+id/register_password_try"
         android:layout_width="300dp"
         android:layout_height="60dp"
@@ -23,11 +23,6 @@
         app:layout_constraintTop_toBottomOf="@+id/regıster_password"
         android:drawableLeft="@drawable/ic_baseline_security_24"
         android:drawablePadding="5dp"
-        app:met_floatingLabel="highlight"
-        android:textColorHighlight="@color/white"
-        android:textColor="@color/white"
-        app:met_textColorHint="@color/white"
-        app:met_floatingLabelTextColor="@color/white"
         />
 
     <EditText
