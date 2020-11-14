@@ -17,7 +17,7 @@
         android:src="@drawable/pngdraw" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/starter_have_account"
         android:layout_width="137dp"
         android:layout_height="48dp"
         android:layout_marginTop="300dp"
@@ -30,15 +30,16 @@
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/starter_create_acount"
         android:layout_width="139dp"
         android:layout_height="49dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="48dp"
         android:background="@drawable/layout_backgorund"
         android:text="@string/create_account"
         android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/button4"
-        app:layout_constraintStart_toStartOf="@+id/button4"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintEnd_toEndOf="@+id/starter_have_account"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/starter_have_account"
+        app:layout_constraintTop_toBottomOf="@+id/starter_have_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
