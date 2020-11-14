@@ -11,5 +11,9 @@
     <string name="about_us">About us</string>
     <string name="have_an_account">have an account</string>
     <string name="create_account">Create Account</string>
+    <string name="password_try">Password...(try)</string>
+    <string name="name_and_surname">Name and Surname</string>
+    <string name="ema_l">Emaıl</string>
+    <string name="password">Password...</string>
 
 </resources>
