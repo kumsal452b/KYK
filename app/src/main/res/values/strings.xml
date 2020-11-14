@@ -17,5 +17,7 @@
     <string name="password">Password...</string>
     <string name="mustbe_empy_email">Field must be not empty</string>
     <string name="mail_valid">Mail is valid</string>
+    <string name="password_wrong">\"The password can be at least 6 digits \"</string>
+    <string name="email_is_empty">Email address cannot be empty</string>
 
 </resources>
