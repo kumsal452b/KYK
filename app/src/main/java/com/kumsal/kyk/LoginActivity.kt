@@ -1,12 +1,50 @@
 package com.kumsal.kyk
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
+    private lateinit var email:EditText
+    private lateinit var password:EditText
+    private lateinit var login:Button
+    private lateinit var mAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        email=findViewById(R.id.login_mail)
+        password=findViewById(R.id.login_password)
+        login=findViewById(R.id.login_button)
+        mAuth=FirebaseAuth.getInstance()
+
+        login.setOnClickListener(
+            View.OnClickListener {
+                mAuth.signInWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnFailureListener(
+                    OnFailureListener {
+                        Exception->
+                        Toast.makeText(applicationContext,Exception.localizedMessage,Toast.LENGTH_LONG).show();
+                    }
+                ).addOnCompleteListener(
+                    OnCompleteListener {
+                        task ->
+                        if (task.isSuccessful){
+                            val intent: Intent = Intent(applicationContext,MainActivity::class.java)
+                            startActivity(intent)
+                        }else{
+                            Toast.makeText(applicationContext,"error",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                )
+            }
+        )
     }
 }

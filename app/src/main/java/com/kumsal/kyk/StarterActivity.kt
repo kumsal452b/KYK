@@ -21,5 +21,11 @@ class StarterActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         )
+        has_account_button.setOnClickListener(
+            View.OnClickListener {
+                val intent:Intent=Intent(applicationContext,LoginActivity::class.java)
+                startActivity(intent)
+            }
+        )
     }
 }
