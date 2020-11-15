@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         })
 
-
+        FirebaseAuth.getInstance().signOut()
         mFloatingActionButton.setOnClickListener(View.OnClickListener {
             println("selammmbutton calist")
         })
