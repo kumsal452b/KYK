@@ -33,12 +33,18 @@ class RegisterActivity : AppCompatActivity() {
         register=findViewById(R.id.register_button)
 
         register.setOnClickListener(View.OnClickListener {
-            if (register()){
-                mAuth.createUserWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnSuccessListener {
-                       Toast.makeText(this,"Succec",Toast.LENGTH_LONG).show()
-                }.addOnFailureListener(this){
-                    Exception->
-                    Toast.makeText(this,Exception.localizedMessage,Toast.LENGTH_LONG).show()
+            if (register()) {
+                mAuth.createUserWithEmailAndPassword(
+                    email.text.toString(),
+                    password.text.toString()
+                ).addOnSuccessListener {
+                    Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
+                    val uid: String = mAuth.uid.toString()
+                    println(uid)
+                    var currentUser:UID=UID(uid)
+                    
+                }.addOnFailureListener(this) { Exception ->
+                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
 
                 }
             }
