@@ -6,7 +6,9 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -32,8 +34,12 @@ class RegisterActivity : AppCompatActivity() {
 
         register.setOnClickListener(View.OnClickListener {
             if (register()){
-                mAuth.signInWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnSuccessListener {
-                       
+                mAuth.createUserWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnSuccessListener {
+                       Toast.makeText(this,"Succec",Toast.LENGTH_LONG).show()
+                }.addOnFailureListener(this){
+                    Exception->
+                    Toast.makeText(this,Exception.localizedMessage,Toast.LENGTH_LONG).show()
+
                 }
             }
         })
