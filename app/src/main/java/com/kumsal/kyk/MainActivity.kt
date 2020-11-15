@@ -89,9 +89,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         })
 
-        FirebaseAuth.getInstance().signOut()
+
         mFloatingActionButton.setOnClickListener(View.OnClickListener {
-            println("selammmbutton calist")
+            FirebaseAuth.getInstance().signOut()
+            val intent:Intent=Intent(applicationContext,StarterActivity::class.java)
+            startActivity(intent)
         })
         setupWindowAnimations()
     }

@@ -1,5 +1,6 @@
 package com.kumsal.kyk
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -59,6 +60,8 @@ class RegisterActivity : AppCompatActivity() {
                     }.addOnSuccessListener(
                         OnSuccessListener <Void>{
                             Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
+                            val intent:Intent=Intent(applicationContext,MainActivity::class.java)
+                            startActivity(intent)
                         }
                     )
 
