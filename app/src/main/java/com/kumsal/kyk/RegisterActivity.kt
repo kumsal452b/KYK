@@ -9,10 +9,15 @@ import android.widget.EditText
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import java.util.*
+import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var name:EditText
@@ -22,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var register:Button
     private lateinit var mUser: FirebaseUser
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDatabase:DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -31,6 +37,9 @@ class RegisterActivity : AppCompatActivity() {
         password=findViewById(R.id.regıster_password)
         passwordTry=findViewById(R.id.register_password_try)
         register=findViewById(R.id.register_button)
+        mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
+
+
 
         register.setOnClickListener(View.OnClickListener {
             if (register()) {
@@ -38,11 +47,22 @@ class RegisterActivity : AppCompatActivity() {
                     email.text.toString(),
                     password.text.toString()
                 ).addOnSuccessListener {
-                    Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
-                    val uid: String = mAuth.uid.toString()
-                    println(uid)
-                    var currentUser:UID=UID(uid)
-                    
+
+                    var mMap:HashMap<String,String>
+                    mMap= HashMap()
+                    mMap.set("name_surname",name.text.toString())
+                    mMap.set("image","")
+                    var currId:String=mAuth.toString()
+                    mDatabase.child(currId).setValue(mMap).addOnFailureListener {
+                        Exception->
+                        Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
+                    }.addOnSuccessListener(
+                        OnSuccessListener <Void>{
+                            Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
+                        }
+                    )
+
+
                 }.addOnFailureListener(this) { Exception ->
                     Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
 
