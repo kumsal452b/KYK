@@ -8,16 +8,11 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import java.util.*
 import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
@@ -34,10 +29,10 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         mAuth=FirebaseAuth.getInstance()
         name=findViewById(R.id.register_name_and_surname)
-        email=findViewById(R.id.register_mail)
-        password=findViewById(R.id.regıster_password)
+        email=findViewById(R.id.login_mail)
+        password=findViewById(R.id.login_password)
         passwordTry=findViewById(R.id.register_password_try)
-        register=findViewById(R.id.register_button)
+        register=findViewById(R.id.login_button)
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
 
 
