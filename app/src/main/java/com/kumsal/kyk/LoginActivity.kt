@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
@@ -16,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var password:EditText
     private lateinit var login:Button
     private lateinit var register:Button
-    private lateinit var forgotPsw:EditText
+    private lateinit var forgotPsw:TextView
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
         login=findViewById(R.id.login_button)
         register=findViewById(R.id.login_register_button)
         forgotPsw=findViewById(R.id.login_forgot_button)
-        
+
         mAuth=FirebaseAuth.getInstance()
 
         login.setOnClickListener(
