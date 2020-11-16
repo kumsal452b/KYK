@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="@drawable/layout_backgorundthree"
-        android:text="Forgot passwod?"
+        android:text="@string/forgot_passwod"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/register_button"
         app:layout_constraintStart_toStartOf="@+id/register_button"
