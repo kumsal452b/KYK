@@ -5,7 +5,7 @@
             <corners android:topLeftRadius="25dp" android:bottomRightRadius="25dp" />
             <solid android:color="#00FFFFFF" />
             <stroke android:width="2dp" android:color="#03A9F4" />
-            <padding android:left="10dp" android:right="10dp"/>
+            <padding android:left="10dp" android:right="10dp" android:bottom="2dp" android:top="2dp"/>
         </shape>
     </item>
     <item android:state_pressed="true">
