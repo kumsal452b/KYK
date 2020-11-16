@@ -40,14 +40,14 @@ class LoginActivity : AppCompatActivity() {
                 mAuth.signInWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnFailureListener(
                     OnFailureListener {
                         Exception->
-                        Toast.makeText(applicationContext,Exception.localizedMessage,Toast.LENGTH_LONG).show();
-                        TipDialog.show(LoginActivity(), "Problem has found", TipDialog.TYPE.ERROR);
+                        TipDialog.show(this, "Problem has found", TipDialog.TYPE.ERROR);
+//                        Toast.makeText(applicationContext,Exception.localizedMessage,Toast.LENGTH_LONG).show();
                     }
                 ).addOnCompleteListener(
                     OnCompleteListener {
                         task ->
                         if (task.isSuccessful){
-                            TipDialog.show(LoginActivity(), getString(R.string.login_activity_sucess), TipDialog.TYPE.SUCCESS);
+                            TipDialog.show(this, getString(R.string.login_activity_sucess), TipDialog.TYPE.SUCCESS);
                             val intent: Intent = Intent(applicationContext,MainActivity::class.java)
                             startActivity(intent)
                         }else{
