@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
                     OnCompleteListener {
                         task ->
                         if (task.isSuccessful){
-                            TipDialog.show(this, getString(R.string.login_activity_sucess), TipDialog.TYPE.SUCCESS);
                             val intent: Intent = Intent(applicationContext,MainActivity::class.java)
                             startActivity(intent)
                         }else{
