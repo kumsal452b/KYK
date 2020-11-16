@@ -43,6 +43,18 @@
         app:layout_constraintTop_toBottomOf="@+id/login_mail" />
 
     <Button
+    android:id="@+id/login_button"
+    android:layout_width="293dp"
+    android:layout_height="40dp"
+    android:layout_marginTop="50dp"
+
+    android:background="@drawable/layout_backgorund"
+    android:text="@string/login"
+    android:textColor="@color/white"
+    app:layout_constraintEnd_toEndOf="@+id/login_password"
+    app:layout_constraintStart_toStartOf="@+id/login_password"
+    app:layout_constraintTop_toBottomOf="@+id/login_password" />
+    <Button
         android:id="@+id/login_button"
         android:layout_width="293dp"
         android:layout_height="40dp"
