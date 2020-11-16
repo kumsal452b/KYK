@@ -22,5 +22,6 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="login_register">Register</string>
+    <string name="forgot_passwod">Forgot passwod?</string>
 
 </resources>
