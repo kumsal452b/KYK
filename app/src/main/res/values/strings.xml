@@ -23,5 +23,6 @@
     <string name="login">Login</string>
     <string name="login_register">Register</string>
     <string name="forgot_passwod">Forgot passwod?</string>
+    <string name="login_activity_sucess">Success</string>
 
 </resources>
