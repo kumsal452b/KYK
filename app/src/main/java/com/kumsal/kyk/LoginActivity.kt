@@ -15,6 +15,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var email:EditText
     private lateinit var password:EditText
     private lateinit var login:Button
+    private lateinit var register:Button
+    private lateinit var forgotPsw:EditText
     private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +26,9 @@ class LoginActivity : AppCompatActivity() {
         email=findViewById(R.id.login_mail)
         password=findViewById(R.id.login_password)
         login=findViewById(R.id.login_button)
+        register=findViewById(R.id.login_register_button)
+        forgotPsw=findViewById(R.id.login_forgot_button)
+        
         mAuth=FirebaseAuth.getInstance()
 
         login.setOnClickListener(
@@ -46,5 +51,9 @@ class LoginActivity : AppCompatActivity() {
                 )
             }
         )
+        register.setOnClickListener(View.OnClickListener {
+            val intent:Intent=Intent(applicationContext,RegisterActivity::class.java)
+            startActivity(intent)
+        })
     }
 }
