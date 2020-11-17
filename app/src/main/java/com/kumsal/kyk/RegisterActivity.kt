@@ -48,7 +48,9 @@ class RegisterActivity : AppCompatActivity() {
                     mMap= HashMap()
                     mMap.set("name_surname",name.text.toString())
                     mMap.set("image","")
-                    var currId:String=mAuth.uid.toString()
+                    val currId:String=mAuth.uid.toString()
+                    val globals = Globals.ınstance
+                    globals.uid?=currId
                     mDatabase.child(currId).setValue(mMap).addOnFailureListener {
                         Exception->
                         Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
