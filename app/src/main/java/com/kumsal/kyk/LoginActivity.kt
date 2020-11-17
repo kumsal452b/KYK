@@ -41,8 +41,9 @@ class LoginActivity : AppCompatActivity() {
                 mAuth.signInWithEmailAndPassword(email.text.toString(),password.text.toString()).addOnFailureListener(
                     OnFailureListener {
                         Exception->
-                        TipDialog.show(this, "Problem has found", TipDialog.TYPE.ERROR);
-//                        Toast.makeText(applicationContext,Exception.localizedMessage,Toast.LENGTH_LONG).show();
+                        TipDialog.show(this, "Problem has found", TipDialog.TYPE.ERROR)
+                        Toast.makeText(applicationContext,Exception.localizedMessage,Toast.LENGTH_LONG).show()
+
                     }
                 ).addOnCompleteListener(
                     OnCompleteListener {
@@ -64,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        Animatoo.animateSlideDown(this)
         super.onBackPressed()
+        Animatoo.animateSlideDown(this)
     }
 }
