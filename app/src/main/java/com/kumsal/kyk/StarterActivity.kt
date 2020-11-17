@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 
 class StarterActivity : AppCompatActivity() {
     private lateinit var create_account_button: Button
@@ -25,6 +26,7 @@ class StarterActivity : AppCompatActivity() {
             View.OnClickListener {
                 val intent:Intent=Intent(applicationContext,LoginActivity::class.java)
                 startActivity(intent)
+                Animatoo.animateSlideUp(this)
             }
         )
     }
