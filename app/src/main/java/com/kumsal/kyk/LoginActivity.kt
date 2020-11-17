@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
@@ -60,5 +61,10 @@ class LoginActivity : AppCompatActivity() {
             val intent:Intent=Intent(applicationContext,RegisterActivity::class.java)
             startActivity(intent)
         })
+    }
+
+    override fun onBackPressed() {
+        Animatoo.animateSlideDown(this)
+        super.onBackPressed()
     }
 }
