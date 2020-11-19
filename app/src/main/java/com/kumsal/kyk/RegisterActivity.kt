@@ -50,7 +50,7 @@ class RegisterActivity : AppCompatActivity() {
                     mMap.set("image","")
                     val currId:String=mAuth.uid.toString()
                     val globals = Globals.ınstance
-                    globals.uid?=currId
+                    globals?.uid =currId
                     mDatabase.child(currId).setValue(mMap).addOnFailureListener {
                         Exception->
                         Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
