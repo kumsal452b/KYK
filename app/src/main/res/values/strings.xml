@@ -16,7 +16,7 @@
     <string name="ema_l">Emaıl</string>
     <string name="password">Password...</string>
     <string name="mustbe_empy_email">Field must be not empty</string>
-    <string name="mail_valid">Mail is valid</string>
+    <string name="mail_valid">e mail is wrong</string>
     <string name="password_wrong">\"The password can be at least 6 digits \"</string>
     <string name="email_is_empty">Email address cannot be empty</string>
     <string name="register">Register</string>
@@ -24,5 +24,6 @@
     <string name="login_register">Register</string>
     <string name="forgot_passwod">Forgot passwod?</string>
     <string name="login_activity_sucess">Success</string>
+    <string name="send_email">Send</string>
 
 </resources>
