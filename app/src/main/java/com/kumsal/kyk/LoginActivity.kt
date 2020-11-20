@@ -31,8 +31,7 @@ class LoginActivity : AppCompatActivity() {
         password=findViewById(R.id.login_password)
         login=findViewById(R.id.login_button)
         register=findViewById(R.id.login_register_button)
-        forgotPsw=findViewById(R.id.login_forgot_button)
-
+        forgotPsw=findViewById(R.id.login_forgot_textView)
         mAuth=FirebaseAuth.getInstance()
 
         login.setOnClickListener(
@@ -61,6 +60,10 @@ class LoginActivity : AppCompatActivity() {
         register.setOnClickListener(View.OnClickListener {
             val intent:Intent=Intent(applicationContext,RegisterActivity::class.java)
             startActivity(intent)
+        })
+        forgotPsw.setOnClickListener(View.OnClickListener {
+            val intent_forgot_password:Intent=Intent(applicationContext,ForgotPasswordActivity::class.java)
+            startActivity(intent_forgot_password)
         })
     }
 
