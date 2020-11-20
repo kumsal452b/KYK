@@ -1,12 +1,17 @@
 package com.kumsal.kyk
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
+import com.kongzue.dialog.v3.TipDialog
+import com.kongzue.dialog.v3.WaitDialog
 
 class ForgotPasswordActivity : AppCompatActivity() {
     private lateinit var mail:EditText
@@ -24,15 +29,28 @@ class ForgotPasswordActivity : AppCompatActivity() {
 
         button.setOnClickListener(
             View.OnClickListener {
-
+                WaitDialog.show(this,getString(R.string.sending_email_forgot_pasword))
                 if (TextUtils.isEmpty(mail.text.toString())) {
+                    WaitDialog.dismiss()
                     mail.setError(getString(R.string.mustbe_empy_email))
                     return@OnClickListener
                 }
                 if (isMailValid(mail.text.toString())) {
-
+                    mAuth.sendPasswordResetEmail(mail.text.toString()).addOnFailureListener {
+                        Exception->
+                        WaitDialog.dismiss()
+                        Toast.makeText(this,Exception.localizedMessage,Toast.LENGTH_LONG)
+                    }.addOnSuccessListener(
+                        OnSuccessListener {
+                            TipDialog.show(this,getString(R.string.login_activity_sucess),TipDialog.TYPE.SUCCESS)
+                            Thread.sleep(200)
+                            val intent: Intent = Intent(applicationContext,LoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                    )
                 }else{
-                    mail.setError(getString(R.string.test))
+                    WaitDialog.dismiss()
+                    mail.setError(getString(R.string.mail_valid))
                 }
             }
         )
