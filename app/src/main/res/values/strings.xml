@@ -25,5 +25,6 @@
     <string name="forgot_passwod">Forgot passwod?</string>
     <string name="login_activity_sucess">Success</string>
     <string name="send_email">Send</string>
+    <string name="sending_email_forgot_pasword">Sending</string>
 
 </resources>
