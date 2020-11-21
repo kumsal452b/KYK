@@ -9,10 +9,11 @@
         android:id="@+id/imageView3"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:transitionName="loginTransImageLogo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/circlelogo"
-        android:transitionName="loginTransImageLogo"/>
+        app:srcCompat="@mipmap/circlelogo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

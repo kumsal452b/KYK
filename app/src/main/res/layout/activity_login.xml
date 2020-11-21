@@ -16,7 +16,7 @@
         android:drawableLeft="@drawable/ic_baseline_email_24"
         android:drawablePadding="5dp"
         android:hint="@string/ema_l"
-
+        android:transitionName="mailEditText"
         android:inputType="textEmailAddress"
         android:textColor="@color/white"
         android:textColorHint="#C6B4B4"

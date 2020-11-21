@@ -69,7 +69,10 @@ class LoginActivity : AppCompatActivity() {
         })
         forgotPsw.setOnClickListener(View.OnClickListener {
             val intent_forgot_password:Intent=Intent(applicationContext,ForgotPasswordActivity::class.java)
-            startActivity(intent_forgot_password)
+            var pair:android.util.Pair<View,String>
+            pair= android.util.Pair(email,"mailEditText")
+            var option=ActivityOptions.makeSceneTransitionAnimation(this,pair)
+            startActivity(intent_forgot_password,option.toBundle())
         })
     }
 
