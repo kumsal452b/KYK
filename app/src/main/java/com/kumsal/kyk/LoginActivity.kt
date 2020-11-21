@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Pair
 import android.view.View
 import android.widget.*
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
@@ -69,10 +70,9 @@ class LoginActivity : AppCompatActivity() {
         })
         forgotPsw.setOnClickListener(View.OnClickListener {
             val intent_forgot_password:Intent=Intent(applicationContext,ForgotPasswordActivity::class.java)
-            var pair:android.util.Pair<View,String>
-            pair= android.util.Pair(email,"mailEditText")
-            pair= android.util.Pair(register,"button")
-            var option=ActivityOptions.makeSceneTransitionAnimation(this,pair)
+
+            var option=ActivityOptions.makeSceneTransitionAnimation(this,Pair.create(email,"mailEditText"),
+                Pair.create(register,"button"))
             startActivity(intent_forgot_password,option.toBundle())
         })
     }
