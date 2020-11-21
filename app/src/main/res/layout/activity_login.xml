@@ -79,4 +79,17 @@
         app:layout_constraintEnd_toEndOf="@+id/login_register_button"
         app:layout_constraintStart_toStartOf="@+id/login_register_button"
         app:layout_constraintTop_toBottomOf="@+id/login_register_button" />
+
+    <ImageView
+        android:id="@+id/login_imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/login_mail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.601"
+        app:srcCompat="@mipmap/projectlogo"
+        android:transitionName="loginTransImageLogo"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

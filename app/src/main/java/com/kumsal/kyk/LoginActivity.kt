@@ -1,13 +1,11 @@
 package com.kumsal.kyk
 
+import android.app.ActivityOptions
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
@@ -22,7 +20,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var register:Button
     private lateinit var forgotPsw:TextView
     private lateinit var mAuth: FirebaseAuth
-
+    private lateinit var imageView:ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -33,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
         register=findViewById(R.id.login_register_button)
         forgotPsw=findViewById(R.id.login_forgot_textView)
         mAuth=FirebaseAuth.getInstance()
+        imageView=findViewById(R.id.login_imageView)
 
         login.setOnClickListener(
             View.OnClickListener {
@@ -49,8 +48,14 @@ class LoginActivity : AppCompatActivity() {
                         task ->
                         if (task.isSuccessful){
                             val intent: Intent = Intent(applicationContext,MainActivity::class.java)
-                            startActivity(intent)
-                            this.finish()
+                            var pair:android.util.Pair<View,String>
+
+                            pair= android.util.Pair(imageView,"loginTransImageLogo")
+
+                            var option=ActivityOptions.makeSceneTransitionAnimation(this,pair)
+
+                            startActivity(intent,option.toBundle())
+//                            this.finish()
                         }else{
                             Toast.makeText(applicationContext,"error",Toast.LENGTH_LONG).show();
                         }
