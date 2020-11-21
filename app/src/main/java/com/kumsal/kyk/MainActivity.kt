@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             FirebaseAuth.getInstance().signOut()
             val intent:Intent=Intent(applicationContext,StarterActivity::class.java)
             startActivity(intent)
+            this.finish()
         })
         setupWindowAnimations()
     }
