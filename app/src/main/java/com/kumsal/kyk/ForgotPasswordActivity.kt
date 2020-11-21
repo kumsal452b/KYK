@@ -38,12 +38,11 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 if (isMailValid(mail.text.toString())) {
                     mAuth.sendPasswordResetEmail(mail.text.toString()).addOnFailureListener {
                         Exception->
+                        Toast.makeText(this,Exception.message,Toast.LENGTH_LONG)
                         WaitDialog.dismiss()
-                        Toast.makeText(this,Exception.localizedMessage,Toast.LENGTH_LONG)
                     }.addOnSuccessListener(
                         OnSuccessListener {
                             TipDialog.show(this,getString(R.string.login_activity_sucess),TipDialog.TYPE.SUCCESS)
-                            Thread.sleep(500)
                             val intent: Intent = Intent(applicationContext,LoginActivity::class.java)
                             startActivity(intent)
                         }
