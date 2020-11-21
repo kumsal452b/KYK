@@ -52,8 +52,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mAuth = FirebaseAuth.getInstance()
         val mUser1:FirebaseUser?=mAuth.currentUser
         mUser=mUser1
-
-        setSupportActionBar(toolbar)
+        
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
         actionBarDrawerToggle.drawerArrowDrawable.color=Color.WHITE
