@@ -71,6 +71,7 @@ class LoginActivity : AppCompatActivity() {
             val intent_forgot_password:Intent=Intent(applicationContext,ForgotPasswordActivity::class.java)
             var pair:android.util.Pair<View,String>
             pair= android.util.Pair(email,"mailEditText")
+            pair= android.util.Pair(register,"button")
             var option=ActivityOptions.makeSceneTransitionAnimation(this,pair)
             startActivity(intent_forgot_password,option.toBundle())
         })
