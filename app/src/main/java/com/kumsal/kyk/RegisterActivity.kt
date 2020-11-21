@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -73,12 +74,27 @@ class RegisterActivity : AppCompatActivity() {
             }
         })
 
-        password.setOnKeyListener(
-            View.OnKeyListener { v: View?, keyCode: Int, event: KeyEvent? ->
-                true
-
+        password.addTextChangedListener {
+            text ->
+            if (!TextUtils.equals(password.text.toString(),passwordTry.text.toString())){
+                password.setError( getString(R.string.register_activity_match_pass))
+                passwordTry.setError(getString(R.string.register_activity_match_pass))
+            }else{
+                password.clearAnimation()
+                passwordTry.clearAnimation()
             }
-        )
+        }
+
+        passwordTry.addTextChangedListener {
+                text ->
+            if (!TextUtils.equals(password.text.toString(),passwordTry.text.toString())){
+                password.setError( getString(R.string.register_activity_match_pass))
+                passwordTry.setError(getString(R.string.register_activity_match_pass))
+            }else{
+                password.clearAnimation()
+                passwordTry.clearAnimation()
+            }
+        }
     }
 
     private fun register():Boolean {
@@ -103,7 +119,7 @@ class RegisterActivity : AppCompatActivity() {
                     password.setError(getString(R.string.password_wrong))
                     troubleCount++
                 }else{
-                    password.setError("Password cannot be empty")
+                    password.setError(getString(R.string.password_cannot_be_emty))
                     troubleCount++
                 }
         }
@@ -112,14 +128,14 @@ class RegisterActivity : AppCompatActivity() {
                 passwordTry.setError(getString(R.string.password_wrong))
                 troubleCount++
             }else{
-                passwordTry.setError("Password cannot be empty")
+                passwordTry.setError(getString(R.string.password_cannot_be_emty))
                 troubleCount++
             }
         }
 
         if (!TextUtils.equals(passwordTry.text.toString(),password.text.toString())){
-            password.setError( "passwords must match")
-            passwordTry.setError("passwords must match")
+            password.setError( getString(R.string.register_activity_match_pass))
+            passwordTry.setError(getString(R.string.register_activity_match_pass))
         }
 
         if (troubleCount>0){

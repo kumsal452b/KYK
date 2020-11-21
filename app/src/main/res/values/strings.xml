@@ -26,5 +26,7 @@
     <string name="login_activity_sucess">Success</string>
     <string name="send_email">Send</string>
     <string name="sending_email_forgot_pasword">Sending</string>
+    <string name="register_activity_match_pass">passwords must match</string>
+    <string name="password_cannot_be_emty">Password cannot be empty</string>
 
 </resources>
