@@ -83,7 +83,7 @@ class RegisterActivity : AppCompatActivity() {
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
             }else{
                 passwordTry.setError(null)
-                passwordTry.setError(null)
+                password.setError(null)
             }
         }
 
@@ -94,7 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
             }else{
                 passwordTry.setError(null)
-                passwordTry.setError(null)
+                password.setError(null)
             }
         }
     }
