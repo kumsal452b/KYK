@@ -43,7 +43,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
                     }.addOnSuccessListener(
                         OnSuccessListener {
                             TipDialog.show(this,getString(R.string.login_activity_sucess),TipDialog.TYPE.SUCCESS)
-                            Thread.sleep(200)
+                            Thread.sleep(500)
                             val intent: Intent = Intent(applicationContext,LoginActivity::class.java)
                             startActivity(intent)
                         }
