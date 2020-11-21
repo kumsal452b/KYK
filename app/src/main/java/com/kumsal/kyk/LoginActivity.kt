@@ -50,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
                         if (task.isSuccessful){
                             val intent: Intent = Intent(applicationContext,MainActivity::class.java)
                             startActivity(intent)
+                            this.finish()
                         }else{
                             Toast.makeText(applicationContext,"error",Toast.LENGTH_LONG).show();
                         }
