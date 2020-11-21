@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity"
-    tools:openDrawer="end">
+    tools:openDrawer="start">
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_bar"
@@ -15,7 +15,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/menu_bar" />
+        app:menu="@menu/menu_bar"
+        android:layout_marginTop="57dp"/>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
