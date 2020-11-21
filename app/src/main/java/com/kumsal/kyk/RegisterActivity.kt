@@ -59,6 +59,7 @@ class RegisterActivity : AppCompatActivity() {
                             Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
                             val intent:Intent=Intent(applicationContext,MainActivity::class.java)
                             startActivity(intent)
+                            this.finish()
                         }
                     )
 
@@ -111,7 +112,12 @@ class RegisterActivity : AppCompatActivity() {
             password.setError( "passwords must match")
             passwordTry.setError("passwords must match")
         }
-        return troubleCount <= 0
+
+        if (troubleCount>0){
+            return false
+        }else{
+            return true
+        }
     }
     private fun isMailValid(mail:CharSequence):Boolean{
         return android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()
