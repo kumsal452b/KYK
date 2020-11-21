@@ -42,6 +42,8 @@ class RegisterActivity : AppCompatActivity() {
         register.setOnClickListener(View.OnClickListener {
             println(register())
             if (register()) {
+                password.clearAnimation()
+                passwordTry.clearAnimation()
                 mAuth.createUserWithEmailAndPassword(
                     email.text.toString(),
                     password.text.toString()
@@ -80,8 +82,8 @@ class RegisterActivity : AppCompatActivity() {
                 password.setError( getString(R.string.register_activity_match_pass))
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
             }else{
-                password.clearAnimation()
-                passwordTry.clearAnimation()
+                passwordTry.setError(null)
+                passwordTry.setError(null)
             }
         }
 
@@ -91,8 +93,8 @@ class RegisterActivity : AppCompatActivity() {
                 password.setError( getString(R.string.register_activity_match_pass))
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
             }else{
-                password.clearAnimation()
-                passwordTry.clearAnimation()
+                passwordTry.setError(null)
+                passwordTry.setError(null)
             }
         }
     }
