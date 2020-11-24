@@ -1,30 +1,25 @@
 package com.kumsal.kyk
 
 
+
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.provider.CalendarContract
-import android.transition.Fade
 import android.transition.Slide
-import android.transition.TransitionInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.ActionBarDrawerToggle
-
-import com.google.android.material.tabs.TabLayout;
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
-import com.roughike.bottombar.BottomBar
-import com.roughike.bottombar.OnTabSelectListener
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 
@@ -52,7 +47,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mAuth = FirebaseAuth.getInstance()
         val mUser1:FirebaseUser?=mAuth.currentUser
         mUser=mUser1
-        
+        setSupportActionBar(toolbar)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
         actionBarDrawerToggle.drawerArrowDrawable.color=Color.WHITE
@@ -61,7 +56,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         mViewPager.adapter = sectionPagerAdapter
 
-
+//        val actionBar: ActionBar?
+//        actionBar = supportActionBar
+//        val colorDrawable = ColorDrawable(Color.WHITE)
+//        actionBar!!.setBackgroundDrawable(colorDrawable)
+//        actionBar.setStackedBackgroundDrawable(colorDrawable)
+//        actionBar.setSplitBackgroundDrawable(colorDrawable)
+//        actionBar.
         mBottomBar.onItemSelectedListener = this
         mBottomBar.setOnClickListener {
             View.OnClickListener {
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         mFloatingActionButton.setOnClickListener(View.OnClickListener {
             FirebaseAuth.getInstance().signOut()
-            val intent:Intent=Intent(applicationContext,StarterActivity::class.java)
+            val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
             startActivity(intent)
             this.finish()
         })
@@ -123,7 +124,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     override fun onStart() {
         if (mUser==null){
-            val intent:Intent=Intent(this,StarterActivity::class.java ).apply {
+            val intent:Intent=Intent(this, StarterActivity::class.java).apply {
             }
             startActivity(intent)
             setupWindowAnimations()
@@ -135,6 +136,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         val fade:Slide=Slide()
         println(fade)
             window.enterTransition=fade
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_bar, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
 }
