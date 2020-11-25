@@ -139,7 +139,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_bar, menu)
+        menuInflater.inflate(R.menu.search_action, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
