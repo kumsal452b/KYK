@@ -118,7 +118,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             val intent:Intent=Intent(this, StarterActivity::class.java).apply {
             }
             startActivity(intent)
-            setupWindowAnimations()
             super.finish()
         }
         super.onStart()
