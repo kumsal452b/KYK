@@ -55,14 +55,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         actionBarDrawerToggle.syncState()
 
         mViewPager.adapter = sectionPagerAdapter
-
-//        val actionBar: ActionBar?
-//        actionBar = supportActionBar
-//        val colorDrawable = ColorDrawable(Color.WHITE)
-//        actionBar!!.setBackgroundDrawable(colorDrawable)
-//        actionBar.setStackedBackgroundDrawable(colorDrawable)
-//        actionBar.setSplitBackgroundDrawable(colorDrawable)
-//        actionBar.
         mBottomBar.onItemSelectedListener = this
         mBottomBar.setOnClickListener {
             View.OnClickListener {
@@ -96,7 +88,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             startActivity(intent)
             this.finish()
         })
-        setupWindowAnimations()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -131,11 +122,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             super.finish()
         }
         super.onStart()
-    }
-    fun setupWindowAnimations(){
-        val fade:Slide=Slide()
-        println(fade)
-            window.enterTransition=fade
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
