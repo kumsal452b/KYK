@@ -42,21 +42,7 @@
         app:layout_constraintStart_toStartOf="@+id/register_name_and_surname"
         app:layout_constraintTop_toBottomOf="@+id/register_name_and_surname" />
 
-    <AutoCompleteTextView
-        android:id="@+id/resgister_username_in_registr"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:background="@drawable/bacground_edittext"
-        android:drawableLeft="@drawable/ic_baseline_account_circle_24"
-        android:drawablePadding="5dp"
-        android:hint="@string/username"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/white"
-        android:textColorHint="#C6B4B4"
-        app:layout_constraintBottom_toTopOf="@+id/login_password"
-        app:layout_constraintEnd_toEndOf="@+id/login_mail"
-        app:layout_constraintStart_toStartOf="@+id/login_mail"
-        app:layout_constraintTop_toBottomOf="@+id/login_mail" />
+
 
     <EditText
         android:id="@+id/login_password"
@@ -100,7 +86,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/layout_backgorund"
-        android:text="@string/register"
+        android:text="@string/next"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/register_password_try"
         app:layout_constraintHorizontal_bias="0.571"
