@@ -28,5 +28,6 @@
     <string name="sending_email_forgot_pasword">Sending</string>
     <string name="register_activity_match_pass">passwords must match</string>
     <string name="password_cannot_be_emty">Password cannot be empty</string>
+    <string name="username">Username</string>
 
 </resources>
