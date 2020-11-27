@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -37,8 +38,14 @@ class RegisterActivity : AppCompatActivity() {
         register=findViewById(R.id.login_button)
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
 
+        var list=ArrayList<String>()
+        list.add("deneme")
+        list.add("merhaba")
+        list.add("selam")
 
+        var adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list)
 
+        
         register.setOnClickListener(View.OnClickListener {
             println(register())
             if (register()) {
