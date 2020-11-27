@@ -44,6 +44,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list)
         username.setAdapter(adapter)
+        username.performCompletion()
         register.setOnClickListener(View.OnClickListener {
             println(register())
             if (register()) {
