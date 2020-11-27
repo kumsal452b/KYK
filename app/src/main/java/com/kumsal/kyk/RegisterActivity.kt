@@ -3,7 +3,9 @@ package com.kumsal.kyk
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
@@ -44,7 +46,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list)
         username.setAdapter(adapter)
-        username.performCompletion()
+
         register.setOnClickListener(View.OnClickListener {
             println(register())
             if (register()) {
@@ -59,6 +61,7 @@ class RegisterActivity : AppCompatActivity() {
                     mMap = HashMap()
                     mMap.set("name_surname", name.text.toString())
                     mMap.set("image", "")
+                    mMap.set("username",username.text.toString())
                     val currId: String = mAuth.uid.toString()
                     val globals = Globals.ınstance
                     globals?.uid = currId
@@ -103,6 +106,11 @@ class RegisterActivity : AppCompatActivity() {
                 password.setError(null)
             }
         }
+            var text:CharSequence?
+        username.addTextChangedListener{
+
+        }
+
     }
 
     private fun register():Boolean {
@@ -120,6 +128,11 @@ class RegisterActivity : AppCompatActivity() {
         if (TextUtils.isEmpty(email.text.toString())){
                 email.setError(getString(R.string.email_is_empty))
                 troubleCount++
+
+        }
+        if (TextUtils.isEmpty(email.text.toString())){
+            username.setError(getString(R.string.username_must_be_not_empty))
+            troubleCount++
 
         }
         if (TextUtils.isEmpty(password.text.toString())){
