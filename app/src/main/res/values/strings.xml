@@ -29,5 +29,7 @@
     <string name="register_activity_match_pass">passwords must match</string>
     <string name="password_cannot_be_emty">Password cannot be empty</string>
     <string name="username">Username</string>
+    <string name="username_must_be_not_empty">Username cannot be empty</string>
+    <string name="next">Next</string>
 
 </resources>
