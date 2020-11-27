@@ -4,12 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
@@ -27,6 +23,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var mUser: FirebaseUser
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase:DatabaseReference
+    private lateinit var username:AutoCompleteTextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -36,16 +33,17 @@ class RegisterActivity : AppCompatActivity() {
         password=findViewById(R.id.login_password)
         passwordTry=findViewById(R.id.register_password_try)
         register=findViewById(R.id.login_button)
+        username=findViewById(R.id.resgister_username_in_registr);
+
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
 
-        var list=ArrayList<String>()
+        val list=ArrayList<String>()
         list.add("deneme")
         list.add("merhaba")
         list.add("selam")
 
-        var adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list)
-
-        
+        val adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list)
+        username.setAdapter(adapter)
         register.setOnClickListener(View.OnClickListener {
             println(register())
             if (register()) {
