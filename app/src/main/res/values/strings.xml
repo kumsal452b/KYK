@@ -31,5 +31,6 @@
     <string name="username">Username</string>
     <string name="username_must_be_not_empty">Username cannot be empty</string>
     <string name="next">Next</string>
+    <string name="choose_advice_username">Choose a recommended username or enter a username.</string>
 
 </resources>
