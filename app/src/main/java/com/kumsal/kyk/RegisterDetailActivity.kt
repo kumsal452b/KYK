@@ -8,6 +8,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
 import de.hdodenhof.circleimageview.CircleImageView
@@ -19,6 +21,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var imageBtn:ImageButton
     private lateinit var advice:Spinner
     private lateinit var regBtn:Button
+    private lateinit var mAuth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
@@ -27,10 +30,11 @@ class RegisterDetailActivity : AppCompatActivity() {
         imageBtn=findViewById(R.id.register_activity_detail_imageButton);
         advice=findViewById(R.id.register_activity_detail_spinner)
         regBtn=findViewById(R.id.register_activity_detail_regBtn)
+        mAuth=FirebaseAuth.getInstance()
 
         regBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
-                
+
             }
 
         })
