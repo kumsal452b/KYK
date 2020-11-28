@@ -3,9 +3,7 @@ package com.kumsal.kyk
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
@@ -34,8 +32,8 @@ class RegisterActivity : AppCompatActivity() {
         email=findViewById(R.id.login_mail)
         password=findViewById(R.id.login_password)
         passwordTry=findViewById(R.id.register_password_try)
-        register=findViewById(R.id.login_button)
-        username=findViewById(R.id.resgister_username_in_registr);
+        register=findViewById(R.id.register_activity_detail_regBtn)
+        username=findViewById(R.id.register_activity_detail_username);
 
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
 
