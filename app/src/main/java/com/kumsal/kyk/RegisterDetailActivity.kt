@@ -8,6 +8,8 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
+import com.kongzue.dialog.v3.MessageDialog
+import com.kongzue.dialog.v3.WaitDialog
 import de.hdodenhof.circleimageview.CircleImageView
 
 class RegisterDetailActivity : AppCompatActivity() {
@@ -28,7 +30,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         regBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
-
+                
             }
 
         })
@@ -39,8 +41,12 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (TextUtils.isEmpty(username.text)){
             if (TextUtils.isEmpty(advice.selectedItem.toString())) {
                 username.setError("You must not leave this field blank")
+                MessageDialog.OnBindView { dialog, v ->
+                    dialog.message=getString(R.string.choose_advice_username)
+                }
+                return false
             }
         }
-
+        return true
     }
 }
