@@ -20,7 +20,7 @@
     </RelativeLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/circleImageView"
+        android:id="@+id/register_activity_detail_imageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginBottom="400dp"
@@ -31,18 +31,18 @@
         android:background="@drawable/layout_backgorund"/>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/register_activity_detail_imageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="140dp"
         android:background="#FAFAFA"
-        app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-        app:layout_constraintEnd_toEndOf="@id/circleImageView"
-        app:layout_constraintTop_toTopOf="@+id/circleImageView"
+        app:layout_constraintBottom_toBottomOf="@+id/register_activity_detail_imageView"
+        app:layout_constraintEnd_toEndOf="@id/register_activity_detail_imageView"
+        app:layout_constraintTop_toTopOf="@+id/register_activity_detail_imageView"
         app:srcCompat="@drawable/ic_baseline_edit_24" />
 
     <AutoCompleteTextView
-        android:id="@+id/resgister_username_in_registr"
+        android:id="@+id/register_activity_detail_username"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginBottom="50dp"
@@ -56,10 +56,10 @@
         app:layout_constraintBottom_toBottomOf="@+id/parentRelative"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/register_activity_detail_imageView" />
 
     <Button
-        android:id="@+id/login_button"
+        android:id="@+id/register_activity_detail_regBtn"
         android:layout_width="293dp"
         android:layout_height="40dp"
         android:background="@drawable/layout_backgorund"
@@ -68,18 +68,18 @@
         app:layout_constraintBottom_toBottomOf="@+id/parentRelative"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resgister_username_in_registr"/>
+        app:layout_constraintTop_toBottomOf="@+id/register_activity_detail_username"/>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/register_activity_detail_spinner"
         android:layout_width="300dp"
         android:layout_height="40dp"
+        android:layout_marginTop="70dp"
         android:background="@drawable/bacground_edittext"
-        app:layout_constraintBottom_toTopOf="@+id/resgister_username_in_registr"
+        app:layout_constraintBottom_toTopOf="@+id/register_activity_detail_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/circleImageView"
-        tools:listitem="Choose your suggested username"
+        app:layout_constraintTop_toBottomOf="@+id/register_activity_detail_imageView"
 
-        />
+         />
 </androidx.constraintlayout.widget.ConstraintLayout>
