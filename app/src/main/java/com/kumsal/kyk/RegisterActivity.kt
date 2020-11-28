@@ -50,8 +50,6 @@ class RegisterActivity : AppCompatActivity() {
         register.setOnClickListener(View.OnClickListener {
             println(register())
             if (register()) {
-                password.clearAnimation()
-                passwordTry.clearAnimation()
                 mAuth.createUserWithEmailAndPassword(
                     email.text.toString(),
                     password.text.toString()
