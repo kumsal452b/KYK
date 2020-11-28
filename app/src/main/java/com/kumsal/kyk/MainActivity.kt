@@ -1,7 +1,6 @@
 package com.kumsal.kyk
 
 
-
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -24,35 +23,35 @@ import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener {
-    private lateinit var toolbar: Toolbar
+    private var toolbar: Toolbar? = null
     private lateinit var mViewPager: ViewPager
     private lateinit var sectionPagerAdapter: SectionPagerAdapter
     private lateinit var mBottomBar: SmoothBottomBar
     private lateinit var mFloatingActionButton: FloatingActionButton
     private lateinit var mDrawerLayout: DrawerLayout
-    private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
-    private lateinit var mAuth:FirebaseAuth
+    internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
+    private lateinit var mAuth: FirebaseAuth
     private var mUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //initialzed
-        toolbar = findViewById(R.id.main_activity_toolbar)
+        toolbar = findViewById<Toolbar>(R.id.main_activity_toolbar)
         mViewPager = findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
         mFloatingActionButton = findViewById(R.id.fab)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mAuth = FirebaseAuth.getInstance()
-        val mUser1:FirebaseUser?=mAuth.currentUser
-        mUser=mUser1
+        val mUser1: FirebaseUser? = mAuth.currentUser
+        mUser = mUser1
         setSupportActionBar(toolbar)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
-        actionBarDrawerToggle.drawerArrowDrawable.color=Color.WHITE
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
+        actionBarDrawerToggle?.drawerArrowDrawable?.color = Color.WHITE
+        mDrawerLayout.addDrawerListener(actionBarDrawerToggle!!)
+        actionBarDrawerToggle?.syncState()
 
         mViewPager.adapter = sectionPagerAdapter
         mBottomBar.onItemSelectedListener = this
@@ -91,7 +90,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+        if (actionBarDrawerToggle?.onOptionsItemSelected(item)!!) {
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -114,8 +113,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
     override fun onStart() {
-        if (mUser==null){
-            val intent:Intent=Intent(this, StarterActivity::class.java).apply {
+        if (mUser == null) {
+            val intent: Intent = Intent(this, StarterActivity::class.java).apply {
             }
             startActivity(intent)
             super.finish()
