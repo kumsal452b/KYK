@@ -162,6 +162,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
     private fun isMailValid(mail:CharSequence):Boolean{
+
         return android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()
+
     }
 }
