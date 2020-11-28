@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
         email=findViewById(R.id.login_mail)
         password=findViewById(R.id.login_password)
-        login=findViewById(R.id.login_button)
+        login=findViewById(R.id.register_activity_detail_regBtn)
         register=findViewById(R.id.login_register_button)
         forgotPsw=findViewById(R.id.login_forgot_textView)
         mAuth=FirebaseAuth.getInstance()
