@@ -46,9 +46,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (TextUtils.isEmpty(username.text)){
             if (TextUtils.isEmpty(advice?.selectedItem.toString())) {
                 username.setError("You must not leave this field blank")
-                MessageDialog.OnBindView { dialog, v ->
-                    dialog.message=getString(R.string.choose_advice_username)
-                }
+                MessageDialog.show(this,"Warning","test")
                 return false
             }
         }
