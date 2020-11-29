@@ -72,7 +72,7 @@ class RegisterActivity : AppCompatActivity() {
 //                }
                 val intent: Intent =Intent(applicationContext, RegisterDetailActivity::class.java)
                 startActivity(intent)
-                Animatoo.animateSlideLeft(this)
+                Animatoo.animateSwipeLeft(this)
             }
         })
 
