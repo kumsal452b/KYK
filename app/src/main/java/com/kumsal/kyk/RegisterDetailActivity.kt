@@ -20,7 +20,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var username: AutoCompleteTextView
     private lateinit var imageView:CircleImageView
     private lateinit var imageBtn:ImageButton
-    private lateinit var advice:Spinner
+    private  var advice:Spinner?=null
     private lateinit var regBtn:Button
     private lateinit var mAuth:FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     fun isEmpty():Boolean{
      var troubleCount=0;
         if (TextUtils.isEmpty(username.text)){
-            if (TextUtils.isEmpty(advice.selectedItem.toString())) {
+            if (TextUtils.isEmpty(advice?.selectedItem.toString())) {
                 username.setError("You must not leave this field blank")
                 MessageDialog.OnBindView { dialog, v ->
                     dialog.message=getString(R.string.choose_advice_username)
