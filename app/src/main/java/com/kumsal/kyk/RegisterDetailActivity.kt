@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.Notification
+import com.kongzue.dialog.v3.TipDialog
 import com.kongzue.dialog.v3.WaitDialog
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -51,8 +52,8 @@ class RegisterDetailActivity : AppCompatActivity() {
             if (advice?.selectedItem==null) {
                 username.setError("You must not leave this field blank")
 
-                Notification.show(this@RegisterDetailActivity,getString(R.string.choose_username),DialogSettings.STYLE.STYLE_IOS,Notification.DURATION_TIME.LONG)
-                
+//                Notification.show(this@RegisterDetailActivity,getString(R.string.choose_username),DialogSettings.STYLE.STYLE_IOS,Notification.DURATION_TIME.LONG)
+                TipDialog.show(this@RegisterDetailActivity,getString(R.string.choose_username),TipDialog.TYPE.ERROR)
                 return false
             }
         }
