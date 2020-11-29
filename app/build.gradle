@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.kumsal.kyk"
-        minSdkVersion 24
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -54,4 +54,5 @@ dependencies {
     implementation 'com.rengwuxian.materialedittext:library:2.1.4'
     implementation 'com.kongzue.dialog_v3:dialog:3.1.8'
     implementation 'com.github.mohammadatif:Animatoo:master'
+    
 }
