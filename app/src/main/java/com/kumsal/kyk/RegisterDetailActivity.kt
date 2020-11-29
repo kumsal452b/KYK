@@ -8,6 +8,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.kongzue.dialog.v3.MessageDialog
@@ -52,5 +53,10 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Animatoo.animateSwipeRight(this)
     }
 }
