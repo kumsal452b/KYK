@@ -50,16 +50,17 @@ class RegisterDetailActivity : AppCompatActivity() {
      var troubleCount=0;
         if (TextUtils.isEmpty(username.text)){
             if (advice?.selectedItem==null) {
-                username.setError("You must not leave this field blank")
-
-//                Notification.show(this@RegisterDetailActivity,getString(R.string.choose_username),DialogSettings.STYLE.STYLE_IOS,Notification.DURATION_TIME.LONG)
-                TipDialog.show(this@RegisterDetailActivity,getString(R.string.choose_username),TipDialog.TYPE.ERROR)
+                username.setError(getString(R.string.must_be_leave))
+                MessageDialog.show(this@RegisterDetailActivity,"Eror",getString(R.string.choose_username),"Okey")
                 return false
             }
         }
         return true
     }
 
+    fun generateUsername(ad:String):String{
+        
+    }
     override fun onBackPressed() {
         super.onBackPressed()
         Animatoo.animateSwipeRight(this)
