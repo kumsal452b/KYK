@@ -33,5 +33,6 @@
     <string name="next">Next</string>
     <string name="choose_advice_username">Choose a recommended username or enter a username.</string>
     <string name="choose_username">Choose one of the recommended usernames or enter a new username.</string>
+    <string name="must_be_leave">You must not leave this field blank</string>
 
 </resources>
