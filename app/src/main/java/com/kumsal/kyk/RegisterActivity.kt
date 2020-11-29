@@ -71,6 +71,10 @@ class RegisterActivity : AppCompatActivity() {
 //
 //                }
                 val intent: Intent =Intent(applicationContext, RegisterDetailActivity::class.java)
+                intent.putExtra("name",name.text)
+                intent.putExtra("email",email.text)
+                intent.putExtra("pass",password.text)
+
                 startActivity(intent)
                 Animatoo.animateSwipeLeft(this)
             }
