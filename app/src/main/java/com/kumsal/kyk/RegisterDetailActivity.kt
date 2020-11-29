@@ -8,10 +8,13 @@ import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
+import androidx.appcompat.view.menu.ActionMenuItemView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.MessageDialog
+import com.kongzue.dialog.v3.Notification
 import com.kongzue.dialog.v3.WaitDialog
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -33,6 +36,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         regBtn=findViewById(R.id.register_activity_detail_regBtn)
         mAuth=FirebaseAuth.getInstance()
 
+
         regBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 isEmpty()
@@ -44,9 +48,11 @@ class RegisterDetailActivity : AppCompatActivity() {
     fun isEmpty():Boolean{
      var troubleCount=0;
         if (TextUtils.isEmpty(username.text)){
-            if (TextUtils.isEmpty(advice?.selectedItem.toString())) {
+            if (advice?.selectedItem==null) {
                 username.setError("You must not leave this field blank")
-                MessageDialog.show(this,"Warning","test")
+
+                Notification.show(this@RegisterDetailActivity,getString(R.string.choose_username),DialogSettings.STYLE.STYLE_IOS,Notification.DURATION_TIME.LONG)
+                
                 return false
             }
         }
