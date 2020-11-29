@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -23,7 +24,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var mUser: FirebaseUser
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase:DatabaseReference
-    private lateinit var username:AutoCompleteTextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -33,51 +34,45 @@ class RegisterActivity : AppCompatActivity() {
         password=findViewById(R.id.login_password)
         passwordTry=findViewById(R.id.register_password_try)
         register=findViewById(R.id.register_activity_detail_regBtn)
-        username=findViewById(R.id.register_activity_detail_username);
 
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
 
-        val list=ArrayList<String>()
-        list.add("deneme")
-        list.add("merhaba")
-        list.add("selam")
-
-        val adapter=ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,list)
-        username.setAdapter(adapter)
 
         register.setOnClickListener(View.OnClickListener {
             println(register())
             if (register()) {
-                mAuth.createUserWithEmailAndPassword(
-                    email.text.toString(),
-                    password.text.toString()
-                ).addOnSuccessListener {
-
-                    var mMap: HashMap<String, String>
-                    mMap = HashMap()
-                    mMap.set("name_surname", name.text.toString())
-                    mMap.set("image", "")
-                    mMap.set("username",username.text.toString())
-                    val currId: String = mAuth.uid.toString()
-                    val globals = Globals.ınstance
-                    globals?.uid = currId
-                    mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-                        Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-                    }.addOnSuccessListener(
-                        OnSuccessListener<Void> {
-                            Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
-                            val intent: Intent =
-                                Intent(applicationContext, MainActivity::class.java)
-                            startActivity(intent)
-                            this.finish()
-                        }
-                    )
-
-
-                }.addOnFailureListener(this) { Exception ->
-                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-
-                }
+//                mAuth.createUserWithEmailAndPassword(
+//                    email.text.toString(),
+//                    password.text.toString()
+//                ).addOnSuccessListener {
+//
+//                    var mMap: HashMap<String, String>
+//                    mMap = HashMap()
+//                    mMap.set("name_surname", name.text.toString())
+//                    mMap.set("image", "")
+//                    val currId: String = mAuth.uid.toString()
+//                    val globals = Globals.ınstance
+//                    globals?.uid = currId
+//                    mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
+//                        Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
+//                    }.addOnSuccessListener(
+//                        OnSuccessListener<Void> {
+//                            Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
+//                            val intent: Intent =
+//                                Intent(applicationContext, MainActivity::class.java)
+//                            startActivity(intent)
+//                            this.finish()
+//                        }
+//                    )
+//
+//
+//                }.addOnFailureListener(this) { Exception ->
+//                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
+//
+//                }
+                val intent: Intent =Intent(applicationContext, RegisterDetailActivity::class.java)
+                startActivity(intent)
+                Animatoo.animateSlideLeft(this)
             }
         })
 
@@ -103,9 +98,7 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
             var text:CharSequence?
-        username.addTextChangedListener{
 
-        }
 
     }
 
@@ -126,11 +119,7 @@ class RegisterActivity : AppCompatActivity() {
                 troubleCount++
 
         }
-        if (TextUtils.isEmpty(email.text.toString())){
-            username.setError(getString(R.string.username_must_be_not_empty))
-            troubleCount++
 
-        }
         if (TextUtils.isEmpty(password.text.toString())){
                 if (password.text.toString().length<password.maxLines){
                     password.setError(getString(R.string.password_wrong))
