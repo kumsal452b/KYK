@@ -24,43 +24,44 @@ import me.ibrahimsn.lib.SmoothBottomBar
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private var toolbar: Toolbar? = null
-    private lateinit var mViewPager: ViewPager
-    private lateinit var sectionPagerAdapter: SectionPagerAdapter
-    private lateinit var mBottomBar: SmoothBottomBar
-    private lateinit var mFloatingActionButton: FloatingActionButton
-    private lateinit var mDrawerLayout: DrawerLayout
+    private  var mViewPager: ViewPager?=null
+    private  var sectionPagerAdapter: SectionPagerAdapter?=null
+    private  var mBottomBar: SmoothBottomBar?=null
+    private  var mFloatingActionButton: FloatingActionButton?=null
+    private  var mDrawerLayout: DrawerLayout?=null
     internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
-    private lateinit var mAuth: FirebaseAuth
+    private  var mAuth: FirebaseAuth?=null
     private var mUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //initialzed
-        toolbar = findViewById<Toolbar>(R.id.main_activity_toolbar)
+        toolbar = findViewById(R.id.main_activity_toolbar)
         mViewPager = findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
         mFloatingActionButton = findViewById(R.id.fab)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mAuth = FirebaseAuth.getInstance()
-        val mUser1: FirebaseUser? = mAuth.currentUser
+        val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
+        println("sdk number"+android.os.Build.VERSION.SDK_INT)
         setSupportActionBar(toolbar)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
         actionBarDrawerToggle?.drawerArrowDrawable?.color = Color.WHITE
-        mDrawerLayout.addDrawerListener(actionBarDrawerToggle!!)
-        actionBarDrawerToggle?.syncState()
+        mDrawerLayout?.addDrawerListener(actionBarDrawerToggle!!)
+//        actionBarDrawerToggle?.syncState()
 
-        mViewPager.adapter = sectionPagerAdapter
-        mBottomBar.onItemSelectedListener = this
-        mBottomBar.setOnClickListener {
+        mViewPager?.adapter = sectionPagerAdapter
+        mBottomBar?.onItemSelectedListener = this
+        mBottomBar?.setOnClickListener {
             View.OnClickListener {
-                println(mBottomBar.onItemSelected)
+
             }
         }
-        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
             }
@@ -75,13 +76,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
             override fun onPageSelected(position: Int) {
                 println(position)
-                mBottomBar.itemActiveIndex = position
+                mBottomBar?.itemActiveIndex = position
             }
 
         })
 
 
-        mFloatingActionButton.setOnClickListener(View.OnClickListener {
+        mFloatingActionButton?.setOnClickListener(View.OnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
             startActivity(intent)
@@ -98,16 +99,16 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     override fun onItemSelect(pos: Int): Boolean {
         if (pos == 0) {
-            mViewPager.setCurrentItem(0)
+            mViewPager?.setCurrentItem(0)
         }
         if (pos == 1) {
-            mViewPager.setCurrentItem(1)
+            mViewPager?.setCurrentItem(1)
         }
         if (pos == 2) {
-            mViewPager.setCurrentItem(2)
+            mViewPager?.setCurrentItem(2)
         }
         if (pos == 3) {
-            mViewPager.setCurrentItem(3)
+            mViewPager?.setCurrentItem(3)
         }
         return true
     }
