@@ -35,7 +35,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         regBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
-
+                isEmpty()
             }
 
         })
