@@ -16,6 +16,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.kongzue.dialog.v3.MessageDialog
+import com.kongzue.dialog.v3.TipDialog
+import com.kongzue.dialog.v3.WaitDialog
 import java.lang.Exception
 import kotlin.collections.HashMap
 
@@ -43,6 +46,34 @@ class RegisterActivity : AppCompatActivity() {
 
 
         register.setOnClickListener(View.OnClickListener {
+            WaitDialog.show(this,"Loading")
+            mAuth.createUserWithEmailAndPassword(
+                email.text.toString(),
+                password.text.toString()
+            ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
+                override fun onSuccess(p0: AuthResult?) {
+                    WaitDialog.dismiss()
+                    val intent: Intent = Intent(this@RegisterActivity, RegisterDetailActivity::class.java)
+                    intent.putExtra("name", name.text)
+                    intent.putExtra("email", email.text)
+                    intent.putExtra("pass", password.text)
+
+                    startActivity(intent)
+                    Animatoo.animateSwipeLeft(this@RegisterActivity)
+                }
+
+            }
+            ).addOnFailureListener(object : OnFailureListener {
+                override fun onFailure(p0: Exception) {
+                    WaitDialog.dismiss()
+                    if (mAuth.currentUser==null){
+                        //
+                        MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
+                    }
+                    Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
+                }
+
+            })
             println(register())
             if (register()) {
 //                mAuth.createUserWithEmailAndPassword(
@@ -74,28 +105,6 @@ class RegisterActivity : AppCompatActivity() {
 //                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
 //
 //                }
-                mAuth.createUserWithEmailAndPassword(
-                    email.text.toString(),
-                    password.text.toString()
-                ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
-                    override fun onSuccess(p0: AuthResult?) {
-
-                    }
-
-                }
-                ).addOnFailureListener(object : OnFailureListener {
-                    override fun onFailure(p0: Exception) {
-                        println(mAuth)
-                    }
-
-                })
-                val intent: Intent = Intent(applicationContext, RegisterDetailActivity::class.java)
-                intent.putExtra("name", name.text)
-                intent.putExtra("email", email.text)
-                intent.putExtra("pass", password.text)
-
-                startActivity(intent)
-                Animatoo.animateSwipeLeft(this)
             }
         })
 

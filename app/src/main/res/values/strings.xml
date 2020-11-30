@@ -35,5 +35,6 @@
     <string name="choose_username">Choose one of the recommended usernames or enter a new username.</string>
     <string name="must_be_leave">You must not leave this field blank</string>
     <string name="err">Error</string>
+    <string name="email_available">We already have it in our e-mail records. If you have forgotten your password, go to the forgot password section.</string>
 
 </resources>
