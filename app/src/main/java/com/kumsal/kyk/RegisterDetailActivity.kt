@@ -66,21 +66,22 @@ class RegisterDetailActivity : AppCompatActivity() {
         var username=ArrayList<String>()
         var name=""
         var surname=""
-        mUsername.addValueEventListener(object : ValueEventListener {
+        var fulname=""
+        mUsername?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (a in snapshot.children) {
-                    username.add(a.child("username").value)
+                    username.add(a.child("username").value.toString())
                 }
-                ad = ad.trim()
-                for (a in 0..ad.length - 1) {
-                    if (ad.get(a) == ' ') {
-                        if (ad.get(a + 1) == ' ') {
+                fulname = ad?.trim().toString()
+                for (a in 0..fulname.length - 1) {
+                    if (fulname.get(a) == ' ') {
+                        if (fulname.get(a + 1) == ' ') {
                             continue
                         } else {
-                            surname = ad.substring(a + 1, ad.length)
+                            surname = fulname.substring(a + 1, fulname.length)
                         }
                     }
-                    name += ad.get(a)
+                    name += fulname.get(a)
                 }
                 println(name+" "+surname)
 

@@ -47,33 +47,34 @@ class RegisterActivity : AppCompatActivity() {
 
         register.setOnClickListener(View.OnClickListener {
             WaitDialog.show(this,"Loading")
-            mAuth.createUserWithEmailAndPassword(
-                email.text.toString(),
-                password.text.toString()
-            ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
-                override fun onSuccess(p0: AuthResult?) {
-                    WaitDialog.dismiss()
-                    val intent: Intent = Intent(this@RegisterActivity, RegisterDetailActivity::class.java)
-                    intent.putExtra("name", name.text)
-                    intent.putExtra("email", email.text)
-                    intent.putExtra("pass", password.text)
+            WaitDialog.dismiss()
+            val intent: Intent = Intent(this@RegisterActivity, RegisterDetailActivity::class.java)
+            intent.putExtra("name", name.text.toString())
+            intent.putExtra("email", email.text.toString())
+            intent.putExtra("pass", password.text.toString())
 
-                    startActivity(intent)
-                    Animatoo.animateSwipeLeft(this@RegisterActivity)
-                }
-
-            }
-            ).addOnFailureListener(object : OnFailureListener {
-                override fun onFailure(p0: Exception) {
-                    WaitDialog.dismiss()
-                    if (mAuth.currentUser==null){
-                        //
-                        MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
-                    }
-                    Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
-                }
-
-            })
+            startActivity(intent)
+            Animatoo.animateSwipeLeft(this@RegisterActivity)
+//            mAuth.createUserWithEmailAndPassword(
+//                email.text.toString(),
+//                password.text.toString()
+//            ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
+//                override fun onSuccess(p0: AuthResult?) {
+//
+//                }
+//
+//            }
+//            ).addOnFailureListener(object : OnFailureListener {
+//                override fun onFailure(p0: Exception) {
+//                    WaitDialog.dismiss()
+//                    if (mAuth.currentUser==null){
+//                        //
+//                        MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
+//                    }
+//                    Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
+//                }
+//
+//            })
             println(register())
             if (register()) {
 //                mAuth.createUserWithEmailAndPassword(
