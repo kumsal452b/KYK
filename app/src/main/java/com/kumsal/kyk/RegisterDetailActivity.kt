@@ -34,7 +34,6 @@ class RegisterDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register_detail)
         name=getIntent().getStringExtra("name")
         println(name)
-        generateUsername(name)
         username=findViewById(R.id.register_activity_detail_username);
         imageView=findViewById(R.id.register_activity_detail_imageView);
         imageBtn=findViewById(R.id.register_activity_detail_imageButton);
@@ -42,6 +41,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         regBtn=findViewById(R.id.register_activity_detail_regBtn)
         mAuth=FirebaseAuth.getInstance()
         mUsername=FirebaseDatabase.getInstance().getReference("Users")
+        generateUsername(name)
 
         regBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
@@ -68,7 +68,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         var name=""
         var surname=""
         var fulname=""
-        mUsername?.addValueEventListener(object : ValueEventListener {
+             mUsername?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (a in snapshot.children) {
                     username.add(a.child("username").value.toString())
@@ -84,12 +84,12 @@ class RegisterDetailActivity : AppCompatActivity() {
                     }
                     name += fulname.get(a)
                 }
-                println(name+" "+surname)
+                println(name + " " + surname)
 
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                println(error)
             }
         })
 
