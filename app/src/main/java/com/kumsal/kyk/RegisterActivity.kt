@@ -8,11 +8,15 @@ import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.lang.Exception
 import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
@@ -70,10 +74,25 @@ class RegisterActivity : AppCompatActivity() {
 //                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
 //
 //                }
-                val intent: Intent =Intent(applicationContext, RegisterDetailActivity::class.java)
-                intent.putExtra("name",name.text)
-                intent.putExtra("email",email.text)
-                intent.putExtra("pass",password.text)
+                mAuth.createUserWithEmailAndPassword(
+                    email.text.toString(),
+                    password.text.toString()
+                ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
+                    override fun onSuccess(p0: AuthResult?) {
+
+                    }
+
+                }
+                ).addOnFailureListener(object : OnFailureListener {
+                    override fun onFailure(p0: Exception) {
+                        println(mAuth)
+                    }
+
+                })
+                val intent: Intent = Intent(applicationContext, RegisterDetailActivity::class.java)
+                intent.putExtra("name", name.text)
+                intent.putExtra("email", email.text)
+                intent.putExtra("pass", password.text)
 
                 startActivity(intent)
                 Animatoo.animateSwipeLeft(this)
