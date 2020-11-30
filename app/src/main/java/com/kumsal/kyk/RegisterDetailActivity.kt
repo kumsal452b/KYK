@@ -100,7 +100,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var ad2 = ""
                 var surnameM = surname.substring(0, 1).toUpperCase() + surname.substring(1)
                 while (true) {
-                    var num = ThreadLocalRandom.current().nextInt(10, 100)
+                    var num = ThreadLocalRandom.current().nextInt(10, 10000)
 
                     var num2 =  ThreadLocalRandom.current().nextInt(0, 2)
                     println(num2)
