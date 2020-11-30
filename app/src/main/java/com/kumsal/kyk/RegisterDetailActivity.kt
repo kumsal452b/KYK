@@ -93,7 +93,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
                 var ad1 = name.trim().toLowerCase() + surname.trim().toLowerCase()
                 var count = 0
-                if (username.contains(ad1)) {
+                if (!username.contains(ad1)) {
                     result.add(ad1)
                     count++
                 }
@@ -102,7 +102,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 while (true) {
                     var num = ThreadLocalRandom.current().nextInt(10, 100)
                     var rnd = Random()
-                    var num2 = rnd.nextInt(1)
+                    var num2 = rnd.nextInt(2)
 
                     if (num2 == 1) {
                         ad2 = name.trim().toLowerCase() + surnameM + num
