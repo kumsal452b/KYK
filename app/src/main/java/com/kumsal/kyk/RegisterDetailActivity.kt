@@ -12,6 +12,7 @@ import androidx.appcompat.view.menu.ActionMenuItemView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.Notification
@@ -30,7 +31,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var mAuth:FirebaseAuth
 
     private var name:String?=null
-
+    private var mUsername:DatabaseReference?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
@@ -43,6 +44,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         advice=findViewById(R.id.register_activity_detail_spinner)
         regBtn=findViewById(R.id.register_activity_detail_regBtn)
         mAuth=FirebaseAuth.getInstance()
+        mUsername=FirebaseDatabase.getInstance().getReference("Users")
 
         regBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
@@ -65,7 +67,17 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun generateUsername(ad:String?):List<String>{
         var result=ArrayList<String>()
+        mUsername.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+               for (a in snapshot.children){
+                   
+               }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        })
 
 
         return result
