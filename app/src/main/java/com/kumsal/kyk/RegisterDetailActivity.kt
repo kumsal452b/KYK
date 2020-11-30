@@ -17,7 +17,8 @@ import com.kongzue.dialog.v3.Notification
 import com.kongzue.dialog.v3.TipDialog
 import com.kongzue.dialog.v3.WaitDialog
 import de.hdodenhof.circleimageview.CircleImageView
-import java.util.ArrayList
+import java.util.*
+import java.util.concurrent.ThreadLocalRandom
 
 class RegisterDetailActivity : AppCompatActivity() {
 
@@ -69,29 +70,43 @@ class RegisterDetailActivity : AppCompatActivity() {
         var surname=""
         var fulname=""
              mUsername?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (a in snapshot.children) {
-                    username.add(a.child("username").value.toString())
-                }
-                fulname = ad?.trim().toString()
-                for (a in 0..fulname.length - 1) {
-                    if (fulname.get(a) == ' ') {
-                        if (fulname.get(a + 1) == ' ') {
-                            continue
-                        } else {
-                            surname = fulname.substring(a + 1, fulname.length)
-                        }
-                    }
-                    name += fulname.get(a)
-                }
-                println(name + " " + surname)
+                 override fun onDataChange(snapshot: DataSnapshot) {
+                     for (a in snapshot.children) {
+                         username.add(a.child("username").value.toString())
+                     }
+                     fulname = ad?.trim().toString()
+                     for (a in 0..fulname.length - 1) {
+                         if (fulname.get(a) == ' ') {
+                             if (fulname.get(a + 1) == ' ') {
+                                 continue
+                             } else {
+                                 surname = fulname.substring(a + 1, fulname.length)
+                                 break
+                             }
+                         }
+                         name += fulname.get(a)
+                     }
+                     var ad1=name.trim().toLowerCase()+surname.trim().toLowerCase()
+                     var count=0
+                     if (username.contains(ad1)){
+                         result.add(ad1)
+                         count++
+                     }
+                     var ad2=""
+                     var surnameM=surname.substring(0, 1).toUpperCase() + surname.substring(1)
+                     while (true){
+                         var num=ThreadLocalRandom.current().nextInt(10,100)
+                         if (!username.contains(ad1)){
 
-            }
+                         }
+                     }
 
-            override fun onCancelled(error: DatabaseError) {
-                println(error)
-            }
-        })
+                 }
+
+                 override fun onCancelled(error: DatabaseError) {
+                     println(error)
+                 }
+             })
 
 
         return result
