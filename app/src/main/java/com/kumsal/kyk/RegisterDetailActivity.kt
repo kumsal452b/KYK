@@ -101,14 +101,14 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var surnameM = surname.substring(0, 1).toUpperCase() + surname.substring(1)
                 while (true) {
                     var num = ThreadLocalRandom.current().nextInt(10, 100)
-                    
-                    var num2 =  ThreadLocalRandom.current().nextInt(0, 1)
+
+                    var num2 =  ThreadLocalRandom.current().nextInt(0, 2)
                     println(num2)
                     if (num2 == 1) {
-                        ad2 = name.trim().toLowerCase() + surnameM + num
+                        ad2 = name.trim().toLowerCase() + surnameM.trim() + num
                     }
                     if (num2 == 0) {
-                        ad2 = name.trim().toLowerCase() + surname + num
+                        ad2 = name.trim().toLowerCase() + surname.toLowerCase().trim() + num
                     }
                     if (!username.contains(ad2)) {
                         result.add(ad2)
