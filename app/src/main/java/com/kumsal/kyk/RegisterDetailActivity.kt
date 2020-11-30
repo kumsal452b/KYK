@@ -101,9 +101,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var surnameM = surname.substring(0, 1).toUpperCase() + surname.substring(1)
                 while (true) {
                     var num = ThreadLocalRandom.current().nextInt(10, 100)
-                    var rnd = Random()
-                    var num2 = rnd.nextInt(2)
-
+                    
+                    var num2 =  ThreadLocalRandom.current().nextInt(0, 1)
+                    println(num2)
                     if (num2 == 1) {
                         ad2 = name.trim().toLowerCase() + surnameM + num
                     }
@@ -111,15 +111,19 @@ class RegisterDetailActivity : AppCompatActivity() {
                         ad2 = name.trim().toLowerCase() + surname + num
                     }
                     if (!username.contains(ad2)) {
-                         result.add(ad2)
+                        result.add(ad2)
                         count++
                     }
-                    if (count==3){
+                    if (count == 3) {
                         break
                     }
                 }
-                var adapter=ArrayAdapter<String>(this@RegisterDetailActivity,android.R.layout.simple_list_item_1,result)
-                advice?.adapter =adapter
+                var adapter = ArrayAdapter<String>(
+                    this@RegisterDetailActivity,
+                    android.R.layout.simple_list_item_1,
+                    result
+                )
+                advice?.adapter = adapter
 
             }
 
