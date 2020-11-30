@@ -33,6 +33,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name=getIntent().getStringExtra("name")
+        println(name)
         generateUsername(name)
         username=findViewById(R.id.register_activity_detail_username);
         imageView=findViewById(R.id.register_activity_detail_imageView);
