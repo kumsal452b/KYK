@@ -1,13 +1,11 @@
 package com.kumsal.kyk
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.Spinner
+import android.widget.*
 import androidx.appcompat.view.menu.ActionMenuItemView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
@@ -29,13 +27,11 @@ class RegisterDetailActivity : AppCompatActivity() {
     private  var advice:Spinner?=null
     private lateinit var regBtn:Button
     private lateinit var mAuth:FirebaseAuth
-
     private var name:String?=null
     private var mUsername:DatabaseReference?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
-
         name=getIntent().getStringExtra("name")
         generateUsername(name)
         username=findViewById(R.id.register_activity_detail_username);
@@ -67,11 +63,27 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun generateUsername(ad:String?):List<String>{
         var result=ArrayList<String>()
-        mUsername.addValueEventListener(object: ValueEventListener{
+        var username=ArrayList<String>()
+        var name=""
+        var surname=""
+        mUsername.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-               for (a in snapshot.children){
-                   
-               }
+                for (a in snapshot.children) {
+                    username.add(a.child("username").value)
+                }
+                ad = ad.trim()
+                for (a in 0..ad.length - 1) {
+                    if (ad.get(a) == ' ') {
+                        if (ad.get(a + 1) == ' ') {
+                            continue
+                        } else {
+                            surname = ad.substring(a + 1, ad.length)
+                        }
+                    }
+                    name += ad.get(a)
+                }
+                println(name+" "+surname)
+
             }
 
             override fun onCancelled(error: DatabaseError) {
