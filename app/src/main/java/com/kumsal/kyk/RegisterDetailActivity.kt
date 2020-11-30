@@ -27,9 +27,15 @@ class RegisterDetailActivity : AppCompatActivity() {
     private  var advice:Spinner?=null
     private lateinit var regBtn:Button
     private lateinit var mAuth:FirebaseAuth
+
+    private var name:String?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
+
+        name=getIntent().getStringExtra("name")
+        
         username=findViewById(R.id.register_activity_detail_username);
         imageView=findViewById(R.id.register_activity_detail_imageView);
         imageBtn=findViewById(R.id.register_activity_detail_imageButton);
@@ -37,12 +43,10 @@ class RegisterDetailActivity : AppCompatActivity() {
         regBtn=findViewById(R.id.register_activity_detail_regBtn)
         mAuth=FirebaseAuth.getInstance()
 
-
         regBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 isEmpty()
             }
-
         })
     }
 
