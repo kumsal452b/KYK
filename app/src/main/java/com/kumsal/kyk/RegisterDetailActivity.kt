@@ -18,6 +18,7 @@ import com.kongzue.dialog.v3.Notification
 import com.kongzue.dialog.v3.TipDialog
 import com.kongzue.dialog.v3.WaitDialog
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.ArrayList
 
 class RegisterDetailActivity : AppCompatActivity() {
 
@@ -35,7 +36,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register_detail)
 
         name=getIntent().getStringExtra("name")
-        
+        generateUsername(name)
         username=findViewById(R.id.register_activity_detail_username);
         imageView=findViewById(R.id.register_activity_detail_imageView);
         imageBtn=findViewById(R.id.register_activity_detail_imageButton);
@@ -55,15 +56,19 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (TextUtils.isEmpty(username.text)){
             if (advice?.selectedItem==null) {
                 username.setError(getString(R.string.must_be_leave))
-                MessageDialog.show(this@RegisterDetailActivity,"Eror",getString(R.string.choose_username),"Okey")
+                MessageDialog.show(this@RegisterDetailActivity,getString(R.string.err),getString(R.string.choose_username),"Okey")
                 return false
             }
         }
         return true
     }
 
-    fun generateUsername(ad:String):String{
-        
+    fun generateUsername(ad:String?):List<String>{
+        var result=ArrayList<String>()
+
+
+
+        return result
     }
     override fun onBackPressed() {
         super.onBackPressed()
