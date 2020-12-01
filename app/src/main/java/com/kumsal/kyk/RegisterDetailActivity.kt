@@ -72,7 +72,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         var result = ArrayList<String>()
         var username = ArrayList<String>()
         var name = ""
-        var surname = ""
+        var surname:String?=null
         var fulname = ""
         mUsername?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -91,24 +91,23 @@ class RegisterDetailActivity : AppCompatActivity() {
                     }
                     name += fulname.get(a)
                 }
-                var ad1 = name.trim().toLowerCase() + surname.trim().toLowerCase()
+                var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
                 var count = 0
                 if (!username.contains(ad1)) {
                     result.add(ad1)
                     count++
                 }
                 var ad2 = ""
-                var surnameM = surname.substring(0, 1).toUpperCase() + surname.substring(1)
+                val surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
                 while (true) {
                     var num = ThreadLocalRandom.current().nextInt(10, 10000)
-
                     var num2 =  ThreadLocalRandom.current().nextInt(0, 2)
-                    println(num2)
+
                     if (num2 == 1) {
                         ad2 = name.trim().toLowerCase() + surnameM.trim() + num
                     }
                     if (num2 == 0) {
-                        ad2 = name.trim().toLowerCase() + surname.toLowerCase().trim() + num
+                        ad2 = name.trim().toLowerCase() + surname?.toLowerCase()?.trim() + num
                     }
                     if (!username.contains(ad2)) {
                         result.add(ad2)
