@@ -82,6 +82,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         })
 
 
+        //Set spinner
+
         mFloatingActionButton?.setOnClickListener(View.OnClickListener {
             FirebaseAuth.getInstance().signOut()
             val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
