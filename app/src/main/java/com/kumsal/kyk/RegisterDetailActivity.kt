@@ -1,21 +1,21 @@
 package com.kumsal .kyk
 
-import android.graphics.Color
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
 import android.widget.*
-import androidx.appcompat.view.menu.ActionMenuItemView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+
 import com.google.firebase.database.*
-import com.kongzue.dialog.util.DialogSettings
+
 import com.kongzue.dialog.v3.MessageDialog
-import com.kongzue.dialog.v3.Notification
-import com.kongzue.dialog.v3.TipDialog
-import com.kongzue.dialog.v3.WaitDialog
+
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
@@ -49,10 +49,43 @@ class RegisterDetailActivity : AppCompatActivity() {
                 isEmpty()
             }
         })
+        var perm:Array<String>?=null
+        perm?.set(0,Manifest.permission.READ_EXTERNAL_STORAGE)
         imageBtn.setOnClickListener(object: View.OnClickListener{
-
+            override fun onClick(v: View?) {
+                if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+                    if (perm != null) {
+                        requestPermissions(perm,2)
+                    }
+                }
+            }
         })
 
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode==2){
+            if (grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults.size>0){
+                var mediaWindow=Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(mediaWindow,1)
+            }
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode==1){
+            if (resultCode== RESULT_OK){
+                if (data!=null){
+
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     fun isEmpty(): Boolean {
