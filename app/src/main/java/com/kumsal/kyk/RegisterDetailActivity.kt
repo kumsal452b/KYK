@@ -74,6 +74,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                     if (perm != null) {
                         requestPermissions(perm2,1234)
                     }
+                }else{
+                    var mediaWindow=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(mediaWindow,1111)
                 }
             }
         })
@@ -94,7 +97,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode==1234){
             if (grantResults[1]==PackageManager.PERMISSION_GRANTED && grantResults.size>0){
                 var mediaWindow=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(mediaWindow,1)
+                startActivityForResult(mediaWindow,1111)
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
