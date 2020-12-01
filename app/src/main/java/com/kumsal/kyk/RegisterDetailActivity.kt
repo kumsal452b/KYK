@@ -49,14 +49,28 @@ class RegisterDetailActivity : AppCompatActivity() {
                 isEmpty()
             }
         })
-        var perm:Array<String>?=null
-        perm?.set(0,Manifest.permission.READ_EXTERNAL_STORAGE)
+        var perm=Array<String>(3){
+            i: Int ->
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+        var perm2=Array<String>(3){
+                i: Int ->
+            Manifest.permission.CAMERA
+        }
+
         imageBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
                     if (perm != null) {
                         requestPermissions(perm,2)
                     }
+                }else{
+                    var mediaWindow=Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                    startActivityForResult(mediaWindow,1)
+                }
+
+                if (checkSelfPermission(Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED){
+
                 }
             }
         })
