@@ -49,6 +49,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 isEmpty()
             }
         })
+        
     }
 
     fun isEmpty(): Boolean {
