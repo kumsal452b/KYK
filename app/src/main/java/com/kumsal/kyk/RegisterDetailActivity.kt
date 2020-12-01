@@ -3,6 +3,7 @@ package com.kumsal .kyk
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.hardware.camera2.CameraManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -60,17 +61,19 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         imageBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
-                if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
-                    if (perm != null) {
-                        requestPermissions(perm,2)
-                    }
-                }else{
-                    var mediaWindow=Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    startActivityForResult(mediaWindow,1)
-                }
+//                if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+//                    if (perm != null) {
+//                        requestPermissions(perm,2)
+//                    }
+//                }else{
+//                    var mediaWindow=Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                    startActivityForResult(mediaWindow,1)
+//                }
 
                 if (checkSelfPermission(Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED){
-
+                    if (perm != null) {
+                        requestPermissions(perm2,1234)
+                    }
                 }
             }
         })
@@ -85,6 +88,12 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode==2){
             if (grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults.size>0){
                 var mediaWindow=Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(mediaWindow,1)
+            }
+        }
+        if (requestCode==1234){
+            if (grantResults[1]==PackageManager.PERMISSION_GRANTED && grantResults.size>0){
+                var mediaWindow=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(mediaWindow,1)
             }
         }
