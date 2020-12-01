@@ -49,6 +49,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                 isEmpty()
             }
         })
+        imageBtn.setOnClickListener(object: View.OnClickListener{
+
+        })
 
     }
 
