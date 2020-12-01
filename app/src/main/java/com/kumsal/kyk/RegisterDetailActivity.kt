@@ -119,7 +119,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
                 var adapter = ArrayAdapter<String>(
                     this@RegisterDetailActivity,
-                    android.R.layout.simple_list_item_1,
+                    R.layout.spinner_list,
                     result
                 )
                 advice?.adapter = adapter
