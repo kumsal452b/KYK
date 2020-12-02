@@ -36,6 +36,10 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
     private var name: String? = null
     private var mUsername: DatabaseReference? = null
     private lateinit var choosingDialog:Dialog
+    //Chooser
+    private lateinit var camera:LinearLayout
+    private lateinit var galery:LinearLayout
+    private lateinit var close:ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
@@ -96,6 +100,14 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
         choosingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         choosingDialog.setCancelable(true)
         choosingDialog.setContentView(R.layout.chooser_layout_item)
+
+        galery=findViewById(R.id.chooser_layout_galery)
+        camera=findViewById(R.id.chooser_layout_camera)
+        close=findViewById(R.id.chooser_layout_close)
+
+        close.setOnClickListener(this)
+        galery.setOnClickListener(this)
+        camera.setOnClickListener(this)
 
 
     }
@@ -226,7 +238,7 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
                 print("camera is runnimg")
             R.id.chooser_layout_galery->
                 print("galery is running")
-                
+
 
         }
     }
