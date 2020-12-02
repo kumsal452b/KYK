@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.*
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
@@ -23,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
-class RegisterDetailActivity : AppCompatActivity() {
+class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
 
     private lateinit var username: AutoCompleteTextView
     private lateinit var imageView: CircleImageView
@@ -88,7 +90,14 @@ class RegisterDetailActivity : AppCompatActivity() {
     }
 
     fun chooserSetting(){
-        choosingDialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        choosingDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        choosingDialog.window?.setWindowAnimations(  R.style.Animation_Design_BottomSheetDialog)
+        choosingDialog.window?.setGravity(Gravity.BOTTOM)
+        choosingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        choosingDialog.setCancelable(true)
+        choosingDialog.setContentView(R.layout.chooser_layout_item)
+
+
     }
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -208,5 +217,17 @@ class RegisterDetailActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         Animatoo.animateSwipeRight(this)
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.chooser_layout_close-> choosingDialog.dismiss()
+            R.id.chooser_layout_camera->
+                print("camera is runnimg")
+            R.id.chooser_layout_galery->
+                print("galery is running")
+                
+
+        }
     }
 }

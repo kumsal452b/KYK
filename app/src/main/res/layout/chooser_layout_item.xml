@@ -16,14 +16,15 @@
             android:layout_marginTop="2dp"
             android:layout_marginStart="2dp"
             android:textColor="@color/white"/>
+
         <ImageButton
+            android:id="@+id/chooser_layout_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_close_24"
-            android:background="#00FFFFFF"
-            android:layout_marginTop="2dp"
             android:layout_marginStart="315dp"
-          />
+            android:layout_marginTop="2dp"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_baseline_close_24" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
