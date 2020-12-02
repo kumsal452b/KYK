@@ -1,6 +1,7 @@
 package com.kumsal .kyk
 
 import android.Manifest
+import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.camera2.CameraManager
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
@@ -31,6 +33,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private var name: String? = null
     private var mUsername: DatabaseReference? = null
+    private lateinit var choosingDialog:Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
@@ -44,7 +47,8 @@ class RegisterDetailActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         generateUsername(name)
-
+        choosingDialog= Dialog(this,R.style.AppTheme)
+        chooserSetting()
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 isEmpty()
@@ -83,6 +87,9 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     }
 
+    fun chooserSetting(){
+        choosingDialog.window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
