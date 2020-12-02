@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".RegisterDetailActivity"></activity>
-        <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".screns.ForgotPasswordActivity" />
+        <activity android:name=".screns.LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".StarterActivity" />
+        <activity android:name=".screns.StarterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
