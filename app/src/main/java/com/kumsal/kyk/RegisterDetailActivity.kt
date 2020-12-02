@@ -44,7 +44,11 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name = getIntent().getStringExtra("name")
-        println(name)
+
+        galery=findViewById(R.id.chooser_layout_galery)
+        camera=findViewById(R.id.chooser_layout_camera)
+        close=findViewById(R.id.chooser_layout_close)
+
         username = findViewById(R.id.register_activity_detail_username);
         imageView = findViewById(R.id.register_activity_detail_imageView);
         imageBtn = findViewById(R.id.register_activity_detail_imageButton);
@@ -71,23 +75,7 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
 
         imageBtn.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
-//                if(checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
-//                    if (perm != null) {
-//                        requestPermissions(perm,2)
-//                    }
-//                }else{
-//                    var mediaWindow=Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                    startActivityForResult(mediaWindow,1)
-//                }
-
-                if (checkSelfPermission(Manifest.permission.CAMERA)!=PackageManager.PERMISSION_GRANTED){
-                    if (perm != null) {
-                        requestPermissions(perm2,1234)
-                    }
-                }else{
-                    var mediaWindow=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivityForResult(mediaWindow,1111)
-                }
+                choosingDialog.show()
             }
         })
 
@@ -101,9 +89,7 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
         choosingDialog.setCancelable(true)
         choosingDialog.setContentView(R.layout.chooser_layout_item)
 
-        galery=findViewById(R.id.chooser_layout_galery)
-        camera=findViewById(R.id.chooser_layout_camera)
-        close=findViewById(R.id.chooser_layout_close)
+
 
         close.setOnClickListener(this)
         galery.setOnClickListener(this)
