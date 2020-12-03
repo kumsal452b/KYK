@@ -1,4 +1,4 @@
-package com.kumsal .kyk
+package com.kumsal.kyk
 
 import android.Manifest
 import android.app.Dialog
@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
-class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
+class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var username: AutoCompleteTextView
     private lateinit var imageView: CircleImageView
@@ -35,20 +35,21 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
     private lateinit var mAuth: FirebaseAuth
     private var name: String? = null
     private var mUsername: DatabaseReference? = null
-    private lateinit var choosingDialog:Dialog
+    private lateinit var choosingDialog: Dialog
+
     //Chooser
-    private lateinit var camera:LinearLayout
-    private lateinit var galery:LinearLayout
-    private lateinit var close:ImageButton
+    private lateinit var camera: LinearLayout
+    private lateinit var galery: LinearLayout
+    private lateinit var close: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name = getIntent().getStringExtra("name")
-        layoutInflater.inflate(R.layout.chooser_layout_item,null)
-        close=findViewById(R.id.chooser_layout_close)
-        galery=findViewById(R.id.chooser_layout_galery)
-        camera=findViewById(R.id.chooser_layout_camera)
-        choosingDialog= Dialog(this@RegisterDetailActivity,R.style.AppTheme)
+        var view = layoutInflater.inflate(R.layout.chooser_layout_item, null) as View
+        close = view.findViewById(R.id.chooser_layout_close)
+        galery = view.findViewById(R.id.chooser_layout_galery)
+        camera = view.findViewById(R.id.chooser_layout_camera)
+        choosingDialog = Dialog(this@RegisterDetailActivity, R.style.AppTheme)
 
         chooserSetting()
 
@@ -66,16 +67,14 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
                 isEmpty()
             }
         })
-        var perm=Array<String>(3){
-            i: Int ->
+        var perm = Array<String>(3) { i: Int ->
             Manifest.permission.READ_EXTERNAL_STORAGE
         }
-        var perm2=Array<String>(3){
-                i: Int ->
+        var perm2 = Array<String>(3) { i: Int ->
             Manifest.permission.CAMERA
         }
 
-        imageBtn.setOnClickListener(object: View.OnClickListener{
+        imageBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 choosingDialog.show()
             }
@@ -83,9 +82,12 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
 
     }
 
-    fun chooserSetting(){
-        choosingDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        choosingDialog.window?.setWindowAnimations(  R.style.Animation_Design_BottomSheetDialog)
+    fun chooserSetting() {
+        choosingDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        choosingDialog.window?.setWindowAnimations(R.style.Animation_Design_BottomSheetDialog)
         choosingDialog.window?.setGravity(Gravity.BOTTOM)
         choosingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         choosingDialog.setCancelable(true)
@@ -96,30 +98,32 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
 
 
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode==2){
-            if (grantResults[0]==PackageManager.PERMISSION_GRANTED && grantResults.size>0){
-                var mediaWindow=Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(mediaWindow,1)
+        if (requestCode == 2) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                var mediaWindow =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(mediaWindow, 1)
             }
         }
-        if (requestCode==1234){
-            if (grantResults[1]==PackageManager.PERMISSION_GRANTED && grantResults.size>0){
-                var mediaWindow=Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(mediaWindow,1111)
+        if (requestCode == 1234) {
+            if (grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                var mediaWindow = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(mediaWindow, 1111)
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode==1){
-            if (resultCode== RESULT_OK){
-                if (data!=null){
+        if (requestCode == 1) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
 
                 }
             }
@@ -148,7 +152,7 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
         var result = ArrayList<String>()
         var username = ArrayList<String>()
         var name = ""
-        var surname:String?=null
+        var surname: String? = null
         var fulname = ""
         mUsername?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -177,7 +181,7 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
                 val surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
                 while (true) {
                     var num = ThreadLocalRandom.current().nextInt(10, 10000)
-                    var num2 =  ThreadLocalRandom.current().nextInt(0, 2)
+                    var num2 = ThreadLocalRandom.current().nextInt(0, 2)
 
                     if (num2 == 1) {
                         ad2 = name.trim().toLowerCase() + surnameM.trim() + num
@@ -217,11 +221,11 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.chooser_layout_close-> choosingDialog.dismiss()
-            R.id.chooser_layout_camera->
+        when (v?.id) {
+            R.id.chooser_layout_close -> choosingDialog.dismiss()
+            R.id.chooser_layout_camera ->
                 print("camera is runnimg")
-            R.id.chooser_layout_galery->
+            R.id.chooser_layout_galery ->
                 print("galery is running")
 
 
