@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".RegisterDetailActivity"
     android:background="@drawable/background_starter"
-    >
 
+    >
+  
     <RelativeLayout
         android:id="@+id/parentRelative"
         android:layout_width="0dp"
