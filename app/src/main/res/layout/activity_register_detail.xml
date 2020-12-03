@@ -8,7 +8,7 @@
     android:background="@drawable/background_starter"
 
     >
-  
+
     <RelativeLayout
         android:id="@+id/parentRelative"
         android:layout_width="0dp"
