@@ -49,8 +49,13 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         close = view.findViewById(R.id.chooser_layout_close)
         galery = view.findViewById(R.id.chooser_layout_galery)
         camera = view.findViewById(R.id.chooser_layout_camera)
-        
-        close.setOnClickListener(this)
+
+        close.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                choosingDialog.dismiss()
+            }
+
+        })
         galery.setOnClickListener(this)
         camera.setOnClickListener(this)
 
