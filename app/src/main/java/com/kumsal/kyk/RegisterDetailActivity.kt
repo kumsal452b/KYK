@@ -44,10 +44,13 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name = getIntent().getStringExtra("name")
-
+        layoutInflater.inflate(R.layout.chooser_layout_item,null)
+        close=findViewById(R.id.chooser_layout_close)
         galery=findViewById(R.id.chooser_layout_galery)
         camera=findViewById(R.id.chooser_layout_camera)
-        close=findViewById(R.id.chooser_layout_close)
+        choosingDialog= Dialog(this@RegisterDetailActivity,R.style.AppTheme)
+
+        chooserSetting()
 
         username = findViewById(R.id.register_activity_detail_username);
         imageView = findViewById(R.id.register_activity_detail_imageView);
@@ -57,8 +60,7 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         generateUsername(name)
-        choosingDialog= Dialog(this,R.style.AppTheme)
-        chooserSetting()
+
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 isEmpty()
@@ -88,9 +90,6 @@ class RegisterDetailActivity : AppCompatActivity(),View.OnClickListener{
         choosingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         choosingDialog.setCancelable(true)
         choosingDialog.setContentView(R.layout.chooser_layout_item)
-
-
-
         close.setOnClickListener(this)
         galery.setOnClickListener(this)
         camera.setOnClickListener(this)
