@@ -38,7 +38,7 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var choosingDialog: Dialog
 
     //Chooser
-    private lateinit var camera: LinearLayout
+    private lateinit var camera: ImageView
     private lateinit var galery: LinearLayout
     private lateinit var close: ImageButton
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +49,11 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         close = view.findViewById(R.id.chooser_layout_close)
         galery = view.findViewById(R.id.chooser_layout_galery)
         camera = view.findViewById(R.id.chooser_layout_camera)
+        
+        close.setOnClickListener(this)
+        galery.setOnClickListener(this)
+        camera.setOnClickListener(this)
+
         choosingDialog = Dialog(this@RegisterDetailActivity, R.style.AppTheme)
 
         chooserSetting()
@@ -92,9 +97,7 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         choosingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         choosingDialog.setCancelable(true)
         choosingDialog.setContentView(R.layout.chooser_layout_item)
-        close.setOnClickListener(this)
-        galery.setOnClickListener(this)
-        camera.setOnClickListener(this)
+
 
 
     }
@@ -221,16 +224,14 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        println("tamam")
+
         when (v?.id) {
             R.id.chooser_layout_close -> choosingDialog.dismiss()
-                
+
             R.id.chooser_layout_camera ->
                 print("camera is runnimg")
             R.id.chooser_layout_galery ->
                 print("galery is running")
-
-
         }
     }
 }
