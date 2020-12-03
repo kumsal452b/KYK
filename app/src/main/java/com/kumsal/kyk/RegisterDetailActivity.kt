@@ -45,10 +45,10 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name = getIntent().getStringExtra("name")
-        var view = layoutInflater.inflate(R.layout.chooser_layout_item, null) as View
-        close = view.findViewById(R.id.chooser_layout_close)
-        galery = view.findViewById(R.id.chooser_layout_galery)
-        camera = view.findViewById(R.id.chooser_layout_camera)
+//        var view = layoutInflater.inflate(R.layout.chooser_layout_item, null) as View
+        close = findViewById(R.id.chooser_layout_close)
+        galery =findViewById(R.id.chooser_layout_galery)
+        camera =findViewById(R.id.chooser_layout_camera)
 
         close.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
