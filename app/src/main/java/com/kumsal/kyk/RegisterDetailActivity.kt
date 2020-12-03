@@ -221,8 +221,10 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        println("tamam")
         when (v?.id) {
             R.id.chooser_layout_close -> choosingDialog.dismiss()
+                
             R.id.chooser_layout_camera ->
                 print("camera is runnimg")
             R.id.chooser_layout_galery ->
