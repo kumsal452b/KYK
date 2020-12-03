@@ -50,9 +50,16 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         galery =findViewById(R.id.chooser_layout_galery)
         camera =findViewById(R.id.chooser_layout_camera)
 
-        close.setOnClickListener(object: View.OnClickListener{
+        close.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 choosingDialog.dismiss()
+                println("tiklandi")
+            }
+
+        })
+        findViewById<Button>(R.id.gggg).setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                println("tiklama tamam")
             }
 
         })
