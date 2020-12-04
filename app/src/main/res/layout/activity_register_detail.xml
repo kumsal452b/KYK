@@ -8,8 +8,7 @@
     android:background="@drawable/background_starter"
 
     >
-
-    <include layout="@layout/chooser_layout_item"/>
+    
 
     <RelativeLayout
         android:id="@+id/parentRelative"
