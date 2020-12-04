@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@drawable/chooser_background"
     tools:context=".RegisterDetailActivity"
-    android:id="@+id/test">
+    android:id="@+id/chooser_layout_linearLayout">
 
     <Button
         android:id="@+id/gggg"
