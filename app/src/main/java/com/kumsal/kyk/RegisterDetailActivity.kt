@@ -9,15 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.*
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 
 import com.google.firebase.database.*
+import com.kongzue.dialog.interfaces.OnMenuItemClickListener
+import com.kongzue.dialog.v3.BottomMenu
 
 import com.kongzue.dialog.v3.MessageDialog
 
@@ -36,7 +35,7 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
     private var name: String? = null
     private var mUsername: DatabaseReference? = null
     private lateinit var choosingDialog: Dialog
-
+    private lateinit var linearLayout: LinearLayout
     //Chooser
     private lateinit var camera: ImageView
     private lateinit var galery: LinearLayout
@@ -45,11 +44,12 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name = getIntent().getStringExtra("name")
-//        var view = layoutInflater.inflate(R.layout.chooser_layout_item, null) as View
-        close = findViewById(R.id.chooser_layout_close)
-        galery =findViewById(R.id.chooser_layout_galery)
-        camera =findViewById(R.id.chooser_layout_camera)
-
+        linearLayout=findViewById(R.id.chooser_layout_linearLayout)
+        var view = layoutInflater.inflate(R.layout.chooser_layout_item, linearLayout,false) as View
+        choosingDialog = Dialog(this@RegisterDetailActivity, R.style.AppTheme)
+        close = view.findViewById(R.id.chooser_layout_close)
+        galery =view.findViewById(R.id.chooser_layout_galery)
+        camera =view.findViewById(R.id.chooser_layout_camera)
         close.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 choosingDialog.dismiss()
@@ -66,9 +66,9 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         galery.setOnClickListener(this)
         camera.setOnClickListener(this)
 
-        choosingDialog = Dialog(this@RegisterDetailActivity, R.style.AppTheme)
 
-        chooserSetting()
+
+//        chooserSetting()
 
         username = findViewById(R.id.register_activity_detail_username);
         imageView = findViewById(R.id.register_activity_detail_imageView);
@@ -91,13 +91,22 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
             Manifest.permission.CAMERA
         }
 
+
         imageBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                choosingDialog.show()
+                val myArray3 = arrayOf<String>("Abu","Praveen")
+                BottomMenu.show(this@RegisterDetailActivity,myArray3,object :OnMenuItemClickListener{
+                    override fun onClick(text: String?, index: Int) {
+
+                    }
+
+                })
+                    .cancelButtonText="Close"
             }
         })
 
     }
+
 
     fun chooserSetting() {
         choosingDialog.window?.setLayout(
