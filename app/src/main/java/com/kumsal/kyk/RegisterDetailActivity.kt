@@ -97,7 +97,7 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
                 val myArray3 = arrayOf<String>("Abu","Praveen")
                 BottomMenu.show(this@RegisterDetailActivity,myArray3,object :OnMenuItemClickListener{
                     override fun onClick(text: String?, index: Int) {
-
+                        
                     }
 
                 })
