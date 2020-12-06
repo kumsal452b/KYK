@@ -98,12 +98,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             perm2, 545
                                         )
                                     } else {
-                                        var mediaWindow =
-                                            Intent(
-                                                Intent.ACTION_PICK,
-                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                                            )
-                                        startActivityForResult(mediaWindow, 100)
+                                        var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                                        startActivityForResult(Cameraintent, 600)
+
                                     }
                                 1 ->
                                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -112,8 +109,14 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             perm, 546
                                         )
                                     }else{
-                                        var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-                                        startActivityForResult(Cameraintent, 600)
+
+
+                                        var mediaWindow =
+                                            Intent(
+                                                Intent.ACTION_PICK,
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                            )
+                                        startActivityForResult(mediaWindow, 100)
                                     }
 
                             }
