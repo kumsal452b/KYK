@@ -89,7 +89,10 @@ class RegisterDetailActivity : AppCompatActivity(){
                         print(index)
                         when(index){
                             0->
-                                print("selam ")
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+                                    ActivityCompat.requestPermissions(this@RegisterDetailActivity,
+                                        perm2,545)
+                                }
                             1->
                                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
                                     ActivityCompat.requestPermissions(this@RegisterDetailActivity,
@@ -136,8 +139,7 @@ class RegisterDetailActivity : AppCompatActivity(){
         }
         if (requestCode == 1234) {
             if (grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                var mediaWindow = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(mediaWindow, 1111)
+               
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
