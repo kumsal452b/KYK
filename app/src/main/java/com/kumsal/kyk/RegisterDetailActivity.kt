@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.*
 import android.widget.*
+import androidx.core.app.ActivityCompat
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 
@@ -24,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
-class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
+class RegisterDetailActivity : AppCompatActivity(){
 
     private lateinit var username: AutoCompleteTextView
     private lateinit var imageView: CircleImageView
@@ -44,27 +45,15 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name = getIntent().getStringExtra("name")
-        linearLayout=findViewById(R.id.chooser_layout_linearLayout)
-        var view = layoutInflater.inflate(R.layout.chooser_layout_item, linearLayout,false) as View
+//        linearLayout=findViewById(R.id.chooser_layout_linearLayout)
+//        var view = layoutInflater.inflate(R.layout.chooser_layout_item, linearLayout,false) as View
         choosingDialog = Dialog(this@RegisterDetailActivity, R.style.AppTheme)
-        close = view.findViewById(R.id.chooser_layout_close)
-        galery =view.findViewById(R.id.chooser_layout_galery)
-        camera =view.findViewById(R.id.chooser_layout_camera)
-        close.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                choosingDialog.dismiss()
-                println("tiklandi")
-            }
+//        close = findViewById(R.id.chooser_layout_close)
+//        galery =findViewById(R.id.chooser_layout_galery)
+//        camera =findViewById(R.id.chooser_layout_camera)
 
-        })
-        findViewById<Button>(R.id.gggg).setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                println("tiklama tamam")
-            }
-
-        })
-        galery.setOnClickListener(this)
-        camera.setOnClickListener(this)
+//        galery.setOnClickListener(this)
+//        camera.setOnClickListener(this)
 
 
 
@@ -94,10 +83,20 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
 
         imageBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val myArray3 = arrayOf<String>("Abu","Praveen")
+                val myArray3 = arrayOf<String>("Camera","Galery")
                 BottomMenu.show(this@RegisterDetailActivity,myArray3,object :OnMenuItemClickListener{
                     override fun onClick(text: String?, index: Int) {
-                        
+                        print(index)
+                        when(index){
+                            0->
+                                print("selam ")
+                            1->
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
+                                    ActivityCompat.requestPermissions(this@RegisterDetailActivity,
+                                    perm,546)
+                                }
+
+                        }
                     }
 
                 })
@@ -128,11 +127,11 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if (requestCode == 2) {
+        if (requestCode == 546) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
                 var mediaWindow =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(mediaWindow, 1)
+                    startActivityForResult(mediaWindow, 100)
             }
         }
         if (requestCode == 1234) {
@@ -145,7 +144,7 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 1) {
+        if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
 
@@ -244,15 +243,5 @@ class RegisterDetailActivity : AppCompatActivity(), View.OnClickListener {
         Animatoo.animateSwipeRight(this)
     }
 
-    override fun onClick(v: View?) {
 
-        when (v?.id) {
-            R.id.chooser_layout_close -> choosingDialog.dismiss()
-
-            R.id.chooser_layout_camera ->
-                print("camera is runnimg")
-            R.id.chooser_layout_galery ->
-                print("galery is running")
-        }
-    }
 }
