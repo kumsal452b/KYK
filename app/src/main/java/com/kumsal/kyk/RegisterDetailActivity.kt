@@ -9,11 +9,13 @@ import android.hardware.camera2.CameraManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 
@@ -26,6 +28,8 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
 import de.hdodenhof.circleimageview.CircleImageView
+import java.io.File
+import java.io.FileOutputStream
 import java.net.URI
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
@@ -47,6 +51,13 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var camera: ImageView
     private lateinit var galery: LinearLayout
     private lateinit var close: ImageButton
+
+    var perm = Array<String>(3) { i: Int ->
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    }
+    var perm2 = Array<String>(3) { i: Int ->
+        Manifest.permission.CAMERA
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
@@ -78,12 +89,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 isEmpty()
             }
         })
-        var perm = Array<String>(3) { i: Int ->
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-        var perm2 = Array<String>(3) { i: Int ->
-            Manifest.permission.CAMERA
-        }
+
 
 
         imageBtn.setOnClickListener(object : View.OnClickListener {
@@ -109,10 +115,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                                     }
                                 1 ->
                                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                        ActivityCompat.requestPermissions(
-                                            this@RegisterDetailActivity,
-                                            perm, 546
-                                        )
+                                       requestPermisson()
                                     }else{
 
 
@@ -179,7 +182,12 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
-
+                    var uri:Uri?
+                    uri=data.data
+                    println("selam"+uri)
+                    CropImage.activity(uri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(this)
                 }
             }
         }
@@ -187,17 +195,45 @@ class RegisterDetailActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
 
-                    var uri:Uri?
-                    uri=data.data
-                    println(uri)
-                    CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(this)
+                    var bitma=data.extras?.get("data") as Bitmap
+                    println(readWriteImage(bitma))
+//                    CropImage.activity(uri)
+//                        .setGuidelines(CropImageView.Guidelines.ON)
+//                            .start(this)
 
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+    fun readWriteImage(bitmap: Bitmap): Uri {
+        // store in DCIM/Camera directory
+        val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+        val cameraDir = File(dir, "Camera/")
+
+        val file = if (cameraDir.exists()) {
+            File(cameraDir, "LK_${System.currentTimeMillis()}.png")
+        } else {
+            cameraDir.mkdir()
+            File(cameraDir, "LK_${System.currentTimeMillis()}.png")
+        }
+        if (!checkPermissons()){
+            requestPermisson()
+        }
+        println(checkPermissons())
+        val fos = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
+        fos.flush()
+        fos.close()
+
+        return Uri.fromFile(file)
+    }
+    fun checkPermissons():Boolean{
+        var result=ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return result==PackageManager.PERMISSION_GRANTED
+    }
+    fun requestPermisson(){
+        ActivityCompat.requestPermissions(this,perm,100)
     }
 
     fun isEmpty(): Boolean {
