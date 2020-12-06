@@ -92,11 +92,18 @@ class RegisterDetailActivity : AppCompatActivity() {
                             print(index)
                             when (index) {
                                 0 ->
-                                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                                         ActivityCompat.requestPermissions(
                                             this@RegisterDetailActivity,
                                             perm2, 545
                                         )
+                                    } else {
+                                        var mediaWindow =
+                                            Intent(
+                                                Intent.ACTION_PICK,
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                            )
+                                        startActivityForResult(mediaWindow, 100)
                                     }
                                 1 ->
                                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -104,6 +111,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             this@RegisterDetailActivity,
                                             perm, 546
                                         )
+                                    }else{
+                                        var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                                        startActivityForResult(Cameraintent, 600)
                                     }
 
                             }
@@ -148,8 +158,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "Camera Permission denied", Toast.LENGTH_LONG)
                 var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(Cameraintent, 600)
-            }
-            else {
+            } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
             }
         }
