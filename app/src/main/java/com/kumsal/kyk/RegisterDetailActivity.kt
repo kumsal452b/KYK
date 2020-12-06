@@ -186,9 +186,11 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode == 600) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
-                    var bitmap= data.extras?.get("data") as Bitmap
-                    var uri=data.data as Uri
-                    CropImage.activity(uri)
+
+                    var uri:Uri?
+                    uri=data.data
+                    println(uri)
+                    CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(this)
 

@@ -22,6 +22,8 @@
         android:roundIcon="@mipmap/circlelogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
         <activity android:name=".RegisterDetailActivity"></activity>
         <activity android:name=".screns.ForgotPasswordActivity" />
         <activity android:name=".screns.LoginActivity" />
