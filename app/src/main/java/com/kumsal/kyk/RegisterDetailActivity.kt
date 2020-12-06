@@ -203,10 +203,13 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                     var bitma=data.extras?.get("data") as Bitmap
                     if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE)){
-                        ActivityCompat.requestPermissions(this,perm,547)
+                        println("izin istegi geldi")
+                        ActivityCompat.requestPermissions(this,perm,546)
 
+                    }else{
+                        readWriteImage(bitma)
                     }
-//                    println(readWriteImage(bitma))
+
 //                    CropImage.activity(uri)
 //                        .setGuidelines(CropImageView.Guidelines.ON)
 //                            .start(this)
