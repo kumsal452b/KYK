@@ -1,6 +1,7 @@
 package com.kumsal.kyk
 
 import android.Manifest
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -106,7 +107,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                                     if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                                         ActivityCompat.requestPermissions(
                                             this@RegisterDetailActivity,
-                                            perm2, 545
+                                            perm2, 1234
                                         )
                                     } else {
                                         var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
@@ -162,9 +163,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var mediaWindow =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(mediaWindow, 100)
+            }else {
+                Toast.makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
             }
-        }else {
-            Toast.makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
         }
         if (requestCode == 1234) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
@@ -173,6 +174,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                 startActivityForResult(Cameraintent, 600)
             } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
+            }
+        }
+        if (requestCode==547){
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0){
+
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -196,7 +202,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (data != null) {
 
                     var bitma=data.extras?.get("data") as Bitmap
-                    println(readWriteImage(bitma))
+                    if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE)){
+                        ActivityCompat.requestPermissions(this,perm,547)
+
+                    }
+//                    println(readWriteImage(bitma))
 //                    CropImage.activity(uri)
 //                        .setGuidelines(CropImageView.Guidelines.ON)
 //                            .start(this)
@@ -217,10 +227,8 @@ class RegisterDetailActivity : AppCompatActivity() {
             cameraDir.mkdir()
             File(cameraDir, "LK_${System.currentTimeMillis()}.png")
         }
-        if (!checkPermissons()){
-            requestPermisson()
-        }
-        println(checkPermissons())
+
+        println("permission"+checkPermissons())
         val fos = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
         fos.flush()
@@ -233,7 +241,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         return result==PackageManager.PERMISSION_GRANTED
     }
     fun requestPermisson(){
-        ActivityCompat.requestPermissions(this,perm,100)
+        ActivityCompat.requestPermissions(this,perm,546)
     }
 
     fun isEmpty(): Boolean {
