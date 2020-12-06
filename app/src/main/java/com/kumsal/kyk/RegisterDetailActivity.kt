@@ -4,7 +4,9 @@ import android.Manifest
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.hardware.camera2.CameraManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
@@ -20,8 +22,11 @@ import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.v3.BottomMenu
 
 import com.kongzue.dialog.v3.MessageDialog
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 
 import de.hdodenhof.circleimageview.CircleImageView
+import java.net.URI
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
@@ -155,6 +160,8 @@ class RegisterDetailActivity : AppCompatActivity() {
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(mediaWindow, 100)
             }
+        }else {
+            Toast.makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
         }
         if (requestCode == 1234) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
@@ -179,6 +186,11 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode == 600) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
+                    var bitmap= data.extras?.get("data") as Bitmap
+                    var uri=data.data as Uri
+                    CropImage.activity(uri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(this)
 
                 }
             }
