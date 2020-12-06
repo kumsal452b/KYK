@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 
-class RegisterDetailActivity : AppCompatActivity(){
+class RegisterDetailActivity : AppCompatActivity() {
 
     private lateinit var username: AutoCompleteTextView
     private lateinit var imageView: CircleImageView
@@ -37,6 +37,7 @@ class RegisterDetailActivity : AppCompatActivity(){
     private var mUsername: DatabaseReference? = null
     private lateinit var choosingDialog: Dialog
     private lateinit var linearLayout: LinearLayout
+
     //Chooser
     private lateinit var camera: ImageView
     private lateinit var galery: LinearLayout
@@ -54,7 +55,6 @@ class RegisterDetailActivity : AppCompatActivity(){
 
 //        galery.setOnClickListener(this)
 //        camera.setOnClickListener(this)
-
 
 
 //        chooserSetting()
@@ -83,27 +83,34 @@ class RegisterDetailActivity : AppCompatActivity(){
 
         imageBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                val myArray3 = arrayOf<String>("Camera","Galery")
-                BottomMenu.show(this@RegisterDetailActivity,myArray3,object :OnMenuItemClickListener{
-                    override fun onClick(text: String?, index: Int) {
-                        print(index)
-                        when(index){
-                            0->
-                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
-                                    ActivityCompat.requestPermissions(this@RegisterDetailActivity,
-                                        perm2,545)
-                                }
-                            1->
-                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)!=PackageManager.PERMISSION_GRANTED){
-                                    ActivityCompat.requestPermissions(this@RegisterDetailActivity,
-                                    perm,546)
-                                }
+                val myArray3 = arrayOf<String>("Camera", "Galery")
+                BottomMenu.show(
+                    this@RegisterDetailActivity,
+                    myArray3,
+                    object : OnMenuItemClickListener {
+                        override fun onClick(text: String?, index: Int) {
+                            print(index)
+                            when (index) {
+                                0 ->
+                                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                        ActivityCompat.requestPermissions(
+                                            this@RegisterDetailActivity,
+                                            perm2, 545
+                                        )
+                                    }
+                                1 ->
+                                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                        ActivityCompat.requestPermissions(
+                                            this@RegisterDetailActivity,
+                                            perm, 546
+                                        )
+                                    }
 
+                            }
                         }
-                    }
 
-                })
-                    .cancelButtonText="Close"
+                    })
+                    .cancelButtonText = "Close"
             }
         })
 
@@ -122,7 +129,6 @@ class RegisterDetailActivity : AppCompatActivity(){
         choosingDialog.setContentView(R.layout.chooser_layout_item)
 
 
-
     }
 
     override fun onRequestPermissionsResult(
@@ -134,12 +140,17 @@ class RegisterDetailActivity : AppCompatActivity(){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
                 var mediaWindow =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                    startActivityForResult(mediaWindow, 100)
+                startActivityForResult(mediaWindow, 100)
             }
         }
         if (requestCode == 1234) {
-            if (grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-               
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                Toast.makeText(this, "Camera Permission denied", Toast.LENGTH_LONG)
+                var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(Cameraintent, 600)
+            }
+            else {
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -147,6 +158,13 @@ class RegisterDetailActivity : AppCompatActivity(){
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+
+                }
+            }
+        }
+        if (requestCode == 600) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
 
