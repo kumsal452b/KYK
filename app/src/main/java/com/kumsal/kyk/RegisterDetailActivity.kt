@@ -30,6 +30,7 @@ import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
 
 import de.hdodenhof.circleimageview.CircleImageView
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URI
@@ -170,7 +171,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         if (requestCode == 547) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                var uri = readWriteImage(bitma) as Uri
+                var uri = getUri(bitma) as Uri
                 CropImage.activity(uri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(this)
@@ -201,7 +202,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                     bitma = data.extras?.get("data") as Bitmap
                     if (checkAndRequestPermissions()) {
-                        var uri = readWriteImage(bitma) as Uri
+                        var uri = getUri(bitma)
                         CropImage.activity(uri)
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .setAspectRatio(2, 2)
@@ -210,6 +211,13 @@ class RegisterDetailActivity : AppCompatActivity() {
                             .start(this)
 
                     } else {
+                        var uri = getUri(bitma)
+                        CropImage.activity(uri)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setAspectRatio(2, 2)
+                            .setActivityTitle("Crop Image")
+                            .setAutoZoomEnabled(true)
+                            .start(this)
 
                     }
 
@@ -245,9 +253,11 @@ class RegisterDetailActivity : AppCompatActivity() {
             ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         return result == PackageManager.PERMISSION_GRANTED
     }
-
-    fun requestPermisson() {
-        ActivityCompat.requestPermissions(this, perm, 546)
+    fun getUri(bitmap: Bitmap):Uri{
+       var bytes=ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
+        var path=MediaStore.Images.Media.insertImage(contentResolver,bitmap,"Title",null)
+        return Uri.parse(path)
     }
 
     fun checkAndRequestPermissions(): Boolean {
@@ -267,12 +277,10 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (permReadStrg != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(READ_EXTERNAL_STORAGE)
         }
-        var array= arrayOf<String>()
-
         if (!listPermissionsNeeded.isEmpty()){
 
             ActivityCompat.requestPermissions(this,
-                listPermissionsNeeded.toArray() as Array<out String>,547)
+                listPermissionsNeeded.toTypedArray(),547)
             return false
         }
         return true
