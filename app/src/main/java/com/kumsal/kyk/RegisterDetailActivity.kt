@@ -1,8 +1,7 @@
 package com.kumsal.kyk
 
 import android.Manifest
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+import android.Manifest.permission.*
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -36,6 +35,7 @@ import java.io.FileOutputStream
 import java.net.URI
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
+import kotlin.collections.ArrayList
 
 class RegisterDetailActivity : AppCompatActivity() {
 
@@ -55,14 +55,18 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var galery: LinearLayout
     private lateinit var close: ImageButton
 
-    var perm = Array<String>(3) { i: Int ->
+    var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
         WRITE_EXTERNAL_STORAGE
     }
-    var perm2 = Array<String>(3) { i: Int ->
+    var perm2 = Array<String>(1) { i: Int ->
         Manifest.permission.CAMERA
     }
-    lateinit var bitma:Bitmap
+    var perm3 = Array<String>(1) { i: Int ->
+        Manifest.permission.READ_EXTERNAL_STORAGE
+        WRITE_EXTERNAL_STORAGE
+    }
+    lateinit var bitma: Bitmap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
@@ -102,14 +106,24 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             perm2, 1234
                                         )
                                     } else {
-                                        var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                                        var Cameraintent =
+                                            Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
                                         startActivityForResult(Cameraintent, 600)
 
                                     }
                                 1 ->
                                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                       requestPermisson()
-                                    }else{
+                                        ActivityCompat.requestPermissions(
+                                            this@RegisterDetailActivity,
+                                            perm,
+                                            546
+                                        )
+                                        ActivityCompat.requestPermissions(
+                                            this@RegisterDetailActivity,
+                                            perm,
+                                            546
+                                        )
+                                    } else {
 
 
                                         var mediaWindow =
@@ -131,8 +145,6 @@ class RegisterDetailActivity : AppCompatActivity() {
     }
 
 
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -143,7 +155,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var mediaWindow =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(mediaWindow, 100)
-            }else {
+            } else {
                 Toast.makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
             }
         }
@@ -156,9 +168,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
             }
         }
-        if (requestCode==547){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0){
-                var uri=readWriteImage(bitma) as Uri
+        if (requestCode == 547) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                var uri = readWriteImage(bitma) as Uri
                 CropImage.activity(uri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .start(this)
@@ -171,10 +183,13 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
-                    var uri:Uri?
-                    uri=data.data
+                    var uri: Uri?
+                    uri = data.data
                     CropImage.activity(uri)
-                        .setAspectRatio(2,2)
+                        .setAspectRatio(2, 2)
+                        .setActivityTitle("Crop Image")
+                        .setCropMenuCropButtonTitle("Kirp")
+                        .setAutoZoomEnabled(true)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(this)
                 }
@@ -184,17 +199,18 @@ class RegisterDetailActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
 
-                  bitma=data.extras?.get("data") as Bitmap
-                    if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE) || shouldShowRequestPermissionRationale(
-                            WRITE_EXTERNAL_STORAGE)){
-                        ActivityCompat.requestPermissions(this,perm,547)
-
-                    }else{
-                        var uri=readWriteImage(bitma) as Uri
+                    bitma = data.extras?.get("data") as Bitmap
+                    if (checkAndRequestPermissions()) {
+                        var uri = readWriteImage(bitma) as Uri
                         CropImage.activity(uri)
                             .setGuidelines(CropImageView.Guidelines.ON)
-                            .setAspectRatio(2,2)
+                            .setAspectRatio(2, 2)
+                            .setActivityTitle("Crop Image")
+                            .setAutoZoomEnabled(true)
                             .start(this)
+
+                    } else {
+
                     }
 
                 }
@@ -202,6 +218,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+
     fun readWriteImage(bitmap: Bitmap): Uri {
         // store in DCIM/Camera directory
         val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
@@ -214,7 +231,7 @@ class RegisterDetailActivity : AppCompatActivity() {
             File(cameraDir, "LK_${System.currentTimeMillis()}.png")
         }
 
-        println("permission"+checkPermissons())
+        println("permission" + checkPermissons())
         val fos = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
         fos.flush()
@@ -222,12 +239,43 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         return Uri.fromFile(file)
     }
-    fun checkPermissons():Boolean{
-        var result=ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        return result==PackageManager.PERMISSION_GRANTED
+
+    fun checkPermissons(): Boolean {
+        var result =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return result == PackageManager.PERMISSION_GRANTED
     }
-    fun requestPermisson(){
-        ActivityCompat.requestPermissions(this,perm,546)
+
+    fun requestPermisson() {
+        ActivityCompat.requestPermissions(this, perm, 546)
+    }
+
+    fun checkAndRequestPermissions(): Boolean {
+        var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        var permWrtStrg =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        var permReadStrg =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        var listPermissionsNeeded=ArrayList<String>()
+        if (permCam != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(CAMERA)
+        }
+        if (permWrtStrg != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(WRITE_EXTERNAL_STORAGE)
+        }
+        if (permReadStrg != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(READ_EXTERNAL_STORAGE)
+        }
+        var array= arrayOf<String>()
+
+        if (!listPermissionsNeeded.isEmpty()){
+
+            ActivityCompat.requestPermissions(this,
+                listPermissionsNeeded.toArray() as Array<out String>,547)
+            return false
+        }
+        return true
     }
 
     fun isEmpty(): Boolean {
