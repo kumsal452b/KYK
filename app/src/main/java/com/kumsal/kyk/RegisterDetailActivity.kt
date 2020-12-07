@@ -2,6 +2,7 @@ package com.kumsal.kyk
 
 import android.Manifest
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -26,6 +27,7 @@ import com.kongzue.dialog.v3.BottomMenu
 
 import com.kongzue.dialog.v3.MessageDialog
 import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
 
 import de.hdodenhof.circleimageview.CircleImageView
@@ -55,26 +57,16 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     var perm = Array<String>(3) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
+        WRITE_EXTERNAL_STORAGE
     }
     var perm2 = Array<String>(3) { i: Int ->
         Manifest.permission.CAMERA
     }
+    lateinit var bitma:Bitmap
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
         name = getIntent().getStringExtra("name")
-//        linearLayout=findViewById(R.id.chooser_layout_linearLayout)
-//        var view = layoutInflater.inflate(R.layout.chooser_layout_item, linearLayout,false) as View
-        choosingDialog = Dialog(this@RegisterDetailActivity, R.style.AppTheme)
-//        close = findViewById(R.id.chooser_layout_close)
-//        galery =findViewById(R.id.chooser_layout_galery)
-//        camera =findViewById(R.id.chooser_layout_camera)
-
-//        galery.setOnClickListener(this)
-//        camera.setOnClickListener(this)
-
-
-//        chooserSetting()
 
         username = findViewById(R.id.register_activity_detail_username);
         imageView = findViewById(R.id.register_activity_detail_imageView);
@@ -139,19 +131,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     }
 
 
-    fun chooserSetting() {
-        choosingDialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        choosingDialog.window?.setWindowAnimations(R.style.Animation_Design_BottomSheetDialog)
-        choosingDialog.window?.setGravity(Gravity.BOTTOM)
-        choosingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        choosingDialog.setCancelable(true)
-        choosingDialog.setContentView(R.layout.chooser_layout_item)
 
-
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -159,7 +139,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         if (requestCode == 546) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
                 var mediaWindow =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(mediaWindow, 100)
@@ -177,8 +157,11 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         }
         if (requestCode==547){
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0){
-
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0){
+                var uri=readWriteImage(bitma) as Uri
+                CropImage.activity(uri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this)
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -190,8 +173,8 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (data != null) {
                     var uri:Uri?
                     uri=data.data
-                    println("selam"+uri)
                     CropImage.activity(uri)
+                        .setAspectRatio(2,2)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(this)
                 }
@@ -201,18 +184,18 @@ class RegisterDetailActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
 
-                    var bitma=data.extras?.get("data") as Bitmap
-                    if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE)){
-                        println("izin istegi geldi")
-                        ActivityCompat.requestPermissions(this,perm,546)
+                  bitma=data.extras?.get("data") as Bitmap
+                    if (shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE) || shouldShowRequestPermissionRationale(
+                            WRITE_EXTERNAL_STORAGE)){
+                        ActivityCompat.requestPermissions(this,perm,547)
 
                     }else{
-                        readWriteImage(bitma)
+                        var uri=readWriteImage(bitma) as Uri
+                        CropImage.activity(uri)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setAspectRatio(2,2)
+                            .start(this)
                     }
-
-//                    CropImage.activity(uri)
-//                        .setGuidelines(CropImageView.Guidelines.ON)
-//                            .start(this)
 
                 }
             }
