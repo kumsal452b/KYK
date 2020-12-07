@@ -17,6 +17,7 @@ import android.view.*
 import android.widget.*
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 
@@ -171,9 +172,10 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         if (requestCode == 547) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                var uri = getUri(bitma) as Uri
+                var uri = readWriteImage(bitma) as Uri
                 CropImage.activity(uri)
                     .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(2,2)
                     .start(this)
             }
         }
@@ -202,16 +204,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                     bitma = data.extras?.get("data") as Bitmap
                     if (checkAndRequestPermissions()) {
-                        var uri = getUri(bitma)
-                        CropImage.activity(uri)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setAspectRatio(2, 2)
-                            .setActivityTitle("Crop Image")
-                            .setAutoZoomEnabled(true)
-                            .start(this)
-
-                    } else {
-                        var uri = getUri(bitma)
+                        var uri = readWriteImage(bitma)
                         CropImage.activity(uri)
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .setAspectRatio(2, 2)
@@ -221,6 +214,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                     }
 
+
                 }
             }
         }
@@ -228,9 +222,9 @@ class RegisterDetailActivity : AppCompatActivity() {
     }
 
     fun readWriteImage(bitmap: Bitmap): Uri {
+        var root=Environment.getExternalStorageDirectory()
         // store in DCIM/Camera directory
-        val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-        val cameraDir = File(dir, "Camera/")
+        val cameraDir = File(root.absolutePath+"/DCIM", "Camera/")
 
         val file = if (cameraDir.exists()) {
             File(cameraDir, "LK_${System.currentTimeMillis()}.png")
@@ -238,8 +232,6 @@ class RegisterDetailActivity : AppCompatActivity() {
             cameraDir.mkdir()
             File(cameraDir, "LK_${System.currentTimeMillis()}.png")
         }
-
-        println("permission" + checkPermissons())
         val fos = FileOutputStream(file)
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
         fos.flush()
