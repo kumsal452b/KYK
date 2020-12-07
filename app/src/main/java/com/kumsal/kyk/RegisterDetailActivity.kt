@@ -256,7 +256,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     fun getUri(bitmap: Bitmap):Uri{
        var bytes=ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
-        var path=MediaStore.Images.Media.insertImage(contentResolver,bitmap,"Title",null)
+        var path=MediaStore.Images.Media.insertImage(this.contentResolver,bitmap,"Title",null)
         return Uri.parse(path)
     }
 
@@ -374,6 +374,4 @@ class RegisterDetailActivity : AppCompatActivity() {
         super.onBackPressed()
         Animatoo.animateSwipeRight(this)
     }
-
-
 }
