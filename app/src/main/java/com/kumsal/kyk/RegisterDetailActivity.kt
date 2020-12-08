@@ -26,6 +26,7 @@ import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.v3.BottomMenu
 
 import com.kongzue.dialog.v3.MessageDialog
+import com.kumsal.kyk.UID.Companion.getInstance
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -34,6 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.lang.Exception
 import java.net.URI
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
@@ -144,10 +146,17 @@ class RegisterDetailActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         if (requestCode == 546) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                var mediaWindow =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                startActivityForResult(mediaWindow, 100)
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+//                var mediaWindow =
+//                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//                startActivityForResult(mediaWindow, 100)
+                CropImage.activity(CropImage.getCaptureImageOutputUri(this))
+                    .setAspectRatio(2, 2)
+                    .setActivityTitle("Crop Image")
+                    .setCropMenuCropButtonTitle("Kirp")
+                    .setAutoZoomEnabled(true)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .start(this)
             } else {
                 Toast.makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
             }
@@ -162,7 +171,7 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         }
         if (requestCode == 547) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&  grantResults.size > 0) {
                 var uri = readWriteImage(bitma) as Uri
                 CropImage.activity(uri)
                     .setGuidelines(CropImageView.Guidelines.ON)
@@ -202,10 +211,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                             .setActivityTitle("Crop Image")
                             .setAutoZoomEnabled(true)
                             .start(this)
-
                     }
-
-
                 }
             }
         }
@@ -214,6 +220,10 @@ class RegisterDetailActivity : AppCompatActivity() {
             if (resultCode== RESULT_OK){
                 var imageuri=result.uri
                 imageView.setImageURI(imageuri)
+            }
+            else if (resultCode==CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+                var e:Exception=result.error
+                Toast.makeText(this,e.localizedMessage,Toast.LENGTH_LONG)
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
