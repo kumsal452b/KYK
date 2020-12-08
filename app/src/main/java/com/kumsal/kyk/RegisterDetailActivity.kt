@@ -56,7 +56,6 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
-        WRITE_EXTERNAL_STORAGE
     }
     var perm2 = Array<String>(1) { i: Int ->
         Manifest.permission.CAMERA
@@ -109,11 +108,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                                     }
                                 1 ->
                                     if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                                        ActivityCompat.requestPermissions(
-                                            this@RegisterDetailActivity,
-                                            perm,
-                                            546
-                                        )
                                         ActivityCompat.requestPermissions(
                                             this@RegisterDetailActivity,
                                             perm,
