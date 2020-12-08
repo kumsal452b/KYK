@@ -52,11 +52,6 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var choosingDialog: Dialog
     private lateinit var linearLayout: LinearLayout
 
-    //Chooser
-    private lateinit var camera: ImageView
-    private lateinit var galery: LinearLayout
-    private lateinit var close: ImageButton
-
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
         WRITE_EXTERNAL_STORAGE
@@ -88,9 +83,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                 isEmpty()
             }
         })
-
-
-
         imageBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 val myArray3 = arrayOf<String>("Camera", "Galery")
@@ -143,7 +135,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                     .cancelButtonText = "Close"
             }
         })
-
     }
 
 
@@ -218,6 +209,13 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
             }
         }
+        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            var result:CropImage.ActivityResult=CropImage.getActivityResult(data)
+            if (resultCode== RESULT_OK){
+                var imageuri=result.uri
+                imageView.setImageURI(imageuri)
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
@@ -240,11 +238,6 @@ class RegisterDetailActivity : AppCompatActivity() {
         return Uri.fromFile(file)
     }
 
-    fun checkPermissons(): Boolean {
-        var result =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        return result == PackageManager.PERMISSION_GRANTED
-    }
     fun getUri(bitmap: Bitmap):Uri{
        var bytes=ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
