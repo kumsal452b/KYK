@@ -39,5 +39,6 @@
     <string name="camera">Camera</string>
     <string name="galery">Galery</string>
     <string name="chooser">Chooser</string>
+    <string name="permision">Camera or Galery permission denied</string>
 
 </resources>

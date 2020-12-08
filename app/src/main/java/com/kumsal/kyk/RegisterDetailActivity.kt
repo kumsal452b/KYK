@@ -97,15 +97,17 @@ class RegisterDetailActivity : AppCompatActivity() {
                             print(index)
                             when (index) {
                                 0 ->
-                                    if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                    if (checkAndRequestPermissions()) {
                                         ActivityCompat.requestPermissions(
                                             this@RegisterDetailActivity,
                                             perm2, 1234
                                         )
                                     } else {
-                                        var Cameraintent =
-                                            Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-                                        startActivityForResult(Cameraintent, 600)
+
+//                                        CropImage.activity()
+//                                            .setGuidelines(CropImageView.Guidelines.ON)
+//                                            .setAspectRatio(2,2)
+//                                            .start(this@RegisterDetailActivity)
 
                                     }
                                 1 ->
@@ -142,37 +144,28 @@ class RegisterDetailActivity : AppCompatActivity() {
     ) {
         if (requestCode == 546) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-//                var mediaWindow =
-//                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//                startActivityForResult(mediaWindow, 100)
-                CropImage.activity(CropImage.getCaptureImageOutputUri(this))
-                    .setAspectRatio(2, 2)
-                    .setActivityTitle("Crop Image")
-                    .setCropMenuCropButtonTitle("Kirp")
-                    .setAutoZoomEnabled(true)
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .start(this)
+                var mediaWindow =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(mediaWindow, 100)
             } else {
                 Toast.makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
             }
         }
         if (requestCode == 1234) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
                 Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
-                var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-                var imagePath=Environment.getExternalStorageDirectory().absolutePath+"/picture.jpg"
-                var imageFile=File(imagePath)
-                var picUri=imageFile.toURI()
-                Cameraintent.putExtra(MediaStore.EXTRA_OUTPUT,picUri)
-                startActivityForResult(Cameraintent, 600)
+                CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(2,2)
+                    .start(this)
             } else {
-                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
             }
         }
         if (requestCode == 547) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&  grantResults.size > 0) {
-                var uri = getUri(bitma) as Uri
-                CropImage.activity(uri)
+                CropImage.activity()
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(2,2)
                     .start(this)
@@ -197,32 +190,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
             }
         }
-        if (requestCode == 600) {
-            if (resultCode == RESULT_OK) {
-                if (data != null) {
-
-                    bitma = data.extras?.get("data") as Bitmap
-                    println(bitma.byteCount)
-                    var test=data.getStringExtra(MediaStore.EXTRA_OUTPUT) as Uri
-                    CropImage.activity(test)
-                            .setGuidelines(CropImageView.Guidelines.ON)
-                            .setAspectRatio(2, 2)
-                            .setActivityTitle("Crop Image")
-                            .setAutoZoomEnabled(true)
-                            .start(this)
-                    
-//                    if (checkAndRequestPermissions()) {
-//                        var uri = getUri(bitma)
-//                        CropImage.activity(uri)
-//                            .setGuidelines(CropImageView.Guidelines.ON)
-//                            .setAspectRatio(2, 2)
-//                            .setActivityTitle("Crop Image")
-//                            .setAutoZoomEnabled(true)
-//                            .start(this)
-//                    }
-                }
-            }
-        }
         if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
             var result:CropImage.ActivityResult=CropImage.getActivityResult(data)
             if (resultCode== RESULT_OK){
@@ -235,34 +202,6 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
-    }
-
-    fun readWriteImage(bitmap: Bitmap): Uri {
-        var root=Environment.getExternalStorageDirectory()
-        // store in DCIM/Camera directory
-        val cameraDir = File(root.absolutePath+"/DCIM", "Camera/")
-
-        val file = if (cameraDir.exists()) {
-            File(cameraDir, "LK_${System.currentTimeMillis()}.png")
-        } else {
-            cameraDir.mkdir()
-            File(cameraDir, "LK_${System.currentTimeMillis()}.png")
-        }
-        val fos = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos)
-        fos.flush()
-        fos.close()
-
-        return Uri.fromFile(file)
-    }
-
-    fun getUri(bitmap: Bitmap):Uri{
-       var bytes=ByteArrayOutputStream()
-//        bitmap.compress(Bitmap.CompressFormat.PNG,100,bytes)
-//        var bit=BitmapFactory.decodeStream(ByteArrayInputStream(bytes.toByteArray()))
-//        println("sonra "+bit.byteCount)
-        var path=MediaStore.Images.Media.insertImage(this.contentResolver,bitmap,"Title",null)
-        return Uri.parse(path)
     }
 
     fun checkAndRequestPermissions(): Boolean {
@@ -285,7 +224,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (!listPermissionsNeeded.isEmpty()){
 
             ActivityCompat.requestPermissions(this,
-                listPermissionsNeeded.toTypedArray(),547)
+                listPermissionsNeeded.toTypedArray(),1234)
             return false
         }
         return true
