@@ -6,6 +6,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.hardware.camera2.CameraManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,7 @@ import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
 
 import de.hdodenhof.circleimageview.CircleImageView
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -114,14 +116,13 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             546
                                         )
                                     } else {
-
-
                                         var mediaWindow =
                                             Intent(
                                                 Intent.ACTION_PICK,
                                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                                             )
                                         startActivityForResult(mediaWindow, 100)
+
                                     }
 
                             }
@@ -157,8 +158,12 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         if (requestCode == 1234) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                Toast.makeText(this, "Camera Permission denied", Toast.LENGTH_LONG)
+                Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
                 var Cameraintent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                var imagePath=Environment.getExternalStorageDirectory().absolutePath+"/picture.jpg"
+                var imageFile=File(imagePath)
+                var picUri=imageFile.toURI()
+                Cameraintent.putExtra(MediaStore.EXTRA_OUTPUT,picUri)
                 startActivityForResult(Cameraintent, 600)
             } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show()
@@ -166,7 +171,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         if (requestCode == 547) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&  grantResults.size > 0) {
-                var uri = readWriteImage(bitma) as Uri
+                var uri = getUri(bitma) as Uri
                 CropImage.activity(uri)
                     .setGuidelines(CropImageView.Guidelines.ON)
                     .setAspectRatio(2,2)
@@ -197,15 +202,24 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (data != null) {
 
                     bitma = data.extras?.get("data") as Bitmap
-                    if (checkAndRequestPermissions()) {
-                        var uri = readWriteImage(bitma)
-                        CropImage.activity(uri)
+                    println(bitma.byteCount)
+                    var test=data.getStringExtra(MediaStore.EXTRA_OUTPUT) as Uri
+                    CropImage.activity(test)
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .setAspectRatio(2, 2)
                             .setActivityTitle("Crop Image")
                             .setAutoZoomEnabled(true)
                             .start(this)
-                    }
+                    
+//                    if (checkAndRequestPermissions()) {
+//                        var uri = getUri(bitma)
+//                        CropImage.activity(uri)
+//                            .setGuidelines(CropImageView.Guidelines.ON)
+//                            .setAspectRatio(2, 2)
+//                            .setActivityTitle("Crop Image")
+//                            .setAutoZoomEnabled(true)
+//                            .start(this)
+//                    }
                 }
             }
         }
@@ -244,7 +258,9 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun getUri(bitmap: Bitmap):Uri{
        var bytes=ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,bytes)
+//        bitmap.compress(Bitmap.CompressFormat.PNG,100,bytes)
+//        var bit=BitmapFactory.decodeStream(ByteArrayInputStream(bytes.toByteArray()))
+//        println("sonra "+bit.byteCount)
         var path=MediaStore.Images.Media.insertImage(this.contentResolver,bitmap,"Title",null)
         return Uri.parse(path)
     }
