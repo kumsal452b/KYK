@@ -152,25 +152,22 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         }
         if (requestCode == 1234) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
-                CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(2,2)
-                    .start(this)
-            } else {
-                Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+            if (grantResults.size>=2){
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                    Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
+                    CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(2,2)
+                        .start(this)
+                } else {
+                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                }
             }
+            
+
         }
-        if (requestCode == 547) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&  grantResults.size > 0) {
-                CropImage.activity()
-                    .setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(2,2)
-                    .start(this)
-            }
-        }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
