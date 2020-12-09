@@ -41,4 +41,5 @@
     <string name="chooser">Chooser</string>
     <string name="permision">Camera or Galery permission denied</string>
     <string name="i_want_to_use_the_recommended_username">I want to use the recommended username</string>
+    <string name="please_wait">Please Wait</string>
 </resources>
