@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RegisterDetailActivity"
     android:background="@drawable/background_starter"
-    android:clickable="false"
     >
 
 

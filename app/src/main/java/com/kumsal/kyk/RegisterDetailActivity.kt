@@ -76,7 +76,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         username = findViewById(R.id.register_activity_detail_username);
         imageView = findViewById(R.id.register_activity_detail_imageView);
         imageBtn = findViewById(R.id.register_activity_detail_imageButton);
-        advice = findViewById(R.id.register_activity_detail_spinner)
+        advice = findViewById<Spinner>(R.id.register_activity_detail_spinner)
         regBtn = findViewById(R.id.register_activity_detail_regBtn)
         usernameCheckBox=findViewById(R.id.recomanded_username)
 
@@ -142,7 +142,11 @@ class RegisterDetailActivity : AppCompatActivity() {
             override fun onClick(v: View?) {
                 if (usernameCheckBox.isChecked){
                     username.setEnabled(false)
-
+                    advice?.isEnabled=true
+                }
+                else{
+                    username.setEnabled(true)
+                    advice?.isEnabled=false
                 }
             }
         })
