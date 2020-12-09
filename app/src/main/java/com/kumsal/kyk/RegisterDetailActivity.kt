@@ -56,6 +56,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var choosingDialog: Dialog
     private lateinit var linearLayout: LinearLayout
     private lateinit var usernameCheckBox: CheckBox
+    lateinit var adapter : ArrayAdapter<String>
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -139,7 +140,10 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         usernameCheckBox.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                println("tiklandi")
+                if (usernameCheckBox.isChecked){
+                    username.setEnabled(false)
+
+                }
             }
         })
     }
@@ -314,7 +318,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                         break
                     }
                 }
-                var adapter = ArrayAdapter<String>(
+                 adapter = ArrayAdapter<String>(
                     this@RegisterDetailActivity,
                     R.layout.spinner_list,
                     result
