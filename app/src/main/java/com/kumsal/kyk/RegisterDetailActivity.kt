@@ -283,7 +283,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                     count++
                 }
                 var ad2 = ""
-                val surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
+                var surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
+                if (surname==null){
+                    surname=""
+                    surnameM=""
+                }
                 while (true) {
                     var num = ThreadLocalRandom.current().nextInt(10, 10000)
                     var num2 = ThreadLocalRandom.current().nextInt(0, 2)
