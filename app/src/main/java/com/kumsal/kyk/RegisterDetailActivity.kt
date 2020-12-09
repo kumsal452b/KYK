@@ -148,12 +148,14 @@ class RegisterDetailActivity : AppCompatActivity() {
                     advice?.isEnabled=true
                     username.setHintTextColor(Color.RED)
                     advice?.setBackgroundResource(R.drawable.bacground_edittext)
+                    username.setBackgroundResource(R.drawable.bacground_spinner_error)
 
                 }
                 else{
                     username.setEnabled(true)
                     username.setHintTextColor(Color.parseColor("#D1CDCD"))
                     advice?.isEnabled=false
+                    username.setBackgroundResource(R.drawable.bacground_edittext)
                     advice?.setBackgroundResource(R.drawable.bacground_spinner_error)
                 }
             }
@@ -308,6 +310,10 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
                 var ad2 = ""
                 var surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
+                if (surname==null){
+                    surname=""
+                    surnameM=""
+                }
                 if (surname==null){
                     surname=""
                     surnameM=""

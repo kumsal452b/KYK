@@ -75,7 +75,7 @@
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginTop="70dp"
-        android:background="@drawable/bacground_edittext"
+        android:background="@drawable/bacground_spinner_error"
         app:layout_constraintBottom_toTopOf="@+id/register_activity_detail_username"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
