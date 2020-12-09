@@ -26,11 +26,12 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginBottom="400dp"
+        android:background="@drawable/layout_backgorund"
+        android:padding="5dp"
         android:src="@mipmap/emptyuser"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/parentRelative"
-        app:layout_constraintStart_toStartOf="@id/parentRelative"
-        android:background="@drawable/layout_backgorund"/>
+        app:layout_constraintStart_toStartOf="@id/parentRelative" />
 
     <ImageButton
         android:id="@+id/register_activity_detail_imageButton"
@@ -84,4 +85,18 @@
         app:layout_constraintTop_toBottomOf="@+id/register_activity_detail_imageView"
         android:popupBackground="@drawable/radius_color"
          />
+
+    <CheckBox
+        android:id="@+id/recomanded_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/layout_backgorund"
+        android:padding="5dp"
+        android:text="@string/i_want_to_use_the_recommended_username"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/register_activity_detail_spinner"
+        app:layout_constraintEnd_toEndOf="@+id/register_activity_detail_spinner"
+        app:layout_constraintStart_toStartOf="@id/register_activity_detail_spinner" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
