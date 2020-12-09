@@ -55,7 +55,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private var mUsername: DatabaseReference? = null
     private lateinit var choosingDialog: Dialog
     private lateinit var linearLayout: LinearLayout
-
+    private lateinit var usernameCheckBox: CheckBox
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -77,6 +77,8 @@ class RegisterDetailActivity : AppCompatActivity() {
         imageBtn = findViewById(R.id.register_activity_detail_imageButton);
         advice = findViewById(R.id.register_activity_detail_spinner)
         regBtn = findViewById(R.id.register_activity_detail_regBtn)
+        usernameCheckBox=findViewById(R.id.recomanded_username)
+
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         generateUsername(name)
@@ -132,6 +134,12 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                     })
                     .cancelButtonText = "Close"
+            }
+        })
+
+        usernameCheckBox.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                println("tiklandi")
             }
         })
     }
