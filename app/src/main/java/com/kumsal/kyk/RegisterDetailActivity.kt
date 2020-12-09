@@ -147,13 +147,16 @@ class RegisterDetailActivity : AppCompatActivity() {
                     advice?.isEnabled=true
                     username.setHintTextColor(Color.RED)
                     spinnerColor.setTextColor(Color.WHITE)
+                    advice?.adapter=adapter
+                    adapter.notifyDataSetChanged()
                 }
                 else{
                     username.setEnabled(true)
                     username.setHintTextColor(Color.parseColor("#D1CDCD"))
                     advice?.isEnabled=false
                     spinnerColor.setTextColor(Color.RED)
-                    advice?.setBackgroundColor(Color.RED)
+                    advice?.adapter=adapter
+                    adapter.notifyDataSetChanged()
                 }
             }
         })
