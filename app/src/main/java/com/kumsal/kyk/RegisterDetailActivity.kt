@@ -59,6 +59,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var usernameCheckBox: CheckBox
     lateinit var adapter : ArrayAdapter<String>
     private lateinit var spinnerColor:TextView
+    var result = ArrayList<String>()
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -147,16 +148,18 @@ class RegisterDetailActivity : AppCompatActivity() {
                     advice?.isEnabled=true
                     username.setHintTextColor(Color.RED)
                     spinnerColor.setTextColor(Color.WHITE)
+                    adapter=ArrayAdapter<String>(this@RegisterDetailActivity,R.layout.spinner_list,result)
                     advice?.adapter=adapter
-                    adapter.notifyDataSetChanged()
+
                 }
                 else{
                     username.setEnabled(true)
                     username.setHintTextColor(Color.parseColor("#D1CDCD"))
                     advice?.isEnabled=false
                     spinnerColor.setTextColor(Color.RED)
+                    adapter=ArrayAdapter<String>(this@RegisterDetailActivity,R.layout.spinner_list,result)
                     advice?.adapter=adapter
-                    adapter.notifyDataSetChanged()
+
                 }
             }
         })
