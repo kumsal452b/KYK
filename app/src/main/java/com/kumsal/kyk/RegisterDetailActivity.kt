@@ -164,7 +164,17 @@ class RegisterDetailActivity : AppCompatActivity() {
                     Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
             }
-            
+            else if(grantResults.size==1){
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                    Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
+                    CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(2,2)
+                        .start(this)
+                } else {
+                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                }
+            }
 
         }
 
