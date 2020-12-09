@@ -147,19 +147,14 @@ class RegisterDetailActivity : AppCompatActivity() {
                     username.setEnabled(false)
                     advice?.isEnabled=true
                     username.setHintTextColor(Color.RED)
-                    spinnerColor.setTextColor(Color.WHITE)
-                    adapter=ArrayAdapter<String>(this@RegisterDetailActivity,R.layout.spinner_list,result)
-                    advice?.adapter=adapter
+                    advice?.setBackgroundResource(R.drawable.bacground_edittext)
 
                 }
                 else{
                     username.setEnabled(true)
                     username.setHintTextColor(Color.parseColor("#D1CDCD"))
                     advice?.isEnabled=false
-                    spinnerColor.setTextColor(Color.RED)
-                    adapter=ArrayAdapter<String>(this@RegisterDetailActivity,R.layout.spinner_list,result)
-                    advice?.adapter=adapter
-
+                    advice?.setBackgroundResource(R.drawable.bacground_spinner_error)
                 }
             }
         })
