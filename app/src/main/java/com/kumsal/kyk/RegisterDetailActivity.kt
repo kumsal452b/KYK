@@ -28,6 +28,7 @@ import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.v3.BottomMenu
 
 import com.kongzue.dialog.v3.MessageDialog
+import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.UID.Companion.getInstance
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageOptions
@@ -80,6 +81,8 @@ class RegisterDetailActivity : AppCompatActivity() {
         imageView = findViewById(R.id.register_activity_detail_imageView);
         imageBtn = findViewById(R.id.register_activity_detail_imageButton);
         advice = findViewById<Spinner>(R.id.register_activity_detail_spinner)
+        advice?.isEnabled=false
+
         regBtn = findViewById(R.id.register_activity_detail_regBtn)
         usernameCheckBox=findViewById(R.id.recomanded_username)
         spinnerColor=findViewById(R.id.spinner_list_)
@@ -285,6 +288,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         var name = ""
         var surname: String? = null
         var fulname = ""
+        WaitDialog.show(this,getString(R.string.please_wait))
         mUsername?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (a in snapshot.children) {
@@ -302,6 +306,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                     }
                     name += fulname.get(a)
                 }
+                var surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
+                if (surname==null){
+                    surname=""
+                    surnameM=""
+                }
                 var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
                 var count = 0
                 if (!username.contains(ad1)) {
@@ -309,15 +318,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                     count++
                 }
                 var ad2 = ""
-                var surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
                 if (surname==null){
                     surname=""
                     surnameM=""
                 }
-                if (surname==null){
-                    surname=""
-                    surnameM=""
-                }
+
                 while (true) {
                     var num = ThreadLocalRandom.current().nextInt(10, 10000)
                     var num2 = ThreadLocalRandom.current().nextInt(0, 2)
@@ -342,10 +347,12 @@ class RegisterDetailActivity : AppCompatActivity() {
                     result
                 )
                 advice?.adapter = adapter
+                WaitDialog.dismiss()
 
             }
 
             override fun onCancelled(error: DatabaseError) {
+                WaitDialog.dismiss()
                 println(error)
             }
         })
