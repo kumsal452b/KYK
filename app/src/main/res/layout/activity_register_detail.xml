@@ -82,6 +82,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_activity_detail_imageView"
-        android:popupBackground="#923C3333"
+        android:popupBackground="@drawable/radius_color"
          />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -204,7 +204,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 imageView.setImageURI(imageuri)
             }
             else if (resultCode==CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
-                
+
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
