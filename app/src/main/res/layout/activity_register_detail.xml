@@ -89,10 +89,11 @@
     <CheckBox
         android:id="@+id/recomanded_username"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/layout_backgorund"
         android:padding="5dp"
+        android:shadowColor="@color/white"
         android:text="@string/i_want_to_use_the_recommended_username"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@id/register_activity_detail_spinner"
