@@ -60,7 +60,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var usernameCheckBox: CheckBox
     lateinit var adapter : ArrayAdapter<String>
     private lateinit var spinnerColor:TextView
-    var result = ArrayList<String>()
+    private lateinit  var usernames : ArrayList<String>
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -88,11 +88,14 @@ class RegisterDetailActivity : AppCompatActivity() {
         spinnerColor=findViewById(R.id.spinner_list_)
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
+        usernames=ArrayList<String>()
         generateUsername(name)
 
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                isEmpty()
+                if (isEmpty()){
+                    
+                }
             }
         })
         imageBtn.setOnClickListener(object : View.OnClickListener {
@@ -143,7 +146,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                     .cancelButtonText = "Close"
             }
         })
-
         usernameCheckBox.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 if (usernameCheckBox.isChecked){
@@ -267,13 +269,24 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun isEmpty(): Boolean {
         var troubleCount = 0;
-        if (TextUtils.isEmpty(username.text)) {
-            if (advice?.selectedItem == null) {
-                username.setError(getString(R.string.must_be_leave))
+        if (!usernameCheckBox.isChecked){
+            if (TextUtils.isEmpty(username.text)) {
+                if (!usernameCheckBox.isChecked) {
+                    username.setError(getString(R.string.must_be_leave))
+                    MessageDialog.show(
+                        this@RegisterDetailActivity,
+                        getString(R.string.err),
+                        getString(R.string.choose_username),
+                        "Okey"
+                    )
+                    return false
+                }
+            }
+            else if (usernames.contains(username.text.toString())){
                 MessageDialog.show(
                     this@RegisterDetailActivity,
                     getString(R.string.err),
-                    getString(R.string.choose_username),
+                    getString(R.string.wrong_username),
                     "Okey"
                 )
                 return false
@@ -284,7 +297,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun generateUsername(ad: String?): List<String> {
         var result = ArrayList<String>()
-        var username = ArrayList<String>()
+
         var name = ""
         var surname: String? = null
         var fulname = ""
@@ -292,7 +305,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         mUsername?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (a in snapshot.children) {
-                    username.add(a.child("username").value.toString())
+                    usernames.add(a.child("username").value.toString())
                 }
                 fulname = ad?.trim().toString()
                 for (a in 0..fulname.length - 1) {
@@ -313,7 +326,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
                 var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
                 var count = 0
-                if (!username.contains(ad1)) {
+                if (!usernames.contains(ad1)) {
                     result.add(ad1)
                     count++
                 }
@@ -333,7 +346,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                     if (num2 == 0) {
                         ad2 = name.trim().toLowerCase() + surname?.toLowerCase()?.trim() + num
                     }
-                    if (!username.contains(ad2)) {
+                    if (!usernames.contains(ad2)) {
                         result.add(ad2)
                         count++
                     }
