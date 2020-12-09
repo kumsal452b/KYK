@@ -198,14 +198,13 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         }
         if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            var result:CropImage.ActivityResult=CropImage.getActivityResult(data)
             if (resultCode== RESULT_OK){
+            var result:CropImage.ActivityResult=CropImage.getActivityResult(data)
                 var imageuri=result.uri
                 imageView.setImageURI(imageuri)
             }
             else if (resultCode==CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
-                var e:Exception=result.error
-                Toast.makeText(this,e.localizedMessage,Toast.LENGTH_LONG)
+                
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
