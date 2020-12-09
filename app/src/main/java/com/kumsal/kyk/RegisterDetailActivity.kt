@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.hardware.camera2.CameraManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -57,6 +58,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var linearLayout: LinearLayout
     private lateinit var usernameCheckBox: CheckBox
     lateinit var adapter : ArrayAdapter<String>
+    private lateinit var spinnerColor:TextView
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -79,7 +81,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         advice = findViewById<Spinner>(R.id.register_activity_detail_spinner)
         regBtn = findViewById(R.id.register_activity_detail_regBtn)
         usernameCheckBox=findViewById(R.id.recomanded_username)
-
+        spinnerColor=findViewById(R.id.spinner_list_)
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         generateUsername(name)
@@ -143,10 +145,15 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (usernameCheckBox.isChecked){
                     username.setEnabled(false)
                     advice?.isEnabled=true
+                    username.setHintTextColor(Color.RED)
+                    spinnerColor.setTextColor(Color.WHITE)
                 }
                 else{
                     username.setEnabled(true)
+                    username.setHintTextColor(Color.parseColor("#D1CDCD"))
                     advice?.isEnabled=false
+                    spinnerColor.setTextColor(Color.RED)
+                    advice?.setBackgroundColor(Color.RED)
                 }
             }
         })
