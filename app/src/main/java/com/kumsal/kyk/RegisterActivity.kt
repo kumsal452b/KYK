@@ -112,11 +112,13 @@ class RegisterActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (data in snapshot.children){
                     var email=data.child("email").value as String
+                    emailArray.add(email)
                 }
+                myList.onCallBack(emailArray)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
 
         })
