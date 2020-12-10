@@ -46,66 +46,37 @@ class RegisterActivity : AppCompatActivity() {
 
 
         register.setOnClickListener(View.OnClickListener {
-            WaitDialog.show(this,"Loading")
-            WaitDialog.dismiss()
-            val intent: Intent = Intent(this@RegisterActivity, RegisterDetailActivity::class.java)
-            intent.putExtra("name", name.text.toString())
-            intent.putExtra("email", email.text.toString())
-            intent.putExtra("pass", password.text.toString())
-
-            startActivity(intent)
-            Animatoo.animateSwipeLeft(this@RegisterActivity)
-            mAuth.createUserWithEmailAndPassword(
-                email.text.toString(),
-                password.text.toString()
-            ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
-                override fun onSuccess(p0: AuthResult?) {
-
-                }
-
-            }
-            ).addOnFailureListener(object : OnFailureListener {
-                override fun onFailure(p0: Exception) {
-                    WaitDialog.dismiss()
-                    if (mAuth.currentUser==null){
-                        //
-                        MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
-                    }
-                    Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
-                }
-
-            })
-
             if (register()) {
+                WaitDialog.show(this, "Loading")
+                WaitDialog.dismiss()
+                val intent: Intent =
+                    Intent(this@RegisterActivity, RegisterDetailActivity::class.java)
+                intent.putExtra("name", name.text.toString())
+                intent.putExtra("email", email.text.toString())
+                intent.putExtra("pass", password.text.toString())
+
+
+                
                 mAuth.createUserWithEmailAndPassword(
                     email.text.toString(),
                     password.text.toString()
-                ).addOnSuccessListener {
-
-                    var mMap: HashMap<String, String>
-                    mMap = HashMap()
-                    mMap.set("name_surname", name.text.toString())
-                    mMap.set("image", "")
-                    val currId: String = mAuth.uid.toString()
-                    val globals = Globals.ınstance
-                    globals?.uid = currId
-                    mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-                        Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-                    }.addOnSuccessListener(
-                        OnSuccessListener<Void> {
-                            Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
-                            val intent: Intent =
-                                Intent(applicationContext, MainActivity::class.java)
-                            startActivity(intent)
-                            this.finish()
-                        }
-                    )
-
-
-                }.addOnFailureListener(this) { Exception ->
-                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-
+                ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
+                    override fun onSuccess(p0: AuthResult?) {
+                        startActivity(intent)
+                        Animatoo.animateSwipeLeft(this@RegisterActivity)
+                    }
                 }
+                ).addOnFailureListener(object : OnFailureListener {
+                    override fun onFailure(p0: Exception) {
+                        WaitDialog.dismiss()
+                        if (mAuth.currentUser==null){
+                            MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
+                        }
+                        Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
+                    }
+
+                })
+
             }
         })
 
