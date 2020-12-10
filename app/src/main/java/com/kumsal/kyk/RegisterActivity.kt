@@ -36,10 +36,7 @@ class RegisterActivity : AppCompatActivity() {
         password=findViewById(R.id.login_password)
         passwordTry=findViewById(R.id.register_password_try)
         register=findViewById(R.id.register_activity_detail_regBtn)
-
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
-
-
         register.setOnClickListener(View.OnClickListener {
             if (register()) {
                 WaitDialog.show(this, "Loading")
@@ -60,8 +57,6 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
                 })
-
-
             }
         })
 
@@ -88,7 +83,6 @@ class RegisterActivity : AppCompatActivity() {
         }
             var text:CharSequence?
 
-
     }
     private fun callEmailCheck(myList:UserListCallback){
         var emailArray=ArrayList<String>()
@@ -107,7 +101,6 @@ class RegisterActivity : AppCompatActivity() {
 
         })
     }
-
     private fun register():Boolean {
         var troubleCount:Int=0
 
