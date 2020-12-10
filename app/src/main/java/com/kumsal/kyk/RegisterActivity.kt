@@ -55,27 +55,27 @@ class RegisterActivity : AppCompatActivity() {
 
             startActivity(intent)
             Animatoo.animateSwipeLeft(this@RegisterActivity)
-//            mAuth.createUserWithEmailAndPassword(
-//                email.text.toString(),
-//                password.text.toString()
-//            ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
-//                override fun onSuccess(p0: AuthResult?) {
-//
-//                }
-//
-//            }
-//            ).addOnFailureListener(object : OnFailureListener {
-//                override fun onFailure(p0: Exception) {
-//                    WaitDialog.dismiss()
-//                    if (mAuth.currentUser==null){
-//                        //
-//                        MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
-//                    }
-//                    Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
-//                }
-//
-//            })
-            println(register())
+            mAuth.createUserWithEmailAndPassword(
+                email.text.toString(),
+                password.text.toString()
+            ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
+                override fun onSuccess(p0: AuthResult?) {
+
+                }
+
+            }
+            ).addOnFailureListener(object : OnFailureListener {
+                override fun onFailure(p0: Exception) {
+                    WaitDialog.dismiss()
+                    if (mAuth.currentUser==null){
+                        //
+                        MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
+                    }
+                    Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
+                }
+
+            })
+
             if (register()) {
 //                mAuth.createUserWithEmailAndPassword(
 //                    email.text.toString(),
