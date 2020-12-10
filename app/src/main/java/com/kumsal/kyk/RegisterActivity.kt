@@ -38,23 +38,32 @@ class RegisterActivity : AppCompatActivity() {
         register=findViewById(R.id.register_activity_detail_regBtn)
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
         register.setOnClickListener(View.OnClickListener {
+//            WaitDialog.show(this,getString(R.string.please_wait))
             if (register()) {
                 WaitDialog.show(this, "Loading")
-                WaitDialog.dismiss()
+                WaitDialog.dismiss(5000)
                 val intent: Intent =
                     Intent(this@RegisterActivity, RegisterDetailActivity::class.java)
                 intent.putExtra("name", name.text.toString())
                 intent.putExtra("email", email.text.toString())
                 intent.putExtra("pass", password.text.toString())
-                var test=email.text.trimEnd().trimStart()
-                callEmailCheck(object:UserListCallback{
+                var test = email.text.toString().trimEnd().trimStart()
+
+                callEmailCheck(object : UserListCallback {
                     override fun onCallBack(value: ArrayList<String>) {
-                       if (!value.contains(test)){
-                           startActivity(intent)
-                           Animatoo.animateSwipeLeft(this@RegisterActivity)
-                       }else{
-                           MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
-                       }
+                        WaitDialog.dismiss()
+                        println(value.contains(test))
+                        if (!value.contains(test)) {
+                            startActivity(intent)
+                            Animatoo.animateSwipeLeft(this@RegisterActivity)
+                        } else {
+                            MessageDialog.show(
+                                this@RegisterActivity,
+                                getString(R.string.err),
+                                getString(R.string.email_available),
+                                "OK"
+                            )
+                        }
                     }
 
                 })
