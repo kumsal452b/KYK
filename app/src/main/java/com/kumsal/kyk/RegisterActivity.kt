@@ -77,35 +77,35 @@ class RegisterActivity : AppCompatActivity() {
             })
 
             if (register()) {
-//                mAuth.createUserWithEmailAndPassword(
-//                    email.text.toString(),
-//                    password.text.toString()
-//                ).addOnSuccessListener {
-//
-//                    var mMap: HashMap<String, String>
-//                    mMap = HashMap()
-//                    mMap.set("name_surname", name.text.toString())
-//                    mMap.set("image", "")
-//                    val currId: String = mAuth.uid.toString()
-//                    val globals = Globals.ınstance
-//                    globals?.uid = currId
-//                    mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-//                        Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-//                    }.addOnSuccessListener(
-//                        OnSuccessListener<Void> {
-//                            Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
-//                            val intent: Intent =
-//                                Intent(applicationContext, MainActivity::class.java)
-//                            startActivity(intent)
-//                            this.finish()
-//                        }
-//                    )
-//
-//
-//                }.addOnFailureListener(this) { Exception ->
-//                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-//
-//                }
+                mAuth.createUserWithEmailAndPassword(
+                    email.text.toString(),
+                    password.text.toString()
+                ).addOnSuccessListener {
+
+                    var mMap: HashMap<String, String>
+                    mMap = HashMap()
+                    mMap.set("name_surname", name.text.toString())
+                    mMap.set("image", "")
+                    val currId: String = mAuth.uid.toString()
+                    val globals = Globals.ınstance
+                    globals?.uid = currId
+                    mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
+                        Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
+                    }.addOnSuccessListener(
+                        OnSuccessListener<Void> {
+                            Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
+                            val intent: Intent =
+                                Intent(applicationContext, MainActivity::class.java)
+                            startActivity(intent)
+                            this.finish()
+                        }
+                    )
+
+
+                }.addOnFailureListener(this) { Exception ->
+                    Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
+
+                }
             }
         })
 
