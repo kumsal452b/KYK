@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var mUser: FirebaseUser
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase:DatabaseReference
-
+    var troubleCount:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -46,9 +46,10 @@ class RegisterActivity : AppCompatActivity() {
                 intent.putExtra("name", name.text.toString())
                 intent.putExtra("email", email.text.toString())
                 intent.putExtra("pass", password.text.toString())
+                var test=email.text.trimEnd().trimStart()
                 callEmailCheck(object:UserListCallback{
                     override fun onCallBack(value: ArrayList<String>) {
-                       if (!value.contains(email.text.trimEnd().trimStart())){
+                       if (!value.contains(test)){
                            startActivity(intent)
                            Animatoo.animateSwipeLeft(this@RegisterActivity)
                        }else{
@@ -65,24 +66,23 @@ class RegisterActivity : AppCompatActivity() {
             if (!TextUtils.equals(password.text.toString(),passwordTry.text.toString())){
                 password.setError( getString(R.string.register_activity_match_pass))
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
+                troubleCount++
             }else{
                 passwordTry.setError(null)
                 password.setError(null)
             }
         }
-
         passwordTry.addTextChangedListener {
                 text ->
             if (!TextUtils.equals(password.text.toString(),passwordTry.text.toString())){
                 password.setError( getString(R.string.register_activity_match_pass))
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
+                troubleCount++
             }else{
                 passwordTry.setError(null)
                 password.setError(null)
             }
         }
-            var text:CharSequence?
-
     }
     private fun callEmailCheck(myList:UserListCallback){
         var emailArray=ArrayList<String>()
@@ -102,7 +102,7 @@ class RegisterActivity : AppCompatActivity() {
         })
     }
     private fun register():Boolean {
-        var troubleCount:Int=0
+
 
         if (TextUtils.isEmpty(name.text.toString())){
 
@@ -144,6 +144,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         if (troubleCount>0){
+            troubleCount=0
             return false
         }else{
             return true
