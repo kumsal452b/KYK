@@ -8,20 +8,14 @@ import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Tasks
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.kongzue.dialog.v3.MessageDialog
-import com.kongzue.dialog.v3.TipDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.interfaces.UserListCallback
-import java.lang.Exception
 import java.util.ArrayList
-import kotlin.collections.HashMap
+
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var name:EditText
@@ -55,28 +49,18 @@ class RegisterActivity : AppCompatActivity() {
                 intent.putExtra("name", name.text.toString())
                 intent.putExtra("email", email.text.toString())
                 intent.putExtra("pass", password.text.toString())
-
-
-
-                mAuth.createUserWithEmailAndPassword(
-                    email.text.toString(),
-                    password.text.toString()
-                ).addOnSuccessListener(object : OnSuccessListener<AuthResult> {
-                    override fun onSuccess(p0: AuthResult?) {
-                        startActivity(intent)
-                        Animatoo.animateSwipeLeft(this@RegisterActivity)
-                    }
-                }
-                ).addOnFailureListener(object : OnFailureListener {
-                    override fun onFailure(p0: Exception) {
-                        WaitDialog.dismiss()
-                        if (mAuth.currentUser==null){
-                            MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
-                        }
-                        Toast.makeText(this@RegisterActivity,p0.localizedMessage,Toast.LENGTH_LONG)
+                callEmailCheck(object:UserListCallback{
+                    override fun onCallBack(value: ArrayList<String>) {
+                       if (!value.contains(email.text.trimEnd().trimStart())){
+                           startActivity(intent)
+                           Animatoo.animateSwipeLeft(this@RegisterActivity)
+                       }else{
+                           MessageDialog.show(this@RegisterActivity,getString(R.string.err),getString(R.string.email_available),"OK")
+                       }
                     }
 
                 })
+
 
             }
         })
