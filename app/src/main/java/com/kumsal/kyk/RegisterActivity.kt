@@ -14,12 +14,13 @@ import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.TipDialog
 import com.kongzue.dialog.v3.WaitDialog
+import com.kumsal.kyk.interfaces.UserListCallback
 import java.lang.Exception
+import java.util.ArrayList
 import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
@@ -56,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
                 intent.putExtra("pass", password.text.toString())
 
 
-                
+
                 mAuth.createUserWithEmailAndPassword(
                     email.text.toString(),
                     password.text.toString()
@@ -104,6 +105,21 @@ class RegisterActivity : AppCompatActivity() {
             var text:CharSequence?
 
 
+    }
+    private fun callEmailCheck(myList:UserListCallback){
+        var emailArray=ArrayList<String>()
+        mDatabase.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (data in snapshot.children){
+                    var email=data.child("email").value as String
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     private fun register():Boolean {
