@@ -16,7 +16,6 @@ import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.interfaces.UserListCallback
 import java.util.ArrayList
 
-
 class RegisterActivity : AppCompatActivity() {
     private lateinit var name:EditText
     private lateinit var email:EditText
