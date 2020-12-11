@@ -69,9 +69,9 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private var mUsername: DatabaseReference? = null
     private lateinit var mDatabase: DatabaseReference
-    private lateinit var mRefStorage:StorageReference
+    private lateinit var mRefStorage: StorageReference
 
-    private lateinit var imageuri:Uri
+    private lateinit var imageuri: Uri
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -95,23 +95,24 @@ class RegisterDetailActivity : AppCompatActivity() {
         spinnerColor = findViewById(R.id.spinner_list_)
         usernames = ArrayList<String>()
 
-        imageuri= Uri.EMPTY
+        imageuri = Uri.EMPTY
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
-        mRefStorage=FirebaseStorage.getInstance().getReference("images")
+        mRefStorage = FirebaseStorage.getInstance().getReference("images")
         generateUsername(name)
 
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                WaitDialog.show(this@RegisterDetailActivity,getString(R.string.err))
+                WaitDialog.show(this@RegisterDetailActivity, getString(R.string.err))
                 WaitDialog.dismiss(6000)
-                
+
                 var theName = getIntent().getStringExtra("name") as String
                 var thePass = getIntent().getStringExtra("pass") as String
                 var theEmail = getIntent().getStringExtra("email") as String
                 var theUserNames = username.text.toString()
                 if (usernames.contains(theUserNames)) {
+                    WaitDialog.dismiss()
                     MessageDialog.show(
                         this@RegisterDetailActivity,
                         getString(R.string.err),
@@ -135,38 +136,40 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                         getImagePath(object : LoadImage {
                             override fun getImagePath(path: String) {
-                                println("oath"+path)
-                        mMap.set("name_surname", theName)
-                        mMap.set("image", path)
-                        mMap.set("username", theUserNames)
-                        mMap.set("email", theEmail)
-                        mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-                            makeText(
-                                this@RegisterDetailActivity,
-                                Exception.localizedMessage,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }.addOnSuccessListener(
-                            OnSuccessListener<Void> {
-                                makeText(
-                                    this@RegisterDetailActivity,
-                                    "Succec",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                val intent: Intent =
-                                    Intent(applicationContext, MainActivity::class.java)
-                                startActivity(intent)
-                                this@RegisterDetailActivity.finish()
-                            }
-                        )
+                                WaitDialog.dismiss()
+                                println("oath" + path)
+                                mMap.set("name_surname", theName)
+                                mMap.set("image", path)
+                                mMap.set("username", theUserNames)
+                                mMap.set("email", theEmail)
+                                mDatabase.child(currId).setValue(mMap)
+                                    .addOnFailureListener { Exception ->
+                                        makeText(
+                                            this@RegisterDetailActivity,
+                                            Exception.localizedMessage,
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }.addOnSuccessListener(
+                                        OnSuccessListener<Void> {
+                                            makeText(
+                                                this@RegisterDetailActivity,
+                                                "Succec",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                            val intent: Intent =
+                                                Intent(applicationContext, MainActivity::class.java)
+                                            startActivity(intent)
+                                            this@RegisterDetailActivity.finish()
+                                        }
+                                    )
 
 
                             }
-                        },  currId )
-
+                        }, currId)
 
 
                     }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
+                        WaitDialog.dismiss()
                         makeText(
                             this@RegisterDetailActivity,
                             "test",
@@ -174,6 +177,8 @@ class RegisterDetailActivity : AppCompatActivity() {
                         ).show()
 
                     }
+                } else {
+                    WaitDialog.dismiss()
                 }
             }
         })
@@ -452,9 +457,9 @@ class RegisterDetailActivity : AppCompatActivity() {
         return result
     }
 
-    fun getImagePath(myLoadImage:LoadImage,uid:String){
-        var path="profile_image"+uid
-        var fileRef=mRefStorage.child(path+".jpg")
+    fun getImagePath(myLoadImage: LoadImage, uid: String) {
+        var path = "profile_image" + uid
+        var fileRef = mRefStorage.child(path + ".jpg")
         fileRef.putFile(imageuri).addOnFailureListener(object : OnFailureListener {
             override fun onFailure(p0: Exception) {
                 throw p0.fillInStackTrace()
@@ -466,18 +471,23 @@ class RegisterDetailActivity : AppCompatActivity() {
                     fileRef.downloadUrl.addOnFailureListener { Exception ->
                         println(Exception.localizedMessage + Exception.stackTrace)
                     }.addOnSuccessListener { Uri ->
-                        myLoadImage.getImagePath(Uri.path.toString())
+                        myLoadImage.getImagePath(Uri.toString())
 
                     }
                 } else if (p0.isCanceled) {
-                   throw p0.exception?.fillInStackTrace()!!
+                    throw p0.exception?.fillInStackTrace()!!
                 } else {
-                  makeText(this@RegisterDetailActivity,getString(R.string.unknown),Toast.LENGTH_LONG).show()
+                    makeText(
+                        this@RegisterDetailActivity,
+                        getString(R.string.unknown),
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         })
 
     }
+
     override fun onBackPressed() {
         super.onBackPressed()
         Animatoo.animateSwipeRight(this)
