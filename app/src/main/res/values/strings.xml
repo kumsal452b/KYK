@@ -44,4 +44,5 @@
     <string name="please_wait">Please Wait</string>
     <string name="wrong_username">This username is already in use. Enter another username or choose one of the recommended usernames.</string>
     <string name="exsist_username">Username is already in use. Try another username or use recommended usernames.</string>
+    <string name="unknown">An unknown error has occurred. Please try again.</string>
 </resources>

@@ -104,6 +104,9 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                WaitDialog.show(this@RegisterDetailActivity,getString(R.string.err))
+                WaitDialog.dismiss(6000)
+                
                 var theName = getIntent().getStringExtra("name") as String
                 var thePass = getIntent().getStringExtra("pass") as String
                 var theEmail = getIntent().getStringExtra("email") as String
@@ -133,33 +136,33 @@ class RegisterDetailActivity : AppCompatActivity() {
                         getImagePath(object : LoadImage {
                             override fun getImagePath(path: String) {
                                 println("oath"+path)
-//                        mMap.set("name_surname", theName)
-//                        mMap.set("image", path)
-//                        mMap.set("username", theUserNames)
-//                        mMap.set("email", theEmail)
-//                        mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-//                            makeText(
-//                                this@RegisterDetailActivity,
-//                                Exception.localizedMessage,
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }.addOnSuccessListener(
-//                            OnSuccessListener<Void> {
-//                                makeText(
-//                                    this@RegisterDetailActivity,
-//                                    "Succec",
-//                                    Toast.LENGTH_LONG
-//                                ).show()
-//                                val intent: Intent =
-//                                    Intent(applicationContext, MainActivity::class.java)
-//                                startActivity(intent)
-//                                this@RegisterDetailActivity.finish()
-//                            }
-//                        )
+                        mMap.set("name_surname", theName)
+                        mMap.set("image", path)
+                        mMap.set("username", theUserNames)
+                        mMap.set("email", theEmail)
+                        mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
+                            makeText(
+                                this@RegisterDetailActivity,
+                                Exception.localizedMessage,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }.addOnSuccessListener(
+                            OnSuccessListener<Void> {
+                                makeText(
+                                    this@RegisterDetailActivity,
+                                    "Succec",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                val intent: Intent =
+                                    Intent(applicationContext, MainActivity::class.java)
+                                startActivity(intent)
+                                this@RegisterDetailActivity.finish()
+                            }
+                        )
 
 
                             }
-                        }, "deneme")
+                        },  currId )
 
 
 
@@ -452,52 +455,24 @@ class RegisterDetailActivity : AppCompatActivity() {
     fun getImagePath(myLoadImage:LoadImage,uid:String){
         var path="profile_image"+uid
         var fileRef=mRefStorage.child(path+".jpg")
-        fileRef.putFile(imageuri).addOnSuccessListener {
-            object : OnSuccessListener<UploadTask.TaskSnapshot> {
-                override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
-
-
-
-                }
-
-            } }.addOnFailureListener(object : OnFailureListener {
+        fileRef.putFile(imageuri).addOnFailureListener(object : OnFailureListener {
             override fun onFailure(p0: Exception) {
-                println(p0.localizedMessage)
+                throw p0.fillInStackTrace()
                 return
             }
         }).addOnCompleteListener(object : OnCompleteListener<UploadTask.TaskSnapshot> {
             override fun onComplete(p0: Task<UploadTask.TaskSnapshot>) {
-                println("erisim saglandi")
                 if (p0.isSuccessful) {
-                    fileRef.downloadUrl.addOnCompleteListener {
-                        object : OnCompleteListener<Uri> {
-                            override fun onComplete(p0: Task<Uri>) {
-                                if (p0.isSuccessful) {
-                                    myLoadImage.getImagePath(p0.result.toString())
-                                } else {
-                                    makeText(
-                                        this@RegisterDetailActivity,
-                                        "Something went wrong. Please try again.",
-                                        Toast.LENGTH_LONG
-                                    )
-                                }
-                            }
-
-                        }
-                    }.addOnFailureListener { Exception ->
+                    fileRef.downloadUrl.addOnFailureListener { Exception ->
                         println(Exception.localizedMessage + Exception.stackTrace)
-                    }.addOnCanceledListener {
-                        object : OnCanceledListener {
-                            override fun onCanceled() {
-                                println("iptal")
-                            }
+                    }.addOnSuccessListener { Uri ->
+                        myLoadImage.getImagePath(Uri.path.toString())
 
-                        }
                     }
                 } else if (p0.isCanceled) {
-                    println("islem basarisiz" + p0.exception?.localizedMessage)
+                   throw p0.exception?.fillInStackTrace()!!
                 } else {
-                    println("islem bilinmiyor" + p0.exception?.localizedMessage)
+                  makeText(this@RegisterDetailActivity,getString(R.string.unknown),Toast.LENGTH_LONG).show()
                 }
             }
         })
