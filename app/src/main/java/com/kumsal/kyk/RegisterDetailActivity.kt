@@ -466,33 +466,38 @@ class RegisterDetailActivity : AppCompatActivity() {
     }
 
     fun getImagePath(myLoadImage: LoadImage, uid: String) {
-        var path = "profile_image" + uid
-        var fileRef = mRefStorage.child(path + ".jpg")
-        fileRef.putFile(imageuri).addOnFailureListener(object : OnFailureListener {
-            override fun onFailure(p0: Exception) {
-                throw p0.fillInStackTrace()
-                return
-            }
-        }).addOnCompleteListener(object : OnCompleteListener<UploadTask.TaskSnapshot> {
-            override fun onComplete(p0: Task<UploadTask.TaskSnapshot>) {
-                if (p0.isSuccessful) {
-                    fileRef.downloadUrl.addOnFailureListener { Exception ->
-                        println(Exception.localizedMessage + Exception.stackTrace)
-                    }.addOnSuccessListener { Uri ->
-                        myLoadImage.getImagePath(Uri.toString())
+       if (imageuri!= Uri.EMPTY){
+           var path = "profile_image" + uid
+           var fileRef = mRefStorage.child(path + ".jpg")
+           fileRef.putFile(imageuri).addOnFailureListener(object : OnFailureListener {
+               override fun onFailure(p0: Exception) {
+                   throw p0.fillInStackTrace()
+                   return
+               }
+           }).addOnCompleteListener(object : OnCompleteListener<UploadTask.TaskSnapshot> {
+               override fun onComplete(p0: Task<UploadTask.TaskSnapshot>) {
+                   if (p0.isSuccessful) {
+                       fileRef.downloadUrl.addOnFailureListener { Exception ->
+                           println(Exception.localizedMessage + Exception.stackTrace)
+                       }.addOnSuccessListener { Uri ->
+                           myLoadImage.getImagePath(Uri.toString())
 
-                    }
-                } else if (p0.isCanceled) {
-                    throw p0.exception?.fillInStackTrace()!!
-                } else {
-                    makeText(
-                        this@RegisterDetailActivity,
-                        getString(R.string.unknown),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        })
+                       }
+                   } else if (p0.isCanceled) {
+                       throw p0.exception?.fillInStackTrace()!!
+                   } else {
+                       makeText(
+                           this@RegisterDetailActivity,
+                           getString(R.string.unknown),
+                           Toast.LENGTH_LONG
+                       ).show()
+                   }
+               }
+           })
+       }
+        else{
+           myLoadImage.getImagePath("")
+       }
 
     }
 
