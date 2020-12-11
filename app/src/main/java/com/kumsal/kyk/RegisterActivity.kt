@@ -38,6 +38,7 @@ class RegisterActivity : AppCompatActivity() {
         mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
         register.setOnClickListener(View.OnClickListener {
 //            WaitDialog.show(this,getString(R.string.please_wait))
+            println(register())
             if (register()) {
                 WaitDialog.show(this, "Loading")
                 WaitDialog.dismiss(5000)
