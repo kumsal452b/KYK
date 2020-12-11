@@ -104,13 +104,19 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                WaitDialog.show(this@RegisterDetailActivity, getString(R.string.err))
+                WaitDialog.show(this@RegisterDetailActivity, getString(R.string.please_wait))
                 WaitDialog.dismiss(6000)
 
                 var theName = getIntent().getStringExtra("name") as String
                 var thePass = getIntent().getStringExtra("pass") as String
                 var theEmail = getIntent().getStringExtra("email") as String
-                var theUserNames = username.text.toString()
+                var theUserNames:String
+                if (usernameCheckBox.isChecked){
+                    theUserNames=advice?.getSelectedItem() as String
+                }
+                else{
+                    theUserNames=username.text.toString()
+                }
                 if (usernames.contains(theUserNames)) {
                     WaitDialog.dismiss()
                     MessageDialog.show(
@@ -353,26 +359,28 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun isEmpty(): Boolean {
         var troubleCount = 0;
-        if (!usernameCheckBox.isChecked) {
-            if (TextUtils.isEmpty(username.text)) {
-                if (!usernameCheckBox.isChecked) {
-                    username.setError(getString(R.string.must_be_leave))
+        if (!usernameCheckBox.isChecked){
+            if (!usernameCheckBox.isChecked) {
+                if (TextUtils.isEmpty(username.text)) {
+                    if (!usernameCheckBox.isChecked) {
+                        username.setError(getString(R.string.must_be_leave))
+                        MessageDialog.show(
+                            this@RegisterDetailActivity,
+                            getString(R.string.err),
+                            getString(R.string.choose_username),
+                            "Okey"
+                        )
+                        return false
+                    }
+                } else if (usernames.contains(username.text.toString())) {
                     MessageDialog.show(
                         this@RegisterDetailActivity,
                         getString(R.string.err),
-                        getString(R.string.choose_username),
+                        getString(R.string.wrong_username),
                         "Okey"
                     )
                     return false
                 }
-            } else if (usernames.contains(username.text.toString())) {
-                MessageDialog.show(
-                    this@RegisterDetailActivity,
-                    getString(R.string.err),
-                    getString(R.string.wrong_username),
-                    "Okey"
-                )
-                return false
             }
         }
         return true
