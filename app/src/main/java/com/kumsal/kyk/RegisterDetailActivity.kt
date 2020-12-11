@@ -106,9 +106,9 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                var theName = getIntent().getStringExtra("") as String
-                var thePass = getIntent().getStringExtra("") as String
-                var theEmail = getIntent().getStringExtra("") as String
+                var theName = getIntent().getStringExtra("name") as String
+                var thePass = getIntent().getStringExtra("pass") as String
+                var theEmail = getIntent().getStringExtra("email") as String
                 var theUserNames=username.text.toString()
                 if (usernames.contains(theUserNames)){
                     MessageDialog.show(
