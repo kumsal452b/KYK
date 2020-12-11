@@ -410,10 +410,13 @@ class RegisterDetailActivity : AppCompatActivity() {
                     }
                     name += fulname.get(a)
                 }
-                var surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
+                var surnameM = ""
                 if (surname == null) {
                     surname = ""
                     surnameM = ""
+                }
+                else{
+                    surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
                 }
                 var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
                 var count = 0
