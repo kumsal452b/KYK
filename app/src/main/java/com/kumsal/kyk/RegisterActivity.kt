@@ -40,6 +40,7 @@ class RegisterActivity : AppCompatActivity() {
 //            WaitDialog.show(this,getString(R.string.please_wait))
             println(register())
             if (register()) {
+                troubleCount=0;
                 WaitDialog.show(this, "Loading")
                 WaitDialog.dismiss(5000)
                 val intent: Intent =
@@ -77,6 +78,7 @@ class RegisterActivity : AppCompatActivity() {
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
                 troubleCount++
             }else{
+                troubleCount=0
                 passwordTry.setError(null)
                 password.setError(null)
             }
@@ -88,6 +90,7 @@ class RegisterActivity : AppCompatActivity() {
                 passwordTry.setError(getString(R.string.register_activity_match_pass))
                 troubleCount++
             }else{
+                troubleCount=0
                 passwordTry.setError(null)
                 password.setError(null)
             }
@@ -153,7 +156,6 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         if (troubleCount>0){
-            troubleCount=0
             return false
         }else{
             return true
