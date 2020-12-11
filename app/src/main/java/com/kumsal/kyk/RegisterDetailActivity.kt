@@ -268,7 +268,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(mediaWindow, 100)
             } else {
-                makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
+                makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
             }
         }
         if (requestCode == 1234) {
@@ -276,7 +276,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
                 ) {
-                    makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
+                    makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
                     CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(2, 2)
@@ -286,7 +286,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
             } else if (grantResults.size == 1) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                    makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
+                    makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
                     CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(2, 2)
@@ -309,8 +309,8 @@ class RegisterDetailActivity : AppCompatActivity() {
                     uri = data.data
                     CropImage.activity(uri)
                         .setAspectRatio(2, 2)
-                        .setActivityTitle("Crop Image")
-                        .setCropMenuCropButtonTitle("Kirp")
+                        .setActivityTitle(getString(R.string.crop_title))
+                        .setCropMenuCropButtonTitle(getString(R.string.crop_))
                         .setAutoZoomEnabled(true)
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .start(this)

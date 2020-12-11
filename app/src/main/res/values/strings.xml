@@ -45,4 +45,8 @@
     <string name="wrong_username">This username is already in use. Enter another username or choose one of the recommended usernames.</string>
     <string name="exsist_username">Username is already in use. Try another username or use recommended usernames.</string>
     <string name="unknown">An unknown error has occurred. Please try again.</string>
+    <string name="crop_title">Crop Image</string>
+    <string name="crop_">Crop</string>
+    <string name="permissin_deniad">Camera Permission access</string>
+    <string name="galery_perm">Gallery permission denied</string>
 </resources>
