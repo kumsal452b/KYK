@@ -17,14 +17,20 @@ import android.provider.MediaStore
 import android.text.TextUtils
 import android.view.*
 import android.widget.*
+import android.widget.Toast.makeText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 
 import com.google.firebase.database.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.v3.BottomMenu
 
@@ -54,16 +60,20 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var imageBtn: ImageButton
     private var advice: Spinner? = null
     private lateinit var regBtn: Button
-    private lateinit var mAuth: FirebaseAuth
     private var name: String? = null
-    private var mUsername: DatabaseReference? = null
     private lateinit var choosingDialog: Dialog
     private lateinit var linearLayout: LinearLayout
     private lateinit var usernameCheckBox: CheckBox
     lateinit var adapter: ArrayAdapter<String>
     private lateinit var spinnerColor: TextView
     private lateinit var usernames: ArrayList<String>
+
+    private lateinit var mAuth: FirebaseAuth
+    private var mUsername: DatabaseReference? = null
     private lateinit var mDatabase: DatabaseReference
+    private lateinit var mRefStorage:StorageReference
+
+    lateinit var imageuri:Uri
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -85,10 +95,13 @@ class RegisterDetailActivity : AppCompatActivity() {
         regBtn = findViewById(R.id.register_activity_detail_regBtn)
         usernameCheckBox = findViewById(R.id.recomanded_username)
         spinnerColor = findViewById(R.id.spinner_list_)
+        usernames = ArrayList<String>()
+
+
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
-        usernames = ArrayList<String>()
+        mRefStorage=FirebaseStorage.getInstance().getReference("images")
         generateUsername(name)
 
         regBtn.setOnClickListener(object : View.OnClickListener {
@@ -112,43 +125,48 @@ class RegisterDetailActivity : AppCompatActivity() {
                         thePass
                     ).addOnSuccessListener {
 
-                        var mMap: HashMap<String, String>
-                        mMap = HashMap()
-                        mMap.set("name_surname",theName)
-                        mMap.set("image", "")
+                        var mMap = HashMap<String, String>()
+
                         val currId: String = mAuth.uid.toString()
                         val globals = Globals.ınstance
                         globals?.uid = currId
-                        mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-                            Toast.makeText(
-                                this@RegisterDetailActivity,
-                                Exception.localizedMessage,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }.addOnSuccessListener(
-                            OnSuccessListener<Void> {
-                                Toast.makeText(
-                                    this@RegisterDetailActivity,
-                                    "Succec",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                                val intent: Intent =
-                                    Intent(applicationContext, MainActivity::class.java)
-                                startActivity(intent)
-                                this@RegisterDetailActivity.finish()
+                        getImagePath(object : LoadImage {
+                            override fun getImagePath(path: String) {
+                                mMap.set("name_surname", theName)
+                                mMap.set("image", path)
+                                mMap.set("username", theUserNames)
+                                mMap.set("email", theEmail)
+                                mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
+                                    makeText(
+                                        this@RegisterDetailActivity,
+                                        Exception.localizedMessage,
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                }.addOnSuccessListener(
+                                    OnSuccessListener<Void> {
+                                        makeText(
+                                            this@RegisterDetailActivity,
+                                            "Succec",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                        val intent: Intent =
+                                            Intent(applicationContext, MainActivity::class.java)
+                                        startActivity(intent)
+                                        this@RegisterDetailActivity.finish()
+                                    }
+                                )
+
+
                             }
-                        )
-
-
+                        }, currId)
                     }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
-                        Toast.makeText(
+                        makeText(
                             this@RegisterDetailActivity,
-                            Exception.localizedMessage,
+                            "test",
                             Toast.LENGTH_LONG
                         ).show()
 
                     }
-
                 }
             }
         })
@@ -232,7 +250,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(mediaWindow, 100)
             } else {
-                Toast.makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
+                makeText(this, "galery permission denied", Toast.LENGTH_LONG).show()
             }
         }
         if (requestCode == 1234) {
@@ -240,23 +258,23 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
                 ) {
-                    Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
+                    makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
                     CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(2, 2)
                         .start(this)
                 } else {
-                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                    makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
             } else if (grantResults.size == 1) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                    Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
+                    makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
                     CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
                         .setAspectRatio(2, 2)
                         .start(this)
                 } else {
-                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                    makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -284,7 +302,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
-                var imageuri = result.uri
+                imageuri = result.uri
                 imageView.setImageURI(imageuri)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 
@@ -427,7 +445,27 @@ class RegisterDetailActivity : AppCompatActivity() {
         return result
     }
 
-    fun getImagePath(myLoadImage:LoadImage){
+    fun getImagePath(myLoadImage:LoadImage,uid:String){
+        var path="profile_image"+uid
+        var fileRef=mRefStorage.child(path+".jpg")
+        fileRef.putFile(imageuri).addOnSuccessListener {
+            object : OnSuccessListener<UploadTask.TaskSnapshot> {
+                override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
+                    fileRef.downloadUrl.addOnCompleteListener {
+                        object : OnCompleteListener<Uri> {
+                            override fun onComplete(p0: Task<Uri>) {
+                                if (p0.isSuccessful){
+                                    myLoadImage.getImagePath(p0.result.toString())
+                                }else{
+                                    makeText(this@RegisterDetailActivity, "Something went wrong. Please try again.",Toast.LENGTH_LONG)
+                                }
+                            }
+
+                        } }
+
+                }
+
+            } }
 
     }
     override fun onBackPressed() {
