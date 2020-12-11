@@ -22,10 +22,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.*
 import com.google.firebase.auth.FirebaseAuth
 
 import com.google.firebase.database.*
@@ -120,9 +117,22 @@ class RegisterDetailActivity : AppCompatActivity() {
                     )
                     return
                 }
-                getImagePath(object : LoadImage {
-                    override fun getImagePath(path: String) {
-                        println("oath"+path)
+
+                if (isEmpty()) {
+                    mAuth.createUserWithEmailAndPassword(
+                        theEmail,
+                        thePass
+                    ).addOnSuccessListener {
+
+                        var mMap = HashMap<String, String>()
+
+                        val currId: String = mAuth.uid.toString()
+                        val globals = Globals.ınstance
+                        globals?.uid = currId
+
+                        getImagePath(object : LoadImage {
+                            override fun getImagePath(path: String) {
+                                println("oath"+path)
 //                        mMap.set("name_surname", theName)
 //                        mMap.set("image", path)
 //                        mMap.set("username", theUserNames)
@@ -148,19 +158,10 @@ class RegisterDetailActivity : AppCompatActivity() {
 //                        )
 
 
-                    }
-                }, "deneme")
-                if (isEmpty()) {
-                    mAuth.createUserWithEmailAndPassword(
-                        theEmail,
-                        thePass
-                    ).addOnSuccessListener {
+                            }
+                        }, "deneme")
 
-                        var mMap = HashMap<String, String>()
 
-                        val currId: String = mAuth.uid.toString()
-                        val globals = Globals.ınstance
-                        globals?.uid = currId
 
                     }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
                         makeText(
@@ -484,7 +485,14 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                         }
                     }.addOnFailureListener { Exception ->
-                        println(Exception.localizedMessage+Exception.stackTrace)
+                        println(Exception.localizedMessage + Exception.stackTrace)
+                    }.addOnCanceledListener {
+                        object : OnCanceledListener {
+                            override fun onCanceled() {
+                                println("iptal")
+                            }
+
+                        }
                     }
                 } else if (p0.isCanceled) {
                     println("islem basarisiz" + p0.exception?.localizedMessage)
