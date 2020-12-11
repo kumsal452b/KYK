@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 
 import com.google.firebase.database.*
@@ -30,6 +31,7 @@ import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.UID.Companion.getInstance
+import com.kumsal.kyk.interfaces.LoadImage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -58,20 +60,17 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var choosingDialog: Dialog
     private lateinit var linearLayout: LinearLayout
     private lateinit var usernameCheckBox: CheckBox
-    lateinit var adapter : ArrayAdapter<String>
-    private lateinit var spinnerColor:TextView
-    private lateinit  var usernames : ArrayList<String>
+    lateinit var adapter: ArrayAdapter<String>
+    private lateinit var spinnerColor: TextView
+    private lateinit var usernames: ArrayList<String>
+    private lateinit var mDatabase: DatabaseReference
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
     var perm2 = Array<String>(1) { i: Int ->
         Manifest.permission.CAMERA
     }
-    var perm3 = Array<String>(1) { i: Int ->
-        Manifest.permission.READ_EXTERNAL_STORAGE
-        WRITE_EXTERNAL_STORAGE
-    }
-    lateinit var bitma: Bitmap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
@@ -81,50 +80,76 @@ class RegisterDetailActivity : AppCompatActivity() {
         imageView = findViewById(R.id.register_activity_detail_imageView);
         imageBtn = findViewById(R.id.register_activity_detail_imageButton);
         advice = findViewById<Spinner>(R.id.register_activity_detail_spinner)
-        advice?.isEnabled=false
+        advice?.isEnabled = false
 
         regBtn = findViewById(R.id.register_activity_detail_regBtn)
-        usernameCheckBox=findViewById(R.id.recomanded_username)
-        spinnerColor=findViewById(R.id.spinner_list_)
+        usernameCheckBox = findViewById(R.id.recomanded_username)
+        spinnerColor = findViewById(R.id.spinner_list_)
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
-        usernames=ArrayList<String>()
+        mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
+        usernames = ArrayList<String>()
         generateUsername(name)
 
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-//                if (isEmpty()){
-//                    mAuth.createUserWithEmailAndPassword(
-//                        email.text.toString(),
-//                        password.text.toString()
-//                    ).addOnSuccessListener {
-//
-//                        var mMap: HashMap<String, String>
-//                        mMap = HashMap()
-//                        mMap.set("name_surname", name.text.toString())
-//                        mMap.set("image", "")
-//                        val currId: String = mAuth.uid.toString()
-//                        val globals = Globals.ınstance
-//                        globals?.uid = currId
-//                        mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-//                            Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-//                        }.addOnSuccessListener(
-//                            OnSuccessListener<Void> {
-//                                Toast.makeText(this, "Succec", Toast.LENGTH_LONG).show()
-//                                val intent: Intent =
-//                                    Intent(applicationContext, MainActivity::class.java)
-//                                startActivity(intent)
-//                                this.finish()
-//                            }
-//                        )
-//
-//
-//                    }.addOnFailureListener(this) { Exception ->
-//                        Toast.makeText(this, Exception.localizedMessage, Toast.LENGTH_LONG).show()
-//
-//                    }
-//
-//                }
+                var theName = getIntent().getStringExtra("") as String
+                var thePass = getIntent().getStringExtra("") as String
+                var theEmail = getIntent().getStringExtra("") as String
+                var theUserNames=username.text.toString()
+                if (usernames.contains(theUserNames)){
+                    MessageDialog.show(
+                        this@RegisterDetailActivity,
+                        getString(R.string.err),
+                        getString(R.string.exsist_username),
+                        "OK"
+                    )
+                    return
+                }
+                if (isEmpty()) {
+                    mAuth.createUserWithEmailAndPassword(
+                        theEmail,
+                        thePass
+                    ).addOnSuccessListener {
+
+                        var mMap: HashMap<String, String>
+                        mMap = HashMap()
+                        mMap.set("name_surname",theName)
+                        mMap.set("image", "")
+                        val currId: String = mAuth.uid.toString()
+                        val globals = Globals.ınstance
+                        globals?.uid = currId
+                        mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
+                            Toast.makeText(
+                                this@RegisterDetailActivity,
+                                Exception.localizedMessage,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }.addOnSuccessListener(
+                            OnSuccessListener<Void> {
+                                Toast.makeText(
+                                    this@RegisterDetailActivity,
+                                    "Succec",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                val intent: Intent =
+                                    Intent(applicationContext, MainActivity::class.java)
+                                startActivity(intent)
+                                this@RegisterDetailActivity.finish()
+                            }
+                        )
+
+
+                    }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
+                        Toast.makeText(
+                            this@RegisterDetailActivity,
+                            Exception.localizedMessage,
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+
+                }
             }
         })
         imageBtn.setOnClickListener(object : View.OnClickListener {
@@ -177,18 +202,17 @@ class RegisterDetailActivity : AppCompatActivity() {
         })
         usernameCheckBox.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                if (usernameCheckBox.isChecked){
+                if (usernameCheckBox.isChecked) {
                     username.setEnabled(false)
-                    advice?.isEnabled=true
+                    advice?.isEnabled = true
                     username.setHintTextColor(Color.RED)
                     advice?.setBackgroundResource(R.drawable.bacground_edittext)
                     username.setBackgroundResource(R.drawable.bacground_spinner_error)
 
-                }
-                else{
+                } else {
                     username.setEnabled(true)
                     username.setHintTextColor(Color.parseColor("#D1CDCD"))
-                    advice?.isEnabled=false
+                    advice?.isEnabled = false
                     username.setBackgroundResource(R.drawable.bacground_edittext)
                     advice?.setBackgroundResource(R.drawable.bacground_spinner_error)
                 }
@@ -212,24 +236,24 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         }
         if (requestCode == 1234) {
-            if (grantResults.size>=2){
+            if (grantResults.size >= 2) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                    grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
+                ) {
                     Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
                     CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(2,2)
+                        .setAspectRatio(2, 2)
                         .start(this)
                 } else {
                     Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
-            }
-            else if(grantResults.size==1){
+            } else if (grantResults.size == 1) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
                     Toast.makeText(this, "Camera Permission access", Toast.LENGTH_LONG)
                     CropImage.activity()
                         .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(2,2)
+                        .setAspectRatio(2, 2)
                         .start(this)
                 } else {
                     Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
@@ -257,13 +281,12 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
             }
         }
-        if (requestCode==CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
-            if (resultCode== RESULT_OK){
-            var result:CropImage.ActivityResult=CropImage.getActivityResult(data)
-                var imageuri=result.uri
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
+                var imageuri = result.uri
                 imageView.setImageURI(imageuri)
-            }
-            else if (resultCode==CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 
             }
         }
@@ -277,7 +300,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         var permReadStrg =
             ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
 
-        var listPermissionsNeeded=ArrayList<String>()
+        var listPermissionsNeeded = ArrayList<String>()
         if (permCam != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(CAMERA)
         }
@@ -287,10 +310,12 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (permReadStrg != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(READ_EXTERNAL_STORAGE)
         }
-        if (!listPermissionsNeeded.isEmpty()){
+        if (!listPermissionsNeeded.isEmpty()) {
 
-            ActivityCompat.requestPermissions(this,
-                listPermissionsNeeded.toTypedArray(),1234)
+            ActivityCompat.requestPermissions(
+                this,
+                listPermissionsNeeded.toTypedArray(), 1234
+            )
             return false
         }
         return true
@@ -298,7 +323,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun isEmpty(): Boolean {
         var troubleCount = 0;
-        if (!usernameCheckBox.isChecked){
+        if (!usernameCheckBox.isChecked) {
             if (TextUtils.isEmpty(username.text)) {
                 if (!usernameCheckBox.isChecked) {
                     username.setError(getString(R.string.must_be_leave))
@@ -310,8 +335,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                     )
                     return false
                 }
-            }
-            else if (usernames.contains(username.text.toString())){
+            } else if (usernames.contains(username.text.toString())) {
                 MessageDialog.show(
                     this@RegisterDetailActivity,
                     getString(R.string.err),
@@ -330,7 +354,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         var name = ""
         var surname: String? = null
         var fulname = ""
-        WaitDialog.show(this,getString(R.string.please_wait))
+        WaitDialog.show(this, getString(R.string.please_wait))
         mUsername?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (a in snapshot.children) {
@@ -349,9 +373,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                     name += fulname.get(a)
                 }
                 var surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
-                if (surname==null){
-                    surname=""
-                    surnameM=""
+                if (surname == null) {
+                    surname = ""
+                    surnameM = ""
                 }
                 var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
                 var count = 0
@@ -360,9 +384,9 @@ class RegisterDetailActivity : AppCompatActivity() {
                     count++
                 }
                 var ad2 = ""
-                if (surname==null){
-                    surname=""
-                    surnameM=""
+                if (surname == null) {
+                    surname = ""
+                    surnameM = ""
                 }
 
                 while (true) {
@@ -383,7 +407,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                         break
                     }
                 }
-                 adapter = ArrayAdapter<String>(
+                adapter = ArrayAdapter<String>(
                     this@RegisterDetailActivity,
                     R.layout.spinner_list,
                     result
@@ -403,6 +427,9 @@ class RegisterDetailActivity : AppCompatActivity() {
         return result
     }
 
+    fun getImagePath(myLoadImage:LoadImage){
+
+    }
     override fun onBackPressed() {
         super.onBackPressed()
         Animatoo.animateSwipeRight(this)
