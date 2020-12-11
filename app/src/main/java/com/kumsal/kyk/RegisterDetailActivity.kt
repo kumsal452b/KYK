@@ -122,7 +122,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
                 getImagePath(object : LoadImage {
                     override fun getImagePath(path: String) {
-                        println(path)
+                        println("oath"+path)
 //                        mMap.set("name_surname", theName)
 //                        mMap.set("image", path)
 //                        mMap.set("username", theUserNames)
@@ -150,27 +150,27 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                     }
                 }, "deneme")
-//                if (isEmpty()) {
-//                    mAuth.createUserWithEmailAndPassword(
-//                        theEmail,
-//                        thePass
-//                    ).addOnSuccessListener {
-//
-//                        var mMap = HashMap<String, String>()
-//
-//                        val currId: String = mAuth.uid.toString()
-//                        val globals = Globals.ınstance
-//                        globals?.uid = currId
-//
-//                    }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
-//                        makeText(
-//                            this@RegisterDetailActivity,
-//                            "test",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-//
-//                    }
-//                }
+                if (isEmpty()) {
+                    mAuth.createUserWithEmailAndPassword(
+                        theEmail,
+                        thePass
+                    ).addOnSuccessListener {
+
+                        var mMap = HashMap<String, String>()
+
+                        val currId: String = mAuth.uid.toString()
+                        val globals = Globals.ınstance
+                        globals?.uid = currId
+
+                    }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
+                        makeText(
+                            this@RegisterDetailActivity,
+                            "test",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+                    }
+                }
             }
         })
         imageBtn.setOnClickListener(object : View.OnClickListener {
@@ -455,17 +455,7 @@ class RegisterDetailActivity : AppCompatActivity() {
             object : OnSuccessListener<UploadTask.TaskSnapshot> {
                 override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
 
-                    fileRef.downloadUrl.addOnCompleteListener {
-                        object : OnCompleteListener<Uri> {
-                            override fun onComplete(p0: Task<Uri>) {
-                                if (p0.isSuccessful){
-                                    myLoadImage.getImagePath(p0.result.toString())
-                                }else{
-                                    makeText(this@RegisterDetailActivity, "Something went wrong. Please try again.",Toast.LENGTH_LONG)
-                                }
-                            }
 
-                        } }
 
                 }
 
@@ -473,6 +463,34 @@ class RegisterDetailActivity : AppCompatActivity() {
             override fun onFailure(p0: Exception) {
                 println(p0.localizedMessage)
                 return
+            }
+        }).addOnCompleteListener(object : OnCompleteListener<UploadTask.TaskSnapshot> {
+            override fun onComplete(p0: Task<UploadTask.TaskSnapshot>) {
+                println("erisim saglandi")
+                if (p0.isSuccessful) {
+                    fileRef.downloadUrl.addOnCompleteListener {
+                        object : OnCompleteListener<Uri> {
+                            override fun onComplete(p0: Task<Uri>) {
+                                if (p0.isSuccessful) {
+                                    myLoadImage.getImagePath(p0.result.toString())
+                                } else {
+                                    makeText(
+                                        this@RegisterDetailActivity,
+                                        "Something went wrong. Please try again.",
+                                        Toast.LENGTH_LONG
+                                    )
+                                }
+                            }
+
+                        }
+                    }.addOnFailureListener { Exception ->
+                        println(Exception.localizedMessage+Exception.stackTrace)
+                    }
+                } else if (p0.isCanceled) {
+                    println("islem basarisiz" + p0.exception?.localizedMessage)
+                } else {
+                    println("islem bilinmiyor" + p0.exception?.localizedMessage)
+                }
             }
         })
 
