@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
@@ -73,7 +74,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mRefStorage:StorageReference
 
-    lateinit var imageuri:Uri
+    private lateinit var imageuri:Uri
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -97,7 +98,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         spinnerColor = findViewById(R.id.spinner_list_)
         usernames = ArrayList<String>()
 
-
+        imageuri= Uri.EMPTY
         mAuth = FirebaseAuth.getInstance()
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
@@ -109,8 +110,8 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var theName = getIntent().getStringExtra("name") as String
                 var thePass = getIntent().getStringExtra("pass") as String
                 var theEmail = getIntent().getStringExtra("email") as String
-                var theUserNames=username.text.toString()
-                if (usernames.contains(theUserNames)){
+                var theUserNames = username.text.toString()
+                if (usernames.contains(theUserNames)) {
                     MessageDialog.show(
                         this@RegisterDetailActivity,
                         getString(R.string.err),
@@ -119,55 +120,57 @@ class RegisterDetailActivity : AppCompatActivity() {
                     )
                     return
                 }
-                if (isEmpty()) {
-                    mAuth.createUserWithEmailAndPassword(
-                        theEmail,
-                        thePass
-                    ).addOnSuccessListener {
+                getImagePath(object : LoadImage {
+                    override fun getImagePath(path: String) {
+                        println(path)
+//                        mMap.set("name_surname", theName)
+//                        mMap.set("image", path)
+//                        mMap.set("username", theUserNames)
+//                        mMap.set("email", theEmail)
+//                        mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
+//                            makeText(
+//                                this@RegisterDetailActivity,
+//                                Exception.localizedMessage,
+//                                Toast.LENGTH_LONG
+//                            ).show()
+//                        }.addOnSuccessListener(
+//                            OnSuccessListener<Void> {
+//                                makeText(
+//                                    this@RegisterDetailActivity,
+//                                    "Succec",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+//                                val intent: Intent =
+//                                    Intent(applicationContext, MainActivity::class.java)
+//                                startActivity(intent)
+//                                this@RegisterDetailActivity.finish()
+//                            }
+//                        )
 
-                        var mMap = HashMap<String, String>()
-
-                        val currId: String = mAuth.uid.toString()
-                        val globals = Globals.ınstance
-                        globals?.uid = currId
-                        getImagePath(object : LoadImage {
-                            override fun getImagePath(path: String) {
-                                mMap.set("name_surname", theName)
-                                mMap.set("image", path)
-                                mMap.set("username", theUserNames)
-                                mMap.set("email", theEmail)
-                                mDatabase.child(currId).setValue(mMap).addOnFailureListener { Exception ->
-                                    makeText(
-                                        this@RegisterDetailActivity,
-                                        Exception.localizedMessage,
-                                        Toast.LENGTH_LONG
-                                    ).show()
-                                }.addOnSuccessListener(
-                                    OnSuccessListener<Void> {
-                                        makeText(
-                                            this@RegisterDetailActivity,
-                                            "Succec",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                        val intent: Intent =
-                                            Intent(applicationContext, MainActivity::class.java)
-                                        startActivity(intent)
-                                        this@RegisterDetailActivity.finish()
-                                    }
-                                )
-
-
-                            }
-                        }, currId)
-                    }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
-                        makeText(
-                            this@RegisterDetailActivity,
-                            "test",
-                            Toast.LENGTH_LONG
-                        ).show()
 
                     }
-                }
+                }, "deneme")
+//                if (isEmpty()) {
+//                    mAuth.createUserWithEmailAndPassword(
+//                        theEmail,
+//                        thePass
+//                    ).addOnSuccessListener {
+//
+//                        var mMap = HashMap<String, String>()
+//
+//                        val currId: String = mAuth.uid.toString()
+//                        val globals = Globals.ınstance
+//                        globals?.uid = currId
+//
+//                    }.addOnFailureListener(this@RegisterDetailActivity) { Exception ->
+//                        makeText(
+//                            this@RegisterDetailActivity,
+//                            "test",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//
+//                    }
+//                }
             }
         })
         imageBtn.setOnClickListener(object : View.OnClickListener {
@@ -451,6 +454,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         fileRef.putFile(imageuri).addOnSuccessListener {
             object : OnSuccessListener<UploadTask.TaskSnapshot> {
                 override fun onSuccess(p0: UploadTask.TaskSnapshot?) {
+
                     fileRef.downloadUrl.addOnCompleteListener {
                         object : OnCompleteListener<Uri> {
                             override fun onComplete(p0: Task<Uri>) {
@@ -465,7 +469,12 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                 }
 
-            } }
+            } }.addOnFailureListener(object : OnFailureListener {
+            override fun onFailure(p0: Exception) {
+                println(p0.localizedMessage)
+                return
+            }
+        })
 
     }
     override fun onBackPressed() {
