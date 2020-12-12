@@ -109,13 +109,14 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             }
         })
 
-        mUserDB.child(Globals.ınstance?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
+        mUserDB.child(mUser1?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var uriImage=snapshot.child("image").value as Uri
                 var thename=snapshot.child("name_surname").value as String
                 var thesername=snapshot.child("username").value as String
 
                 name.setText(thename)
+
                 username.setText(thesername)
                 proImage.setImageURI(uriImage)
             }
