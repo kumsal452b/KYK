@@ -49,4 +49,6 @@
     <string name="crop_">Crop</string>
     <string name="permissin_deniad">Camera Permission access</string>
     <string name="galery_perm">Gallery permission denied</string>
+    <string name="options">Options</string>
+    <string name="exit">Exit</string>
 </resources>
