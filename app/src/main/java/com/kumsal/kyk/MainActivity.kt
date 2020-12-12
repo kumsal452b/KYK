@@ -3,10 +3,12 @@ package com.kumsal.kyk
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,8 +18,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.*
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.kumsal.kyk.screns.StarterActivity
+import de.hdodenhof.circleimageview.CircleImageView
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 
@@ -32,7 +36,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
     private lateinit var mNavbar: NavigationView
-    
+    private lateinit var mUserDB:DatabaseReference
+    private lateinit var proImage:CircleImageView
+    private lateinit var name:TextView
+    private lateinit var username:TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,11 +50,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
         mFloatingActionButton = findViewById(R.id.fab)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
+        mNavbar = findViewById(R.id.nav_bar)
+
+
         mAuth = FirebaseAuth.getInstance()
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
-        mNavbar = findViewById(R.id.nav_bar)
-
+        mUserDB=FirebaseDatabase.getInstance().getReference("Users")
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -97,6 +106,22 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
                     this@MainActivity.finish()
                 }
                 return true
+            }
+        })
+
+        mUserDB.child(Globals.ınstance?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var uriImage=snapshot.child("image").value as Uri
+                var thename=snapshot.child("name_surname").value as String
+                var thesername=snapshot.child("username").value as String
+
+                name.setText(thename)
+                username.setText(thesername)
+                proImage.setImageURI(uriImage)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
             }
         })
 
