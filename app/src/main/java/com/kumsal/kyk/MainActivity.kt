@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
@@ -22,15 +23,16 @@ import me.ibrahimsn.lib.SmoothBottomBar
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private var toolbar: Toolbar? = null
-    private  var mViewPager: ViewPager?=null
-    private  var sectionPagerAdapter: SectionPagerAdapter?=null
-    private  var mBottomBar: SmoothBottomBar?=null
-    private  var mFloatingActionButton: FloatingActionButton?=null
-    private  var mDrawerLayout: DrawerLayout?=null
+    private var mViewPager: ViewPager? = null
+    private var sectionPagerAdapter: SectionPagerAdapter? = null
+    private var mBottomBar: SmoothBottomBar? = null
+    private var mFloatingActionButton: FloatingActionButton? = null
+    private var mDrawerLayout: DrawerLayout? = null
     internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
-    private  var mAuth: FirebaseAuth?=null
+    private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
-
+    private lateinit var mNavbar: NavigationView
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,13 +46,16 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mAuth = FirebaseAuth.getInstance()
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
-        println("sdk number"+android.os.Build.VERSION.SDK_INT)
+        mNavbar = findViewById(R.id.nav_bar)
+
+
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         actionBarDrawerToggle =
             ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
         actionBarDrawerToggle?.drawerArrowDrawable?.color = Color.WHITE
         mDrawerLayout?.addDrawerListener(actionBarDrawerToggle!!)
-//        actionBarDrawerToggle?.syncState()
+        actionBarDrawerToggle?.syncState()
 
         mViewPager?.adapter = sectionPagerAdapter
         mBottomBar?.onItemSelectedListener = this
@@ -79,15 +84,22 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         })
 
-
-        //Set spinner
-
         mFloatingActionButton?.setOnClickListener(View.OnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
-            startActivity(intent)
-            this.finish()
+
         })
+
+        mNavbar.setNavigationItemSelectedListener(object :NavigationView.OnNavigationItemSelectedListener {
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                if (item.itemId==R.id.menu_bar_quit){
+                    FirebaseAuth.getInstance().signOut()
+                    val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
+                    startActivity(intent)
+                    this@MainActivity.finish()
+                }
+                return true
+            }
+        })
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
