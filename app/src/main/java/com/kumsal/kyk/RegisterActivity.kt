@@ -155,11 +155,7 @@ class RegisterActivity : AppCompatActivity() {
             passwordTry.setError(getString(R.string.register_activity_match_pass))
         }
 
-        if (troubleCount>0){
-            return false
-        }else{
-            return true
-        }
+        return troubleCount <= 0
     }
     private fun isMailValid(mail:CharSequence):Boolean{
 
