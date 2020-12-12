@@ -5,10 +5,31 @@
     android:orientation="vertical">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/header_circle_image"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:src="@drawable/persontwo"
-        />
+        android:src="@drawable/persontwo" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:id="@+id/header_circle_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name Surname"
+            android:textSize="24dp"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/header_circle_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="20dp"
+            android:textColor="#686363"
+            android:layout_marginStart="3dp"/>
+    </LinearLayout>
 
 
 </LinearLayout>
