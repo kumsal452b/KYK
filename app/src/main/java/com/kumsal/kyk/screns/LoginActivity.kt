@@ -41,11 +41,11 @@ class LoginActivity : AppCompatActivity() {
 
         login.setOnClickListener(
             View.OnClickListener {
-                if (!isMailValid(email.text.toString())){
-                    email.setError(getString(R.string.mail_valid))
-                    return@OnClickListener
-                }
                 if (isLogin()){
+                    if (!isMailValid(email.text.toString())){
+                        email.setError(getString(R.string.mail_valid))
+                        return@OnClickListener
+                    }
                     WaitDialog.show(this, "Loading")
                     mAuth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
                         .addOnFailureListener(
@@ -98,11 +98,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun isLogin(): Boolean {
+        troubleCount=0
         if (TextUtils.isEmpty(email.text.toString())) {
             email.setError(getString(R.string.mustbe_empy_email))
             troubleCount++
         }
-        if (TextUtils.isEmpty(email.text.toString())) {
+        if (TextUtils.isEmpty(password.text.toString())) {
             password.setError(getString(R.string.password_cannot_be_emty))
             troubleCount++
         }
