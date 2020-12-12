@@ -45,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                         Exception->
                         TipDialog.show(this, "Problem has found", TipDialog.TYPE.ERROR)
                         Toast.makeText(applicationContext,Exception.localizedMessage,Toast.LENGTH_LONG).show()
-
+                        throw Exception.fillInStackTrace()
                     }
                 ).addOnCompleteListener(
                     OnCompleteListener {
@@ -79,7 +79,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent_forgot_password,option.toBundle())
         })
     }
-
+    private fun 
+    private fun isMailValid(mail:CharSequence):Boolean{
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()
+    }
     override fun onBackPressed() {
         super.onBackPressed()
         Animatoo.animateSlideDown(this)
