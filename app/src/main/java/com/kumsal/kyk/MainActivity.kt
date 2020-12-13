@@ -59,10 +59,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mNavbar = findViewById(R.id.nav_bar)
         //header initialize
-        layout=findViewById(R.id.header_layout)
+
         var view=View(this)
         var inflater:LayoutInflater=this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        view = inflater.inflate(R.layout.header, layout)
+        view = inflater.inflate(R.layout.header, null)
 
         name=view.findViewById(R.id.header_circle_name)
         username=view.findViewById(R.id.header_circle_user)
@@ -123,23 +123,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             false
         }
 
-        mUserDB.child(mUser1?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var uriImage=snapshot.child("image").value
-                var thename=snapshot.child("name_surname").value as String
-                var thesername=snapshot.child("username").value as String
-                if (uriImage==null){
-                    uriImage="emtpy"
-                }
-                name.setText(thename)
-                username.setText(thesername)
-                Picasso.get().load(uriImage as String).into(proImage)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
 
     }
 
@@ -174,6 +158,24 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             }
             startActivity(intent)
             super.finish()
+        }else{
+            mUserDB.child(mUser?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var uriImage=snapshot.child("image").value
+                    var thename=snapshot.child("name_surname").value as String
+                    var thesername=snapshot.child("username").value as String
+                    if (uriImage==null){
+                        uriImage="emtpy"
+                    }
+                    name.setText(thename)
+                    username.setText(thesername)
+                    Picasso.get().load(uriImage as String).into(proImage)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
         }
         super.onStart()
     }
