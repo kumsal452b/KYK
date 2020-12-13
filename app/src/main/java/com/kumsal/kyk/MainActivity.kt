@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         var view=View(this)
         var inflater:LayoutInflater=this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         view = inflater.inflate(R.layout.header, layout)
-        mNavbar.addView(view)
+
         name=view.findViewById(R.id.header_circle_name)
         username=view.findViewById(R.id.header_circle_user)
         proImage=view.findViewById(R.id.header_circle_image)
