@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
                                     Exception.localizedMessage,
                                     Toast.LENGTH_LONG
                                 ).show()
-                                throw Exception.fillInStackTrace()
+
                             }
                         ).addOnCompleteListener(
                             OnCompleteListener { task ->
