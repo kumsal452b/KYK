@@ -6,10 +6,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var proImage:CircleImageView
     private lateinit var name:TextView
     private lateinit var username:TextView
+    private lateinit var layout: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -56,10 +59,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mNavbar = findViewById(R.id.nav_bar)
         //header initialize
+        layout=findViewById(R.id.header_layout)
         var view=View(this)
         var inflater:LayoutInflater=this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        view = inflater.inflate(R.layout.header, null)
-        
+        view = inflater.inflate(R.layout.header, layout)
+        mNavbar.addView(view)
         name=view.findViewById(R.id.header_circle_name)
         username=view.findViewById(R.id.header_circle_user)
         proImage=view.findViewById(R.id.header_circle_image)
@@ -139,6 +143,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         })
 
     }
+
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (actionBarDrawerToggle?.onOptionsItemSelected(item)!!) {
