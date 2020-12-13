@@ -53,6 +53,7 @@
             </androidx.appcompat.widget.Toolbar>
 
         </LinearLayout>
+        <include layout="@layout/header" android:visibility="invisible"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_activity_pager_view"
