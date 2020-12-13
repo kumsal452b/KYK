@@ -112,17 +112,16 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         })
 
-        mNavbar.setNavigationItemSelectedListener(object :NavigationView.OnNavigationItemSelectedListener {
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                if (item.itemId==R.id.menu_bar_quit){
-                    FirebaseAuth.getInstance().signOut()
-                    val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
-                    startActivity(intent)
-                    this@MainActivity.finish()
-                }
-                return true
+        mNavbar.setNavigationItemSelectedListener { item ->
+            println("item calisti")
+            if (item.itemId == R.id.menu_bar_quit) {
+                FirebaseAuth.getInstance().signOut()
+                val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
+                startActivity(intent)
+                this@MainActivity.finish()
             }
-        })
+            false
+        }
 
         mUserDB.child(mUser1?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
