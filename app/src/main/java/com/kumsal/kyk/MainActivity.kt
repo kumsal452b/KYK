@@ -1,10 +1,12 @@
 package com.kumsal.kyk
 
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -12,6 +14,7 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.getSystemService
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -21,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.kumsal.kyk.screns.StarterActivity
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
@@ -51,7 +55,14 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mFloatingActionButton = findViewById(R.id.fab)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mNavbar = findViewById(R.id.nav_bar)
-
+        //header initialize
+        var view=View(this)
+        var inflater:LayoutInflater=this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        view = inflater.inflate(R.layout.header, null)
+        
+        name=view.findViewById(R.id.header_circle_name)
+        username=view.findViewById(R.id.header_circle_user)
+        proImage=view.findViewById(R.id.header_circle_image)
 
         mAuth = FirebaseAuth.getInstance()
         val mUser1: FirebaseUser? = mAuth?.currentUser
@@ -111,14 +122,15 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         mUserDB.child(mUser1?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                var uriImage=snapshot.child("image").value as Uri
+                var uriImage=snapshot.child("image").value
                 var thename=snapshot.child("name_surname").value as String
                 var thesername=snapshot.child("username").value as String
-
+                if (uriImage==null){
+                    uriImage="emtpy"
+                }
                 name.setText(thename)
-
                 username.setText(thesername)
-                proImage.setImageURI(uriImage)
+                Picasso.get().load(uriImage as String).into(proImage)
             }
 
             override fun onCancelled(error: DatabaseError) {
