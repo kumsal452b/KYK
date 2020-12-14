@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 
-class MainActivity : AppCompatActivity(), OnItemSelectedListener{
+class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private var toolbar: Toolbar? = null
     private var mViewPager: ViewPager? = null
     private var sectionPagerAdapter: SectionPagerAdapter? = null
@@ -43,10 +43,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener{
     private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
     private lateinit var mNavbar: NavigationView
-    private lateinit var mUserDB:DatabaseReference
-    private lateinit var proImage:CircleImageView
-    private lateinit var name:TextView
-    private lateinit var username:TextView
+    private lateinit var mUserDB: DatabaseReference
+    private lateinit var proImage: CircleImageView
+    private lateinit var name: TextView
+    private lateinit var username: TextView
     private lateinit var layout: LinearLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,18 +61,19 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener{
         mNavbar = findViewById(R.id.nav_bar)
         //header initialize
 
-        var view=View(this)
-        var inflater:LayoutInflater=this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        var view = View(this)
+        var inflater: LayoutInflater =
+            this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         view = inflater.inflate(R.layout.header, null)
 
-        name=view.findViewById(R.id.header_circle_name)
-        username=view.findViewById(R.id.header_circle_user)
-        proImage=view.findViewById(R.id.header_circle_image)
+        name = view.findViewById(R.id.header_circle_name)
+        username = view.findViewById(R.id.header_circle_user)
+        proImage = view.findViewById(R.id.header_circle_image)
 
         mAuth = FirebaseAuth.getInstance()
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
-        mUserDB=FirebaseDatabase.getInstance().getReference("Users")
+        mUserDB = FirebaseDatabase.getInstance().getReference("Users")
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -111,7 +112,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener{
 
         mFloatingActionButton?.setOnClickListener(View.OnClickListener {
 
-
         })
 
         mNavbar.setNavigationItemSelectedListener { item ->
@@ -121,13 +121,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener{
                 startActivity(intent)
                 this@MainActivity.finish()
             }
-            false
+            true
         }
 
 
-
     }
-
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -159,24 +157,25 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener{
             }
             startActivity(intent)
             super.finish()
-        }else{
-            mUserDB.child(mUser?.uid as String).addListenerForSingleValueEvent(object:ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var uriImage=snapshot.child("image").value
-                    var thename=snapshot.child("name_surname").value as String
-                    var thesername=snapshot.child("username").value as String
-                    if (uriImage==null){
-                        uriImage="emtpy"
+        } else {
+            mUserDB.child(mUser?.uid as String)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var uriImage = snapshot.child("image").value
+                        var thename = snapshot.child("name_surname").value as String
+                        var thesername = snapshot.child("username").value as String
+                        if (uriImage == null) {
+                            uriImage = "emtpy"
+                        }
+                        name.setText(thename)
+                        username.setText(thesername)
+                        Picasso.get().load(uriImage as String).into(proImage)
                     }
-                    name.setText(thename)
-                    username.setText(thesername)
-                    Picasso.get().load(uriImage as String).into(proImage)
-                }
 
-                override fun onCancelled(error: DatabaseError) {
+                    override fun onCancelled(error: DatabaseError) {
 
-                }
-            })
+                    }
+                })
         }
         super.onStart()
     }
