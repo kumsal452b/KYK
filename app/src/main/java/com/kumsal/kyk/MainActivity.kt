@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.getSystemService
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -31,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 
-class MainActivity : AppCompatActivity(), OnItemSelectedListener {
+class MainActivity : AppCompatActivity(), OnItemSelectedListener{
     private var toolbar: Toolbar? = null
     private var mViewPager: ViewPager? = null
     private var sectionPagerAdapter: SectionPagerAdapter? = null
