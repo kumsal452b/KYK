@@ -111,10 +111,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener{
 
         mFloatingActionButton?.setOnClickListener(View.OnClickListener {
 
+
         })
 
         mNavbar.setNavigationItemSelectedListener { item ->
-            println("item calisti")
             if (item.itemId == R.id.menu_bar_quit) {
                 FirebaseAuth.getInstance().signOut()
                 val intent: Intent = Intent(applicationContext, StarterActivity::class.java)
