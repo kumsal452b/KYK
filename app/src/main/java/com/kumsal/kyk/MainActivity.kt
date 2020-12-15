@@ -61,10 +61,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mNavbar = findViewById(R.id.nav_bar)
         //header initialize
 
-        var view = View(this)
-        var inflater: LayoutInflater =
-            this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        view = inflater.inflate(R.layout.header, null)
+        var view =mNavbar.getHeaderView(0)
 
         name = view.findViewById(R.id.header_circle_name)
         username = view.findViewById(R.id.header_circle_user)
