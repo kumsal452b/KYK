@@ -110,6 +110,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
         app:menu="@menu/menu_bar"
-        android:focusable="true" />
+        android:focusable="true"
+        android:background="@drawable/chooser_background"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
