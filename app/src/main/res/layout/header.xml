@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/header_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,30 +13,35 @@
         android:layout_height="170dp"
         android:src="@drawable/persontwo" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginStart="120dp">
+        android:layout_marginStart="60dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/header_circle_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name Surname"
+            android:text="-"
             android:textColor="@color/black"
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/header_circle_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="Username"
+            android:layout_marginTop="5dp"
+            android:text="-"
             android:textColor="#686363"
             android:textSize="16dp"
-            />
-    </LinearLayout>
+            app:layout_constraintEnd_toEndOf="@+id/header_circle_name"
+            app:layout_constraintStart_toStartOf="@+id/header_circle_name"
+            app:layout_constraintTop_toBottomOf="@+id/header_circle_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </LinearLayout>
