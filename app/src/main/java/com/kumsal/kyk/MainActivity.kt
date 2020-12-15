@@ -120,6 +120,24 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             }
             true
         }
+        mUserDB.child(mUser?.uid as String)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var uriImage = snapshot.child("image").value
+                    var thename = snapshot.child("name_surname").value as String
+                    var thesername = snapshot.child("username").value as String
+                    if (uriImage == null) {
+                        uriImage = "emtpy"
+                    }
+                    name.setText(thename)
+                    username.setText(thesername)
+                    Picasso.get().load(uriImage as String).into(proImage)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    println(error.message)
+                }
+            })
 
 
     }
@@ -155,24 +173,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             startActivity(intent)
             super.finish()
         } else {
-            mUserDB.child(mUser?.uid as String)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var uriImage = snapshot.child("image").value
-                        var thename = snapshot.child("name_surname").value as String
-                        var thesername = snapshot.child("username").value as String
-                        if (uriImage == null) {
-                            uriImage = "emtpy"
-                        }
-                        name.setText(thename)
-                        username.setText(thesername)
-                        Picasso.get().load(uriImage as String).into(proImage)
-                    }
 
-                    override fun onCancelled(error: DatabaseError) {
-
-                    }
-                })
         }
         super.onStart()
     }
