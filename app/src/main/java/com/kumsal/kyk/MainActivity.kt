@@ -44,9 +44,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var name: TextView
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
+
     private val rotateAnimOpen:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim)}
     private val rotateAnimClose:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim)}
-    private val rotateAnimFromBottom:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)}
+    private val FromBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim)}
+    private val toBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)}
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +59,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mViewPager = findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
-        mFloatingActionButton = findViewById(R.id.fab)
+        mFloatingActionButton = findViewById(R.id.fab_add)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mNavbar = findViewById(R.id.nav_bar)
         //header initialize
@@ -88,6 +90,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
             }
         }
+
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
