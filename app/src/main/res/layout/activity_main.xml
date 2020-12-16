@@ -56,9 +56,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
-
-        </androidx.viewpager.widget.ViewPager>
+            app:layout_constraintVertical_bias="1.0"/>
 
 
         <LinearLayout
@@ -70,15 +68,41 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab"
+                android:id="@+id/fab_message"
                 android:layout_width="53dp"
                 android:layout_height="70dp"
                 android:layout_gravity="bottom|center"
                 android:layout_marginLeft="175dp"
                 android:focusable="true"
+                android:scaleType="matrix"
+                android:src="@drawable/ic_baseline_message_24"
+                app:elevation="10dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="#325477"
+                />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_edit"
+                android:layout_width="53dp"
+                android:layout_height="70dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginLeft="175dp"
+                android:focusable="true"
+                android:scaleType="matrix"
+                android:src="@drawable/ic_edit"
+                app:elevation="10dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="#325477"
+                />
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_add"
+                android:layout_width="53dp"
+                android:layout_height="70dp"
+                android:layout_gravity="bottom|center"
+                android:layout_marginLeft="175dp"
+                android:focusable="true"
+                android:backgroundTint="#325477"
                 android:scaleType="matrix"
                 android:src="@drawable/ic_baseline_add_24"
                 app:elevation="10dp"
