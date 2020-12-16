@@ -18,7 +18,7 @@
     </group>
 
     <group>
-       <item android:title="@string/menu_support">
+       <item android:title="@string/menu_support"  >
            <menu>
                <item
                    android:id="@+id/menu_bar_feed"
