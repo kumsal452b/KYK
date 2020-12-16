@@ -6,10 +6,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
     <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorControlNormal">#FFFFFF</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
     <style name="MyCheckBox" parent="Theme.AppCompat.NoActionBar">
         <item name="colorControlNormal">#FFFFFF</item>   <!-- normal border color change as you wish -->
