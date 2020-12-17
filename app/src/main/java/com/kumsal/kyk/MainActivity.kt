@@ -99,8 +99,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         addMessage=findViewById(R.id.fab_message)
 
         add?.setOnClickListener(View.OnClickListener {
-            setVisibilty()
-            setAnimation()
+            setVisibilty(clicable)
+            setAnimation(clicable)
+            clicable!=clicable
         })
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
@@ -155,7 +156,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     }
 
-    private fun setAnimation() {
+    private fun setAnimation(clicable:Boolean) {
 
     }
 
@@ -165,8 +166,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             addMessage.visibility=View.VISIBLE
         }
         else{
-            addPost.visibility=View.VISIBLE
-            addMessage.visibility=View.VISIBLE
+            addPost.visibility=View.INVISIBLE
+            addMessage.visibility=View.INVISIBLE
         }
     }
 
