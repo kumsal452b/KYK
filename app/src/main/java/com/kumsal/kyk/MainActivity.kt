@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private val rotateAnimClose:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim)}
     private val fromBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim)}
     private val toBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)}
-    private var clicable=false
+    private var clicable:Boolean=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,10 +99,15 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         addMessage=findViewById(R.id.fab_message)
 
         add?.setOnClickListener(View.OnClickListener {
-            setVisibilty(clicable)
-            setAnimation(clicable)
-            clicable !=clicable
-            println(clicable)
+//            setVisibilty(clicable)
+//            setAnimation(clicable)
+//            clicable = clicable != true
+//            println(clicable)
+            if (!clicable){
+                showFABMenu()
+            }else{
+                closeFABMenu()
+            }
         })
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
@@ -156,6 +161,21 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
 
     }
+
+    private fun closeFABMenu() {
+
+        clicable=false;
+        addPost?.animate()?.translationY(0F);
+        addMessage?.animate()?.translationY(0F);
+//        fab3.animate().translationY(-getResources().getDimension(R.dimen.standard_155))
+    }
+
+    private fun showFABMenu() {
+        clicable=true
+        addPost?.animate()?.translationY(-getResources().getDimension(R.dimen.standard_55))
+        addMessage?.animate()?.translationY(-getResources().getDimension(R.dimen.standard_105))
+    }
+
 
     private fun setAnimation(clicable:Boolean) {
         if (!clicable){
