@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     private val rotateAnimOpen:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim)}
     private val rotateAnimClose:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim)}
-    private val FromBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim)}
+    private val fromBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim)}
     private val toBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)}
     private val clicable=false
 
@@ -157,6 +157,15 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
     private fun setAnimation(clicable:Boolean) {
+        if (!clicable){
+            add?.startAnimation(rotateAnimOpen)
+            addMessage?.startAnimation(fromBottomAnim)
+            addPost?.startAnimation(fromBottomAnim)
+        }else{
+            add?.startAnimation(rotateAnimClose)
+            addMessage?.startAnimation(toBottomAnim)
+            addPost?.startAnimation(toBottomAnim)
+        }
 
     }
 
