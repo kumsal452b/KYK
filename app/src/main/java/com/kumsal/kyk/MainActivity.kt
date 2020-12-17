@@ -162,12 +162,12 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     private fun setVisibilty(clicable:Boolean) {
         if (!clicable){
-            addPost.visibility=View.VISIBLE
-            addMessage.visibility=View.VISIBLE
+            addPost?.visibility=View.VISIBLE
+            addMessage?.visibility=View.VISIBLE
         }
         else{
-            addPost.visibility=View.INVISIBLE
-            addMessage.visibility=View.INVISIBLE
+            addPost?.visibility=View.INVISIBLE
+            addMessage?.visibility=View.INVISIBLE
         }
     }
 
