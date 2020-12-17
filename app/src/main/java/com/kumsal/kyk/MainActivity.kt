@@ -28,6 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 
+
 class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private var toolbar: Toolbar? = null
     private var mViewPager: ViewPager? = null
@@ -47,11 +48,31 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
 
-    private val rotateAnimOpen:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_open_anim)}
-    private val rotateAnimClose:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim)}
-    private val fromBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim)}
-    private val toBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)}
-    private var clicable:Boolean=false
+    private val rotateAnimOpen: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.rotate_open_anim
+        )
+    }
+    private val rotateAnimClose: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.rotate_close_anim
+        )
+    }
+    private val fromBottomAnim: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.from_bottom_anim
+        )
+    }
+    private val toBottomAnim: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            this,
+            R.anim.to_bottom_anim
+        )
+    }
+    private var clicable: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +87,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mNavbar = findViewById(R.id.nav_bar)
         //header initialize
 
-        var view =mNavbar.getHeaderView(0)
+        var view = mNavbar.getHeaderView(0)
 
         name = view.findViewById(R.id.header_circle_name)
         username = view.findViewById(R.id.header_circle_user)
@@ -95,17 +116,17 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         //FAB anime zoon
         add = findViewById(R.id.fab_add)
-        addPost=findViewById(R.id.fab_edit)
-        addMessage=findViewById(R.id.fab_message)
+        addPost = findViewById(R.id.fab_edit)
+        addMessage = findViewById(R.id.fab_message)
 
         add?.setOnClickListener(View.OnClickListener {
 //            setVisibilty(clicable)
 //            setAnimation(clicable)
 //            clicable = clicable != true
 //            println(clicable)
-            if (!clicable){
+            if (!clicable) {
                 showFABMenu()
-            }else{
+            } else {
                 closeFABMenu()
             }
         })
@@ -164,25 +185,26 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     private fun closeFABMenu() {
 
-        clicable=false;
-        addPost?.animate()?.translationY(0F);
-        addMessage?.animate()?.translationY(0F);
+        clicable = false;
+        addMessage?.animate()?.translationX(0F)
+        addPost?.animate()?.translationX(0F)
 //        fab3.animate().translationY(-getResources().getDimension(R.dimen.standard_155))
     }
 
     private fun showFABMenu() {
-        clicable=true
-        addPost?.animate()?.translationY(-getResources().getDimension(R.dimen.standard_155))
-        addMessage?.animate()?.translationY(-getResources().getDimension(R.dimen.standard_105))
+        addPost?.animate()?.translationX(-60F);
+        addMessage?.animate()?.translationX(-120F);
+        clicable = true
+
     }
 
 
-    private fun setAnimation(clicable:Boolean) {
-        if (!clicable){
+    private fun setAnimation(clicable: Boolean) {
+        if (!clicable) {
             add?.startAnimation(rotateAnimOpen)
             addMessage?.startAnimation(fromBottomAnim)
             addPost?.startAnimation(fromBottomAnim)
-        }else{
+        } else {
             add?.startAnimation(rotateAnimClose)
             addMessage?.startAnimation(toBottomAnim)
             addPost?.startAnimation(toBottomAnim)
@@ -190,14 +212,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     }
 
-    private fun setVisibilty(clicable:Boolean) {
-        if (!clicable){
-            addPost?.visibility=View.VISIBLE
-            addMessage?.visibility=View.VISIBLE
-        }
-        else{
-            addPost?.visibility=View.INVISIBLE
-            addMessage?.visibility=View.INVISIBLE
+    private fun setVisibilty(clicable: Boolean) {
+        if (!clicable) {
+            addPost?.visibility = View.VISIBLE
+            addMessage?.visibility = View.VISIBLE
+        } else {
+            addPost?.visibility = View.INVISIBLE
+            addMessage?.visibility = View.INVISIBLE
         }
     }
 
@@ -243,6 +264,3 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     }
 
 }
-
-
-
