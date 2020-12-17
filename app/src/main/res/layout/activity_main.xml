@@ -59,7 +59,7 @@
             app:layout_constraintVertical_bias="1.0"/>
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
 
@@ -68,55 +68,62 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_message"
                 android:layout_width="53dp"
                 android:layout_height="70dp"
                 android:layout_gravity="bottom|center"
-                android:layout_marginLeft="175dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="#325477"
                 android:focusable="true"
                 android:scaleType="matrix"
                 android:src="@drawable/ic_baseline_message_24"
+                android:visibility="visible"
                 app:elevation="10dp"
-                android:layout_marginBottom="4dp"
-                android:backgroundTint="#325477"
-                android:visibility="invisible"
-                />
+                app:layout_constraintBottom_toTopOf="@+id/fab_edit"
+                app:layout_constraintEnd_toEndOf="@+id/fab_edit"
+                app:layout_constraintStart_toStartOf="@+id/fab_edit" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_edit"
                 android:layout_width="53dp"
                 android:layout_height="70dp"
                 android:layout_gravity="bottom|center"
-                android:layout_marginLeft="175dp"
+                android:layout_marginBottom="4dp"
+                android:backgroundTint="#325477"
                 android:focusable="true"
                 android:scaleType="matrix"
                 android:src="@drawable/ic_edit"
+                android:visibility="visible"
                 app:elevation="10dp"
-                android:layout_marginBottom="4dp"
-                android:backgroundTint="#325477"
-                android:visibility="invisible"
-                />
+                app:layout_constraintBottom_toTopOf="@id/fab_add"
+                app:layout_constraintEnd_toEndOf="@id/fab_add"
+                app:layout_constraintStart_toStartOf="@+id/fab_add" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add"
                 android:layout_width="53dp"
                 android:layout_height="70dp"
                 android:layout_gravity="bottom|center"
-                android:layout_marginLeft="175dp"
-                android:focusable="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="4dp"
                 android:backgroundTint="#325477"
+                android:focusable="true"
                 android:scaleType="matrix"
                 android:src="@drawable/ic_baseline_add_24"
                 app:elevation="10dp"
-                android:layout_marginBottom="4dp"
-                />
+                app:layout_constraintBottom_toTopOf="@id/main_activity_colapse"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/main_activity_colapse"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:background="@drawable/background_starter"
-
-
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 >
 
                 <me.ibrahimsn.lib.SmoothBottomBar
@@ -125,10 +132,11 @@
                     android:layout_height="60dp"
                     app:backgroundColor="#00FFFFFF"
                     app:iconSize="25dp"
-                    app:menu="@menu/bottom_bar_menu" />
+                    app:menu="@menu/bottom_bar_menu"
+                    />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
