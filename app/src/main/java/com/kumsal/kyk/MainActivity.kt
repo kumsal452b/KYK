@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private val rotateAnimClose:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim)}
     private val fromBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim)}
     private val toBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)}
-    private val clicable=false
+    private var clicable=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,7 +101,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         add?.setOnClickListener(View.OnClickListener {
             setVisibilty(clicable)
             setAnimation(clicable)
-            clicable!=clicable
+            clicable !=clicable
+            println(clicable)
         })
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
