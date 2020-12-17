@@ -33,7 +33,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private var mViewPager: ViewPager? = null
     private var sectionPagerAdapter: SectionPagerAdapter? = null
     private var mBottomBar: SmoothBottomBar? = null
-    private var mFloatingActionButton: FloatingActionButton? = null
+    private var add: FloatingActionButton? = null
+    private var addPost: FloatingActionButton? = null
+    private var addMessage: FloatingActionButton? = null
     private var mDrawerLayout: DrawerLayout? = null
     internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     private var mAuth: FirebaseAuth? = null
@@ -49,7 +51,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private val rotateAnimClose:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.rotate_close_anim)}
     private val FromBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.from_bottom_anim)}
     private val toBottomAnim:Animation by lazy{AnimationUtils.loadAnimation(this,R.anim.to_bottom_anim)}
-
+    private val clicable=false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         mViewPager = findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
-        mFloatingActionButton = findViewById(R.id.fab_add)
+
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mNavbar = findViewById(R.id.nav_bar)
         //header initialize
@@ -91,6 +93,15 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             }
         }
 
+        //FAB anime zoon
+        add = findViewById(R.id.fab_add)
+        addPost=findViewById(R.id.fab_edit)
+        addMessage=findViewById(R.id.fab_message)
+
+        add?.setOnClickListener(View.OnClickListener {
+            setVisibilty()
+            setAnimation()
+        })
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -111,9 +122,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
         })
 
-        mFloatingActionButton?.setOnClickListener(View.OnClickListener {
 
-        })
 
         mNavbar.setNavigationItemSelectedListener { item ->
             if (item.itemId == R.id.menu_bar_quit) {
@@ -144,6 +153,21 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
             })
 
 
+    }
+
+    private fun setAnimation() {
+
+    }
+
+    private fun setVisibilty(clicable:Boolean) {
+        if (!clicable){
+            addPost.visibility=View.VISIBLE
+            addMessage.visibility=View.VISIBLE
+        }
+        else{
+            addPost.visibility=View.VISIBLE
+            addMessage.visibility=View.VISIBLE
+        }
     }
 
 
