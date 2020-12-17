@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
     private fun showFABMenu() {
         clicable=true
-        addPost?.animate()?.translationY(-getResources().getDimension(R.dimen.standard_55))
+        addPost?.animate()?.translationY(-getResources().getDimension(R.dimen.standard_155))
         addMessage?.animate()?.translationY(-getResources().getDimension(R.dimen.standard_105))
     }
 
