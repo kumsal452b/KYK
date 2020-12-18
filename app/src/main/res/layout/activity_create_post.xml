@@ -4,19 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screns.CreatePost"
-    android:background="@drawable/post_create_background">
+    android:background="@drawable/post_create_background"
+    android:scrollbarStyle="insideOverlay"
+    tools:context=".screns.CreatePost">
 
     <LinearLayout
-        android:layout_width="414dp"
-        android:layout_height="112dp"
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
         android:background="@drawable/create_post_bottom_arround"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView6"
@@ -29,26 +30,46 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/Share"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="10dp"
             android:layout_weight="1"
             android:background="@drawable/create_post_button"
-            android:text="Button" />
+            android:enabled="false"
+            android:text="Share" />
 
     </LinearLayout>
 
     <EditText
         android:id="@+id/editTextTextPersonName2"
-        android:layout_width="294dp"
-        android:layout_height="122dp"
+        android:layout_width="317dp"
+        android:layout_height="121dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/create_post_bottom_arround"
         android:ems="10"
         android:gravity="top"
+        android:hint="Write something"
         android:inputType="textPersonName"
-        android:text="Name"
         android:textColor="#E3D2D2"
-        tools:layout_editor_absoluteX="73dp"
-        tools:layout_editor_absoluteY="124dp" />
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:background="#021E1C1C"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
+        app:srcCompat="@drawable/image" />
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_account_circle_24"
+        app:layout_constraintTop_toTopOf="@id/editTextTextPersonName2"
+        app:layout_constraintEnd_toStartOf="@id/editTextTextPersonName2"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
