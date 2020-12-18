@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.OvershootInterpolator
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -29,7 +30,7 @@ import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 
 
-class MainActivity : AppCompatActivity(), OnItemSelectedListener {
+class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickListener {
     private var toolbar: Toolbar? = null
     private var mViewPager: ViewPager? = null
     private var sectionPagerAdapter: SectionPagerAdapter? = null
@@ -48,31 +49,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
 
-    private val rotateAnimOpen: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            this,
-            R.anim.rotate_open_anim
-        )
-    }
-    private val rotateAnimClose: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            this,
-            R.anim.rotate_close_anim
-        )
-    }
-    private val fromBottomAnim: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            this,
-            R.anim.from_bottom_anim
-        )
-    }
-    private val toBottomAnim: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            this,
-            R.anim.to_bottom_anim
-        )
-    }
-    private var clicable: Boolean = false
+
+    var isOpen: Boolean = false
+    var interPolator: OvershootInterpolator = OvershootInterpolator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,18 +97,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
         add = findViewById(R.id.fab_add)
         addPost = findViewById(R.id.fab_edit)
         addMessage = findViewById(R.id.fab_message)
-
-        add?.setOnClickListener(View.OnClickListener {
-//            setVisibilty(clicable)
-//            setAnimation(clicable)
-//            clicable = clicable != true
-//            println(clicable)
-            if (!clicable) {
-                showFABMenu()
-            } else {
-                closeFABMenu()
-            }
-        })
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -182,44 +149,45 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
 
 
     }
+    private fun initial() {
+        add = findViewById(R.id.fab_add)
+        addPost = findViewById(R.id.fab_edit)
+        addMessage = findViewById(R.id.fab_message)
+
+
+        add?.alpha = 0F
+        addMessage?.alpha = 0F
+        addPost?.alpha = 0F
+
+        add?.translationY = 100F
+        addMessage?.translationY = 100F
+        addPost?.translationY = 100F
+
+        add?.setOnClickListener(this)
+        addPost?.setOnClickListener(this)
+        addMessage?.setOnClickListener(this)
+
+    }
 
     private fun closeFABMenu() {
+        isOpen = false
+        add?.animate()?.setInterpolator(interPolator)?.rotationBy(0f)?.setDuration(300)?.start()
+        addMessage?.animate()?.translationY(1000F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
+            ?.start()
+        addPost?.animate()?.translationY(1000F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
+            ?.start()
 
-        clicable = false;
-        addMessage?.animate()?.translationX(0F)
-        addPost?.animate()?.translationX(0F)
-//        fab3.animate().translationY(-getResources().getDimension(R.dimen.standard_155))
     }
 
     private fun showFABMenu() {
-        addPost?.animate()?.translationX(-60F);
-        addMessage?.animate()?.translationX(-120F);
-        clicable = true
+        isOpen = true
+        add?.animate()?.setInterpolator(interPolator)?.rotationBy(45f)?.setDuration(300)?.start()
+        addMessage?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(300)
+            ?.start()
+        addPost?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(300)
+            ?.start()
 
-    }
 
-
-    private fun setAnimation(clicable: Boolean) {
-        if (!clicable) {
-            add?.startAnimation(rotateAnimOpen)
-            addMessage?.startAnimation(fromBottomAnim)
-            addPost?.startAnimation(fromBottomAnim)
-        } else {
-            add?.startAnimation(rotateAnimClose)
-            addMessage?.startAnimation(toBottomAnim)
-            addPost?.startAnimation(toBottomAnim)
-        }
-
-    }
-
-    private fun setVisibilty(clicable: Boolean) {
-        if (!clicable) {
-            addPost?.visibility = View.VISIBLE
-            addMessage?.visibility = View.VISIBLE
-        } else {
-            addPost?.visibility = View.INVISIBLE
-            addMessage?.visibility = View.INVISIBLE
-        }
     }
 
 
@@ -261,6 +229,23 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_action, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.fab_add ->
+                if (!isOpen) {
+                    showFABMenu()
+                } else {
+                    closeFABMenu()
+                }
+            R.id.fab_message ->
+                println("fab1")
+            R.id.fab_edit ->
+                println("fab2")
+
+
+        }
     }
 
 }
