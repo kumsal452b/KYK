@@ -80,9 +80,10 @@
                 android:src="@drawable/ic_baseline_message_24"
                 android:visibility="visible"
                 app:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/fab_add"
-                app:layout_constraintEnd_toEndOf="@id/fab_add"
-                app:layout_constraintStart_toStartOf="@id/fab_add" />
+                app:layout_constraintBottom_toTopOf="@id/fab_edit"
+                app:layout_constraintEnd_toEndOf="@id/fab_edit"
+                app:layout_constraintStart_toStartOf="@id/fab_edit"
+                android:layout_marginBottom="5dp"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_edit"
@@ -95,9 +96,10 @@
                 android:src="@drawable/ic_edit"
                 android:visibility="visible"
                 app:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="@id/fab_add"
+                app:layout_constraintBottom_toTopOf="@id/fab_add"
                 app:layout_constraintStart_toStartOf="@id/fab_add"
-                app:layout_constraintTop_toTopOf="@id/fab_add" />
+                android:layout_marginBottom="5dp"
+                />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add"

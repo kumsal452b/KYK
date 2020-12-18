@@ -94,9 +94,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         }
 
         //FAB anime zoon
-        add = findViewById(R.id.fab_add)
-        addPost = findViewById(R.id.fab_edit)
-        addMessage = findViewById(R.id.fab_message)
+//        initial()
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -116,9 +114,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             }
 
         })
-
-
-
         mNavbar.setNavigationItemSelectedListener { item ->
             if (item.itemId == R.id.menu_bar_quit) {
                 FirebaseAuth.getInstance().signOut()
