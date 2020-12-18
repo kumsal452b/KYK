@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity"
-    tools:openDrawer="end"
-    >
+    tools:openDrawer="end">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,12 +31,11 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginBottom="2dp"
-                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                >
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <include layout="@layout/custom_app_bar_text" />
             </androidx.appcompat.widget.Toolbar>
@@ -56,7 +54,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintVertical_bias="1.0" />
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,22 +72,23 @@
                 android:layout_width="53dp"
                 android:layout_height="70dp"
                 android:layout_gravity="bottom|center"
-                android:backgroundTint="#325477"
+                android:layout_marginBottom="5dp"
                 android:focusable="true"
                 android:scaleType="matrix"
                 android:src="@drawable/ic_baseline_message_24"
                 android:visibility="visible"
                 app:elevation="10dp"
+                app:iconTint="#FFFFFF"
                 app:layout_constraintBottom_toTopOf="@id/fab_edit"
                 app:layout_constraintEnd_toEndOf="@id/fab_edit"
-                app:layout_constraintStart_toStartOf="@id/fab_edit"
-                android:layout_marginBottom="5dp"/>
+                app:layout_constraintStart_toStartOf="@id/fab_edit" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_edit"
                 android:layout_width="53dp"
                 android:layout_height="70dp"
                 android:layout_gravity="bottom|center"
+                android:layout_marginBottom="5dp"
                 android:backgroundTint="#325477"
                 android:focusable="true"
                 android:scaleType="matrix"
@@ -97,9 +96,7 @@
                 android:visibility="visible"
                 app:elevation="10dp"
                 app:layout_constraintBottom_toTopOf="@id/fab_add"
-                app:layout_constraintStart_toStartOf="@id/fab_add"
-                android:layout_marginBottom="5dp"
-                />
+                app:layout_constraintStart_toStartOf="@id/fab_add" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add"
@@ -122,9 +119,8 @@
                 android:layout_height="60dp"
                 android:background="@drawable/background_starter"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                >
+                app:layout_constraintStart_toStartOf="parent">
 
                 <me.ibrahimsn.lib.SmoothBottomBar
                     android:id="@+id/main_activity_bottomBar"
@@ -132,8 +128,7 @@
                     android:layout_height="60dp"
                     app:backgroundColor="#00FFFFFF"
                     app:iconSize="25dp"
-                    app:menu="@menu/bottom_bar_menu"
-                    />
+                    app:menu="@menu/bottom_bar_menu" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -141,18 +136,17 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:clickable="true"
         android:id="@+id/nav_bar"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/menu_bar"
-        android:focusable="true"
         android:background="@drawable/chooser_background"
-        app:itemTextColor="@color/white"
-        app:itemIconTint="@color/white"
         android:backgroundTintMode="screen"
-        />
+        android:clickable="true"
+        android:focusable="true"
+        app:headerLayout="@layout/header"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/menu_bar" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
