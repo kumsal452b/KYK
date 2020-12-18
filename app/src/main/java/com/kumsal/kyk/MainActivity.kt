@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -35,9 +36,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private var mViewPager: ViewPager? = null
     private var sectionPagerAdapter: SectionPagerAdapter? = null
     private var mBottomBar: SmoothBottomBar? = null
+
     private var add: FloatingActionButton? = null
     private var addPost: FloatingActionButton? = null
-    private var addMessage: FloatingActionButton? = null
+    private var addMessage: ExtendedFloatingActionButton? = null
+
     private var mDrawerLayout: DrawerLayout? = null
     internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     private var mAuth: FirebaseAuth? = null
@@ -94,7 +97,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         }
 
         //FAB anime zoon
-//        initial()
+        initial()
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -149,12 +152,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         addPost = findViewById(R.id.fab_edit)
         addMessage = findViewById(R.id.fab_message)
 
-
-        add?.alpha = 0F
         addMessage?.alpha = 0F
         addPost?.alpha = 0F
 
-        add?.translationY = 100F
         addMessage?.translationY = 100F
         addPost?.translationY = 100F
 
@@ -166,10 +166,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     private fun closeFABMenu() {
         isOpen = false
-        add?.animate()?.setInterpolator(interPolator)?.rotationBy(0f)?.setDuration(300)?.start()
-        addMessage?.animate()?.translationY(1000F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
+        add?.animate()?.setInterpolator(interPolator)?.rotationBy(45f)?.setDuration(300)?.start()
+        addMessage?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
             ?.start()
-        addPost?.animate()?.translationY(1000F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
+        addPost?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
             ?.start()
 
     }
@@ -235,7 +235,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                     closeFABMenu()
                 }
             R.id.fab_message ->
-                println("fab1")
+                println("")
             R.id.fab_edit ->
                 println("fab2")
 
