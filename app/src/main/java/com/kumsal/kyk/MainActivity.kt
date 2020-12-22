@@ -22,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
+import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -124,24 +125,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             }
             true
         }
-        mUserDB.child(mUser?.uid as String)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    var uriImage = snapshot.child("image").value
-                    var thename = snapshot.child("name_surname").value as String
-                    var thesername = snapshot.child("username").value as String
-                    if (uriImage == null) {
-                        uriImage = "emtpy"
-                    }
-                    name.setText(thename)
-                    username.setText(thesername)
-                    Picasso.get().load(uriImage as String).into(proImage)
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    println(error.message)
-                }
-            })
 
 
     }
@@ -214,6 +198,24 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             startActivity(intent)
             super.finish()
         } else {
+            mUserDB.child(mUser?.uid as String)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var uriImage = snapshot.child("image").value
+                        var thename = snapshot.child("name_surname").value as String
+                        var thesername = snapshot.child("username").value as String
+                        if (uriImage == null) {
+                            uriImage = "emtpy"
+                        }
+                        name.setText(thename)
+                        username.setText(thesername)
+                        Picasso.get().load(uriImage as String).into(proImage)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        println(error.message)
+                    }
+                })
 
         }
         super.onStart()
@@ -225,6 +227,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     }
 
     override fun onClick(v: View?) {
+        var post_Activity=Intent(this,CreatePost::class.java)
         when (v?.id) {
             R.id.fab_add ->
                 if (!isOpen) {
@@ -235,9 +238,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             R.id.fab_message ->
                 println("")
             R.id.fab_edit ->
-                println("fab2")
-
-
+                startActivity(post_Activity)
         }
     }
 
