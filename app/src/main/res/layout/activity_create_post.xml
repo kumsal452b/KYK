@@ -44,9 +44,9 @@
     <com.hendraanggrian.widget.SocialAutoCompleteTextView
         android:id="@+id/activity_create_post_post_text_element"
         android:layout_width="317dp"
-        android:layout_height="121dp"
+        android:layout_height="39dp"
         android:layout_marginTop="60dp"
-        android:background="@drawable/create_post_bottom_arround"
+
 
         android:gravity="clip_horizontal"
         android:inputType="textMultiLine"
