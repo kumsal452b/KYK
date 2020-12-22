@@ -25,7 +25,7 @@ class CreatePost : AppCompatActivity() {
         share_button=findViewById(R.id.activity_create_post_share)
         post_text_element=findViewById(R.id.activity_create_post_post_text_element)
 
-        post_text_element.setMentionEnabled(false)
+        post_text_element.setMentionEnabled(true)
         var names=ArrayList<Mention>()
 
         names.add(Mention("Selam"))
