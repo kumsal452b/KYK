@@ -28,11 +28,15 @@ class CreatePost : AppCompatActivity() {
         post_text_element.setMentionEnabled(true)
         var names=ArrayList<Mention>()
 
+        var mn=Mention("yahya")
+        mn.displayname="Selam"
+        mn.setAvatarURL("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
+
         names.add(Mention("Selam"))
         names.add(Mention("yahya"))
         names.add(Mention("mahsin"))
         names.add(Mention("sdsd"))
         var adapter=ArrayAdapter<Mention>(this,android.R.layout.simple_list_item_1,names)
-        post_text_element.mentionAdapter=adapter
+        post_text_element.mentionAdapter.add(mn)
     }
 }
