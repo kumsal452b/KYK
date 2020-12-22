@@ -30,7 +30,7 @@
             android:textSize="18sp" />
 
         <Button
-            android:id="@+id/Share"
+            android:id="@+id/activity_create_post_share"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="10dp"
@@ -41,8 +41,8 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editTextTextPersonName2"
+    <com.hendraanggrian.widget.SocialAutoCompleteTextView
+        android:id="@+id/activity_create_post_post_text_element"
         android:layout_width="317dp"
         android:layout_height="121dp"
         android:layout_marginTop="60dp"
@@ -55,23 +55,24 @@
         tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
     <ImageButton
-        android:id="@+id/imageButton2"
+        android:id="@+id/activity_create_post_select_image"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="3dp"
         android:background="#021E1C1C"
         android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
+        app:layout_constraintStart_toStartOf="@+id/activity_create_post_post_text_element"
+        app:layout_constraintTop_toBottomOf="@+id/activity_create_post_post_text_element"
         app:srcCompat="@drawable/image" />
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/activity_create_post_image"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="15dp"
         android:src="@drawable/ic_baseline_account_circle_24"
-        app:layout_constraintEnd_toStartOf="@id/editTextTextPersonName2"
-        app:layout_constraintTop_toTopOf="@id/editTextTextPersonName2" />
+        app:layout_constraintEnd_toStartOf="@id/activity_create_post_post_text_element"
+        app:layout_constraintTop_toTopOf="@id/activity_create_post_post_text_element" />
 
     
 
