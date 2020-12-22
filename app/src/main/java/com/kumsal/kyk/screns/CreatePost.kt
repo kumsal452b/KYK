@@ -1,22 +1,22 @@
 package com.kumsal.kyk.screns
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import com.kumsal.kyk.R
 import de.hdodenhof.circleimageview.CircleImageView
-import java.util.ArrayList
+import java.util.*
 
 class CreatePost : AppCompatActivity() {
     private lateinit var profile_image:CircleImageView
     private lateinit var select_image:ImageButton
     private lateinit var share_button:Button
-    private lateinit var post_text_element:SocialAutoCompleteTextView<Hashtag,Mention>
+    private lateinit var post_text_element:SocialAutoCompleteTextView<Hashtag, Mention>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -28,15 +28,20 @@ class CreatePost : AppCompatActivity() {
         post_text_element.setMentionEnabled(true)
         var names=ArrayList<Mention>()
 
-        var mn=Mention("yahya")
-        mn.displayname="Selam"
-        mn.setAvatarURL("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
+        val mention1 = Mention("dirtyhobo")
+        val mention2 = Mention.Builder("hobo")
+            .setDisplayname("Regular Hobo")
+            .setAvatarDrawable(R.mipmap.ic_launcher)
+            .build()
+        val mention3 = Mention.Builder("hendraanggrian")
+            .setDisplayname("Hendra Anggrian")
+            .setAvatarURL("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
+            .build()
+        names.add(mention2)
+        names.add(mention1)
+        names.add(mention3)
+        var adapter=ArrayAdapter<Mention>(this, android.R.layout.simple_list_item_1, names)
 
-        names.add(Mention("Selam"))
-        names.add(Mention("yahya"))
-        names.add(Mention("mahsin"))
-        names.add(Mention("sdsd"))
-        var adapter=ArrayAdapter<Mention>(this,android.R.layout.simple_list_item_1,names)
-        post_text_element.mentionAdapter.add(mn)
+        post_text_element.mentionAdapter=adapter
     }
 }
