@@ -41,18 +41,24 @@
 
     </LinearLayout>
 
-    <com.hendraanggrian.widget.SocialAutoCompleteTextView
+    <com.hasankucuk.socialtextview.SocialTextView
         android:id="@+id/activity_create_post_post_text_element"
         android:layout_width="317dp"
         android:layout_height="39dp"
         android:layout_marginTop="60dp"
-
-
         android:gravity="clip_horizontal"
         android:inputType="textMultiLine"
         android:textColor="#E3D2D2"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:emailColor="#FF9E80"
+        app:hashtagColor="#82B1FF"
+        app:linkType="mention|hashtag|phone|email|url"
+        app:mentionColor="#BCBCCF"
+        app:normalTextColor="#18181F"
+        app:phoneColor="#03A9F4"
+        app:selectedColor="#03A9F4"
+        app:urlColor="#8BC34A"
         tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
     <ImageButton
