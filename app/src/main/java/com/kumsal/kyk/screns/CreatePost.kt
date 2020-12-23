@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.hasankucuk.socialtextview.SocialTextView
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
@@ -16,7 +17,7 @@ class CreatePost : AppCompatActivity() {
     private lateinit var profile_image:CircleImageView
     private lateinit var select_image:ImageButton
     private lateinit var share_button:Button
-    private lateinit var post_text_element:SocialAutoCompleteTextView<Hashtag, Mention>
+    private lateinit var post_text_element: SocialTextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -25,7 +26,6 @@ class CreatePost : AppCompatActivity() {
         share_button=findViewById(R.id.activity_create_post_share)
         post_text_element=findViewById(R.id.activity_create_post_post_text_element)
 
-        post_text_element.setMentionEnabled(true)
         var names=ArrayList<Mention>()
 
         val mention1 = Mention("dirtyhobo")
@@ -41,7 +41,10 @@ class CreatePost : AppCompatActivity() {
         names.add(mention1)
         names.add(mention3)
         var adapter=ArrayAdapter<Mention>(this, android.R.layout.simple_list_item_1, names)
-
-        post_text_element.mentionAdapter=adapter
+        val mentions: MutableList<String> = arrayListOf()
+        mentions.add("@hasankucuk")
+        mentions.add("@yahya")
+        mentions.add("@kumsal")
+        post_text_element.setLinkedMention(mentions)
     }
 }
