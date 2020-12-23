@@ -15,6 +15,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,6 +24,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.kumsal.kyk.AdapterModel.post_adapter
+import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
@@ -29,6 +33,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
+import java.util.ArrayList
 
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickListener {
@@ -43,11 +48,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     private var mDrawerLayout: DrawerLayout? = null
     internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
+
     private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
-    private var mPostDb:DatabaseReference?=null
-    private lateinit var mNavbar: NavigationView
+
     private lateinit var mUserDB: DatabaseReference
+
+    private lateinit var mNavbar: NavigationView
     private lateinit var proImage: CircleImageView
     private lateinit var name: TextView
     private lateinit var username: TextView
@@ -61,6 +68,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     //Image send element
     var imageUri=""
     var userId=""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -123,7 +132,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
         mUserDB = FirebaseDatabase.getInstance().getReference("Users")
+
         userId=mUser?.uid.toString()
+
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -140,6 +151,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
             }
         }
+
+
     }
 
     private fun initial() {
@@ -234,9 +247,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         }
         super.onStart()
     }
-    fun getPostValue(){
 
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_action, menu)
