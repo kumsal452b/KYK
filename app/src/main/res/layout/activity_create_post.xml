@@ -44,15 +44,15 @@
     <com.hendraanggrian.widget.SocialAutoCompleteTextView
         android:id="@+id/activity_create_post_post_text_element"
         android:layout_width="317dp"
-        android:layout_height="0dp"
+        android:layout_height="150dp"
         android:layout_marginTop="60dp"
+        android:background="@drawable/post_create_background"
         android:gravity="clip_horizontal"
+        android:hint="What's on your mind, Yahya?"
         android:inputType="textMultiLine"
         android:textColor="#E3D2D2"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        android:background="@drawable/post_create_background"
-        tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <ImageButton
         android:id="@+id/activity_create_post_select_image"
@@ -74,6 +74,5 @@
         app:layout_constraintEnd_toStartOf="@id/activity_create_post_post_text_element"
         app:layout_constraintTop_toTopOf="@id/activity_create_post_post_text_element" />
 
-    
 
 </androidx.constraintlayout.widget.ConstraintLayout>
