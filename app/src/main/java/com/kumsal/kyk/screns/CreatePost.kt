@@ -10,6 +10,7 @@ import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.widget.SocialTextView
 import com.kumsal.kyk.R
+import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
@@ -18,6 +19,10 @@ class CreatePost : AppCompatActivity() {
     private lateinit var select_image:ImageButton
     private lateinit var share_button:Button
     private lateinit var post_text_element: SocialTextView
+
+    //add intent element varíable
+    var name=""
+    var imageUri=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -46,5 +51,12 @@ class CreatePost : AppCompatActivity() {
         mentions.add("@yahya")
         mentions.add("@kumsal")
 //        post_text_element.setLinkedMention(mentions)
+
+        //initialize intent element
+        name=intent.getStringExtra("name") as String
+        imageUri=intent.getStringExtra("uri") as String
+        var hint= "What's on your mind, $name?"
+        post_text_element.hint=hint
+        Picasso.get().load(imageUri).into(profile_image)
     }
 }
