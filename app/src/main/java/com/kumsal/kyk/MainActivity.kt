@@ -55,50 +55,22 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
+
     //Image send element
     var imageUri=""
+    var userId=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //initialzed
-        toolbar = findViewById(R.id.main_activity_toolbar)
-        mViewPager = findViewById(R.id.main_activity_pager_view)
-        sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
-        mBottomBar = findViewById(R.id.main_activity_bottomBar)
-
-        mDrawerLayout = findViewById(R.id.main_activity_drawer)
-        mNavbar = findViewById(R.id.nav_bar)
-        //header initialize
-
-        var view = mNavbar.getHeaderView(0)
-
-        name = view.findViewById(R.id.header_circle_name)
-        username = view.findViewById(R.id.header_circle_user)
-        proImage = view.findViewById(R.id.header_circle_image)
-
-        mAuth = FirebaseAuth.getInstance()
-        val mUser1: FirebaseUser? = mAuth?.currentUser
-        mUser = mUser1
-        mUserDB = FirebaseDatabase.getInstance().getReference("Users")
-
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBarDrawerToggle =
-            ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
-        actionBarDrawerToggle?.drawerArrowDrawable?.color = Color.WHITE
-        mDrawerLayout?.addDrawerListener(actionBarDrawerToggle!!)
-        actionBarDrawerToggle?.syncState()
-
-        mViewPager?.adapter = sectionPagerAdapter
-        mBottomBar?.onItemSelectedListener = this
-        mBottomBar?.setOnClickListener {
-            View.OnClickListener {
-
-            }
-        }
+        initializeComponent()
 
         //FAB anime zoon
         initial()
+        addListener()
+    }
+
+    private fun addListener() {
         mViewPager?.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -127,10 +99,47 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             }
             true
         }
-
-
-
     }
+
+    private fun initializeComponent() {
+        toolbar = findViewById(R.id.main_activity_toolbar)
+        mViewPager = findViewById(R.id.main_activity_pager_view)
+        sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
+        mBottomBar = findViewById(R.id.main_activity_bottomBar)
+
+        mDrawerLayout = findViewById(R.id.main_activity_drawer)
+        mNavbar = findViewById(R.id.nav_bar)
+        //header initialize
+
+        var view = mNavbar.getHeaderView(0)
+
+        name = view.findViewById(R.id.header_circle_name)
+        username = view.findViewById(R.id.header_circle_user)
+        proImage = view.findViewById(R.id.header_circle_image)
+
+        mAuth = FirebaseAuth.getInstance()
+        val mUser1: FirebaseUser? = mAuth?.currentUser
+        mUser = mUser1
+        mUserDB = FirebaseDatabase.getInstance().getReference("Users")
+        userId=mUser?.uid.toString()
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBarDrawerToggle =
+            ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close)
+        actionBarDrawerToggle?.drawerArrowDrawable?.color = Color.WHITE
+        mDrawerLayout?.addDrawerListener(actionBarDrawerToggle!!)
+        actionBarDrawerToggle?.syncState()
+
+        mViewPager?.adapter = sectionPagerAdapter
+        mBottomBar?.onItemSelectedListener = this
+        mBottomBar?.setOnClickListener {
+            View.OnClickListener {
+
+            }
+        }
+    }
+
     private fun initial() {
         add = findViewById(R.id.fab_add)
         addPost = findViewById(R.id.fab_edit)
@@ -233,6 +242,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         var post_Activity=Intent(this,CreatePost::class.java)
         post_Activity.putExtra("uri",imageUri)
         post_Activity.putExtra("name",name.text.toString())
+        post_Activity.putExtra("username",username.text.toString())
+        post_Activity.putExtra("uid",userId)
 
         when (v?.id) {
             R.id.fab_add ->

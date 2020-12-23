@@ -3,10 +3,13 @@ package com.kumsal.kyk.screns
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
@@ -26,6 +29,9 @@ class CreatePost : AppCompatActivity() {
     //add intent element varíable
     var name=""
     var imageUri=""
+    var userid=""
+    //Database section
+    private lateinit var mPostRefDb:DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -52,22 +58,25 @@ class CreatePost : AppCompatActivity() {
         //initialize intent element
         initialDynamic()
         canBeSent()
+        share_button.setOnClickListener(object : View.OnClickListener{
+            override fun onClick(v: View?) {
+                mPostRefDb
+            }
+        })
     }
 
     private fun canBeSent() {
         post_text_element.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                TODO("Not yet implemented")
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (post_text_element.length()>0){
-                    share_button.isEnabled=true
-                }
+                share_button.isEnabled = post_text_element.length()>0
             }
 
             override fun afterTextChanged(s: Editable?) {
-                TODO("Not yet implemented")
+
             }
 
         })
@@ -78,13 +87,16 @@ class CreatePost : AppCompatActivity() {
         select_image = findViewById(R.id.activity_create_post_select_image)
         share_button = findViewById(R.id.activity_create_post_share)
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
-
+        mPostRefDb=FirebaseDatabase.getInstance().getReference("Post")
         var names=ArrayList<Mention>()
+
+        name = intent.getStringExtra("name") as String
+        imageUri = intent.getStringExtra("uri") as String
+        userid=intent.getStringExtra("uid") as String
     }
 
     private fun initialDynamic() {
-        name = intent.getStringExtra("name") as String
-        imageUri = intent.getStringExtra("uri") as String
+
         var hint = "What's on your mind, $name?"
         post_text_element.hint = hint
         Picasso.get().load(imageUri).into(profile_image)
