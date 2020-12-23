@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
+    private var mPostDb:DatabaseReference?=null
     private lateinit var mNavbar: NavigationView
     private lateinit var mUserDB: DatabaseReference
     private lateinit var proImage: CircleImageView
@@ -232,6 +233,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
         }
         super.onStart()
+    }
+    fun getPostValue(){
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
