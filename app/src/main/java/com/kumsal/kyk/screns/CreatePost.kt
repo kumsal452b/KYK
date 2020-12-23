@@ -1,5 +1,6 @@
 package com.kumsal.kyk.screns
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,18 +8,23 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.widget.SocialEditText
 import com.hendraanggrian.widget.SocialTextView
+import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
+import kotlin.collections.HashMap
 
 class CreatePost : AppCompatActivity() {
     private lateinit var profile_image:CircleImageView
@@ -30,6 +36,7 @@ class CreatePost : AppCompatActivity() {
     var name=""
     var imageUri=""
     var userid=""
+    var username=""
     //Database section
     private lateinit var mPostRefDb:DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +67,26 @@ class CreatePost : AppCompatActivity() {
         canBeSent()
         share_button.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
-                mPostRefDb
+                var postContent=post_text_element.text.toString()
+                var time=ServerValue.TIMESTAMP
+                var values=HashMap<String,String>()
+
+                values.put("pc",postContent)
+                values.put("time",time as String)
+                values.put("name",name)
+                values.put("username",username)
+
+                mPostRefDb.child(userid).setValue(values).addOnSuccessListener { object :OnSuccessListener<Void>{
+                    override fun onSuccess(p0: Void?) {
+
+                        var main_Activity= Intent(this@CreatePost,MainActivity::class.java)
+                        startActivity(main_Activity)
+                    
+                    }
+                } }.addOnFailureListener {
+                    Exception->
+                    Toast.makeText(this@CreatePost,Exception.localizedMessage,Toast.LENGTH_LONG)
+                }
             }
         })
     }
@@ -93,6 +119,7 @@ class CreatePost : AppCompatActivity() {
         name = intent.getStringExtra("name") as String
         imageUri = intent.getStringExtra("uri") as String
         userid=intent.getStringExtra("uid") as String
+        username=intent.getStringExtra("username") as String
     }
 
     private fun initialDynamic() {
