@@ -51,14 +51,15 @@
         android:textColor="#E3D2D2"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:emailColor="#FF9E80"
-        app:hashtagColor="#82B1FF"
-        app:linkType="mention|hashtag|phone|email|url"
-        app:mentionColor="#BCBCCF"
-        app:normalTextColor="#18181F"
-        app:phoneColor="#03A9F4"
-        app:selectedColor="#03A9F4"
-        app:urlColor="#8BC34A"
+        android:emailColor="#FF9E80"
+        android:hashtagColor="#82B1FF"
+        android:linkType="mention|hashtag|phone|email|url"
+        android:mentionColor="#BCBCCF"
+        android:normalTextColor="#D5D5E6"
+        android:phoneColor="#03A9F4"
+        android:selectedColor="#03A9F4"
+        android:urlColor="#8BC34A"
+
         tools:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" />
 
     <ImageButton
