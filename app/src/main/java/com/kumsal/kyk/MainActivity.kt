@@ -4,6 +4,7 @@ package com.kumsal.kyk
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -215,7 +216,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                         var uriImage = snapshot.child("image").value
                         var thename = snapshot.child("name_surname").value as String
                         var thesername = snapshot.child("username").value as String
-                        if (uriImage == null) {
+                        if (TextUtils.isEmpty(uriImage.toString())) {
                             uriImage = "emtpy"
                         }
                         imageUri=uriImage as String
