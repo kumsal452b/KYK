@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
+    //Image send element
+    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
