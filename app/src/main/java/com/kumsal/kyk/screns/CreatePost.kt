@@ -19,6 +19,7 @@ import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.widget.SocialEditText
 import com.hendraanggrian.widget.SocialTextView
+import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
@@ -70,21 +71,23 @@ class CreatePost : AppCompatActivity() {
                 var postContent=post_text_element.text.toString()
                 var time=ServerValue.TIMESTAMP
                 var values=HashMap<String,String>()
-
+                WaitDialog.show(this@CreatePost,getString(R.string.please_wait));
+                WaitDialog.dismiss(10000)
                 values.put("pc",postContent)
                 values.put("time",time as String)
                 values.put("name",name)
                 values.put("username",username)
-
                 mPostRefDb.child(userid).setValue(values).addOnSuccessListener { object :OnSuccessListener<Void>{
                     override fun onSuccess(p0: Void?) {
 
+                        WaitDialog.dismiss()
                         var main_Activity= Intent(this@CreatePost,MainActivity::class.java)
                         startActivity(main_Activity)
-                    
+
                     }
                 } }.addOnFailureListener {
                     Exception->
+                    WaitDialog.dismiss()
                     Toast.makeText(this@CreatePost,Exception.localizedMessage,Toast.LENGTH_LONG)
                 }
             }
