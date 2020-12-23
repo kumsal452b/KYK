@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
+import com.hendraanggrian.widget.SocialEditText
 import com.hendraanggrian.widget.SocialTextView
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
@@ -18,7 +19,7 @@ class CreatePost : AppCompatActivity() {
     private lateinit var profile_image:CircleImageView
     private lateinit var select_image:ImageButton
     private lateinit var share_button:Button
-    private lateinit var post_text_element: SocialTextView
+    private lateinit var post_text_element: SocialEditText
 
     //add intent element varíable
     var name=""
