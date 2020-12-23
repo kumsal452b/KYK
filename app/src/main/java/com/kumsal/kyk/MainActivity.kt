@@ -56,8 +56,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
     //Image send element
-    
-
+    var imageUri=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -210,6 +209,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                         if (uriImage == null) {
                             uriImage = "emtpy"
                         }
+                        imageUri=uriImage as String
                         name.setText(thename)
                         username.setText(thesername)
                         Picasso.get().load(uriImage as String).into(proImage)
@@ -231,6 +231,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     override fun onClick(v: View?) {
         var post_Activity=Intent(this,CreatePost::class.java)
+        post_Activity.putExtra("uri",imageUri)
+        post_Activity.putExtra("name",name.text.toString())
+
         when (v?.id) {
             R.id.fab_add ->
                 if (!isOpen) {
@@ -241,6 +244,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             R.id.fab_message ->
                 println("")
             R.id.fab_edit ->
+
                 startActivity(post_Activity)
         }
     }
