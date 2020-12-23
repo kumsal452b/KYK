@@ -5,10 +5,10 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.hasankucuk.socialtextview.SocialTextView
 import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
+import com.hendraanggrian.widget.SocialTextView
 import com.kumsal.kyk.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
@@ -45,6 +45,6 @@ class CreatePost : AppCompatActivity() {
         mentions.add("@hasankucuk")
         mentions.add("@yahya")
         mentions.add("@kumsal")
-        post_text_element.setLinkedMention(mentions)
+//        post_text_element.setLinkedMention(mentions)
     }
 }
