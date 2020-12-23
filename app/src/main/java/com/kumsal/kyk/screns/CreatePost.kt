@@ -73,8 +73,8 @@ class CreatePost : AppCompatActivity() {
                 var values=HashMap<String,String>()
                 WaitDialog.show(this@CreatePost,getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
-                values.put("pc",postContent)
-                values.put("time",time as String)
+                values.put("pc",postContent.toString())
+                values.put("time",time.toString())
                 values.put("name",name)
                 values.put("username",username)
                 mPostRefDb.child(userid).setValue(values).addOnSuccessListener { object :OnSuccessListener<Void>{
