@@ -2,12 +2,15 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    app:cardBackgroundColor="#120909">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ECE1E1">
+        android:layout_height="wrap_content"
+        android:background="#553939">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/post_layout_imageView"
@@ -35,6 +38,7 @@
                 android:elegantTextHeight="false"
                 android:freezesText="true"
                 android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+                android:textColor="#100C0C"
                 app:layout_constraintStart_toEndOf="@+id/post_layout_imageView"
                 tools:layout_editor_absoluteY="19dp" />
 
@@ -47,7 +51,9 @@
             android:layout_marginStart="4dp"
             android:text="Yahya Alatas"
             android:textColor="#090606"
+            app:layout_constraintEnd_toStartOf="@id/post_layout_username"
             app:layout_constraintStart_toEndOf="@+id/post_layout_imageView"
+            app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteY="0dp" />
 
         <TextView
@@ -56,7 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="sans-serif-black"
-            android:text="@yahyaKumsalll"
+            android:text="@yahya"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/post_layout_name"
             app:layout_constraintTop_toTopOf="parent" />
@@ -68,6 +75,7 @@
             android:layout_marginStart="8dp"
             android:fontFamily="sans-serif-thin"
             android:text="4h"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/post_layout_username"
             app:layout_constraintTop_toTopOf="parent" />
