@@ -41,6 +41,7 @@ import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
 
 import de.hdodenhof.circleimageview.CircleImageView
+import id.zelory.compressor.Compressor
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -72,6 +73,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var mRefStorage: StorageReference
 
     private lateinit var imageuri: Uri
+    private lateinit var tmbimageuri: Uri
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -82,26 +84,12 @@ class RegisterDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_detail)
-        name = getIntent().getStringExtra("name")
-
-        username = findViewById(R.id.register_activity_detail_username);
-        imageView = findViewById(R.id.register_activity_detail_imageView);
-        imageBtn = findViewById(R.id.register_activity_detail_imageButton);
-        advice = findViewById<Spinner>(R.id.register_activity_detail_spinner)
-        advice?.isEnabled = false
-
-        regBtn = findViewById(R.id.register_activity_detail_regBtn)
-        usernameCheckBox = findViewById(R.id.recomanded_username)
-        spinnerColor = findViewById(R.id.spinner_list_)
-        usernames = ArrayList<String>()
-
-        imageuri = Uri.EMPTY
-        mAuth = FirebaseAuth.getInstance()
-        mUsername = FirebaseDatabase.getInstance().getReference("Users")
-        mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
-        mRefStorage = FirebaseStorage.getInstance().getReference("images")
+        initializeComponent()
         generateUsername(name)
+        clickListeners()
+    }
 
+    private fun clickListeners() {
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 WaitDialog.show(this@RegisterDetailActivity, getString(R.string.please_wait))
@@ -110,12 +98,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var theName = getIntent().getStringExtra("name") as String
                 var thePass = getIntent().getStringExtra("pass") as String
                 var theEmail = getIntent().getStringExtra("email") as String
-                var theUserNames:String
-                if (usernameCheckBox.isChecked){
-                    theUserNames=advice?.getSelectedItem() as String
-                }
-                else{
-                    theUserNames=username.text.toString()
+                var theUserNames: String
+                if (usernameCheckBox.isChecked) {
+                    theUserNames = advice?.getSelectedItem() as String
+                } else {
+                    theUserNames = username.text.toString()
                 }
                 if (usernames.contains(theUserNames)) {
                     WaitDialog.dismiss()
@@ -206,14 +193,14 @@ class RegisterDetailActivity : AppCompatActivity() {
                                         )
                                     } else {
 
-//                                        CropImage.activity()
-//                                            .setGuidelines(CropImageView.Guidelines.ON)
-//                                            .setAspectRatio(2,2)
-//                                            .start(this@RegisterDetailActivity)
+    //                                        CropImage.activity()
+    //                                            .setGuidelines(CropImageView.Guidelines.ON)
+    //                                            .setAspectRatio(2,2)
+    //                                            .start(this@RegisterDetailActivity)
 
                                     }
                                 1 ->
-                                    if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    if (checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                                         ActivityCompat.requestPermissions(
                                             this@RegisterDetailActivity,
                                             perm,
@@ -254,6 +241,27 @@ class RegisterDetailActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun initializeComponent() {
+        name = getIntent().getStringExtra("name")
+
+        username = findViewById(R.id.register_activity_detail_username);
+        imageView = findViewById(R.id.register_activity_detail_imageView);
+        imageBtn = findViewById(R.id.register_activity_detail_imageButton);
+        advice = findViewById<Spinner>(R.id.register_activity_detail_spinner)
+        advice?.isEnabled = false
+
+        regBtn = findViewById(R.id.register_activity_detail_regBtn)
+        usernameCheckBox = findViewById(R.id.recomanded_username)
+        spinnerColor = findViewById(R.id.spinner_list_)
+        usernames = ArrayList<String>()
+
+        imageuri = Uri.EMPTY
+        mAuth = FirebaseAuth.getInstance()
+        mUsername = FirebaseDatabase.getInstance().getReference("Users")
+        mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
+        mRefStorage = FirebaseStorage.getInstance().getReference("images")
     }
 
 
@@ -322,6 +330,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 imageuri = result.uri
                 imageView.setImageURI(imageuri)
+                var imFile:File
+                imFile=File("Deneme.txt","deneme"){
+
+                }
+                var copresorImage=Compressor.compress(this,imFile)
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 
             }
