@@ -330,11 +330,10 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 imageuri = result.uri
                 imageView.setImageURI(imageuri)
-                var imFile:File
-                imFile=File("Deneme.txt","deneme"){
 
-                }
-                var copresorImage=Compressor.compress(this,imFile)
+                var copresorImage=Compressor.compress(this,File(result.uri.toString()))
+                tmbimageuri=copresorImage.toURI() as Uri
+                
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 
             }
