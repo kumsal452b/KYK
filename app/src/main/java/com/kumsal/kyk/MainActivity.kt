@@ -98,6 +98,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             override fun onPageSelected(position: Int) {
                 println(position)
                 mBottomBar?.itemActiveIndex = position
+                if (isOpen){
+                    closeFABMenu()
+                }
             }
 
         })
@@ -204,15 +207,27 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     override fun onItemSelect(pos: Int): Boolean {
         if (pos == 0) {
             mViewPager?.setCurrentItem(0)
+            if (isOpen){
+                closeFABMenu()
+            }
         }
         if (pos == 1) {
             mViewPager?.setCurrentItem(1)
+            if (isOpen){
+                closeFABMenu()
+            }
         }
         if (pos == 2) {
             mViewPager?.setCurrentItem(2)
+            if (isOpen){
+                closeFABMenu()
+            }
         }
         if (pos == 3) {
             mViewPager?.setCurrentItem(3)
+            if (isOpen){
+                closeFABMenu()
+            }
         }
         return true
     }

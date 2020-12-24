@@ -18,5 +18,6 @@ class post_model(ad: String, username: String, postContent: String, imageUri: St
         this.theusername=username
         this.thePost=postContent
         this.theSince=since
+        this.thead=ad
     }
 }
