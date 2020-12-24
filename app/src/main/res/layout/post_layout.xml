@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#553939">
+        android:background="#FAF7F7">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/post_layout_imageView"
@@ -38,7 +38,11 @@
                 android:elegantTextHeight="false"
                 android:freezesText="true"
                 android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"
+                android:textAlignment="inherit"
+                android:textAllCaps="false"
                 android:textColor="#100C0C"
+                android:textSize="15sp"
+                android:textStyle="normal"
                 app:layout_constraintStart_toEndOf="@+id/post_layout_imageView"
                 tools:layout_editor_absoluteY="19dp" />
 
@@ -84,9 +88,10 @@
             android:id="@+id/post_layout_expanded"
             android:layout_width="23dp"
             android:layout_height="28dp"
-            app:srcCompat="@drawable/ic_baseline_expand_more_24"
-            tools:layout_editor_absoluteX="385dp"
-            tools:layout_editor_absoluteY="2dp" />
+            android:background="#32816666"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_expand_more_24" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

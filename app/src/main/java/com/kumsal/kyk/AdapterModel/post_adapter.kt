@@ -18,6 +18,7 @@ class post_adapter(private var list:ArrayList<post_model>,private var context:Co
         var image:CircleImageView=itemView.findViewById(R.id.post_layout_imageView)
         var postc:TextView=itemView.findViewById(R.id.post_layout_imageView_postContent)
         var name:TextView=itemView.findViewById(R.id.post_layout_name)
+        var username:TextView=itemView.findViewById(R.id.post_layout_username)
         var since:TextView=itemView.findViewById(R.id.post_layout_sinceTime)
         var expanded:ImageButton=itemView.findViewById(R.id.post_layout_expanded)
 
@@ -26,6 +27,7 @@ class post_adapter(private var list:ArrayList<post_model>,private var context:Co
             postc.setText(model.thePost)
             name.setText(model.thead)
             since.setText(model.theSince)
+            username.setText(model.theusername)
         }
 
     }
