@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.text.TextUtils
 import android.view.*
 import android.widget.*
@@ -21,6 +22,7 @@ import android.widget.Toast.makeText
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.*
 import com.google.firebase.auth.FirebaseAuth
@@ -42,6 +44,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 
 import de.hdodenhof.circleimageview.CircleImageView
 import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -330,10 +333,10 @@ class RegisterDetailActivity : AppCompatActivity() {
                 var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 imageuri = result.uri
                 imageView.setImageURI(imageuri)
-
-                var copresorImage=Compressor.compress(this,File(result.uri.toString()))
-                tmbimageuri=copresorImage.toURI() as Uri
-                
+                lifecycleScope.launch(){
+                    var copresorImage=Compressor.compress(this@RegisterDetailActivity,File(result.uri.toString()))
+                    tmbimageuri=copresorImage.toURI() as Uri
+                }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 
             }
