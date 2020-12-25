@@ -11,7 +11,7 @@
         android:id="@+id/header_circle_image"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:src="@drawable/persontwo" />
+        android:src="@drawable/common_google_signin_btn_icon_dark" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"

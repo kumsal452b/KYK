@@ -148,6 +148,6 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/menu_bar"
-        android:paddingTop="20dp"/>
+        android:paddingTop="25dp"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
