@@ -136,7 +136,7 @@ class CreatePost : AppCompatActivity() {
 
         var hint = "What's on your mind, $name?"
         post_text_element.hint = hint
-        if (TextUtils.isEmpty(imageUri)){
+        if (!TextUtils.isEmpty(imageUri)){
             Picasso.get().load(imageUri).into(profile_image)
         }
     }
