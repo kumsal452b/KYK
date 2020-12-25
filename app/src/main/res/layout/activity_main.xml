@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity"
-    tools:openDrawer="end">
+    tools:openDrawer="start">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -147,6 +147,7 @@
         app:headerLayout="@layout/header"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/menu_bar" />
+        app:menu="@menu/menu_bar"
+        android:paddingTop="20dp"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
