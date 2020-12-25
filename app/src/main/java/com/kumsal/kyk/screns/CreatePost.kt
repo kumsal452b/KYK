@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.HttpsCallableResult
 import com.google.firebase.storage.StreamDownloadTask
 import com.google.firebase.storage.UploadTask
 import com.hendraanggrian.socialview.commons.Hashtag
@@ -81,7 +82,7 @@ class CreatePost : AppCompatActivity() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
-                var currentTime=getTime(object :getTimeZone{
+                var currentTime=getTime(object:getTimeZone{
                     override fun getTime(time: Long) {
 
                     }
@@ -163,20 +164,22 @@ class CreatePost : AppCompatActivity() {
         mTimeFunction.getHttpsCallable("time")
             .call()
             .addOnFailureListener(
-                object :OnFailureListener{
-                    override fun onFailure(p0: Exception) {
-                        Log.d("problem",p0.localizedMessage as String)
-                        Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
-                        return
-                    }
+                this, OnFailureListener {
+
+                    Log.d("problem",it.localizedMessage as String)
+                    Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
+                    return@OnFailureListener
                 }
+
             ).addOnCompleteListener {
-                if (it.isSuccessful){
-                    timestp=it.result?.data as Long
-                    time.getTime(timestp)
-                }else{
-                    Toast.makeText(this,"There is a problem. Please try again",Toast.LENGTH_LONG)
-                    return@addOnCompleteListener
+                OnCompleteListener<Task<HttpsCallableResult>> {p0->
+                    if (p0.isSuccessful){
+                        timestp=p0.result?.result?.data as Long
+                        time.getTime(timestp)
+                    }else{
+                        Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
+                        return@OnCompleteListener
+                    }
                 }
             }
         return timestp
