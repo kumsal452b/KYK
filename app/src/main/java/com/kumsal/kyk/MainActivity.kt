@@ -37,6 +37,7 @@ import java.util.ArrayList
 
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickListener {
+
     private var toolbar: Toolbar? = null
     private var mViewPager: ViewPager? = null
     private var sectionPagerAdapter: SectionPagerAdapter? = null
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private var addMessage: ExtendedFloatingActionButton? = null
 
     private var mDrawerLayout: DrawerLayout? = null
-    internal var actionBarDrawerToggle: ActionBarDrawerToggle? = null
+    private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
 
     private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     //Image send element
     var imageUri=""
     var userId=""
-
+    var thmbImageUri=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -196,7 +197,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (actionBarDrawerToggle?.onOptionsItemSelected(item)!!) {
             return true
@@ -243,12 +243,14 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         var uriImage = snapshot.child("image").value
+                        var thmburiImage = snapshot.child("thmbImage").value
                         var thename = snapshot.child("name_surname").value as String
                         var thesername = snapshot.child("username").value as String
                         if (TextUtils.isEmpty(uriImage.toString())) {
                             uriImage = "emtpy"
                         }
                         imageUri=uriImage as String
+                        thmbImageUri=thmburiImage as String
                         name.setText(thename)
                         username.setText(thesername)
                         Picasso.get().load(uriImage as String).into(proImage)
@@ -263,7 +265,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         super.onStart()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_action, menu)
         return super.onCreateOptionsMenu(menu)
@@ -271,7 +272,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     override fun onClick(v: View?) {
         var post_Activity=Intent(this,CreatePost::class.java)
-        post_Activity.putExtra("uri",imageUri)
+        post_Activity.putExtra("thmburi",thmbImageUri)
         post_Activity.putExtra("name",name.text.toString())
         post_Activity.putExtra("username",username.text.toString())
         post_Activity.putExtra("uid",userId)
