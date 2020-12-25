@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.*
 import android.widget.Toast.makeText
@@ -37,8 +36,10 @@ import de.hdodenhof.circleimageview.CircleImageView
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileInputStream
 import java.io.FileOutputStream
-import java.io.OutputStream
+import java.io.IOException
+import java.nio.channels.FileChannel
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.collections.ArrayList
@@ -146,8 +147,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             this@RegisterDetailActivity.finish()
                                         }
                                     )
-
-
                             }
                         }, currId)
 
@@ -317,16 +316,18 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                var path=Environment.getExternalStorageDirectory().getAbsolutePath() + "/KYK"
                 var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 imageuri = result.uri
-                saveToExternalStorage(imageuri)
                 imageView.setImageURI(imageuri)
+
                 lifecycleScope.launch(){
                     var copresorImage=Compressor.compress(
                         this@RegisterDetailActivity,
-                        File(imageuri.toString())
+                        File(imageuri.path)
                     )
                     tmbimageuri=copresorImage.toURI() as Uri
+
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
 
@@ -472,7 +473,36 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         return result
     }
-   
+
+   fun getfile(source: String, dest: String){
+      var src:File=File(source)
+       var dst:File=File(dest)
+       copyFile(src, dst)
+   }
+
+    @Throws(IOException::class)
+    fun copyFile(sourceFile: File?, destFile: File) {
+        if (!destFile.parentFile.exists())
+            destFile.parentFile.mkdirs()
+        if (!destFile.exists()) {
+            destFile.createNewFile()
+        }
+        var source: FileChannel? = null
+        var destination: FileChannel? = null
+        try {
+            source = FileInputStream(sourceFile).getChannel()
+            destination = FileOutputStream(destFile).channel
+            destination.transferFrom(source, 0, source.size())
+
+        } finally {
+            if (source != null) {
+                source.close()
+            }
+            if (destination != null) {
+                destination.close()
+            }
+        }
+    }
 
     fun getImagePath(myLoadImage: LoadImage, uid: String) {
        if (imageuri!= Uri.EMPTY){
