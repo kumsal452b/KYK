@@ -285,7 +285,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         if (requestCode == 1234) {
             if (grantResults.size >= 2) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[2] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
                 ) {
                     makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
                     CropImage.activity()
@@ -308,7 +308,6 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
 
         }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
