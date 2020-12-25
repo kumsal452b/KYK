@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -12,11 +13,13 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
+import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.storage.StreamDownloadTask
 import com.google.firebase.storage.UploadTask
 import com.hendraanggrian.socialview.commons.Hashtag
@@ -27,8 +30,10 @@ import com.hendraanggrian.widget.SocialTextView
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
+import com.kumsal.kyk.interfaces.getTimeZone
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.lang.Exception
 import java.security.Timestamp
 import java.util.*
 import kotlin.collections.HashMap
@@ -38,7 +43,7 @@ class CreatePost : AppCompatActivity() {
     private lateinit var select_image:ImageButton
     private lateinit var share_button:Button
     private lateinit var post_text_element: SocialEditText
-
+    private lateinit var mTimeFunction: FirebaseFunctions
     //add intent element varíable
     var name=""
     var imageUri=""
@@ -76,6 +81,11 @@ class CreatePost : AppCompatActivity() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
+                var currentTime=getTime(object :getTimeZone{
+                    override fun getTime(time: Long) {
+
+                    }
+                })
                 var time = ServerValue.TIMESTAMP
                 var values = HashMap<String, String>()
                 var ukey=mPostRefDb.child(userid).push().key.toString()
@@ -126,7 +136,7 @@ class CreatePost : AppCompatActivity() {
         select_image = findViewById(R.id.activity_create_post_select_image)
         share_button = findViewById(R.id.activity_create_post_share)
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
-        mPostRefDb=FirebaseDatabase.getInstance().getReference("Post")
+
         var names=ArrayList<Mention>()
 
         name = intent.getStringExtra("name") as String
@@ -134,6 +144,9 @@ class CreatePost : AppCompatActivity() {
         thmbImageUri=intent.getStringExtra("thmburi") as String
         userid=intent.getStringExtra("uid") as String
         username=intent.getStringExtra("username") as String
+
+        //Firebase initialize zoon
+        mTimeFunction=FirebaseFunctions.getInstance()
     }
 
     private fun initialDynamic() {
@@ -143,5 +156,29 @@ class CreatePost : AppCompatActivity() {
         if (!TextUtils.isEmpty(imageUri)){
             Picasso.get().load(imageUri).into(profile_image)
         }
+    }
+    private fun getTime(time:getTimeZone):Long{
+        var timestp:Long
+        timestp=0
+        mTimeFunction.getHttpsCallable("time")
+            .call()
+            .addOnFailureListener(
+                object :OnFailureListener{
+                    override fun onFailure(p0: Exception) {
+                        Log.d("problem",p0.localizedMessage as String)
+                        Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
+                        return
+                    }
+                }
+            ).addOnCompleteListener {
+                if (it.isSuccessful){
+                    timestp=it.result?.data as Long
+                    time.getTime(timestp)
+                }else{
+                    Toast.makeText(this,"There is a problem. Please try again",Toast.LENGTH_LONG)
+                    return@addOnCompleteListener
+                }
+            }
+        return timestp
     }
 }
