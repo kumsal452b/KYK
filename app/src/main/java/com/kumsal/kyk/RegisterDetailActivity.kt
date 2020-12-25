@@ -87,7 +87,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         regBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 WaitDialog.show(this@RegisterDetailActivity, getString(R.string.please_wait))
-                WaitDialog.dismiss(6000)
+                WaitDialog.dismiss(24000)
 
                 var theName = getIntent().getStringExtra("name") as String
                 var thePass = getIntent().getStringExtra("pass") as String
@@ -124,11 +124,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                         getImagePath(object : LoadImage {
                             override fun getImagePath(path: String, path2:String) {
                                 WaitDialog.dismiss()
-                                println("oath" + path)
                                 mMap.set("name_surname", theName)
                                 mMap.set("image", path)
                                 mMap.set("username", theUserNames)
                                 mMap.set("email", theEmail)
+                                mMap.set("thmbImage",path2)
                                 mDatabase.child(currId).setValue(mMap)
                                     .addOnFailureListener { Exception ->
                                         makeText(
