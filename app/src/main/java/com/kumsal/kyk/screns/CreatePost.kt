@@ -127,7 +127,7 @@ class CreatePost : AppCompatActivity() {
         var names=ArrayList<Mention>()
 
         name = intent.getStringExtra("name") as String
-        imageUri = intent.getStringExtra("uri") as String
+        imageUri = intent.getStringExtra("thmburi") as String
         userid=intent.getStringExtra("uid") as String
         username=intent.getStringExtra("username") as String
     }
