@@ -90,7 +90,7 @@
             android:id="@+id/post_layout_expanded"
             android:layout_width="23dp"
             android:layout_height="28dp"
-            android:background="#32816666"
+            android:background="#00816666"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_expand_more_24" />
