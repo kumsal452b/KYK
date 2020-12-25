@@ -5,52 +5,40 @@ import android.Manifest.permission.*
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.hardware.camera2.CameraManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.Settings
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
 import android.widget.Toast.makeText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.*
 import com.google.firebase.auth.FirebaseAuth
-
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.v3.BottomMenu
-
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
-import com.kumsal.kyk.UID.Companion.getInstance
 import com.kumsal.kyk.interfaces.LoadImage
 import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageOptions
 import com.theartofdev.edmodo.cropper.CropImageView
-
 import de.hdodenhof.circleimageview.CircleImageView
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.Exception
-import java.net.URI
+import java.io.OutputStream
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.collections.ArrayList
@@ -196,10 +184,10 @@ class RegisterDetailActivity : AppCompatActivity() {
                                         )
                                     } else {
 
-    //                                        CropImage.activity()
-    //                                            .setGuidelines(CropImageView.Guidelines.ON)
-    //                                            .setAspectRatio(2,2)
-    //                                            .start(this@RegisterDetailActivity)
+                                        //                                        CropImage.activity()
+                                        //                                            .setGuidelines(CropImageView.Guidelines.ON)
+                                        //                                            .setAspectRatio(2,2)
+                                        //                                            .start(this@RegisterDetailActivity)
 
                                     }
                                 1 ->
@@ -331,9 +319,13 @@ class RegisterDetailActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 imageuri = result.uri
+                saveToExternalStorage(imageuri)
                 imageView.setImageURI(imageuri)
                 lifecycleScope.launch(){
-                    var copresorImage=Compressor.compress(this@RegisterDetailActivity,File(result.uri.toString()))
+                    var copresorImage=Compressor.compress(
+                        this@RegisterDetailActivity,
+                        File(imageuri.toString())
+                    )
                     tmbimageuri=copresorImage.toURI() as Uri
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -428,8 +420,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (surname == null) {
                     surname = ""
                     surnameM = ""
-                }
-                else{
+                } else {
                     surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
                 }
                 var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
@@ -481,6 +472,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         return result
     }
+   
 
     fun getImagePath(myLoadImage: LoadImage, uid: String) {
        if (imageuri!= Uri.EMPTY){
