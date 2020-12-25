@@ -11,12 +11,14 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.*
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.*
@@ -120,7 +122,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                         globals?.uid = currId
 
                         getImagePath(object : LoadImage {
-                            override fun getImagePath(path: String) {
+                            override fun getImagePath(path: String, path2:String) {
                                 WaitDialog.dismiss()
                                 println("oath" + path)
                                 mMap.set("name_surname", theName)
@@ -326,7 +328,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                         this@RegisterDetailActivity,
                         File(imageuri.path)
                     )
-                    tmbimageuri=copresorImage.toURI() as Uri
+                    tmbimageuri=copresorImage.toUri();
 
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -418,7 +420,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                     name += fulname.get(a)
                 }
                 var surnameM = ""
-                if (surname == null) {
+                if (surname == null || TextUtils.isEmpty(surname)) {
                     surname = ""
                     surnameM = ""
                 } else {
@@ -507,10 +509,12 @@ class RegisterDetailActivity : AppCompatActivity() {
     fun getImagePath(myLoadImage: LoadImage, uid: String) {
        if (imageuri!= Uri.EMPTY){
            var path = "profile_image" + uid
+           var pathThmb="profile_image_thumnail" + uid
            var fileRef = mRefStorage.child(path + ".jpg")
+           var fileRefThmb = mRefStorage.child(pathThmb + ".jpg")
            fileRef.putFile(imageuri).addOnFailureListener(object : OnFailureListener {
                override fun onFailure(p0: Exception) {
-                   throw p0.fillInStackTrace()
+                   Log.d("problem",p0.localizedMessage)
                    return
                }
            }).addOnCompleteListener(object : OnCompleteListener<UploadTask.TaskSnapshot> {
@@ -519,11 +523,23 @@ class RegisterDetailActivity : AppCompatActivity() {
                        fileRef.downloadUrl.addOnFailureListener { Exception ->
                            println(Exception.localizedMessage + Exception.stackTrace)
                        }.addOnSuccessListener { Uri ->
-                           myLoadImage.getImagePath(Uri.toString())
+                           fileRefThmb.putFile(tmbimageuri).addOnFailureListener{
+                                Exception->
+                               Log.d("problem",Exception.localizedMessage)
+                           }.addOnSuccessListener {
+                               fileRefThmb.downloadUrl.addOnCompleteListener {
+                                   if (it.isSuccessful){
+                                       myLoadImage.getImagePath(Uri.toString(),Uri.toString())
+                                   }else{
+                                       Log.d("problem","Problem has been solved")
+                                   }
+                               }
+
+                           }
 
                        }
                    } else if (p0.isCanceled) {
-                       throw p0.exception?.fillInStackTrace()!!
+                       Log.d("problem", p0.exception!!.localizedMessage)
                    } else {
                        makeText(
                            this@RegisterDetailActivity,
@@ -535,9 +551,8 @@ class RegisterDetailActivity : AppCompatActivity() {
            })
        }
         else{
-           myLoadImage.getImagePath("")
+           myLoadImage.getImagePath("","")
        }
-
     }
 
     override fun onBackPressed() {
