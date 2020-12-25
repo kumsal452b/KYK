@@ -276,6 +276,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         post_Activity.putExtra("name",name.text.toString())
         post_Activity.putExtra("username",username.text.toString())
         post_Activity.putExtra("uid",userId)
+        post_Activity.putExtra("imageUri",imageUri)
 
         when (v?.id) {
             R.id.fab_add ->

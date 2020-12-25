@@ -23,13 +23,13 @@ class post_adapter(private var list:ArrayList<post_model>,private var context:Co
         var expanded:ImageButton=itemView.findViewById(R.id.post_layout_expanded)
 
         fun BindElement(model:post_model){
-            Picasso.get().load(model.theImage).placeholder(R.drawable.persontwo).into(image)
+            Picasso.get().load(model.theThmbImg).placeholder(R.drawable.persontwo).into(image)
             postc.setText(model.thePost)
             name.setText(model.thead)
             since.setText(model.theSince)
             username.setText(model.theusername)
-        }
 
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): postHolder {

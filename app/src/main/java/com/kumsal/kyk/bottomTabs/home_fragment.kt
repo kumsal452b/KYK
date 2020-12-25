@@ -56,7 +56,7 @@ class home_fragment : Fragment() {
                         var thead = b.child("name").value.toString()
                         var theusername = b.child("username").value.toString()
                         var thePost = b.child("pc").value.toString()
-                        var theImage =b.child("thmbImage").value.toString()
+                        var theImage =b.child("thmbImageUri").value.toString()
 //                        var theSince = ""
                         var theModel=post_model(thead,theusername,thePost,"","",theImage)
                         post_list.add(theModel)

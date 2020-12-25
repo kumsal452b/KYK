@@ -42,6 +42,7 @@ class CreatePost : AppCompatActivity() {
     //add intent element varíable
     var name=""
     var imageUri=""
+    var thmbImageUri=""
     var userid=""
     var username=""
     //Database section
@@ -84,6 +85,8 @@ class CreatePost : AppCompatActivity() {
                 values.put("time", time.toString())
                 values.put("name", name)
                 values.put("username", username)
+                values.put("imageUri",imageUri)
+                values.put("thmbImageUri",thmbImageUri)
                 mPostRefDb.child(userid).child(ukey).setValue(values).addOnSuccessListener {
                             WaitDialog.dismiss()
                             var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
@@ -127,7 +130,8 @@ class CreatePost : AppCompatActivity() {
         var names=ArrayList<Mention>()
 
         name = intent.getStringExtra("name") as String
-        imageUri = intent.getStringExtra("thmburi") as String
+        imageUri = intent.getStringExtra("imageUri") as String
+        thmbImageUri=intent.getStringExtra("thmburi") as String
         userid=intent.getStringExtra("uid") as String
         username=intent.getStringExtra("username") as String
     }
