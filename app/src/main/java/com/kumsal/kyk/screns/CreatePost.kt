@@ -163,9 +163,13 @@ class CreatePost : AppCompatActivity() {
         timestp=0
         mTimeFunction.getHttpsCallable("time")
             .call()
-            .addOnFailureListener(
-                this, OnFailureListener {
+            .addOnCanceledListener {
 
+            }
+            .addOnFailureListener(
+
+                OnFailureListener {
+                    it.message
                     Log.d("problem",it.localizedMessage as String)
                     Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
                     return@OnFailureListener
@@ -181,7 +185,10 @@ class CreatePost : AppCompatActivity() {
                         return@OnCompleteListener
                     }
                 }
+            }.addOnSuccessListener {
+                println("selamsd")
             }
+
         return timestp
     }
 }
