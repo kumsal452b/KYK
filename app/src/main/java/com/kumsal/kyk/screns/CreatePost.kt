@@ -167,14 +167,12 @@ class CreatePost : AppCompatActivity() {
 
             }
             .addOnFailureListener(
-
                 OnFailureListener {
                     it.message
                     Log.d("problem",it.localizedMessage as String)
                     Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
                     return@OnFailureListener
                 }
-
             ).addOnCompleteListener {
                 OnCompleteListener<Task<HttpsCallableResult>> {p0->
                     if (p0.isSuccessful){
