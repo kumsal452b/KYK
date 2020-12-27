@@ -122,13 +122,13 @@ class RegisterDetailActivity : AppCompatActivity() {
                         globals?.uid = currId
 
                         getImagePath(object : LoadImage {
-                            override fun getImagePath(path: String, path2:String) {
+                            override fun getImagePath(path: String, path2: String) {
                                 WaitDialog.dismiss()
                                 mMap.set("name_surname", theName)
                                 mMap.set("image", path)
                                 mMap.set("username", theUserNames)
                                 mMap.set("email", theEmail)
-                                mMap.set("thmbImage",path2)
+                                mMap.set("thmbImage", path2)
                                 mDatabase.child(currId).setValue(mMap)
                                     .addOnFailureListener { Exception ->
                                         makeText(
@@ -143,9 +143,8 @@ class RegisterDetailActivity : AppCompatActivity() {
                                                 "Succec",
                                                 Toast.LENGTH_LONG
                                             ).show()
-                                            val intent: Intent =
-                                                Intent(applicationContext, MainActivity::class.java)
-
+                                            val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+                                                intent.putExtra("deneme",Globals.ınstance)
                                             startActivity(intent)
                                             this@RegisterDetailActivity.finish()
                                         }
@@ -320,17 +319,17 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                var path=Environment.getExternalStorageDirectory().getAbsolutePath() + "/KYK"
+                var path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/KYK"
                 var result: CropImage.ActivityResult = CropImage.getActivityResult(data)
                 imageuri = result.uri
                 imageView.setImageURI(imageuri)
 
-                lifecycleScope.launch(){
-                    var copresorImage=Compressor.compress(
+                lifecycleScope.launch() {
+                    var copresorImage = Compressor.compress(
                         this@RegisterDetailActivity,
                         File(imageuri.path)
                     )
-                    tmbimageuri=copresorImage.toUri();
+                    tmbimageuri = copresorImage.toUri();
 
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -370,7 +369,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     fun isEmpty(): Boolean {
         var troubleCount = 0;
-        if (!usernameCheckBox.isChecked){
+        if (!usernameCheckBox.isChecked) {
             if (!usernameCheckBox.isChecked) {
                 if (TextUtils.isEmpty(username.text)) {
                     if (!usernameCheckBox.isChecked) {
@@ -479,11 +478,11 @@ class RegisterDetailActivity : AppCompatActivity() {
     }
 
 
-   fun getfile(source: String, dest: String){
-      var src:File=File(source)
-       var dst:File=File(dest)
-       copyFile(src, dst)
-   }
+    fun getfile(source: String, dest: String) {
+        var src: File = File(source)
+        var dst: File = File(dest)
+        copyFile(src, dst)
+    }
 
     @Throws(IOException::class)
     fun copyFile(sourceFile: File?, destFile: File) {
@@ -510,52 +509,50 @@ class RegisterDetailActivity : AppCompatActivity() {
     }
 
     fun getImagePath(myLoadImage: LoadImage, uid: String) {
-       if (imageuri!= Uri.EMPTY){
-           var path = "profile_image" + uid
-           var pathThmb="profile_image_thumnail" + uid
-           var fileRef = mRefStorage.child(path + ".jpg")
-           var fileRefThmb = mRefStorage.child(pathThmb + ".jpg")
-           fileRef.putFile(imageuri).addOnFailureListener(object : OnFailureListener {
-               override fun onFailure(p0: Exception) {
-                   Log.d("problem",p0.localizedMessage)
-                   return
-               }
-           }).addOnCompleteListener(object : OnCompleteListener<UploadTask.TaskSnapshot> {
-               override fun onComplete(p0: Task<UploadTask.TaskSnapshot>) {
-                   if (p0.isSuccessful) {
-                       fileRef.downloadUrl.addOnFailureListener { Exception ->
-                           println(Exception.localizedMessage + Exception.stackTrace)
-                       }.addOnSuccessListener { Uri ->
-                           fileRefThmb.putFile(tmbimageuri).addOnFailureListener{
-                                Exception->
-                               Log.d("problem",Exception.localizedMessage)
-                           }.addOnSuccessListener {
-                               fileRefThmb.downloadUrl.addOnCompleteListener {
-                                   if (it.isSuccessful){
-                                       myLoadImage.getImagePath(Uri.toString(),Uri.toString())
-                                   }else{
-                                       Log.d("problem","Problem has been solved")
-                                   }
-                               }
+        if (imageuri != Uri.EMPTY) {
+            var path = "profile_image" + uid
+            var pathThmb = "profile_image_thumnail" + uid
+            var fileRef = mRefStorage.child(path + ".jpg")
+            var fileRefThmb = mRefStorage.child(pathThmb + ".jpg")
+            fileRef.putFile(imageuri).addOnFailureListener(object : OnFailureListener {
+                override fun onFailure(p0: Exception) {
+                    Log.d("problem", p0.localizedMessage)
+                    return
+                }
+            }).addOnCompleteListener(object : OnCompleteListener<UploadTask.TaskSnapshot> {
+                override fun onComplete(p0: Task<UploadTask.TaskSnapshot>) {
+                    if (p0.isSuccessful) {
+                        fileRef.downloadUrl.addOnFailureListener { Exception ->
+                            println(Exception.localizedMessage + Exception.stackTrace)
+                        }.addOnSuccessListener { Uri ->
+                            fileRefThmb.putFile(tmbimageuri).addOnFailureListener { Exception ->
+                                Log.d("problem", Exception.localizedMessage)
+                            }.addOnSuccessListener {
+                                fileRefThmb.downloadUrl.addOnCompleteListener {
+                                    if (it.isSuccessful) {
+                                        myLoadImage.getImagePath(Uri.toString(), Uri.toString())
+                                    } else {
+                                        Log.d("problem", "Problem has been solved")
+                                    }
+                                }
 
-                           }
+                            }
 
-                       }
-                   } else if (p0.isCanceled) {
-                       Log.d("problem", p0.exception!!.localizedMessage)
-                   } else {
-                       makeText(
-                           this@RegisterDetailActivity,
-                           getString(R.string.unknown),
-                           Toast.LENGTH_LONG
-                       ).show()
-                   }
-               }
-           })
-       }
-        else{
-           myLoadImage.getImagePath("","")
-       }
+                        }
+                    } else if (p0.isCanceled) {
+                        Log.d("problem", p0.exception!!.localizedMessage)
+                    } else {
+                        makeText(
+                            this@RegisterDetailActivity,
+                            getString(R.string.unknown),
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            })
+        } else {
+            myLoadImage.getImagePath("", "")
+        }
     }
 
     override fun onBackPressed() {
