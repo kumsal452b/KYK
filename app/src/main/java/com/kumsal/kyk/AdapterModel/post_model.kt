@@ -11,15 +11,19 @@ class post_model(ad: String, username: String, postContent: String, imageUri: St
     var theThmbImg=""
 
     init {
-        if (TextUtils.isEmpty(imageUri)){
+        if (TextUtils.isEmpty(imageUri) || imageUri==null){
             this.theImage="empty"
         }else{
             this.theImage=imageUri
+        }
+        if (TextUtils.isEmpty(thmbImg) || thmbImg==null){
+            this.theThmbImg="empty"
+        }else{
+            this.theThmbImg=thmbImg
         }
         this.theusername=username
         this.thePost=postContent
         this.theSince=since
         this.thead=ad
-        this.theThmbImg=thmbImg
     }
 }
