@@ -92,7 +92,7 @@ class CreatePost : AppCompatActivity() {
                 values.put("imageUri",imageUri )
                 values.put("time",ServerValue.TIMESTAMP)
                 values.put("thmbImageUri",thmbImageUri)
-                mPostRefDb.child(userid).child(ukey).setValue(values).addOnSuccessListener {
+                mPostRefDb.child(userid).child(ukey).setValue(values).addOnSuccessListener{
                             WaitDialog.dismiss()
                             var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
                             startActivity(main_Activity)

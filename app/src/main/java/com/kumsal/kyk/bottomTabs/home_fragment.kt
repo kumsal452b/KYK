@@ -26,10 +26,7 @@ class home_fragment : Fragment() {
 
     //reccler
     private lateinit var recyclerView: RecyclerView
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view=inflater.inflate(R.layout.fragment_home, container, false)
         //Adapter initial
         post_list= ArrayList()
@@ -41,6 +38,7 @@ class home_fragment : Fragment() {
         recyclerView.layoutManager= LinearLayoutManager(view.context)
         recyclerView.adapter=adapter
 
+        //
         mPostDb = FirebaseDatabase.getInstance().getReference("Post")
         mUser=FirebaseAuth.getInstance().currentUser
         if (mUser!=null){
@@ -49,7 +47,7 @@ class home_fragment : Fragment() {
         return view
     }
     fun getPostValue(){
-        mPostDb?.addValueEventListener(object: ValueEventListener {
+        mPostDb?.orderByChild("time")?.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (a in snapshot.children){
                     for (b in a.children){
