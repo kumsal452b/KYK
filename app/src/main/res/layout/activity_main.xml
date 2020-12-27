@@ -27,10 +27,6 @@
                 android:id="@+id/main_activity_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginBottom="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -116,7 +112,7 @@
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/main_activity_colapse"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/background_starter"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +121,7 @@
                 <me.ibrahimsn.lib.SmoothBottomBar
                     android:id="@+id/main_activity_bottomBar"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
+                    android:layout_height="50dp"
                     app:backgroundColor="#00FFFFFF"
                     app:iconSize="25dp"
                     app:menu="@menu/bottom_bar_menu" />
