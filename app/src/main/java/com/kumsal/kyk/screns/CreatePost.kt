@@ -82,8 +82,6 @@ class CreatePost : AppCompatActivity() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
-                
-                var time = ServerValue.TIMESTAMP
                 var values = HashMap<String, Any>()
                 var ukey=mPostRefDb.child(userid).push().key.toString()
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
