@@ -64,8 +64,6 @@ class home_fragment : Fragment(),Serializable {
                 post_list.sortByDescending{ postModel ->
                     postModel.theSince
                 }
-//                adapter=post_adapter(post_list, view?.context!!)
-//                recyclerView.adapter=adapter
                 adapter.notifyDataSetChanged()
             }
 
