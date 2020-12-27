@@ -5,30 +5,21 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.HttpsCallableResult
-import com.google.firebase.storage.StreamDownloadTask
-import com.google.firebase.storage.UploadTask
-import com.hendraanggrian.socialview.commons.Hashtag
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.widget.SocialEditText
 import com.hendraanggrian.widget.SocialTextView
 import com.kongzue.dialog.v3.WaitDialog
+import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.getTimeZone
@@ -66,6 +57,8 @@ class CreatePost : AppCompatActivity() {
             .setDisplayname("Hendra Anggrian")
             .setAvatarURL("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
             .build()
+        var uidG=Globals.ınstance?.uid
+
 //        names.add(mention2)
 //        names.add(mention1)
 //        names.add(mention3)
