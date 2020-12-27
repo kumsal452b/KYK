@@ -145,6 +145,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             ).show()
                                             val intent: Intent =
                                                 Intent(applicationContext, MainActivity::class.java)
+
                                             startActivity(intent)
                                             this@RegisterDetailActivity.finish()
                                         }
@@ -234,6 +235,7 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         })
     }
+
 
     private fun initializeComponent() {
         name = getIntent().getStringExtra("name")
@@ -476,6 +478,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         return result
     }
 
+
    fun getfile(source: String, dest: String){
       var src:File=File(source)
        var dst:File=File(dest)
@@ -557,6 +560,7 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
+
         Animatoo.animateSwipeRight(this)
     }
 }

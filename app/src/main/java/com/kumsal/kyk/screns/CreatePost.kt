@@ -82,21 +82,17 @@ class CreatePost : AppCompatActivity() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
-                var currentTime=getTime(object:getTimeZone{
-                    override fun getTime(time: Long) {
-
-                    }
-                })
+                
                 var time = ServerValue.TIMESTAMP
-                var values = HashMap<String, String>()
+                var values = HashMap<String, Any>()
                 var ukey=mPostRefDb.child(userid).push().key.toString()
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
-                values.put("pc", postContent.toString())
-                values.put("time", time.toString())
-                values.put("name", name)
+                values.put("pc", postContent as String)
+                values.put("name", name as String)
                 values.put("username", username)
-                values.put("imageUri",imageUri)
+                values.put("imageUri",imageUri )
+                values.put("time",ServerValue.TIMESTAMP)
                 values.put("thmbImageUri",thmbImageUri)
                 mPostRefDb.child(userid).child(ukey).setValue(values).addOnSuccessListener {
                             WaitDialog.dismiss()
@@ -148,6 +144,7 @@ class CreatePost : AppCompatActivity() {
 
         //Firebase initialize zoon
         mTimeFunction=FirebaseFunctions.getInstance()
+        mPostRefDb=FirebaseDatabase.getInstance().getReference("Post")
     }
 
     private fun initialDynamic() {
@@ -157,36 +154,5 @@ class CreatePost : AppCompatActivity() {
         if (!TextUtils.isEmpty(imageUri)){
             Picasso.get().load(imageUri).into(profile_image)
         }
-    }
-    private fun getTime(time:getTimeZone):Long{
-        var timestp:Long
-        timestp=0
-        mTimeFunction.getHttpsCallable("time")
-            .call()
-            .addOnCanceledListener {
-
-            }
-            .addOnFailureListener(
-                OnFailureListener {
-                    it.message
-                    Log.d("problem",it.localizedMessage as String)
-                    Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
-                    return@OnFailureListener
-                }
-            ).addOnCompleteListener {
-                OnCompleteListener<Task<HttpsCallableResult>> {p0->
-                    if (p0.isSuccessful){
-                        timestp=p0.result?.result?.data as Long
-                        time.getTime(timestp)
-                    }else{
-                        Toast.makeText(this@CreatePost,"There is a problem. Please try again",Toast.LENGTH_LONG)
-                        return@OnCompleteListener
-                    }
-                }
-            }.addOnSuccessListener {
-                println("selamsd")
-            }
-
-        return timestp
     }
 }
