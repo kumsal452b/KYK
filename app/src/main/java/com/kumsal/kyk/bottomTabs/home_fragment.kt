@@ -13,10 +13,11 @@ import com.google.firebase.database.*
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.R
+import java.io.Serializable
 import java.util.ArrayList
 
 
-class home_fragment : Fragment() {
+class home_fragment : Fragment(),Serializable {
 
     private var mUser: FirebaseUser? = null
     private var mPostDb: DatabaseReference?=null
@@ -55,14 +56,17 @@ class home_fragment : Fragment() {
                         var theusername = b.child("username").value.toString()
                         var thePost = b.child("pc").value.toString()
                         var theImage =b.child("thmbImageUri").value.toString()
-//                        var theSince = ""
-                        var theModel=post_model(thead,theusername,thePost,"","",theImage)
+                        var theSince = b.child("time").value.toString()
+                        var theModel=post_model(thead,theusername,thePost,"",theSince,theImage)
                         post_list.add(theModel)
                     }
                 }
-                adapter=post_adapter(post_list, view?.context!!)
+                post_list.sortByDescending{ postModel ->
+                    postModel.theSince
+                }
+//                adapter=post_adapter(post_list, view?.context!!)
+//                recyclerView.adapter=adapter
                 adapter.notifyDataSetChanged()
-                recyclerView.adapter=adapter
             }
 
             override fun onCancelled(error: DatabaseError) {
