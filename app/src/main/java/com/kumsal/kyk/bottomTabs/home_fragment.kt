@@ -7,6 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -24,7 +27,7 @@ class home_fragment : Fragment(),Serializable {
     //Adapter section
     lateinit var adapter: post_adapter
     lateinit var post_list: ArrayList<post_model>
-
+    private lateinit var query:Query
     //reccler
     private lateinit var recyclerView: RecyclerView
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,6 +51,7 @@ class home_fragment : Fragment(),Serializable {
         return view
     }
     fun getPostValue(){
+        query=mPostDb?.orderByKey()?.limitToLast(10) as Query
         mPostDb?.orderByChild("time")?.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (a in snapshot.children){
@@ -71,6 +75,16 @@ class home_fragment : Fragment(),Serializable {
 
             }
         })
+        var option:FirebaseRecyclerOptions<post_model>
+        option=FirebaseRecyclerOptions.Builder<post_model>()
+            .setQuery(query,post_model::class.java)
+            .build()
+        var adapter: FirebaseRecyclerAdapter<post_model,Post>
+        adapter=FirebaseRecyclerAdapter<post_model,Post>(option)
+
+    }
+    class Post(itemView: View): RecyclerView.ViewHolder(itemView) {
+
     }
 
 }
