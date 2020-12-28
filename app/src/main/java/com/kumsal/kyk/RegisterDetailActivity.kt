@@ -476,38 +476,6 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         return result
     }
-
-
-    fun getfile(source: String, dest: String) {
-        var src: File = File(source)
-        var dst: File = File(dest)
-        copyFile(src, dst)
-    }
-
-    @Throws(IOException::class)
-    fun copyFile(sourceFile: File?, destFile: File) {
-        if (!destFile.parentFile.exists())
-            destFile.parentFile.mkdirs()
-        if (!destFile.exists()) {
-            destFile.createNewFile()
-        }
-        var source: FileChannel? = null
-        var destination: FileChannel? = null
-        try {
-            source = FileInputStream(sourceFile).getChannel()
-            destination = FileOutputStream(destFile).channel
-            destination.transferFrom(source, 0, source.size())
-
-        } finally {
-            if (source != null) {
-                source.close()
-            }
-            if (destination != null) {
-                destination.close()
-            }
-        }
-    }
-
     fun getImagePath(myLoadImage: LoadImage, uid: String) {
         if (imageuri != Uri.EMPTY) {
             var path = "profile_image" + uid
