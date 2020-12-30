@@ -32,6 +32,8 @@ class home_fragment : Fragment(){
     private lateinit var query:Query
     //reccler
     private lateinit var recyclerView: RecyclerView
+
+    lateinit var adapter11: FirebaseRecyclerAdapter<post_model, Post>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,13 +48,14 @@ class home_fragment : Fragment(){
         recyclerView=view.findViewById(R.id.fragment_home_recycler)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= LinearLayoutManager(view.context)
-        recyclerView.adapter=adapter
+
 
         //
         mPostDb = FirebaseDatabase.getInstance().getReference("Post")
         mUser=FirebaseAuth.getInstance().currentUser
         if (mUser!=null){
             getPostValue()
+            recyclerView.adapter=adapter11
         }
         return view
     }
@@ -87,7 +90,7 @@ class home_fragment : Fragment(){
             .setQuery(query, post_model::class.java)
             .build()
 
-        var adapter: FirebaseRecyclerAdapter<post_model, Post> = object:FirebaseRecyclerAdapter<post_model, Post>(option){
+        adapter11 = object:FirebaseRecyclerAdapter<post_model, Post>(option){
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Post {
                 var view=LayoutInflater.from(parent.context).inflate(R.layout.post_layout,parent,false)
                 return Post(view)
