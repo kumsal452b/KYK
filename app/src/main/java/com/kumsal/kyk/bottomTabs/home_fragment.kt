@@ -79,8 +79,8 @@ class home_fragment : Fragment(),Serializable {
         option=FirebaseRecyclerOptions.Builder<post_model>()
             .setQuery(query,post_model::class.java)
             .build()
-        var adapter: FirebaseRecyclerAdapter<post_model,Post>
-        adapter=FirebaseRecyclerAdapter(option)
+        ()
+        var adapter: FirebaseRecyclerAdapter<post_model,Post> = FirebaseRecyclerAdapter<post_model,Post>(option)
 
     }
     class Post(itemView: View): RecyclerView.ViewHolder(itemView) {
