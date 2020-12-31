@@ -90,7 +90,7 @@ class home_fragment : Fragment(){
             .setQuery(query, post_model::class.java)
             .build()
 
-        val adapter = object : FirebaseRecyclerAdapter<post_model, Post>(option){
+         adapter11 = object : FirebaseRecyclerAdapter<post_model, Post>(option){
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Post {
                 var view=LayoutInflater.from(parent.context).inflate(R.layout.post_layout,parent,false)
                 return Post(view)
