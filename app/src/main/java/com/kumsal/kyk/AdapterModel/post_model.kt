@@ -10,6 +10,8 @@ class post_model(ad: String, username: String, postContent: String, imageUri: St
     var theSince = ""
     var theThmbImg=""
 
+    constructor():this("","","","","","")
+
     init {
         if (TextUtils.isEmpty(imageUri) || imageUri==null){
             this.theImage="empty"

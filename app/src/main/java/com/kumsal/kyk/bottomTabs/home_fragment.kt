@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.firebase.ui.database.SnapshotParser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -60,7 +61,7 @@ class home_fragment : Fragment(){
         return view
     }
     fun getPostValue() {
-        query = mPostDb?.limitToLast(10) as Query
+        query = mPostDb as Query
 //        mPostDb?.orderByChild("time")?.addValueEventListener(object : ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
 //                for (a in snapshot.children) {
@@ -85,9 +86,11 @@ class home_fragment : Fragment(){
 //
 //            }
 //        })
-        var option: FirebaseRecyclerOptions<post_model>
-        option = FirebaseRecyclerOptions.Builder<post_model>()
+        query.endAt(true)
+        val option = FirebaseRecyclerOptions.Builder<post_model>()
             .setQuery(query, post_model::class.java)
+            .setLifecycleOwner(this)
+            .setIndexedQuery()
             .build()
 
          adapter11 = object : FirebaseRecyclerAdapter<post_model, Post>(option){
@@ -97,7 +100,7 @@ class home_fragment : Fragment(){
             }
 
             override fun onBindViewHolder(holder: Post, position: Int, model: post_model) {
-                holder.BindElement(model)
+                holder.BindElement(option.snapshots.get(position))
             }
         }
 
@@ -118,8 +121,6 @@ class home_fragment : Fragment(){
             name.setText(model.thead)
             since.setText(model.theSince)
             username.setText(model.theusername)
-
         }
-
     }
 }
