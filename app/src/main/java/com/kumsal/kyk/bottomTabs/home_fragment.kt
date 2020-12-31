@@ -60,7 +60,7 @@ class home_fragment : Fragment(){
         return view
     }
     fun getPostValue(){
-        query=mPostDb?.orderByKey()?.limitToLast(10) as Query
+        query=mPostDb?.limitToLast(10) as Query
 //        mPostDb?.orderByChild("time")?.addValueEventListener(object : ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
 //                for (a in snapshot.children) {
@@ -90,18 +90,21 @@ class home_fragment : Fragment(){
             .setQuery(query, post_model::class.java)
             .build()
 
-        adapter11 = object:FirebaseRecyclerAdapter<post_model, Post>(option){
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Post {
-                var view=LayoutInflater.from(parent.context).inflate(R.layout.post_layout,parent,false)
-                return Post(view)
+        val adapter = object : FirebaseRecyclerAdapter<Chat, ChatHolder>(options) {
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatHolder {
+                return ChatHolder(LayoutInflater.from(parent.context)
+                    .inflate(R.layout.row_chat, parent, false))
             }
 
-            override fun onBindViewHolder(holder: Post, position: Int, model: post_model) {
-                holder.BindElement(option.snapshots[position])
+            protected override fun onBindViewHolder(holder: ChatHolder, position: Int, model: Chat) {
+                holder.bind(model)
+            }
+
+            override fun onDataChanged() {
+                // If there are no chat messages, show a view that invites the user to add a message.
+                mEmptyListMessage.setVisibility(if (itemCount == 0) View.VISIBLE else View.GONE)
             }
         }
-
-    }
     class Post(itemView: View): RecyclerView.ViewHolder(itemView) {
         var image: CircleImageView =itemView.findViewById(R.id.post_layout_imageView)
         var postc: TextView =itemView.findViewById(R.id.post_layout_imageView_postContent)
