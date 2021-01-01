@@ -103,9 +103,6 @@ class home_fragment : Fragment(){
                 holder.BindElement(option.snapshots.get(position))
             }
         }
-
-
-
     }
     class Post(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image: CircleImageView = itemView.findViewById(R.id.post_layout_imageView)
