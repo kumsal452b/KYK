@@ -8,7 +8,7 @@
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:actionMenuTextColor">@color/white</item>
     </style>
-    <style name="MyMaterialTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
+    <style name="MyMaterialTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Add attributes here -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
