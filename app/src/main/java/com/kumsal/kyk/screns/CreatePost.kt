@@ -18,6 +18,7 @@ import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.widget.SocialEditText
 import com.hendraanggrian.widget.SocialTextView
+import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
@@ -125,6 +126,7 @@ class CreatePost : AppCompatActivity() {
         select_image = findViewById(R.id.activity_create_post_select_image)
         share_button = findViewById(R.id.activity_create_post_share)
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
+        select_privacy=findViewById(R.id.activity_create_post_select_security)
 
         var names=ArrayList<Mention>()
 
@@ -136,6 +138,17 @@ class CreatePost : AppCompatActivity() {
 
         //Firebase initialize zoon
         mPostRefDb=FirebaseDatabase.getInstance().getReference("Post")
+
+        //Test section
+        select_privacy.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(v: View?) {
+                FullScreenDialog.show(this@CreatePost,R.layout.post_layout,object: FullScreenDialog.OnBindView{
+                    override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
+
+                    }
+                })
+            }
+        })
     }
 
     private fun initialDynamic() {
