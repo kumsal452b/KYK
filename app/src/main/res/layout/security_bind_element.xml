@@ -10,7 +10,10 @@
         android:id="@+id/radioButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RadioButton"
+        android:text="Friends of all"
+        android:textColor="#ECDFDF"
         tools:layout_editor_absoluteX="43dp"
-        tools:layout_editor_absoluteY="77dp" />
+        tools:layout_editor_absoluteY="77dp"
+        android:buttonTint="@color/white"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
