@@ -15,6 +15,7 @@
         android:id="@+id/layout">
 
         <RadioGroup
+            android:id="@+id/secure_rg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="52dp"
@@ -23,7 +24,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/radioButton"
+                android:id="@+id/secure_allfriends"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/white"
@@ -31,7 +32,7 @@
                 android:textColor="#ECDFDF" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
+                android:id="@+id/secure_except"
                 android:layout_width="242dp"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/white"
@@ -41,10 +42,12 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/secure_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="178dp"
-        tools:layout_editor_absoluteY="390dp"
-        app:layout_constraintTop_toBottomOf="@id/layout"/>
+        android:layout_marginTop="110dp"
+        android:padding="10dp"
+        app:layout_constraintTop_toBottomOf="@id/layout"
+        tools:layout_editor_absoluteX="178dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
