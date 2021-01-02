@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     private var add: FloatingActionButton? = null
     private var addPost: FloatingActionButton? = null
-    private var addMessage: ExtendedFloatingActionButton? = null
+    private var addMessage: FloatingActionButton? = null
 
     private var mDrawerLayout: DrawerLayout? = null
     private var actionBarDrawerToggle: ActionBarDrawerToggle? = null
