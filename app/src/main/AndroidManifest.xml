@@ -19,12 +19,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/projectlogo"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/circlelogo"
         android:supportsRtl="true"
-        android:theme="@style/MyMaterialTheme">
+        android:theme="@style/AppTheme">
         <activity android:name=".screns.CreatePost"></activity>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
