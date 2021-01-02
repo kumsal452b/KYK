@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.google.firebase.functions.FirebaseFunctions
@@ -158,6 +159,8 @@ class CreatePost : AppCompatActivity() {
                 FullScreenDialog.show(this@CreatePost,R.layout.security_bind_element,object: FullScreenDialog.OnBindView{
                     override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
                         recyclerView= rootView?.findViewById(R.id.secure_recycler)!!
+                        recyclerView.setHasFixedSize(true)
+                        recyclerView.layoutManager=LinearLayoutManager(rootView.context)
                         mRadioGroup=rootView?.findViewById(R.id.secure_rg)
                         alfriends=rootView?.findViewById(R.id.secure_allfriends)
                         excpection=rootView?.findViewById(R.id.secure_except)
