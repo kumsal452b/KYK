@@ -7,29 +7,44 @@
     android:layout_height="match_parent"
     android:background="@drawable/post_create_background">
 
-    <RadioGroup
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@drawable/create_post_bottom_arround"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/layout">
 
-        <RadioButton
-            android:id="@+id/radioButton"
+        <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/white"
-            android:text="All friends"
-            android:textColor="#ECDFDF" />
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="44dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/white"
-            android:text=" Except for the chosen ones."
-            android:textColor="#ECDFDF" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:text="All friends"
+                android:textColor="#ECDFDF" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="242dp"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/white"
+                android:text=" Except for the chosen ones."
+                android:textColor="#ECDFDF" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="178dp"
+        tools:layout_editor_absoluteY="390dp"
+        app:layout_constraintTop_toBottomOf="@id/layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
