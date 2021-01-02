@@ -6,13 +6,10 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ServerValue
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import com.google.firebase.functions.FirebaseFunctions
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialAutoCompleteTextView
@@ -20,6 +17,8 @@ import com.hendraanggrian.widget.SocialEditText
 import com.hendraanggrian.widget.SocialTextView
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
+import com.kumsal.kyk.AdapterModel.security_adapter
+import com.kumsal.kyk.AdapterModel.security_model
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
@@ -29,6 +28,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.lang.Exception
 import java.security.Timestamp
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class CreatePost : AppCompatActivity() {
@@ -37,6 +37,12 @@ class CreatePost : AppCompatActivity() {
     private lateinit var share_button:Button
     private lateinit var post_text_element: SocialEditText
     private lateinit var select_privacy:ImageButton
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var listElement:ArrayList<security_model>
+    private lateinit var mAdapter:security_adapter
+    private lateinit var mRadioGroup: RadioGroup
+    private lateinit var alfriends:RadioButton
+    private lateinit var excpection:RadioButton
     //add intent element varíable
     var name=""
     var imageUri=""
@@ -45,6 +51,7 @@ class CreatePost : AppCompatActivity() {
     var username=""
     //Database section
     private lateinit var mPostRefDb:DatabaseReference
+    private lateinit var mUserDbReference: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -138,12 +145,40 @@ class CreatePost : AppCompatActivity() {
 
         //Firebase initialize zoon
         mPostRefDb=FirebaseDatabase.getInstance().getReference("Post")
+        mUserDbReference=FirebaseDatabase.getInstance().getReference("Users")
+
+        //secure initialize section
+        listElement= ArrayList()
+        mAdapter= security_adapter(listElement)
+
 
         //Test section
         select_privacy.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
                 FullScreenDialog.show(this@CreatePost,R.layout.security_bind_element,object: FullScreenDialog.OnBindView{
                     override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
+                        recyclerView= rootView?.findViewById(R.id.secure_recycler)!!
+                        mRadioGroup=rootView?.findViewById(R.id.secure_rg)
+                        alfriends=rootView?.findViewById(R.id.secure_allfriends)
+                        excpection=rootView?.findViewById(R.id.secure_except)
+                        recyclerView.adapter=mAdapter
+                        mUserDbReference.addValueEventListener(object: ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                var theModel:security_model
+                                for (a in snapshot.children){
+                                    var thename=a.child("name").value as String
+                                    var theimg=a.child("thmbImage").value as String
+                                    var theUsername=a.child("username").value as String
+                                    theModel= security_model(thename,theUsername,theimg)
+                                    listElement.add(theModel)
+                                }
+                                mAdapter.notifyDataSetChanged()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+                        })
 
                     }
                 })
