@@ -166,7 +166,7 @@ class CreatePost : AppCompatActivity() {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 var theModel:security_model
                                 for (a in snapshot.children){
-                                    var thename=a.child("name").value as String
+                                    var thename=a.child("name_surname").value as String
                                     var theimg=a.child("thmbImage").value as String
                                     var theUsername=a.child("username").value as String
                                     theModel= security_model(thename,theUsername,theimg)
