@@ -62,32 +62,31 @@ class home_fragment : Fragment(){
     }
     fun getPostValue() {
         query = mPostDb as Query
-        mPostDb?.orderByChild("time")?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (a in snapshot.children) {
-                    var abx = a.getValue(post_list::class.java)
-                    for (b in a.children) {
-                        var thead = b.child("name").value.toString()
-                        var theusername = b.child("username").value.toString()
-                        var thePost = b.child("pc").value.toString()
-                        var theImage = b.child("thmbImageUri").value.toString()
-                        var theSince = b.child("time").value.toString()
-                        var theModel =
-                            post_model(thead, theusername, thePost, "", theSince, theImage)
-                        post_list.add(theModel)
-                    }
-                }
-                post_list.sortByDescending { postModel ->
-                    postModel.theSince
-                }
-                adapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        })
-        query.endAt(true)
+//        mPostDb?.orderByChild("time")?.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for (a in snapshot.children) {
+//                    var abx = a.getValue(post_list::class.java)
+//                    for (b in a.children) {
+//                        var thead = b.child("name").value.toString()
+//                        var theusername = b.child("username").value.toString()
+//                        var thePost = b.child("pc").value.toString()
+//                        var theImage = b.child("thmbImageUri").value.toString()
+//                        var theSince = b.child("time").value.toString()
+//                        var theModel =
+//                            post_model(thead, theusername, thePost, "", theSince, theImage)
+//                        post_list.add(theModel)
+//                    }
+//                }
+//                post_list.sortByDescending { postModel ->
+//                    postModel.theSince
+//                }
+//                adapter.notifyDataSetChanged()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//        })
         val option = FirebaseRecyclerOptions.Builder<post_model>()
             .setQuery(query, post_model::class.java)
             .setLifecycleOwner(this)

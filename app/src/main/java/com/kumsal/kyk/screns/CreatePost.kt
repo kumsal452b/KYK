@@ -35,7 +35,7 @@ class CreatePost : AppCompatActivity() {
     private lateinit var select_image:ImageButton
     private lateinit var share_button:Button
     private lateinit var post_text_element: SocialEditText
-    private lateinit var mTimeFunction: FirebaseFunctions
+    private lateinit var select_privacy:ImageButton
     //add intent element varíable
     var name=""
     var imageUri=""
@@ -135,7 +135,6 @@ class CreatePost : AppCompatActivity() {
         username=intent.getStringExtra("username") as String
 
         //Firebase initialize zoon
-        mTimeFunction=FirebaseFunctions.getInstance()
         mPostRefDb=FirebaseDatabase.getInstance().getReference("Post")
     }
 
