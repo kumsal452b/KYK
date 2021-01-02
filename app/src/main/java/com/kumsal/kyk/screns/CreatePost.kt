@@ -142,7 +142,7 @@ class CreatePost : AppCompatActivity() {
         //Test section
         select_privacy.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
-                FullScreenDialog.show(this@CreatePost,R.layout.post_layout,object: FullScreenDialog.OnBindView{
+                FullScreenDialog.show(this@CreatePost,R.layout.security_bind_element,object: FullScreenDialog.OnBindView{
                     override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
 
                     }
