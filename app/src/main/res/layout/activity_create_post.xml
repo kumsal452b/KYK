@@ -8,6 +8,19 @@
     android:scrollbarStyle="insideOverlay"
     tools:context=".screns.CreatePost">
 
+    <ImageButton
+        android:id="@+id/activity_create_post_select_security"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="3dp"
+        android:background="#021E1C1C"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toEndOf="@+id/activity_create_post_select_image"
+        app:layout_constraintTop_toBottomOf="@+id/activity_create_post_post_text_element"
+        app:srcCompat="@drawable/ic_baseline_security_24"
+        />
+
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
