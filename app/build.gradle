@@ -66,5 +66,5 @@ dependencies {
     implementation 'id.zelory:compressor:3.0.0'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0-alpha01"
     implementation 'com.firebaseui:firebase-ui-database:7.1.1'
-    implementation('com.github.mikiloz92:fancyadapters:0.3.3')
+    implementation 'com.github.mikiloz92:fancyadapters:0.3.3'
 }
