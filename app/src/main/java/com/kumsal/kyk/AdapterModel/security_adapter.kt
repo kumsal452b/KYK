@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ActionMode
 import androidx.appcompat.view.SupportActionModeWrapper
@@ -16,7 +17,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import org.w3c.dom.Text
 import java.util.ArrayList
 
-class security_adapter(items:ArrayList<security_model>,context: Context): SelectableAdapter<security_model, security_adapter.secureHolder>(items) {
+class security_adapter(items:ArrayList<security_model>,private val context: Context): SelectableAdapter<security_model, security_adapter.secureHolder>(items) {
 
     class secureHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         var imageUrl:CircleImageView
@@ -66,7 +67,7 @@ class security_adapter(items:ArrayList<security_model>,context: Context): Select
         callback=SupportActionModeWrapper.CallbackWrapper(context,)
         var action:ActionMode
         action=ActionMode()
-        return start
+        return 
     }
 
     override fun onSelectionUpdate(p0: ActionMode?, p1: Int) {
