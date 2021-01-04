@@ -66,7 +66,7 @@ class security_adapter(items:ArrayList<security_model>,context: Context): Select
         callback=SupportActionModeWrapper.CallbackWrapper(context,)
         var action:ActionMode
         action=ActionMode()
-        return AppCompatDelegate.
+        return start
     }
 
     override fun onSelectionUpdate(p0: ActionMode?, p1: Int) {
