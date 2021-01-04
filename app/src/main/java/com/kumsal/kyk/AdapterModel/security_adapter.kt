@@ -1,9 +1,7 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -63,11 +61,25 @@ class security_adapter(items:ArrayList<security_model>,private val context: Cont
 
 
     override fun startActionMode(): ActionMode {
-        var callback:ActionMode.Callback
-        callback=SupportActionModeWrapper.CallbackWrapper(context,)
-        var action:ActionMode
-        action=ActionMode()
-        return 
+        
+        var appCompatActivity=AppCompatActivity()
+        return  appCompatActivity.startSupportActionMode(object:ActionMode.Callback{
+            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onDestroyActionMode(mode: ActionMode?) {
+                TODO("Not yet implemented")
+            }
+        }) as ActionMode
     }
 
     override fun onSelectionUpdate(p0: ActionMode?, p1: Int) {
