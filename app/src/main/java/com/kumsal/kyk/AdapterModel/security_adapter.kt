@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.R
 import com.mikiloz.fancyadapters.SelectableAdapter
-import com.mikiloz.fancyadapters.SuperSelectableAdapter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
@@ -27,8 +26,8 @@ class security_adapter(items: ArrayList<security_model>, private val context: Co
         init {
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
-                   var a= SuperSelectableAdapter<security_model,secureHolder>.
-                    if (!is) {
+
+                    if ( !is) {
                         v.s
                         return true;
                     } else return false
@@ -74,14 +73,20 @@ class security_adapter(items: ArrayList<security_model>, private val context: Co
                 for (holder in viewHolders) {
 
                     if (holder != null) {
-                        holder.overlay.visibility=View.VISIBLE
-                        var position=holder.layoutPosition
-                        if (position!=-1 && isSelected(position)){
-                            holder.overlay.setBackgroundColor(ContextCompat.getColor(
-                                context, R.color.blackAlpha30))
-                        }else{
-                            holder.overlay.setBackgroundColor(ContextCompat.getColor(
-                                context, R.color.colorPrimary))
+                        holder.overlay.visibility = View.VISIBLE
+                        var position = holder.layoutPosition
+                        if (position != -1 && isSelected(position)) {
+                            holder.overlay.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    context, R.color.blackAlpha30
+                                )
+                            )
+                        } else {
+                            holder.overlay.setBackgroundColor(
+                                ContextCompat.getColor(
+                                    context, R.color.colorPrimary
+                                )
+                            )
                         }
                     }
                 }
