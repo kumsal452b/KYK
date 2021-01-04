@@ -4,37 +4,37 @@ import android.content.Context
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.view.ActionMode
-import androidx.appcompat.view.SupportActionModeWrapper
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.R
 import com.mikiloz.fancyadapters.SelectableAdapter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import org.w3c.dom.Text
-import java.util.ArrayList
+import java.util.*
 
-class security_adapter(items:ArrayList<security_model>,private val context: Context): SelectableAdapter<security_model, security_adapter.secureHolder>(items) {
 
-    class secureHolder(itemView:View):RecyclerView.ViewHolder(itemView){
-        var imageUrl:CircleImageView
-        var name:TextView
-        var username:TextView
+class security_adapter(items: ArrayList<security_model>, private val context: Context): SelectableAdapter<security_model, security_adapter.secureHolder>(
+    items
+) {
 
+    class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+        var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
+        var name:TextView = itemView.findViewById(R.id.secure_name)
+        var username:TextView = itemView.findViewById(R.id.secure_username)
+        var overlay:View=itemView.findViewById(R.id.overLay)
         init {
-            imageUrl=itemView.findViewById(R.id.secure_image)
-            name=itemView.findViewById(R.id.secure_name)
-            username=itemView.findViewById(R.id.secure_username)
-            itemView.setOnLongClickListener(object:View.OnLongClickListener{
+            itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
-                    if ()
-                    return true
+                    if (!isActionModeEnabled()) {
+                        startDrag(secureHolder, getLayoutPosition());
+                        return true;
+                    } else return false
                 }
             })
         }
 
-        fun bindElement(theModel:security_model){
+        fun bindElement(theModel: security_model){
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
@@ -47,7 +47,7 @@ class security_adapter(items:ArrayList<security_model>,private val context: Cont
     }
 
     override fun onCreateSelectableViewHolder(parent: ViewGroup?, viewType: Int): secureHolder {
-        var view=LayoutInflater.from(parent?.context).inflate(R.layout.secure_single,parent,false)
+        var view=LayoutInflater.from(parent?.context).inflate(R.layout.secure_single, parent, false)
         return secureHolder(view)
     }
 
@@ -64,13 +64,24 @@ class security_adapter(items:ArrayList<security_model>,private val context: Cont
 
         var appCompatActivity=AppCompatActivity()
 
-        return  appCompatActivity.startSupportActionMode(object: AdapterActionModeCallback() {
+        return  appCompatActivity.startSupportActionMode(object : AdapterActionModeCallback() {
             override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
-                p0?.menuInflater?.inflate(R.menu.secure_menu,p1)
+                p0?.menuInflater?.inflate(R.menu.secure_menu, p1)
 
-                for (i in 0..p0.){
-
+                for (holder in viewHolders) {
+                    if (holder != null) {
+                        holder.overlay.visibility=View.VISIBLE
+                        var position=holder.layoutPosition
+                        if (position!=-1 && isSelected(position)){
+                            holder.overlay.setBackgroundColor(ContextCompat.getColor(
+                                context, R.color.blackAlpha30))
+                        }else{
+                            holder.overlay.setBackgroundColor(ContextCompat.getColor(
+                                context, R.color.colorPrimary))
+                        }
+                    }
                 }
+                return true
             }
 
             override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
