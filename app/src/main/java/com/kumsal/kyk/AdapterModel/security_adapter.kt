@@ -61,22 +61,27 @@ class security_adapter(items:ArrayList<security_model>,private val context: Cont
 
 
     override fun startActionMode(): ActionMode {
-        
+
         var appCompatActivity=AppCompatActivity()
-        return  appCompatActivity.startSupportActionMode(object:ActionMode.Callback{
-            override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+
+        return  appCompatActivity.startSupportActionMode(object: AdapterActionModeCallback() {
+            override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
+                p0?.menuInflater?.inflate(R.menu.secure_menu,p1)
+
+                for (i in 0..p0.){
+
+                }
+            }
+
+            override fun onPrepareActionMode(p0: ActionMode?, p1: Menu?): Boolean {
                 TODO("Not yet implemented")
             }
 
-            override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            override fun onActionItemClicked(p0: ActionMode?, p1: MenuItem?): Boolean {
                 TODO("Not yet implemented")
             }
 
-            override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
-                TODO("Not yet implemented")
-            }
-
-            override fun onDestroyActionMode(mode: ActionMode?) {
+            override fun onExitActionMode(p0: ActionMode?) {
                 TODO("Not yet implemented")
             }
         }) as ActionMode
