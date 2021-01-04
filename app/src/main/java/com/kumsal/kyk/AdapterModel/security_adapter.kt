@@ -6,15 +6,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.R
 import com.mikiloz.fancyadapters.SelectableAdapter
+import com.mikiloz.fancyadapters.SuperSelectableAdapter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
 
-class security_adapter(items: ArrayList<security_model>, private val context: Context): SelectableAdapter<security_model, security_adapter.secureHolder>(
+class security_adapter(items: ArrayList<security_model>, private val context: Context): SuperSelectableAdapter<security_model, security_adapter.secureHolder>(
     items
 ) {
 
@@ -27,7 +29,9 @@ class security_adapter(items: ArrayList<security_model>, private val context: Co
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
 
-                    if ( !is) {
+                    
+
+                    if ( !v.is) {
                         v.s
                         return true;
                     } else return false
@@ -108,6 +112,14 @@ class security_adapter(items: ArrayList<security_model>, private val context: Co
     }
 
     override fun onSelectionUpdate(p0: ActionMode?, p1: Int) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onMove(p0: secureHolder?, p1: secureHolder?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onSwipe(p0: secureHolder?, p1: Int) {
         TODO("Not yet implemented")
     }
 }
