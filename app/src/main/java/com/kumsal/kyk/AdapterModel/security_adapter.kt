@@ -6,7 +6,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.R
 import com.mikiloz.fancyadapters.SuperSelectableAdapter
@@ -14,13 +13,14 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-
-class security_adapter(items: ArrayList<security_model>, private val context: Context): SuperSelectableAdapter<security_model, security_adapter.secureHolder>(
+open class security_adapter(items: ArrayList<security_model>?, private val context: Context?): SuperSelectableAdapter<security_model, security_adapter.secureHolder>(
     items
 ) {
-
-
-    class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+    constructor():this(null,null)
+    companion object{
+        var secureAdapter:security_adapter=security_adapter()
+    }
+    class secureHolder(itemView: View,isEnable):RecyclerView.ViewHolder(itemView), {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
         var username:TextView = itemView.findViewById(R.id.secure_username)
@@ -28,12 +28,12 @@ class security_adapter(items: ArrayList<security_model>, private val context: Co
         init {
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
+                    if (secureAdapter.isActionModeEnabled){
+                        secureAdapter.startDrag(this@secureHolder,layoutPosition)
+                    }else{
+                        return false
+                    }
 
-
-                    if () {
-                        v.s
-                        return true;
-                    } else return false
                 }
             })
         }
