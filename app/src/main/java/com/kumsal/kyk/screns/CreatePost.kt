@@ -144,7 +144,7 @@ class CreatePost : AppCompatActivity() {
 
         //secure initialize section
         listElement= ArrayList()
-        mAdapter= security_adapter(listElement)
+        mAdapter= security_adapter(listElement,this,recyclerView)
 
 
         //Test section
