@@ -1,6 +1,7 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
+import android.graphics.Color
 import android.view.*
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -54,7 +55,15 @@ open class security_adapter(items: ArrayList<security_model>?, private val conte
             p0.overlay.setVisibility(View.VISIBLE);
         }
         else{
-
+            p0.overlay.setVisibility(View.GONE)
+        }
+        if (isActionModeEnabled){
+            p0.overlay.setBackgroundColor(
+                ContextCompat.getColor(context as Context, R.color.black));
+        }
+        else{
+            p0.overlay.setBackgroundColor(
+                ContextCompat.getColor(context as Context, R.color.white));
         }
         var theModel=items.get(p1)
         p0.bindElement(theModel)
@@ -66,7 +75,7 @@ open class security_adapter(items: ArrayList<security_model>?, private val conte
     }
 
     override fun onItemSelected(p0: secureHolder?, p1: Int) {
-        TODO("Not yet implemented")
+        p0?.overlay?.setBackgroundColor(Color.GRAY)
     }
 
     override fun onItemDeselected(p0: secureHolder?, p1: Int) {
@@ -121,7 +130,7 @@ open class security_adapter(items: ArrayList<security_model>?, private val conte
     }
 
     override fun onSelectionUpdate(p0: ActionMode?, p1: Int) {
-        TODO("Not yet implemented")
+        p0?.title=p1.toString() + " item(s)"
     }
 
     override fun onMove(p0: secureHolder?, p1: secureHolder?) {
