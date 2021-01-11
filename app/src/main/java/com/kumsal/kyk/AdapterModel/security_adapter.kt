@@ -9,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.R
-import com.mikiloz.fancyadapters.SelectableAdapter
 import com.mikiloz.fancyadapters.SuperSelectableAdapter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -20,6 +19,7 @@ class security_adapter(items: ArrayList<security_model>, private val context: Co
     items
 ) {
 
+
     class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
@@ -29,9 +29,8 @@ class security_adapter(items: ArrayList<security_model>, private val context: Co
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
 
-                    
 
-                    if ( !v.is) {
+                    if () {
                         v.s
                         return true;
                     } else return false
