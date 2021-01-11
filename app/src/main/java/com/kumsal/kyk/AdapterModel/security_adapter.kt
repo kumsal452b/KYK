@@ -23,7 +23,7 @@ open class security_adapter(items: ArrayList<security_model>?, private val conte
     companion object{
         var secureAdapter:security_adapter=security_adapter()
     }
-    class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView), {
+    class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
         var username:TextView = itemView.findViewById(R.id.secure_username)
@@ -50,6 +50,12 @@ open class security_adapter(items: ArrayList<security_model>?, private val conte
     }
 
     override fun onBindViewHolder(p0: secureHolder, p1: Int) {
+        if (isActionModeEnabled){
+            p0.overlay.setVisibility(View.VISIBLE);
+        }
+        else{
+
+        }
         var theModel=items.get(p1)
         p0.bindElement(theModel)
     }
