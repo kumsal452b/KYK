@@ -11,11 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import com.google.firebase.functions.FirebaseFunctions
 import com.hendraanggrian.socialview.commons.Mention
-import com.hendraanggrian.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.widget.SocialEditText
-import com.hendraanggrian.widget.SocialTextView
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.AdapterModel.security_adapter
@@ -23,11 +20,8 @@ import com.kumsal.kyk.AdapterModel.security_model
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
-import com.kumsal.kyk.interfaces.getTimeZone
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import java.lang.Exception
-import java.security.Timestamp
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
