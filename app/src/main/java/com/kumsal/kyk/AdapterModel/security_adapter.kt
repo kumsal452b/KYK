@@ -15,15 +15,13 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-open class security_adapter(items: ArrayList<security_model>?, private val context: Context?,
-                            recyclerView: RecyclerView?
-): SuperSelectableAdapter<security_model, security_adapter.secureHolder>(
-    items,recyclerView,ItemTouchHelper.UP,ItemTouchHelper.ANIMATION_TYPE_SWIPE_SUCCESS
-) {
-    constructor():this(null,null,null)
+open class security_adapter(items: ArrayList<security_model>, private val context: Context?, recyclerView: RecyclerView?): SuperSelectableAdapter<security_model, security_adapter.secureHolder>(items,recyclerView,ItemTouchHelper.UP,ItemTouchHelper.ANIMATION_TYPE_SWIPE_SUCCESS) {
     companion object{
         var secureAdapter:security_adapter=security_adapter()
     }
+
+    constructor() : this(ArrayList(),null,null)
+
     class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
@@ -32,7 +30,7 @@ open class security_adapter(items: ArrayList<security_model>?, private val conte
         init {
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
-                    if (secureAdapter.isActionModeEnabled){
+                    if (!secureAdapter.isActionModeEnabled){
                         secureAdapter.startDrag(this@secureHolder,layoutPosition)
                         return true
                     }else{
@@ -86,6 +84,8 @@ open class security_adapter(items: ArrayList<security_model>?, private val conte
     override fun startActionMode(): ActionMode {
 
         var appCompatActivity=AppCompatActivity()
+
+
 
         return  appCompatActivity.startSupportActionMode(object : AdapterActionModeCallback() {
             override fun onCreateActionMode(p0: ActionMode?, p1: Menu?): Boolean {
