@@ -31,7 +31,9 @@ open class security_adapter(items: ArrayList<security_model>, private val contex
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
                     if (!secureAdapter.isActionModeEnabled){
-                        secureAdapter.startDrag(this@secureHolder,layoutPosition)
+
+
+                        secureAdapter.triggerSelectionMode(this@secureHolder,layoutPosition)
                         return true
                     }else{
                         return false
