@@ -1,16 +1,11 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
-import android.graphics.Color
 import android.view.*
+import android.widget.CheckBox
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ActionMode
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.R
-import com.mikiloz.fancyadapters.SuperSelectableAdapter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
@@ -31,10 +26,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         var name:TextView = itemView.findViewById(R.id.secure_name)
         var username:TextView = itemView.findViewById(R.id.secure_username)
         var overlay:View=itemView.findViewById(R.id.overLay)
-        init {
-            
-        }
-
+        var checkBox:CheckBox=itemView.findViewById(R.id.secure_single_check_box)
         fun bindElement(theModel: security_model){
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
