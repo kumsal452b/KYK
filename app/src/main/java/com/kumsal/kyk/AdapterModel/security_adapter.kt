@@ -33,7 +33,7 @@ open class security_adapter(items: ArrayList<security_model>, private val contex
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
                     if (!isActionModeEnabled){
-                        startDrag(this@secureHolder,layoutPosition)
+                        //startDrag(this@secureHolder,layoutPosition)
                         return true
                     }else{
                         return false
