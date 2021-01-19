@@ -33,7 +33,9 @@ class CreatePost : AppCompatActivity() {
     private lateinit var post_text_element: SocialEditText
     private lateinit var select_privacy:ImageButton
     private lateinit var recyclerView: RecyclerView
-    private lateinit var listElement:ArrayList<security_model>
+    companion object {
+        var listElement=ArrayList<security_model>()
+    }
     var selectedlistElement=ArrayList<security_model>()
     private lateinit var mAdapter:security_adapter
     private lateinit var mRadioGroup: RadioGroup
@@ -114,7 +116,7 @@ class CreatePost : AppCompatActivity() {
         if (!isActionMode){
             isActionMode=true
             if (selectedlistElement==null){
-                selectedlistElement=ArrayList()
+                selectedlistElement=ArrayList<security_model>()
             }
             selectedlistElement.add(listElement.get(index))
             counter++
@@ -163,7 +165,6 @@ class CreatePost : AppCompatActivity() {
         mUserDbReference=FirebaseDatabase.getInstance().getReference("Users")
 
         //secure initialize section
-        listElement= ArrayList()
         mAdapter= security_adapter(listElement,this, CreatePost())
         //Test section
         select_privacy.setOnClickListener(object :View.OnClickListener{
