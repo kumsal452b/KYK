@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class security_adapter(private var items: ArrayList<security_model>, private val context: Context?,private val CPElement:CreatePost):
+class security_adapter(private var items: ArrayList<security_model>, private val context: Context?, private val CPElement: CreatePost?):
     RecyclerView.Adapter<security_adapter.secureHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): secureHolder {
         var view=LayoutInflater.from(parent?.context).inflate(R.layout.secure_single, parent, false)

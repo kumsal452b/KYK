@@ -34,6 +34,7 @@ class CreatePost : AppCompatActivity() {
     private lateinit var select_privacy:ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var listElement:ArrayList<security_model>
+    private lateinit var selectedlistElement:ArrayList<security_model>
     private lateinit var mAdapter:security_adapter
     private lateinit var mRadioGroup: RadioGroup
     private lateinit var alfriends:RadioButton
@@ -137,7 +138,7 @@ class CreatePost : AppCompatActivity() {
         share_button = findViewById(R.id.activity_create_post_share)
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
         select_privacy=findViewById(R.id.activity_create_post_select_security)
-
+        selectedlistElement= ArrayList()
         var names=ArrayList<Mention>()
 
         name = intent.getStringExtra("name") as String
@@ -152,9 +153,8 @@ class CreatePost : AppCompatActivity() {
 
         //secure initialize section
         listElement= ArrayList()
-        mAdapter= security_adapter(listElement,this,null)
-
-
+        mAdapter= security_adapter(listElement,this,CreatePost())
+        
         //Test section
         select_privacy.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
