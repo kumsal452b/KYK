@@ -21,8 +21,10 @@ open class security_adapter(items: ArrayList<security_model>, private val contex
     }
 
     constructor() : this(ArrayList(),null,null)
-
-    class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+    init {
+        isDragging
+    }
+    inner class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
         var username:TextView = itemView.findViewById(R.id.secure_username)
@@ -30,14 +32,12 @@ open class security_adapter(items: ArrayList<security_model>, private val contex
         init {
             itemView.setOnLongClickListener(object : View.OnLongClickListener {
                 override fun onLongClick(v: View?): Boolean {
-                    if (!secureAdapter.isActionModeEnabled){
-
-                        secureAdapter.triggerSelectionMode(this@secureHolder,layoutPosition)
+                    if (!isActionModeEnabled){
+                        startDrag(this@secureHolder,layoutPosition)
                         return true
                     }else{
                         return false
                     }
-
                 }
             })
         }
