@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
@@ -29,6 +30,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         var username:TextView = itemView.findViewById(R.id.secure_username)
         var overlay:View=itemView.findViewById(R.id.overLay)
         var checkBox:CheckBox=itemView.findViewById(R.id.secure_single_check_box)
+        var cardView:CardView=itemView.findViewById(R.id.secure_single_cardsingle)
         fun bindElement(theModel: security_model){
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
@@ -49,6 +51,12 @@ class security_adapter(private var items: ArrayList<security_model>, private val
             p0.checkBox.animation=anim
 
         }
+        p0.cardView.setOnLongClickListener(object:View.OnLongClickListener{
+            override fun onLongClick(v: View?): Boolean {
+                mainElement.startSelection(p1)
+                return true
+            }
+        })
     }
 
 }
