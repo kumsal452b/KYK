@@ -5,12 +5,14 @@ import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
+import com.kumsal.kyk.animation.Animation
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class security_adapter(private var items: ArrayList<security_model>, private val context: Context?):
+class security_adapter(private var items: ArrayList<security_model>, private val context: Context?,private val mainElement:MainActivity):
     RecyclerView.Adapter<security_adapter.secureHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): secureHolder {
         var view=LayoutInflater.from(parent?.context).inflate(R.layout.secure_single, parent, false)
@@ -37,6 +39,16 @@ class security_adapter(private var items: ArrayList<security_model>, private val
     override fun onBindViewHolder(p0: secureHolder, p1: Int) {
         var theModel=items.get(p1)
         p0.bindElement(theModel)
+        if (mainElement.isActionMode){
+            var anim=Animation(100,p0.checkBox)
+            anim.duration=100
+            p0.checkBox.animation=anim
+        }else{
+            var anim=Animation(0,p0.checkBox)
+            anim.duration=100
+            p0.checkBox.animation=anim
+
+        }
     }
 
 }
