@@ -3,6 +3,7 @@ package com.kumsal.kyk.animation
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.Transformation
+import com.kumsal.kyk.MainActivity
 
 open class Animation(width:Int, view: View): Animation() {
     private var width=0
@@ -18,7 +19,11 @@ open class Animation(width:Int, view: View): Animation() {
         var newWidth=startWidth+((width-startWidth)*interpolatedTime) as Int
         view.layoutParams.width=newWidth
         view.requestLayout()
-        
+    }
+
+    override fun willChangeBounds(): Boolean {
+
+        return super.willChangeBounds()
     }
 
 }
