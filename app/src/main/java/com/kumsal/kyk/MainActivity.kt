@@ -294,4 +294,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         }
     }
 
+    fun startSelection(index: Int) {
+        if (!isActionMode){
+            isActionMode=true;
+        }
+    }
+
 }
