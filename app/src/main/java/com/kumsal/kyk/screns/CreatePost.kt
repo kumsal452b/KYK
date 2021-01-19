@@ -111,7 +111,8 @@ class CreatePost : AppCompatActivity() {
     }
     fun startSelection(index: Int) {
         if (!isActionMode){
-            isActionMode=true;
+            isActionMode=true
+            selectedlistElement.add(listElement.get(index))
         }
     }
 
@@ -153,8 +154,8 @@ class CreatePost : AppCompatActivity() {
 
         //secure initialize section
         listElement= ArrayList()
-        mAdapter= security_adapter(listElement,this,CreatePost())
-        
+        mAdapter= security_adapter(listElement,this, CreatePost())
+
         //Test section
         select_privacy.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
