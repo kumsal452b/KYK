@@ -47,6 +47,9 @@ class CreatePost : AppCompatActivity() {
     //Database section
     private lateinit var mPostRefDb:DatabaseReference
     private lateinit var mUserDbReference: DatabaseReference
+
+    //Action section
+    var isActionMode=false;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -104,6 +107,11 @@ class CreatePost : AppCompatActivity() {
                 }
             }
         })
+    }
+    fun startSelection(index: Int) {
+        if (!isActionMode){
+            isActionMode=true;
+        }
     }
 
     private fun canBeSent() {

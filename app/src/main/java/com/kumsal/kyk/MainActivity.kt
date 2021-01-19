@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private lateinit var name: TextView
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
-    var isActionMode=false;
+
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
@@ -98,8 +98,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             }
 
             override fun onPageSelected(position: Int) {
-                startSupportActionMode()
-                println(position)
                 mBottomBar?.itemActiveIndex = position
                 if (isOpen){
                     closeFABMenu()
@@ -294,10 +292,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         }
     }
 
-    fun startSelection(index: Int) {
-        if (!isActionMode){
-            isActionMode=true;
-        }
-    }
+
 
 }

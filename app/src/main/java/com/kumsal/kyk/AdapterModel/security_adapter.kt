@@ -6,14 +6,14 @@ import android.widget.CheckBox
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
+import com.kumsal.kyk.screns.CreatePost
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class security_adapter(private var items: ArrayList<security_model>, private val context: Context?,private val mainElement:MainActivity):
+class security_adapter(private var items: ArrayList<security_model>, private val context: Context?,private val CPElement:CreatePost):
     RecyclerView.Adapter<security_adapter.secureHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): secureHolder {
         var view=LayoutInflater.from(parent?.context).inflate(R.layout.secure_single, parent, false)
@@ -41,7 +41,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
     override fun onBindViewHolder(p0: secureHolder, p1: Int) {
         var theModel=items.get(p1)
         p0.bindElement(theModel)
-        if (mainElement.isActionMode){
+        if (CPElement.isActionMode){
             var anim=Animation(100,p0.checkBox)
             anim.duration=100
             p0.checkBox.animation=anim
@@ -53,7 +53,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         }
         p0.cardView.setOnLongClickListener(object:View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
-                mainElement.startSelection(p1)
+                CPElement.startSelection(p1)
                 return true
             }
         })
