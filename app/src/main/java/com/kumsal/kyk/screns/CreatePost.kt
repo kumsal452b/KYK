@@ -50,7 +50,8 @@ class CreatePost : AppCompatActivity() {
     private lateinit var mUserDbReference: DatabaseReference
 
     //Action section
-    var isActionMode=false;
+    var isActionMode=false
+    var counter=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -113,7 +114,13 @@ class CreatePost : AppCompatActivity() {
         if (!isActionMode){
             isActionMode=true
             selectedlistElement.add(listElement.get(index))
+            counter++
+            updateToolbarText(counter)
         }
+    }
+
+    private fun updateToolbarText(counter: Int) {
+
     }
 
     private fun canBeSent() {
