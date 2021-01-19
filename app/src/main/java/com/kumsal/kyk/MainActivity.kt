@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         //FAB anime zoon
         initial()
         addListener()
+
     }
 
     private fun addListener() {
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             }
 
             override fun onPageSelected(position: Int) {
+                startSupportActionMode()
                 println(position)
                 mBottomBar?.itemActiveIndex = position
                 if (isOpen){
