@@ -6,13 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/post_create_background">
-
-    <LinearLayout
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:menu="@menu/secure_menu"/>
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:background="@drawable/create_post_bottom_arround"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/layout">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioGroup
             android:id="@+id/secure_rg"

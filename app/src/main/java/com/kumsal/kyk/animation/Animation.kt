@@ -16,8 +16,8 @@ open class Animation(width:Int, view: View): Animation() {
     }
 
     override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
-        var newWidth=startWidth+((width-startWidth)*interpolatedTime) as Int
-        view.layoutParams.width=newWidth
+        var newWidth=startWidth+((width-startWidth)*interpolatedTime)
+        view.layoutParams.width= newWidth.toInt()
         view.requestLayout()
     }
 
