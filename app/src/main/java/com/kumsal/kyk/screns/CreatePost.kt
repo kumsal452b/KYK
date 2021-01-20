@@ -36,9 +36,9 @@ class CreatePost : AppCompatActivity() {
     companion object {
         var listElement=ArrayList<security_model>()
         lateinit var textView:TextView
+        private lateinit var mAdapter:security_adapter
     }
     var selectedlistElement=ArrayList<security_model>()
-    private lateinit var mAdapter:security_adapter
     private lateinit var mRadioGroup: RadioGroup
     private lateinit var alfriends:RadioButton
     private lateinit var excpection:RadioButton
@@ -124,6 +124,7 @@ class CreatePost : AppCompatActivity() {
             counter++
             updateToolbarText(counter)
             textView.visibility=View.VISIBLE
+            mAdapter.notifyDataSetChanged()
         }
     }
 
