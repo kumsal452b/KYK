@@ -7,7 +7,6 @@
     android:background="@drawable/post_create_background"
     android:scrollbarStyle="insideOverlay"
     tools:context=".screns.CreatePost">
-
     <ImageButton
         android:id="@+id/activity_create_post_select_security"
         android:layout_width="20dp"
