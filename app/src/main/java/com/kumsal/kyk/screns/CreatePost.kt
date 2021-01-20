@@ -36,6 +36,7 @@ class CreatePost : AppCompatActivity() {
     companion object {
         var listElement=ArrayList<security_model>()
     }
+    var textView=TextView(this)
     var selectedlistElement=ArrayList<security_model>()
     private lateinit var mAdapter:security_adapter
     private lateinit var mRadioGroup: RadioGroup
@@ -113,6 +114,7 @@ class CreatePost : AppCompatActivity() {
         })
     }
     fun startSelection(index: Int) {
+        textView.setText("hayat kisa")
         if (!isActionMode){
             isActionMode=true
             if (selectedlistElement==null){
@@ -177,6 +179,7 @@ class CreatePost : AppCompatActivity() {
                         mRadioGroup=rootView?.findViewById(R.id.secure_rg)
                         alfriends=rootView?.findViewById(R.id.secure_allfriends)
                         excpection=rootView?.findViewById(R.id.secure_except)
+                        textView=rootView?.findViewById(R.id.secure_bind_element_size)
                         recyclerView.adapter=mAdapter
                         mUserDbReference.addValueEventListener(object: ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
@@ -203,7 +206,6 @@ class CreatePost : AppCompatActivity() {
     }
 
     private fun initialDynamic() {
-
         var hint = "What's on your mind, $name?"
         post_text_element.hint = hint
         if (!TextUtils.isEmpty(imageUri)){
