@@ -1,6 +1,7 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
+import android.opengl.Visibility
 import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
@@ -41,14 +42,17 @@ class security_adapter(private var items: ArrayList<security_model>, private val
     override fun onBindViewHolder(p0: secureHolder, p1: Int) {
         var theModel=items.get(p1)
         if (CPElement?.isActionMode as Boolean){
-            var anim=Animation(100,p0.checkBox)
-            anim.duration=100
-            p0.checkBox.animation=anim
+//            var anim=Animation(100,p0.checkBox)
+//            anim.duration=100
+//            p0.checkBox.animation=anim
+            p0.checkBox.visibility=View.VISIBLE
 
         }else{
-            var anim=Animation(0,p0.checkBox)
-            anim.duration=100
-            p0.checkBox.animation=anim
+//            var anim=Animation(0,p0.checkBox)
+//            anim.duration=100
+//            p0.checkBox.animation=anim
+
+            p0.checkBox.visibility=View.INVISIBLE
 
         }
         p0.bindElement(theModel)
