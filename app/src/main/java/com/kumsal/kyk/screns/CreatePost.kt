@@ -115,7 +115,6 @@ class CreatePost : AppCompatActivity() {
         })
     }
     fun startSelection(index: Int) {
-        textView.setText("hayat kisa")
         if (!isActionMode){
             isActionMode=true
             if (selectedlistElement==null){
@@ -124,6 +123,7 @@ class CreatePost : AppCompatActivity() {
             selectedlistElement.add(listElement.get(index))
             counter++
             updateToolbarText(counter)
+            textView.visibility=View.VISIBLE
         }
     }
 

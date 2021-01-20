@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Selam evlat"
             android:textColor="#9F8F8F"
+            android:visibility="gone"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="18dp" />
     </androidx.appcompat.widget.Toolbar>
