@@ -35,8 +35,8 @@ class CreatePost : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     companion object {
         var listElement=ArrayList<security_model>()
+        lateinit var textView:TextView
     }
-    var textView=TextView(this)
     var selectedlistElement=ArrayList<security_model>()
     private lateinit var mAdapter:security_adapter
     private lateinit var mRadioGroup: RadioGroup
@@ -59,6 +59,7 @@ class CreatePost : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
         initialComponent()
+        textView=TextView(this)
         val mention1 = Mention("dirtyhobo")
         val mention2 = Mention.Builder("hobo")
             .setDisplayname("Regular Hobo")
