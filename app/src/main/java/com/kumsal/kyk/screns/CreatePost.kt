@@ -59,7 +59,7 @@ class CreatePost : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
         initialComponent()
-        textView=TextView(this)
+        textView= TextView(this)
         val mention1 = Mention("dirtyhobo")
         val mention2 = Mention.Builder("hobo")
             .setDisplayname("Regular Hobo")
@@ -128,7 +128,11 @@ class CreatePost : AppCompatActivity() {
     }
 
     private fun updateToolbarText(counter: Int) {
-
+        if(counter==0){
+            textView.setText("0 person selected ")
+        }else{
+            textView.setText("$counter person selected ")
+        }
     }
 
     private fun canBeSent() {
