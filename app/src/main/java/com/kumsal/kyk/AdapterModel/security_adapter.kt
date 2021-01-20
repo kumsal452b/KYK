@@ -44,6 +44,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
             var anim=Animation(100,p0.checkBox)
             anim.duration=100
             p0.checkBox.animation=anim
+
         }else{
             var anim=Animation(0,p0.checkBox)
             anim.duration=100
