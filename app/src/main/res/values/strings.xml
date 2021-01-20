@@ -51,4 +51,7 @@
     <string name="galery_perm">Gallery permission denied</string>
     <string name="options">Options</string>
     <string name="exit">Exit</string>
+    <string name="accept">Accept</string>
+    <string name="selected_0_item">Selected 0 Item</string>
+    <string name="cancel">Cancel</string>
 </resources>
