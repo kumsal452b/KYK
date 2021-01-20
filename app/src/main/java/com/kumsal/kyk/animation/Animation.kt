@@ -23,7 +23,7 @@ open class Animation(width:Int, view: View): Animation() {
 
     override fun willChangeBounds(): Boolean {
 
-        return super.willChangeBounds()
+        return true
     }
 
 }
