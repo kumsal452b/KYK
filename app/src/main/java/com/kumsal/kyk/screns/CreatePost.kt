@@ -26,7 +26,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class CreatePost : AppCompatActivity() {
+class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var profile_image:CircleImageView
     private lateinit var select_image:ImageButton
     private lateinit var share_button:Button
@@ -174,6 +174,7 @@ class CreatePost : AppCompatActivity() {
 
         //secure initialize section
         mAdapter= security_adapter(listElement,this, CreatePost())
+        mAdapter.setOnITemClickListener(this)
         //Test section
         select_privacy.setOnClickListener(object :View.OnClickListener{
             override fun onClick(v: View?) {
@@ -209,6 +210,10 @@ class CreatePost : AppCompatActivity() {
                 })
             }
         })
+    }
+
+    override fun clickCheckBox(position: Int) {
+        println("selam $position")
     }
 
     private fun initialDynamic() {
