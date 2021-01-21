@@ -73,7 +73,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
 //            anim.duration=100
 //            p0.checkBox.animation=anim
 
-            p0.checkBox.visibility=View.INVISIBLE
+            p0.checkBox.visibility=View.GONE
             p0.checkBox.isChecked=false
 
         }
