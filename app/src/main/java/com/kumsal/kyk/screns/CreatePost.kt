@@ -186,6 +186,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
         //Test section
+        secure_initial()
+
+    }
+
+    private fun secure_initial() {
         select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 FullScreenDialog.show(
@@ -204,6 +209,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             mUserDbReference.addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     var theModel: security_model
+                                    listElement.clear()
                                     for (a in snapshot.children) {
                                         var thename = a.child("name_surname").value as String
                                         var theimg = a.child("thmbImage").value as String
@@ -223,6 +229,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     }).onDismissListener = OnDismissListener {
                     isActionMode = false
                     selectedlistElement.clear()
+                    listElement.clear()
+                    mAdapter.notifyDataSetChanged()
                     mcounter = 0
                 }
             }
@@ -237,6 +245,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         } else {
             mcounter--
             updateToolbarText(mcounter)
+            if(mcounter==0){
+                isActionMode=false
+                mAdapter.notifyDataSetChanged()
+            }
             selectedlistElement.remove(listElement.get(position))
         }
     }
