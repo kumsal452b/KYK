@@ -36,17 +36,23 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var recyclerView: RecyclerView
 
     companion object {
+
         var listElement = ArrayList<security_model>()
         lateinit var textView: TextView
+        lateinit var radioGroup: RadioGroup
         private lateinit var mAdapter: security_adapter
         var isActionMode = false
         var selectedlistElement = ArrayList<security_model>()
         var mcounter = 0
+
+        private lateinit var mRadioGroup: RadioGroup
+        private lateinit var alfriends: RadioButton
+        private lateinit var excpection: RadioButton
+
+
     }
 
-    private lateinit var mRadioGroup: RadioGroup
-    private lateinit var alfriends: RadioButton
-    private lateinit var excpection: RadioButton
+
 
     //add intent element varíable
     var name = ""
@@ -205,6 +211,17 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             alfriends = rootView?.findViewById(R.id.secure_allfriends)
                             excpection = rootView?.findViewById(R.id.secure_except)
                             textView = rootView?.findViewById(R.id.secure_bind_element_size)
+                            if (alfriends.isChecked){
+                                recyclerView.visibility=View.GONE
+                            }
+                            alfriends.setOnClickListener {
+                                    recyclerView.visibility = View.GONE
+
+                            }
+                            excpection.setOnClickListener {
+                                    recyclerView.visibility = View.VISIBLE
+
+                            }
                             recyclerView.adapter = mAdapter
                             mUserDbReference.addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -248,6 +265,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if(mcounter==0){
                 isActionMode=false
                 mAdapter.notifyDataSetChanged()
+                textView.visibility=View.GONE
             }
             selectedlistElement.remove(listElement.get(position))
         }

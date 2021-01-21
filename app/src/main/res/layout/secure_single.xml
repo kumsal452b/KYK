@@ -2,31 +2,33 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/secure_single_cardsingle">
+    android:id="@+id/secure_single_cardsingle"
+    >
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
         android:id="@+id/overLay"/>
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/post_create_background"
         android:orientation="horizontal"
-        android:padding="8dp"
-        >
+        android:padding="8dp">
 
         <CheckBox
             android:id="@+id/secure_single_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginTop="19dp"
-            />
+            android:layout_weight="1" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/secure_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
+            android:background="#B8A3A3"
             android:src="@drawable/persontwo" />
 
         <LinearLayout
@@ -41,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Name Surname"
+                android:textColor="#FDFBFB"
                 android:textSize="18sp" />
 
             <TextView
@@ -48,6 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
+                android:textColor="#FFE6E6"
                 android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>

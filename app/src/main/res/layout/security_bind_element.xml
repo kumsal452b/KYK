@@ -84,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/white"
                 android:text="All friends"
-                android:textColor="#ECDFDF" />
+                android:textColor="#ECDFDF"
+                android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/secure_except"
