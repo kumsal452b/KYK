@@ -121,10 +121,10 @@ class CreatePost : AppCompatActivity() {
                 selectedlistElement=ArrayList<security_model>()
             }
             selectedlistElement.add(listElement.get(index))
-            counter++
             updateToolbarText(counter)
             textView.visibility=View.VISIBLE
             mAdapter.notifyDataSetChanged()
+            counter++
         }
     }
 
