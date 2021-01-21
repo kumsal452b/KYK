@@ -25,8 +25,14 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         return items.size
     }
 
-    interface 
+    interface OnITemClickListener{
+        fun clickCheckBox(position:Int)
+    }
+    lateinit var itemClickListener:OnITemClickListener
 
+    fun setOnITemClickListener(clickListener: OnITemClickListener){
+        this.itemClickListener=clickListener
+    }
     inner class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
