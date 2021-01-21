@@ -3,6 +3,7 @@ package com.kumsal.kyk.AdapterModel
 import android.content.Context
 import android.opengl.Visibility
 import android.view.*
+import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -28,12 +29,12 @@ class security_adapter(private var items: ArrayList<security_model>, private val
     interface OnITemClickListener{
         fun clickCheckBox(position:Int)
     }
-    lateinit var itemClickListener:OnITemClickListener
+    lateinit var mitemClickListener:OnITemClickListener
 
     fun setOnITemClickListener(clickListener: OnITemClickListener){
-        this.itemClickListener=clickListener
+        this.mitemClickListener=clickListener
     }
-    inner class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+    inner class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.OnClickListener {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
         var username:TextView = itemView.findViewById(R.id.secure_username)
@@ -44,6 +45,16 @@ class security_adapter(private var items: ArrayList<security_model>, private val
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
+            checkBox.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            if (mitemClickListener!=null){
+                var position=adapterPosition
+                if(position!=RecyclerView.NO_POSITION){
+                    mitemClickListener.clickCheckBox(position)
+                }
+            }
         }
     }
 
