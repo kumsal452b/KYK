@@ -38,6 +38,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var listElement=ArrayList<security_model>()
         lateinit var textView:TextView
         private lateinit var mAdapter:security_adapter
+        var isActionMode=false
     }
     var selectedlistElement=ArrayList<security_model>()
     private lateinit var mRadioGroup: RadioGroup
@@ -54,7 +55,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var mUserDbReference: DatabaseReference
 
     //Action section
-    var isActionMode=false
+
     var mcounter=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -214,7 +215,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
                         }
                     }).onDismissListener = OnDismissListener {
-                    println("has dismis")
+                   isActionMode=false
+                    selectedlistElement.clear()
                 }
             }
         })

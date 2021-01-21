@@ -62,7 +62,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
 
     override fun onBindViewHolder(p0: secureHolder, p1: Int) {
         var theModel=items.get(p1)
-        if (CPElement?.isActionMode as Boolean){
+        if (CreatePost.isActionMode as Boolean){
 //            var anim=Animation(100,p0.checkBox)
 //            anim.duration=100
 //            p0.checkBox.animation=anim
@@ -79,7 +79,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         p0.bindElement(theModel)
         p0.cardView.setOnLongClickListener(object:View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
-                CPElement.startSelection(p1)
+                CPElement?.startSelection(p1)
                 return true
             }
         })
