@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialEditText
+import com.kongzue.dialog.interfaces.OnDismissListener
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.AdapterModel.security_adapter
@@ -120,7 +121,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (selectedlistElement==null){
                 selectedlistElement=ArrayList<security_model>()
             }
-            
+
             textView.visibility=View.VISIBLE
             updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
@@ -178,38 +179,43 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mAdapter= security_adapter(listElement,this, CreatePost())
         mAdapter.setOnITemClickListener(this)
         //Test section
-        select_privacy.setOnClickListener(object :View.OnClickListener{
+        select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                FullScreenDialog.show(this@CreatePost,R.layout.security_bind_element,object: FullScreenDialog.OnBindView{
-                    override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
-                        recyclerView= rootView?.findViewById(R.id.secure_recycler)!!
-                        recyclerView.setHasFixedSize(true)
-                        recyclerView.layoutManager=LinearLayoutManager(rootView.context)
-                        mRadioGroup=rootView?.findViewById(R.id.secure_rg)
-                        alfriends=rootView?.findViewById(R.id.secure_allfriends)
-                        excpection=rootView?.findViewById(R.id.secure_except)
-                        textView=rootView?.findViewById(R.id.secure_bind_element_size)
-                        recyclerView.adapter=mAdapter
-                        mUserDbReference.addValueEventListener(object: ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                var theModel:security_model
-                                for (a in snapshot.children){
-                                    var thename=a.child("name_surname").value as String
-                                    var theimg=a.child("thmbImage").value as String
-                                    var theUsername=a.child("username").value as String
-                                    theModel= security_model(thename,theUsername,theimg)
-                                    listElement.add(theModel)
+                FullScreenDialog.show(
+                    this@CreatePost,
+                    R.layout.security_bind_element,
+                    object : FullScreenDialog.OnBindView {
+                        override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
+                            recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
+                            recyclerView.setHasFixedSize(true)
+                            recyclerView.layoutManager = LinearLayoutManager(rootView.context)
+                            mRadioGroup = rootView?.findViewById(R.id.secure_rg)
+                            alfriends = rootView?.findViewById(R.id.secure_allfriends)
+                            excpection = rootView?.findViewById(R.id.secure_except)
+                            textView = rootView?.findViewById(R.id.secure_bind_element_size)
+                            recyclerView.adapter = mAdapter
+                            mUserDbReference.addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    var theModel: security_model
+                                    for (a in snapshot.children) {
+                                        var thename = a.child("name_surname").value as String
+                                        var theimg = a.child("thmbImage").value as String
+                                        var theUsername = a.child("username").value as String
+                                        theModel = security_model(thename, theUsername, theimg)
+                                        listElement.add(theModel)
+                                    }
+                                    mAdapter.notifyDataSetChanged()
                                 }
-                                mAdapter.notifyDataSetChanged()
-                            }
 
-                            override fun onCancelled(error: DatabaseError) {
+                                override fun onCancelled(error: DatabaseError) {
 
-                            }
-                        })
+                                }
+                            })
 
-                    }
-                })
+                        }
+                    }).onDismissListener = OnDismissListener {
+                    println("has dismis")
+                }
             }
         })
     }
@@ -221,9 +227,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             updateToolbarText(mcounter)
         }
         else{
+            mcounter--
             updateToolbarText(mcounter)
             selectedlistElement.remove(listElement.get(position))
-            mcounter--
         }
     }
 
