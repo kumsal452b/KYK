@@ -54,7 +54,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     //Action section
     var isActionMode=false
-    var counter=0
+    var mcounter=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -120,11 +120,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (selectedlistElement==null){
                 selectedlistElement=ArrayList<security_model>()
             }
-            selectedlistElement.add(listElement.get(index))
-            updateToolbarText(counter)
+            
             textView.visibility=View.VISIBLE
+            updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
-            counter++
+
         }
     }
 
@@ -133,7 +133,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             textView.setText("0 person selected ")
         }else{
             textView.setText("$counter person selected ")
+
         }
+
     }
 
     private fun canBeSent() {
@@ -213,7 +215,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     override fun clickCheckBox(position: Int) {
-        println("selam $position")
+        if (!selectedlistElement.contains(listElement.get(position))){
+            selectedlistElement.add(listElement.get(position))
+            mcounter++
+            updateToolbarText(mcounter)
+        }
+        else{
+            updateToolbarText(mcounter)
+            selectedlistElement.remove(listElement.get(position))
+            mcounter--
+        }
     }
 
     private fun initialDynamic() {

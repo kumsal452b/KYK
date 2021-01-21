@@ -45,9 +45,11 @@ class security_adapter(private var items: ArrayList<security_model>, private val
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
+
+        }
+        init {
             checkBox.setOnClickListener(this)
         }
-
         override fun onClick(v: View?) {
             if (mitemClickListener!=null){
                 var position=adapterPosition
