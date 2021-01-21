@@ -28,40 +28,45 @@ import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
-    private lateinit var profile_image:CircleImageView
-    private lateinit var select_image:ImageButton
-    private lateinit var share_button:Button
+    private lateinit var profile_image: CircleImageView
+    private lateinit var select_image: ImageButton
+    private lateinit var share_button: Button
     private lateinit var post_text_element: SocialEditText
-    private lateinit var select_privacy:ImageButton
+    private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
+
     companion object {
-        var listElement=ArrayList<security_model>()
-        lateinit var textView:TextView
-        private lateinit var mAdapter:security_adapter
-        var isActionMode=false
+        var listElement = ArrayList<security_model>()
+        lateinit var textView: TextView
+        private lateinit var mAdapter: security_adapter
+        var isActionMode = false
+        var selectedlistElement = ArrayList<security_model>()
+        var mcounter = 0
     }
-    var selectedlistElement=ArrayList<security_model>()
+
     private lateinit var mRadioGroup: RadioGroup
-    private lateinit var alfriends:RadioButton
-    private lateinit var excpection:RadioButton
+    private lateinit var alfriends: RadioButton
+    private lateinit var excpection: RadioButton
+
     //add intent element varíable
-    var name=""
-    var imageUri=""
-    var thmbImageUri=""
-    var userid=""
-    var username=""
+    var name = ""
+    var imageUri = ""
+    var thmbImageUri = ""
+    var userid = ""
+    var username = ""
+
     //Database section
-    private lateinit var mPostRefDb:DatabaseReference
+    private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mUserDbReference: DatabaseReference
 
     //Action section
 
-    var mcounter=0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
         initialComponent()
-        textView= TextView(this)
+        textView = TextView(this)
         val mention1 = Mention("dirtyhobo")
         val mention2 = Mention.Builder("hobo")
             .setDisplayname("Regular Hobo")
@@ -71,7 +76,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             .setDisplayname("Hendra Anggrian")
             .setAvatarURL("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
             .build()
-        var uidG=Globals.ınstance?.uid
+        var uidG = Globals.ınstance?.uid
 
 //        names.add(mention2)
 //        names.add(mention1)
@@ -90,40 +95,41 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
                 var values = HashMap<String, Any>()
-                var ukey=mPostRefDb.child(userid).push().key.toString()
+                var ukey = mPostRefDb.child(userid).push().key.toString()
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
                 values.put("pc", postContent as String)
                 values.put("name", name as String)
                 values.put("username", username)
-                values.put("imageUri",imageUri )
-                values.put("time",ServerValue.TIMESTAMP)
-                values.put("thmbImageUri",thmbImageUri)
+                values.put("imageUri", imageUri)
+                values.put("time", ServerValue.TIMESTAMP)
+                values.put("thmbImageUri", thmbImageUri)
 
-                mPostRefDb.child(ukey).setValue(values).addOnSuccessListener{
-                            WaitDialog.dismiss()
-                            var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
-                            startActivity(main_Activity)
+                mPostRefDb.child(ukey).setValue(values).addOnSuccessListener {
+                    WaitDialog.dismiss()
+                    var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
+                    startActivity(main_Activity)
                 }.addOnFailureListener { Exception ->
                     WaitDialog.dismiss()
                     Toast.makeText(this@CreatePost, Exception.localizedMessage, Toast.LENGTH_LONG)
                 }.addOnCompleteListener {
-                        WaitDialog.dismiss()
-                        var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
-                        startActivity(main_Activity)
-                        WaitDialog.dismiss()
+                    WaitDialog.dismiss()
+                    var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
+                    startActivity(main_Activity)
+                    WaitDialog.dismiss()
                 }
             }
         })
     }
+
     fun startSelection(index: Int) {
-        if (!isActionMode){
-            isActionMode=true
-            if (selectedlistElement==null){
-                selectedlistElement=ArrayList<security_model>()
+        if (!isActionMode) {
+            isActionMode = true
+            if (selectedlistElement == null) {
+                selectedlistElement = ArrayList<security_model>()
             }
 
-            textView.visibility=View.VISIBLE
+            textView.visibility = View.VISIBLE
             updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
 
@@ -131,9 +137,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     private fun updateToolbarText(counter: Int) {
-        if(counter==0){
+        if (counter == 0) {
             textView.setText("0 person selected ")
-        }else{
+        } else {
             textView.setText("$counter person selected ")
 
         }
@@ -147,7 +153,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                share_button.isEnabled = post_text_element.length()>0
+                share_button.isEnabled = post_text_element.length() > 0
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -162,22 +168,22 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         select_image = findViewById(R.id.activity_create_post_select_image)
         share_button = findViewById(R.id.activity_create_post_share)
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
-        select_privacy=findViewById(R.id.activity_create_post_select_security)
-        selectedlistElement= ArrayList<security_model>()
-        var names=ArrayList<Mention>()
+        select_privacy = findViewById(R.id.activity_create_post_select_security)
+        selectedlistElement = ArrayList<security_model>()
+        var names = ArrayList<Mention>()
 
         name = intent.getStringExtra("name") as String
         imageUri = intent.getStringExtra("imageUri") as String
-        thmbImageUri=intent.getStringExtra("thmburi") as String
-        userid=intent.getStringExtra("uid") as String
-        username=intent.getStringExtra("username") as String
+        thmbImageUri = intent.getStringExtra("thmburi") as String
+        userid = intent.getStringExtra("uid") as String
+        username = intent.getStringExtra("username") as String
 
         //Firebase initialize zoon
-        mPostRefDb=FirebaseDatabase.getInstance().getReference("Post")
-        mUserDbReference=FirebaseDatabase.getInstance().getReference("Users")
+        mPostRefDb = FirebaseDatabase.getInstance().getReference("Post")
+        mUserDbReference = FirebaseDatabase.getInstance().getReference("Users")
 
         //secure initialize section
-        mAdapter= security_adapter(listElement,this, CreatePost())
+        mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
         //Test section
         select_privacy.setOnClickListener(object : View.OnClickListener {
@@ -215,20 +221,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
                         }
                     }).onDismissListener = OnDismissListener {
-                   isActionMode=false
+                    isActionMode = false
                     selectedlistElement.clear()
+                    mcounter = 0
                 }
             }
         })
     }
 
     override fun clickCheckBox(position: Int) {
-        if (!selectedlistElement.contains(listElement.get(position))){
+        if (!selectedlistElement.contains(listElement.get(position))) {
             selectedlistElement.add(listElement.get(position))
             mcounter++
             updateToolbarText(mcounter)
-        }
-        else{
+        } else {
             mcounter--
             updateToolbarText(mcounter)
             selectedlistElement.remove(listElement.get(position))
@@ -238,7 +244,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private fun initialDynamic() {
         var hint = "What's on your mind, $name?"
         post_text_element.hint = hint
-        if (!TextUtils.isEmpty(imageUri)){
+        if (!TextUtils.isEmpty(imageUri)) {
             Picasso.get().load(imageUri).into(profile_image)
         }
     }
