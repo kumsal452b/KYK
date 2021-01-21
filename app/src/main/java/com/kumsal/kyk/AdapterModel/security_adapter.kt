@@ -25,6 +25,8 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         return items.size
     }
 
+    interface 
+
     inner class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
