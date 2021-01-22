@@ -5,6 +5,7 @@ import android.opengl.Visibility
 import android.view.*
 import android.widget.AdapterView
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -34,7 +35,7 @@ class security_adapter(var items: ArrayList<security_model>, private val context
     fun setOnITemClickListener(clickListener: OnITemClickListener){
         this.mitemClickListener=clickListener
     }
-    inner class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class secureHolder(itemView: View):RecyclerView.ViewHolder(itemView), CompoundButton.OnCheckedChangeListener {
         var imageUrl:CircleImageView = itemView.findViewById(R.id.secure_image)
         var name:TextView = itemView.findViewById(R.id.secure_name)
         var username:TextView = itemView.findViewById(R.id.secure_username)
@@ -48,9 +49,10 @@ class security_adapter(var items: ArrayList<security_model>, private val context
 
         }
         init {
-            checkBox.setOnClickListener(this)
+            checkBox.setOnCheckedChangeListener(this)
         }
-        override fun onClick(v: View?) {
+
+        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
             if (mitemClickListener!=null){
                 var position=adapterPosition
                 if(position!=RecyclerView.NO_POSITION){
