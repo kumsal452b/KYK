@@ -241,18 +241,22 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             alfriends = rootView?.findViewById(R.id.secure_allfriends)
                             excpection = rootView?.findViewById(R.id.secure_except)
                             textView = rootView?.findViewById(R.id.secure_bind_element_size)
-                            toolbar=rootView.findViewById(R.id.secure_bind_toolbar)
+                            toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
+                            accept_selected_name = rootView.findViewById(R.id.secure_bind_accept)
                             setSupportActionBar(toolbar);
-                            if (alfriends.isChecked){
-                                recyclerView.visibility=View.GONE
+                            if (alfriends.isChecked) {
+                                recyclerView.visibility = View.GONE
                             }
                             alfriends.setOnClickListener {
-                                    recyclerView.visibility = View.GONE
+                                recyclerView.visibility = View.GONE
 
                             }
                             excpection.setOnClickListener {
-                                    recyclerView.visibility = View.VISIBLE
+                                recyclerView.visibility = View.VISIBLE
 
+                            }
+                            accept_selected_name.setOnClickListener {
+                                println("accept is  run")
                             }
                             recyclerView.adapter = mAdapter
                             mUserDbReference.addValueEventListener(object : ValueEventListener {
@@ -301,9 +305,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
             selectedlistElement.remove(listElement.get(position))
         }
-        if (!selectedlistElement.isEmpty()){
-
-        }
+        accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
 
     }
 
