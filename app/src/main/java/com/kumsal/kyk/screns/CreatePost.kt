@@ -52,6 +52,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var mRadioGroup: RadioGroup
         private lateinit var alfriends: RadioButton
         private lateinit var excpection: RadioButton
+        private lateinit var accept_selected_name: Button
 
 
     }
@@ -299,6 +300,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 textView.visibility=View.GONE
             }
             selectedlistElement.remove(listElement.get(position))
+        }
+        if (!selectedlistElement.isEmpty()){
+
         }
 
     }
