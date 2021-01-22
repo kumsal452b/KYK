@@ -3,10 +3,7 @@ package com.kumsal.kyk.AdapterModel
 import android.content.Context
 import android.opengl.Visibility
 import android.view.*
-import android.widget.AdapterView
-import android.widget.CheckBox
-import android.widget.CompoundButton
-import android.widget.TextView
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.kumsal.kyk.R
@@ -17,7 +14,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
 class security_adapter(var items: ArrayList<security_model>, private val context: Context?, private val CPElement: CreatePost?):
-    RecyclerView.Adapter<security_adapter.secureHolder>() {
+    RecyclerView.Adapter<security_adapter.secureHolder>(),Filterable {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): secureHolder {
         var view=LayoutInflater.from(parent?.context).inflate(R.layout.secure_single, parent, false)
         return secureHolder(view)
@@ -88,4 +85,7 @@ class security_adapter(var items: ArrayList<security_model>, private val context
         })
     }
 
+    override fun getFilter(): Filter {
+
+    }
 }
