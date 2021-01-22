@@ -22,17 +22,6 @@
             android:layout_height="wrap_content"
             tools:ignore="ExtraText">
 
-            <Button
-                android:id="@+id/secure_bind_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:background="@drawable/create_post_button"
-                android:text="@string/cancel"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/secure_bind_element_size"
                 android:layout_width="wrap_content"
@@ -43,7 +32,6 @@
 
 
                 app:layout_constraintEnd_toStartOf="@id/secure_bind_accept"
-                app:layout_constraintStart_toEndOf="@id/secure_bind_cancel"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteY="18dp" />
 

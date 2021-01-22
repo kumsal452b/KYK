@@ -135,7 +135,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (selectedlistElement == null) {
                 selectedlistElement = ArrayList<security_model>()
             }
-
             textView.visibility = View.VISIBLE
             updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
@@ -195,9 +194,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         //Test section
         secure_initial()
 
+
     }
 
     private fun secure_initial() {
+        
         select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 FullScreenDialog.show(
