@@ -81,6 +81,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         p0.cardView.setOnLongClickListener(object:View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
                 CPElement?.startSelection(p1)
+                p0.checkBox.isChecked=true
                 return true
             }
         })

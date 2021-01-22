@@ -26,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="19dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                android:backgroundTint="@color/white"
+                android:buttonTint="@color/white"/>
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
