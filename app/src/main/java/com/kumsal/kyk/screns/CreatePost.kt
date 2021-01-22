@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
@@ -34,7 +38,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var post_text_element: SocialEditText
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
-
+    private lateinit var toolbar: Toolbar
     companion object {
 
         var listElement = ArrayList<security_model>()
@@ -73,6 +77,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         setContentView(R.layout.activity_create_post)
         initialComponent()
         textView = TextView(this)
+
         val mention1 = Mention("dirtyhobo")
         val mention2 = Mention.Builder("hobo")
             .setDisplayname("Regular Hobo")
@@ -126,6 +131,28 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 }
             }
         })
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.search_action, menu)
+
+        val search: MenuItem?=menu?.findItem(R.id.search_bar_for_count)
+
+        val searchView: SearchView =search?.actionView as SearchView
+        searchView.queryHint="Search something"
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                mAdapter.filter.filter(newText.toString())
+                return true
+            }
+
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 
     fun startSelection(index: Int) {
@@ -213,6 +240,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             alfriends = rootView?.findViewById(R.id.secure_allfriends)
                             excpection = rootView?.findViewById(R.id.secure_except)
                             textView = rootView?.findViewById(R.id.secure_bind_element_size)
+                            toolbar=rootView.findViewById(R.id.secure_bind_toolbar)
+                            setSupportActionBar(toolbar);
                             if (alfriends.isChecked){
                                 recyclerView.visibility=View.GONE
                             }
