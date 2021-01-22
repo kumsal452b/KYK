@@ -129,6 +129,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     fun startSelection(index: Int) {
+
         if (!isActionMode) {
             isActionMode = true
             if (selectedlistElement == null) {
