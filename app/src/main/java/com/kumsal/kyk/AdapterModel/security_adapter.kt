@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
 
-class security_adapter(private var items: ArrayList<security_model>, private val context: Context?, private val CPElement: CreatePost?):
+class security_adapter(var items: ArrayList<security_model>, private val context: Context?, private val CPElement: CreatePost?):
     RecyclerView.Adapter<security_adapter.secureHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): secureHolder {
         var view=LayoutInflater.from(parent?.context).inflate(R.layout.secure_single, parent, false)
@@ -81,7 +81,7 @@ class security_adapter(private var items: ArrayList<security_model>, private val
         p0.cardView.setOnLongClickListener(object:View.OnLongClickListener{
             override fun onLongClick(v: View?): Boolean {
                 CPElement?.startSelection(p1)
-                p0.checkBox.isChecked=true
+                p0.name
                 return true
             }
         })
