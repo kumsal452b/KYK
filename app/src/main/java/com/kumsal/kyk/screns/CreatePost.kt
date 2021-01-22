@@ -198,7 +198,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     private fun secure_initial() {
-        
+
         select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 FullScreenDialog.show(
@@ -271,6 +271,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
             selectedlistElement.remove(listElement.get(position))
         }
+
     }
 
     private fun initialDynamic() {
