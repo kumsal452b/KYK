@@ -92,8 +92,8 @@ class security_adapter(
         p0.bindElement(theModel)
         p0.cardView.setOnLongClickListener(object : View.OnLongClickListener {
             override fun onLongClick(v: View?): Boolean {
-                p0.checkBox.isChecked = true
                 CPElement?.startSelection(p1)
+                p0.checkBox.isChecked = true
                 return true
             }
         })
