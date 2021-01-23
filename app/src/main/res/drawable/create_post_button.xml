@@ -4,11 +4,15 @@
         <shape>
             <corners android:radius="20sp"/>
             <stroke android:color="#2196F3" android:width="2dp" android:dashGap="2dp"/>
-
+            <solid android:color="#172F32"/>
         </shape>
     </item>
     <item android:state_enabled="false">
+        <shape>
+            <corners android:radius="20sp"/>
+            <stroke android:color="#2196F3" android:width="2dp" android:dashGap="2dp"/>
 
+        </shape>
     </item>
 
 </selector>
