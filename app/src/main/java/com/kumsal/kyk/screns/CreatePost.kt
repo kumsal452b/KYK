@@ -156,30 +156,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         return super.onCreateOptionsMenu(menu)
     }
 
-    fun startSelection(index: Int) {
-
-        if (!isActionMode) {
-            isActionMode = true
-            if (selectedlistElement == null) {
-                selectedlistElement = ArrayList<security_model>()
-            }
-            textView.visibility = View.VISIBLE
-            updateToolbarText(mcounter)
-            mAdapter.notifyDataSetChanged()
-
-        }
-    }
-
-    private fun updateToolbarText(counter: Int) {
-        if (counter == 0) {
-            textView.setText("0 person selected ")
-        } else {
-            textView.setText("$counter person selected ")
-
-        }
-
-    }
-
     private fun canBeSent() {
         post_text_element.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -289,24 +265,51 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         })
     }
+    fun startSelection(index: Int) {
+
+        if (!isActionMode) {
+            isActionMode = true
+            if (selectedlistElement == null) {
+                selectedlistElement = ArrayList<security_model>()
+            }
+            textView.visibility = View.VISIBLE
+            updateToolbarText(mcounter)
+            mAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun updateToolbarText(counter: Int) {
+        if (counter == 0) {
+            textView.setText("0 person selected ")
+        } else {
+            textView.setText("$counter person selected ")
+
+        }
+
+    }
 
     override fun clickCheckBox(position: Int) {
-        if (!selectedlistElement.contains(listElement.get(position))) {
-            selectedlistElement.add(listElement.get(position))
-            mcounter++
-            updateToolbarText(mcounter)
-        } else {
-            mcounter--
-            updateToolbarText(mcounter)
-            if(mcounter==0){
-                isActionMode=false
-                mAdapter.notifyDataSetChanged()
-                textView.visibility=View.GONE
+            if (!selectedlistElement.contains(listElement.get(position))) {
+                selectedlistElement.add(listElement.get(position))
+                mcounter++
+                updateToolbarText(mcounter)
+                var theSecureM= listElement.get(position);
+                theSecureM.theisChecked=true
+                listElement.set(position,theSecureM)
+            } else {
+                mcounter--
+                updateToolbarText(mcounter)
+                if(mcounter==0){
+                    isActionMode=false
+                    mAdapter.notifyDataSetChanged()
+                    textView.visibility=View.GONE
+                }
+                selectedlistElement.remove(listElement.get(position))
+                var theSecureM= listElement.get(position);
+                theSecureM.theisChecked=false
+                listElement.set(position,theSecureM)
             }
-            selectedlistElement.remove(listElement.get(position))
-        }
-        accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
-
+            accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
     }
 
     private fun initialDynamic() {
