@@ -56,7 +56,7 @@ class security_adapter(
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
-
+            checkBox.isChecked = theModel.theisChecked
         }
 
         init {
@@ -75,25 +75,19 @@ class security_adapter(
 
     override fun onBindViewHolder(p0: secureHolder, p1: Int) {
         var theModel = filerList.get(p1)
-        if (CreatePost.isActionMode as Boolean) {
+        if (CreatePost.isActionMode) {
 //            var anim=Animation(100,p0.checkBox)
 //            anim.duration=100
 //            p0.checkBox.animation=anim
             p0.checkBox.visibility = View.VISIBLE
 
         } else {
-//            var anim=Animation(0,p0.checkBox)
-//            anim.duration=100
-//            p0.checkBox.animation=anim
-
             p0.checkBox.visibility = View.GONE
-            p0.checkBox.isChecked = false
         }
         p0.bindElement(theModel)
         p0.cardView.setOnLongClickListener(object : View.OnLongClickListener {
             override fun onLongClick(v: View?): Boolean {
                 CPElement?.startSelection(p1)
-                p0.checkBox.isChecked = true
                 return true
             }
         })
