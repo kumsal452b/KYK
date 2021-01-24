@@ -56,7 +56,9 @@ class security_adapter(
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
-            checkBox.isChecked = theModel.theisChecked
+            if (!checkBox.isChecked && theModel.theisChecked){
+                checkBox.isChecked=true
+            }
         }
 
         init {
@@ -67,7 +69,7 @@ class security_adapter(
             if (mitemClickListener != null) {
                 var position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    mitemClickListener.clickCheckBox(position)
+                    mitemClickListener.clickCheckBox(items.indexOf(filerList.get(position)))
                 }
             }
         }
