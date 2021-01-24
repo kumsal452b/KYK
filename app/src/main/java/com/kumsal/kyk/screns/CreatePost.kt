@@ -267,7 +267,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         var thename = a.child("name_surname").value as String
                                         var theimg = a.child("thmbImage").value as String
                                         var theUsername = a.child("username").value as String
-                                        theModel = security_model(thename, theUsername, theimg)
+                                        theModel = security_model(thename, theUsername, theimg, false)
                                         listElement.add(theModel)
                                     }
                                     mAdapter.notifyDataSetChanged()
