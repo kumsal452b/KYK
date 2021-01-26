@@ -41,7 +41,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var toolbar: Toolbar
 
     companion object {
-
         var listElement = ArrayList<security_model>()
         lateinit var textView: TextView
         lateinit var radioGroup: RadioGroup
@@ -55,7 +54,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var excpection: RadioButton
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
-
     }
 
 
@@ -142,6 +140,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         val searchView: SearchView = search?.actionView as SearchView
         searchView.queryHint = "Search something"
+        searchView.setOnCloseListener(object:SearchView.OnCloseListener{
+            override fun onClose(): Boolean {
+                selectedAll.isChecked=false
+                return false
+            }
+        })
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -239,7 +243,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             selectedAll.setOnClickListener {
                                 if (selectedAll.isChecked) {
                                     for (i in 0..mAdapter.filerList.size-1) {
-                                        var theSecureM = listElement.get(i);
+                                        var theSecureM = listElement.get(listElement.indexOf(mAdapter.filerList.get(i)));
                                         theSecureM.theisChecked = true
                                         listElement.set(i, theSecureM)
                                     }
@@ -319,6 +323,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     override fun clickCheckBox(position: Int) {
         if (!selectedlistElement.contains(listElement.get(position))) {
+            selectedAll.isChecked=false
             selectedlistElement.add(listElement.get(position))
             mcounter++
             updateToolbarText(mcounter)
