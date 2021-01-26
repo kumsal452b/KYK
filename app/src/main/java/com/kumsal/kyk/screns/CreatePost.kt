@@ -139,7 +139,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         val search: MenuItem? = menu?.findItem(R.id.search_bar_for_count)
 
         val searchView: SearchView = search?.actionView as SearchView
-        searchView.queryHint = "Search something"
+        searchView.queryHint = getString(R.string.search_hint)
 
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
