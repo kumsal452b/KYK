@@ -39,6 +39,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
+
     companion object {
 
         var listElement = ArrayList<security_model>()
@@ -53,10 +54,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var alfriends: RadioButton
         private lateinit var excpection: RadioButton
         private lateinit var accept_selected_name: Button
-
+        private lateinit var selectedAll: CheckBox
 
     }
-
 
 
     //add intent element varíable
@@ -133,14 +133,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         })
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_action, menu)
 
-        val search: MenuItem?=menu?.findItem(R.id.search_bar_for_count)
+        val search: MenuItem? = menu?.findItem(R.id.search_bar_for_count)
 
-        val searchView: SearchView =search?.actionView as SearchView
-        searchView.queryHint="Search something"
+        val searchView: SearchView = search?.actionView as SearchView
+        searchView.queryHint = "Search something"
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -219,6 +220,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             textView = rootView?.findViewById(R.id.secure_bind_element_size)
                             toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
                             accept_selected_name = rootView.findViewById(R.id.secure_bind_accept)
+                            selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
                             setSupportActionBar(toolbar);
                             if (alfriends.isChecked) {
                                 recyclerView.visibility = View.GONE
@@ -234,6 +236,23 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             accept_selected_name.setOnClickListener {
                                 println("accept is  run")
                             }
+                            selectedAll.setOnClickListener {
+                                if (selectedAll.isChecked) {
+                                    for (i in 0..listElement.size-1) {
+                                        var theSecureM = listElement.get(i);
+                                        theSecureM.theisChecked = true
+                                        listElement.set(i, theSecureM)
+                                    }
+                                    mAdapter.notifyDataSetChanged()
+                                }else{
+                                    for (i in 0..listElement.size-1) {
+                                        var theSecureM = listElement.get(i);
+                                        theSecureM.theisChecked = false
+                                        listElement.set(i, theSecureM)
+                                    }
+                                    mAdapter.notifyDataSetChanged()
+                                }
+                            }
                             recyclerView.adapter = mAdapter
                             mUserDbReference.addValueEventListener(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -243,7 +262,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         var thename = a.child("name_surname").value as String
                                         var theimg = a.child("thmbImage").value as String
                                         var theUsername = a.child("username").value as String
-                                        theModel = security_model(thename, theUsername, theimg, false)
+                                        theModel =
+                                            security_model(thename, theUsername, theimg, false)
                                         listElement.add(theModel)
                                     }
                                     mAdapter.notifyDataSetChanged()
@@ -265,6 +285,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         })
     }
+
     fun startSelection(index: Int) {
 
         if (!isActionMode) {
@@ -273,6 +294,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 selectedlistElement = ArrayList<security_model>()
             }
             textView.visibility = View.VISIBLE
+            selectedAll.visibility= View.VISIBLE
             updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
         }
@@ -289,27 +311,28 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     override fun clickCheckBox(position: Int) {
-            if (!selectedlistElement.contains(listElement.get(position))) {
-                selectedlistElement.add(listElement.get(position))
-                mcounter++
-                updateToolbarText(mcounter)
-                var theSecureM= listElement.get(position);
-                theSecureM.theisChecked=true
-                listElement.set(position,theSecureM)
-            } else {
-                mcounter--
-                updateToolbarText(mcounter)
-                if(mcounter==0){
-                    isActionMode=false
-                    mAdapter.notifyDataSetChanged()
-                    textView.visibility=View.GONE
-                }
-                selectedlistElement.remove(listElement.get(position))
-                var theSecureM= listElement.get(position);
-                theSecureM.theisChecked=false
-                listElement.set(position,theSecureM)
+        if (!selectedlistElement.contains(listElement.get(position))) {
+            selectedlistElement.add(listElement.get(position))
+            mcounter++
+            updateToolbarText(mcounter)
+            var theSecureM = listElement.get(position);
+            theSecureM.theisChecked = true
+            listElement.set(position, theSecureM)
+        } else {
+            mcounter--
+            updateToolbarText(mcounter)
+            if (mcounter == 0) {
+                isActionMode = false
+                mAdapter.notifyDataSetChanged()
+                textView.visibility = View.GONE
+                selectedAll.visibility=View.GONE
             }
-            accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
+            selectedlistElement.remove(listElement.get(position))
+            var theSecureM = listElement.get(position);
+            theSecureM.theisChecked = false
+            listElement.set(position, theSecureM)
+        }
+        accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
     }
 
     private fun initialDynamic() {
