@@ -244,6 +244,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         listElement.set(i, theSecureM)
                                     }
                                     mAdapter.notifyDataSetChanged()
+                                    mcounter= listElement.size
+                                    textView.text="${listElement.size} person selected"
+                                    selectedlistElement= listElement
                                 }else{
                                     for (i in 0..listElement.size-1) {
                                         var theSecureM = listElement.get(i);
@@ -251,6 +254,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         listElement.set(i, theSecureM)
                                     }
                                     mAdapter.notifyDataSetChanged()
+                                    mcounter= 0
+                                    textView.text="0 person selected"
+                                    selectedlistElement.clear()
+                                    
                                 }
                             }
                             recyclerView.adapter = mAdapter
