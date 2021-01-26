@@ -140,12 +140,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         val searchView: SearchView = search?.actionView as SearchView
         searchView.queryHint = "Search something"
-        searchView.setOnCloseListener(object:SearchView.OnCloseListener{
-            override fun onClose(): Boolean {
-                selectedAll.isChecked=false
-                return false
-            }
-        })
+
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -154,6 +149,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 mAdapter.filter.filter(newText.toString())
+                selectedAll.isChecked=false
                 return true
             }
 
@@ -243,9 +239,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             selectedAll.setOnClickListener {
                                 if (selectedAll.isChecked) {
                                     for (i in 0..mAdapter.filerList.size-1) {
-                                        var theSecureM = listElement.get(listElement.indexOf(mAdapter.filerList.get(i)));
+                                        var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
+                                        var theSecureM = listElement.get(mainIndex);
                                         theSecureM.theisChecked = true
-                                        listElement.set(i, theSecureM)
+                                        listElement.set(mainIndex, theSecureM)
                                     }
                                     mAdapter.notifyDataSetChanged()
                                     mcounter= mAdapter.filerList.size
@@ -253,9 +250,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     selectedlistElement.addAll(mAdapter.filerList)
                                 }else{
                                     for (i in 0..listElement.size-1) {
-                                        var theSecureM = listElement.get(i);
+                                        var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
+                                        var theSecureM = listElement.get(mainIndex);
                                         theSecureM.theisChecked = false
-                                        listElement.set(i, theSecureM)
+                                        listElement.set(mainIndex, theSecureM)
                                     }
                                     mAdapter.notifyDataSetChanged()
                                     mcounter= 0
@@ -323,7 +321,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     override fun clickCheckBox(position: Int) {
         if (!selectedlistElement.contains(listElement.get(position))) {
-            selectedAll.isChecked=false
+
             selectedlistElement.add(listElement.get(position))
             mcounter++
             updateToolbarText(mcounter)
@@ -331,6 +329,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             theSecureM.theisChecked = true
             listElement.set(position, theSecureM)
         } else {
+            selectedAll.isChecked=false
             mcounter--
             updateToolbarText(mcounter)
             if (mcounter == 0) {
