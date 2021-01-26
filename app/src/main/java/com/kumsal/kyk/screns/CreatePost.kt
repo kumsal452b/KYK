@@ -238,15 +238,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             }
                             selectedAll.setOnClickListener {
                                 if (selectedAll.isChecked) {
-                                    for (i in 0..listElement.size-1) {
+                                    for (i in 0..mAdapter.filerList.size-1) {
                                         var theSecureM = listElement.get(i);
                                         theSecureM.theisChecked = true
                                         listElement.set(i, theSecureM)
                                     }
                                     mAdapter.notifyDataSetChanged()
-                                    mcounter= listElement.size
-                                    textView.text="${listElement.size} person selected"
-                                    selectedlistElement= listElement
+                                    mcounter= mAdapter.filerList.size
+                                    textView.text="${mcounter} person selected"
+                                    selectedlistElement.addAll(mAdapter.filerList)
                                 }else{
                                     for (i in 0..listElement.size-1) {
                                         var theSecureM = listElement.get(i);
@@ -257,7 +257,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     mcounter= 0
                                     textView.text="0 person selected"
                                     selectedlistElement.clear()
-                                    
+
                                 }
                             }
                             recyclerView.adapter = mAdapter
