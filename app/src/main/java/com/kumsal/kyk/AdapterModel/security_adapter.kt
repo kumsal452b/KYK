@@ -45,27 +45,28 @@ class security_adapter(
     }
 
     inner class secureHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        CompoundButton.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener, View.OnClickListener{
         var imageUrl: CircleImageView = itemView.findViewById(R.id.secure_image)
         var name: TextView = itemView.findViewById(R.id.secure_name)
         var username: TextView = itemView.findViewById(R.id.secure_username)
-        var overlay: View = itemView.findViewById(R.id.overLay)
         var checkBox: CheckBox = itemView.findViewById(R.id.secure_single_check_box)
         var cardView: CardView = itemView.findViewById(R.id.secure_single_cardsingle)
         fun bindElement(theModel: security_model) {
             Picasso.get().load(theModel.theimage).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
-            if (!checkBox.isChecked && theModel.theisChecked){
-                checkBox.isChecked=true
-            }
+            checkBox.isChecked=theModel.theisChecked
         }
 
         init {
-            checkBox.setOnCheckedChangeListener(this)
+            checkBox.setOnClickListener(this)
         }
 
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+
+        }
+
+        override fun onClick(v: View?) {
             if (mitemClickListener != null) {
                 var position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
