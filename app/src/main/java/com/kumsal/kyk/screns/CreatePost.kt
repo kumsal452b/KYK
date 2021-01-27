@@ -149,7 +149,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 mAdapter.filter.filter(newText.toString())
-                if (!newText.equals("")){
+
                     var counter=0;
                     for (i in 0..mAdapter.filerList.size-1) {
                         var theSecureM = mAdapter.filerList.get(i);
@@ -162,7 +162,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     if (counter==0){
                         selectedAll.isChecked=true
                     }
-                }
+
                 return true
             }
 
@@ -240,10 +240,18 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             }
                             alfriends.setOnClickListener {
                                 recyclerView.visibility = View.GONE
+                                selectedAll.visibility=View.GONE
+                                textView.animate().translationX(0.0f)
 
                             }
                             excpection.setOnClickListener {
                                 recyclerView.visibility = View.VISIBLE
+                                if(isActionMode){
+                                    recyclerView.visibility = View.VISIBLE
+                                    selectedAll.visibility=View.VISIBLE
+                                    textView.visibility=View.VISIBLE
+                                    textView.animate().translationX(textView.width.toFloat())
+                                }
 
                             }
                             accept_selected_name.setOnClickListener {
