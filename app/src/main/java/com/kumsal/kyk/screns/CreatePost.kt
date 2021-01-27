@@ -241,7 +241,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             alfriends.setOnClickListener {
                                 recyclerView.visibility = View.GONE
                                 selectedAll.visibility=View.GONE
-                                textView.animate().translationX(0.0f)
+                                textView.animate().translationX(-textView.width.toFloat())
 
                             }
                             excpection.setOnClickListener {
@@ -250,7 +250,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     recyclerView.visibility = View.VISIBLE
                                     selectedAll.visibility=View.VISIBLE
                                     textView.visibility=View.VISIBLE
-                                    textView.animate().translationX(textView.width.toFloat())
+                                    textView.animate().translationX(0.0f)
                                 }
 
                             }
