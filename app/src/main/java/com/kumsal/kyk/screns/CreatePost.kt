@@ -149,7 +149,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 mAdapter.filter.filter(newText.toString())
-                selectedAll.isChecked=false
+                if (!newText.equals("")){
+                    var counter=0;
+                    for (i in 0..mAdapter.filerList.size-1) {
+                        var theSecureM = mAdapter.filerList.get(i);
+                        if (theSecureM.theisChecked==false){
+                            selectedAll.isChecked=false;
+                            counter++
+                            break
+                        }
+                    }
+                    if (counter==0){
+                        selectedAll.isChecked=true
+                    }
+                }
                 return true
             }
 
