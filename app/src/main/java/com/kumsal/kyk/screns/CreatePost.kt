@@ -251,10 +251,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                 if(isActionMode){
                                     recyclerView.visibility = View.VISIBLE
                                     selectedAll.visibility=View.VISIBLE
-                                    textView.visibility=View.VISIBLE
-                                    textView.animate().scaleY(-100f)
-                                        .setInterpolator(AccelerateDecelerateInterpolator())
-                                        .setDuration(1000)
+                                    var anim=Animation(23, textView)
+                                    textView.animation=anim
                                 }
 
                             }
