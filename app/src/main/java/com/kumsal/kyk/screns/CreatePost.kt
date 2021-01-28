@@ -26,6 +26,7 @@ import com.kumsal.kyk.AdapterModel.security_model
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
+import com.kumsal.kyk.animation.Animation
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
@@ -242,10 +243,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             alfriends.setOnClickListener {
                                 recyclerView.visibility = View.GONE
                                 selectedAll.visibility=View.GONE
-                                textView.animate().scaleY(-100f)
-                                    .setInterpolator(AccelerateDecelerateInterpolator())
-                                    .setDuration(1000)
-
+                                var anim=Animation(0, textView)
+                                textView.animation=anim
                             }
                             excpection.setOnClickListener {
                                 recyclerView.visibility = View.VISIBLE
