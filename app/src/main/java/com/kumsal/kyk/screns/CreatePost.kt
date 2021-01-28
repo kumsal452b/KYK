@@ -300,6 +300,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         var thename = a.child("name_surname").value as String
                                         var theimg = a.child("thmbImage").value as String
                                         var theUsername = a.child("username").value as String
+                                        var theModel2=a.value
                                         theModel =
                                             security_model(thename, theUsername, theimg, false)
                                         listElement.add(theModel)
@@ -327,11 +328,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private fun checkSecurePanel() {
         if (selectedlistElement.size>0){
             isActionMode=true
-            for (i in 0..listElement.size-1){
-                var theSecureM = listElement.get(i);
-                theSecureM.theisChecked = true
-                listElement.set(position, theSecureM)
-            }
+
+//            for (i in 0..listElement.size-1){
+//                var theSecureM = listElement.get(i);
+//                theSecureM.theisChecked = true
+//                listElement.set(i, theSecureM)
+//            }
         }
     }
 
