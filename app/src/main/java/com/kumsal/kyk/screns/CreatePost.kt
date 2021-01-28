@@ -59,22 +59,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
     }
-
-
     //add intent element varíable
     var name = ""
     var imageUri = ""
     var thmbImageUri = ""
     var userid = ""
     var username = ""
-
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mUserDbReference: DatabaseReference
-
-    //Action section
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
