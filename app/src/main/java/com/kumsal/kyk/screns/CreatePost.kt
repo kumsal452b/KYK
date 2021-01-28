@@ -57,6 +57,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var excpection: RadioButton
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
+        private lateinit var search: MenuItem
     }
 
 
@@ -139,12 +140,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_action, menu)
 
-        val search: MenuItem? = menu?.findItem(R.id.search_bar_for_count)
-
-        val searchView: SearchView = search?.actionView as SearchView
+        search = menu?.findItem(R.id.search_bar_for_count)!!
+        search.isVisible =false
+        var searchView:SearchView= search?.actionView as SearchView
         searchView.queryHint = getString(R.string.search_hint)
-
-
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -196,6 +195,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         share_button = findViewById(R.id.activity_create_post_share)
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
         select_privacy = findViewById(R.id.activity_create_post_select_security)
+
         selectedlistElement = ArrayList<security_model>()
         var names = ArrayList<Mention>()
 
@@ -234,6 +234,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             alfriends = rootView?.findViewById(R.id.secure_allfriends)
                             excpection = rootView?.findViewById(R.id.secure_except)
                             textView = rootView?.findViewById(R.id.secure_bind_element_size)
+                            textView.measure(0, 0);       //must call measure!
                             toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
                             accept_selected_name = rootView.findViewById(R.id.secure_bind_accept)
                             selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
@@ -241,20 +242,27 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             if (alfriends.isChecked) {
                                 recyclerView.visibility = View.GONE
                             }
-                            currentWith=textView.width;
+
                             alfriends.setOnClickListener {
                                 recyclerView.visibility = View.GONE
                                 selectedAll.visibility=View.GONE
                                 var anim=Animation(0, textView)
                                 textView.animation=anim
+                                accept_selected_name.isEnabled=false
+                                search.isVisible=false
+
                             }
                             excpection.setOnClickListener {
+                                search.isVisible=true
                                 recyclerView.visibility = View.VISIBLE
                                 if(isActionMode){
                                     recyclerView.visibility = View.VISIBLE
                                     selectedAll.visibility=View.VISIBLE
                                     var anim=Animation(currentWith, textView)
                                     textView.animation=anim
+                                    if (selectedlistElement.size>0){
+                                        accept_selected_name.isEnabled=true
+                                    }
                                 }
 
                             }
@@ -263,6 +271,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             }
                             selectedAll.setOnClickListener {
                                 if (selectedAll.isChecked) {
+                                    accept_selected_name.isEnabled=true
                                     for (i in 0..mAdapter.filerList.size-1) {
                                         var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
                                         var theSecureM = listElement.get(mainIndex);
@@ -274,6 +283,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     textView.text="${mcounter} person selected"
                                     selectedlistElement.addAll(mAdapter.filerList)
                                 }else{
+                                    accept_selected_name.isEnabled=false
                                     for (i in 0..listElement.size-1) {
                                         var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
                                         var theSecureM = listElement.get(mainIndex);
@@ -328,6 +338,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 selectedlistElement = ArrayList<security_model>()
             }
             textView.visibility = View.VISIBLE
+            currentWith=textView.measuredWidth;
+            var anim=Animation(currentWith, textView)
+            textView.animation=anim
             selectedAll.visibility= View.VISIBLE
             updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
@@ -369,6 +382,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             listElement.set(position, theSecureM)
         }
         accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
+        if (listElement.size== selectedlistElement.size){
+            selectedAll.isChecked=true
+        }
+        else if (listElement.size> selectedlistElement.size){
+            selectedAll.isChecked=false
+        }
     }
 
     private fun initialDynamic() {
