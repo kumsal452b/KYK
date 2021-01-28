@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -241,7 +242,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             alfriends.setOnClickListener {
                                 recyclerView.visibility = View.GONE
                                 selectedAll.visibility=View.GONE
-                                textView.animate().translationX(-textView.width.toFloat())
+                                textView.animate().scaleY(-100f)
+                                    .setInterpolator(AccelerateDecelerateInterpolator())
+                                    .setDuration(1000)
 
                             }
                             excpection.setOnClickListener {
@@ -250,7 +253,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     recyclerView.visibility = View.VISIBLE
                                     selectedAll.visibility=View.VISIBLE
                                     textView.visibility=View.VISIBLE
-                                    textView.animate().translationX(0.0f)
+                                    textView.animate().scaleY(-100f)
+                                        .setInterpolator(AccelerateDecelerateInterpolator())
+                                        .setDuration(1000)
                                 }
 
                             }
