@@ -231,6 +231,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
                             accept_selected_name = rootView.findViewById(R.id.secure_bind_accept)
                             selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
+                            checkSecurePanel()
                             setSupportActionBar(toolbar);
                             if (alfriends.isChecked) {
                                 recyclerView.visibility = View.GONE
@@ -321,6 +322,17 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 }
             }
         })
+    }
+
+    private fun checkSecurePanel() {
+        if (selectedlistElement.size>0){
+            isActionMode=true
+            for (i in 0..listElement.size-1){
+                var theSecureM = listElement.get(i);
+                theSecureM.theisChecked = true
+                listElement.set(position, theSecureM)
+            }
+        }
     }
 
     fun startSelection(index: Int) {
