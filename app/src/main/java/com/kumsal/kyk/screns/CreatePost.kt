@@ -50,6 +50,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var isActionMode = false
         var selectedlistElement = ArrayList<security_model>()
         var mcounter = 0
+        var currentWith=0
 
         private lateinit var mRadioGroup: RadioGroup
         private lateinit var alfriends: RadioButton
@@ -240,6 +241,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             if (alfriends.isChecked) {
                                 recyclerView.visibility = View.GONE
                             }
+                            currentWith=textView.width;
                             alfriends.setOnClickListener {
                                 recyclerView.visibility = View.GONE
                                 selectedAll.visibility=View.GONE
@@ -251,7 +253,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                 if(isActionMode){
                                     recyclerView.visibility = View.VISIBLE
                                     selectedAll.visibility=View.VISIBLE
-                                    var anim=Animation(23, textView)
+                                    var anim=Animation(currentWith, textView)
                                     textView.animation=anim
                                 }
 
