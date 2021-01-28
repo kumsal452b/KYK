@@ -7,6 +7,7 @@ class security_model(name:String, username:String,image:String,isChecked:Boolean
     var theusername=""
     var theimage=""
     var theisChecked=false
+    constructor():this("","","",false)
     init {
         if (TextUtils.isEmpty(image) || image==null){
             this.theimage="empty"

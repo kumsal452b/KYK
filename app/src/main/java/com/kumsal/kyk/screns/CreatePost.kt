@@ -19,6 +19,7 @@ import com.google.firebase.database.*
 import com.hendraanggrian.socialview.commons.Mention
 import com.hendraanggrian.widget.SocialEditText
 import com.kongzue.dialog.interfaces.OnDismissListener
+import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.AdapterModel.security_adapter
@@ -215,113 +216,107 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                FullScreenDialog.show(
-                    this@CreatePost,
-                    R.layout.security_bind_element,
-                    object : FullScreenDialog.OnBindView {
-                        override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
-                            recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
-                            recyclerView.setHasFixedSize(true)
-                            recyclerView.layoutManager = LinearLayoutManager(rootView.context)
-                            mRadioGroup = rootView?.findViewById(R.id.secure_rg)
-                            alfriends = rootView?.findViewById(R.id.secure_allfriends)
-                            excpection = rootView?.findViewById(R.id.secure_except)
-                            textView = rootView?.findViewById(R.id.secure_bind_element_size)
-                            textView.measure(0, 0);       //must call measure!
-                            toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
-                            accept_selected_name = rootView.findViewById(R.id.secure_bind_accept)
-                            selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
-                            checkSecurePanel()
-                            setSupportActionBar(toolbar);
-                            if (alfriends.isChecked) {
-                                recyclerView.visibility = View.GONE
-                            }
+                var fullScreenDialog=FullScreenDialog.build(this@CreatePost)
+                fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_KONGZUE).setCustomView(R.layout.security_bind_element,object :FullScreenDialog.OnBindView{
+                    override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
+                        recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
+                        recyclerView.setHasFixedSize(true)
+                        recyclerView.layoutManager = LinearLayoutManager(rootView.context)
+                        mRadioGroup = rootView?.findViewById(R.id.secure_rg)
+                        alfriends = rootView?.findViewById(R.id.secure_allfriends)
+                        excpection = rootView?.findViewById(R.id.secure_except)
+                        textView = rootView?.findViewById(R.id.secure_bind_element_size)
+                        textView.measure(0, 0);       //must call measure!
+                        toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
+                        accept_selected_name = rootView.findViewById(R.id.secure_bind_accept)
+                        selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
+                        checkSecurePanel()
+                        setSupportActionBar(toolbar);
+                        if (alfriends.isChecked) {
+                            recyclerView.visibility = View.GONE
+                        }
 
-                            alfriends.setOnClickListener {
-                                recyclerView.visibility = View.GONE
-                                selectedAll.visibility=View.GONE
-                                var anim=Animation(0, textView)
-                                textView.animation=anim
-                                accept_selected_name.isEnabled=false
-                                search.isVisible=false
-
-                            }
-                            excpection.setOnClickListener {
-                                search.isVisible=true
-                                recyclerView.visibility = View.VISIBLE
-                                if(isActionMode){
-                                    recyclerView.visibility = View.VISIBLE
-                                    selectedAll.visibility=View.VISIBLE
-                                    var anim=Animation(currentWith, textView)
-                                    textView.animation=anim
-                                    if (selectedlistElement.size>0){
-                                        accept_selected_name.isEnabled=true
-                                    }
-                                }
-
-                            }
-                            accept_selected_name.setOnClickListener {
-                                println("accept is  run")
-                            }
-                            selectedAll.setOnClickListener {
-                                if (selectedAll.isChecked) {
-                                    accept_selected_name.isEnabled=true
-                                    for (i in 0..mAdapter.filerList.size-1) {
-                                        var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
-                                        var theSecureM = listElement.get(mainIndex);
-                                        theSecureM.theisChecked = true
-                                        listElement.set(mainIndex, theSecureM)
-                                    }
-                                    mAdapter.notifyDataSetChanged()
-                                    mcounter= mAdapter.filerList.size
-                                    textView.text="${mcounter} person selected"
-                                    selectedlistElement.addAll(mAdapter.filerList)
-                                }else{
-                                    accept_selected_name.isEnabled=false
-                                    for (i in 0..listElement.size-1) {
-                                        var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
-                                        var theSecureM = listElement.get(mainIndex);
-                                        theSecureM.theisChecked = false
-                                        listElement.set(mainIndex, theSecureM)
-                                    }
-                                    mAdapter.notifyDataSetChanged()
-                                    mcounter= 0
-                                    textView.text="0 person selected"
-                                    selectedlistElement.clear()
-
-                                }
-                            }
-                            recyclerView.adapter = mAdapter
-                            mUserDbReference.addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    var theModel: security_model
-                                    listElement.clear()
-                                    for (a in snapshot.children) {
-                                        var thename = a.child("name_surname").value as String
-                                        var theimg = a.child("thmbImage").value as String
-                                        var theUsername = a.child("username").value as String
-                                        var theModel2=a.value
-                                        theModel =
-                                            security_model(thename, theUsername, theimg, false)
-                                        listElement.add(theModel)
-                                    }
-                                    mAdapter.notifyDataSetChanged()
-                                }
-
-                                override fun onCancelled(error: DatabaseError) {
-
-                                }
-                            })
+                        alfriends.setOnClickListener {
+                            recyclerView.visibility = View.GONE
+                            selectedAll.visibility=View.GONE
+                            var anim=Animation(0, textView)
+                            textView.animation=anim
+                            accept_selected_name.isEnabled=false
+                            search.isVisible=false
 
                         }
-                    }).onDismissListener = OnDismissListener {
-                    isActionMode = false
-                    selectedlistElement.clear()
-                    listElement.clear()
-                    mAdapter.notifyDataSetChanged()
-                    mcounter = 0
-                }
+                        excpection.setOnClickListener {
+                            search.isVisible=true
+                            recyclerView.visibility = View.VISIBLE
+                            if(isActionMode){
+                                recyclerView.visibility = View.VISIBLE
+                                selectedAll.visibility=View.VISIBLE
+                                var anim=Animation(currentWith, textView)
+                                textView.animation=anim
+                                if (selectedlistElement.size>0){
+                                    accept_selected_name.isEnabled=true
+                                }
+                            }
+
+                        }
+                        accept_selected_name.setOnClickListener {
+                            println("accept is  run")
+                        }
+                        selectedAll.setOnClickListener {
+                            if (selectedAll.isChecked) {
+                                accept_selected_name.isEnabled=true
+                                for (i in 0..mAdapter.filerList.size-1) {
+                                    var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
+                                    var theSecureM = listElement.get(mainIndex);
+                                    theSecureM.theisChecked = true
+                                    listElement.set(mainIndex, theSecureM)
+                                }
+                                mAdapter.notifyDataSetChanged()
+                                mcounter= mAdapter.filerList.size
+                                textView.text="${mcounter} person selected"
+                                selectedlistElement.addAll(mAdapter.filerList)
+                            }else{
+                                accept_selected_name.isEnabled=false
+                                for (i in 0..listElement.size-1) {
+                                    var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
+                                    var theSecureM = listElement.get(mainIndex);
+                                    theSecureM.theisChecked = false
+                                    listElement.set(mainIndex, theSecureM)
+                                }
+                                mAdapter.notifyDataSetChanged()
+                                mcounter= 0
+                                textView.text="0 person selected"
+                                selectedlistElement.clear()
+
+                            }
+                        }
+                        recyclerView.adapter = mAdapter
+                        mUserDbReference.addValueEventListener(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                var theModel: security_model
+                                listElement.clear()
+                                for (a in snapshot.children) {
+                                    var thename = a.child("name_surname").value as String
+                                    var theimg = a.child("thmbImage").value as String
+                                    var theUsername = a.child("username").value as String
+                                    var theModel2=a.getValue(security_model::class.java)
+                                    theModel =
+                                        security_model(thename, theUsername, theimg, false)
+                                    listElement.add(theModel)
+                                }
+                                mAdapter.notifyDataSetChanged()
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+
+                            }
+                        })
+                    }
+                })
+                fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_IOS)
+                fullScreenDialog.show()
             }
+
         })
     }
 
