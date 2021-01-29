@@ -119,7 +119,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun callEmailCheck(myList:UserListCallback){
         var emailArray=ArrayList<String>()
 
-        mFireStoreDb.collection("Users").document("l67SLXicUeBH7BWPONqh").get().addOnSuccessListener {document->
+        mFireStoreDb.collection("Users").document("uid").get().addOnSuccessListener {document->
             try {
                 var test=document.toObject(UsersModel::class.java)
                 test
