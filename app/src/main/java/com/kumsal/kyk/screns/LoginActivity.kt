@@ -30,7 +30,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        initializeZoone()
+        loginZoone()
+        otherZoone()
+    }
 
+    private fun initializeZoone() {
         email = findViewById(R.id.login_mail)
         password = findViewById(R.id.login_password)
         login = findViewById(R.id.register_activity_detail_regBtn)
@@ -38,16 +43,38 @@ class LoginActivity : AppCompatActivity() {
         forgotPsw = findViewById(R.id.login_forgot_textView)
         mAuth = FirebaseAuth.getInstance()
         imageView = findViewById(R.id.login_imageView)
+    }
 
+    private fun otherZoone() {
+        register.setOnClickListener(View.OnClickListener {
+            val intent: Intent = Intent(applicationContext, RegisterActivity::class.java)
+            startActivity(intent)
+        })
+        forgotPsw.setOnClickListener(View.OnClickListener {
+            val intent_forgot_password: Intent =
+                Intent(applicationContext, ForgotPasswordActivity::class.java)
+
+            var option = ActivityOptions.makeSceneTransitionAnimation(
+                this, Pair.create(email, "mailEditText"),
+                Pair.create(register, "button")
+            )
+            startActivity(intent_forgot_password, option.toBundle())
+        })
+    }
+
+    private fun loginZoone() {
         login.setOnClickListener(
             View.OnClickListener {
-                if (isLogin()){
-                    if (!isMailValid(email.text.toString())){
+                if (isLogin()) {
+                    if (!isMailValid(email.text.toString())) {
                         email.setError(getString(R.string.mail_valid))
                         return@OnClickListener
                     }
                     WaitDialog.show(this, "Loading")
-                    mAuth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+                    mAuth.signInWithEmailAndPassword(
+                        email.text.toString(),
+                        password.text.toString()
+                    )
                         .addOnFailureListener(
                             OnFailureListener { Exception ->
                                 TipDialog.show(this, "Problem has found", TipDialog.TYPE.ERROR)
@@ -63,9 +90,9 @@ class LoginActivity : AppCompatActivity() {
                                 if (task.isSuccessful) {
                                     val intent: Intent =
                                         Intent(applicationContext, MainActivity::class.java)
-                                    var pair: android.util.Pair<View, String>
+                                    var pair: Pair<View, String>
 
-                                    pair = android.util.Pair(imageView, "loginTransImageLogo")
+                                    pair = Pair(imageView, "loginTransImageLogo")
 
                                     var option =
                                         ActivityOptions.makeSceneTransitionAnimation(this, pair)
@@ -81,20 +108,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         )
-        register.setOnClickListener(View.OnClickListener {
-            val intent: Intent = Intent(applicationContext, RegisterActivity::class.java)
-            startActivity(intent)
-        })
-        forgotPsw.setOnClickListener(View.OnClickListener {
-            val intent_forgot_password: Intent =
-                Intent(applicationContext, ForgotPasswordActivity::class.java)
-
-            var option = ActivityOptions.makeSceneTransitionAnimation(
-                this, Pair.create(email, "mailEditText"),
-                Pair.create(register, "button")
-            )
-            startActivity(intent_forgot_password, option.toBundle())
-        })
     }
 
     private fun isLogin(): Boolean {
