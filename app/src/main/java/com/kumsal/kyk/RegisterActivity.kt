@@ -9,11 +9,14 @@ import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -119,20 +122,27 @@ class RegisterActivity : AppCompatActivity() {
     private fun callEmailCheck(myList:UserListCallback){
         var emailArray=ArrayList<String>()
 
-        mFireStoreDb.collection("Users").document("uid").get().addOnSuccessListener {document->
-            try {
-                var test=document.toObject(UsersModel::class.java)
-                test
+        val db = FirebaseFirestore.getInstance().collection("Users").document("uid")
+        db.get().addOnCompleteListener { p0 ->
+            Log.d(
+                "TAG",
+                "onComplete: " + p0.result?.getString("email")
+            )
+        }
+        /*  mFireStoreDb.collection("Users").document("uid").get().addOnSuccessListener {document->
+              try {
+                  var test=document.toObject(UsersModel::class.java)?:UsersModel()
+                  test
 
-            }catch (ex:Exception){
-                ex.message?.let { Log.e("Prople found", it) }
-            }
+              }catch (ex:Exception){
+                  ex.message?.let { Log.e("Prople found", it) }
+              }
 
-        }.addOnFailureListener(object:OnFailureListener{
-            override fun onFailure(p0: Exception) {
-                Log.d("eroor",p0.localizedMessage)
-            }
-        })
+          }.addOnFailureListener(object:OnFailureListener{
+              override fun onFailure(p0: Exception) {
+                  Log.d("eroor",p0.localizedMessage)
+              }
+          })*/
         mDatabase.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (data in snapshot.children){
