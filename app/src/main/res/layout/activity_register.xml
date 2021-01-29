@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:background="@drawable/background_starter">
+    android:background="@drawable/back">
 
 
     <EditText
         android:id="@+id/register_name_and_surname"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_marginTop="200dp"
         android:background="@drawable/bacground_edittext"
         android:drawableLeft="@drawable/ic_baseline_account_circle_24"
