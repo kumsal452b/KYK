@@ -4,16 +4,24 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
+import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.interfaces.UserListCallback
+import java.lang.Exception
 import java.util.ArrayList
 
 class RegisterActivity : AppCompatActivity() {
@@ -25,22 +33,58 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var mUser: FirebaseUser
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase:DatabaseReference
+    private lateinit var mFireStoreDb:FirebaseFirestore
     var troubleCount:Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        mAuth=FirebaseAuth.getInstance()
-        name=findViewById(R.id.register_name_and_surname)
-        email=findViewById(R.id.login_mail)
-        password=findViewById(R.id.login_password)
-        passwordTry=findViewById(R.id.register_password_try)
-        register=findViewById(R.id.register_activity_detail_regBtn)
-        mDatabase=FirebaseDatabase.getInstance().reference.child("Users")
+        initializeeZoone()
+        registerZoone()
+        passWordControlZoone()
+    }
+
+    private fun initializeeZoone() {
+        mAuth = FirebaseAuth.getInstance()
+        name = findViewById(R.id.register_name_and_surname)
+        email = findViewById(R.id.login_mail)
+        password = findViewById(R.id.login_password)
+        passwordTry = findViewById(R.id.register_password_try)
+        register = findViewById(R.id.register_activity_detail_regBtn)
+        mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
+        mFireStoreDb= FirebaseFirestore.getInstance()
+    }
+
+    private fun passWordControlZoone() {
+        password.addTextChangedListener { text ->
+            if (!TextUtils.equals(password.text.toString(), passwordTry.text.toString())) {
+                password.setError(getString(R.string.register_activity_match_pass))
+                passwordTry.setError(getString(R.string.register_activity_match_pass))
+                troubleCount++
+            } else {
+                troubleCount = 0
+                passwordTry.setError(null)
+                password.setError(null)
+            }
+        }
+        passwordTry.addTextChangedListener { text ->
+            if (!TextUtils.equals(password.text.toString(), passwordTry.text.toString())) {
+                password.setError(getString(R.string.register_activity_match_pass))
+                passwordTry.setError(getString(R.string.register_activity_match_pass))
+                troubleCount++
+            } else {
+                troubleCount = 0
+                passwordTry.setError(null)
+                password.setError(null)
+            }
+        }
+    }
+
+    private fun registerZoone() {
         register.setOnClickListener(View.OnClickListener {
-//            WaitDialog.show(this,getString(R.string.please_wait))
+    //            WaitDialog.show(this,getString(R.string.please_wait))
             println(register())
             if (register()) {
-                troubleCount=0;
+                troubleCount = 0;
                 WaitDialog.show(this, "Loading")
                 WaitDialog.dismiss(5000)
                 val intent: Intent =
@@ -70,34 +114,25 @@ class RegisterActivity : AppCompatActivity() {
                 })
             }
         })
-
-        password.addTextChangedListener {
-            text ->
-            if (!TextUtils.equals(password.text.toString(),passwordTry.text.toString())){
-                password.setError( getString(R.string.register_activity_match_pass))
-                passwordTry.setError(getString(R.string.register_activity_match_pass))
-                troubleCount++
-            }else{
-                troubleCount=0
-                passwordTry.setError(null)
-                password.setError(null)
-            }
-        }
-        passwordTry.addTextChangedListener {
-                text ->
-            if (!TextUtils.equals(password.text.toString(),passwordTry.text.toString())){
-                password.setError( getString(R.string.register_activity_match_pass))
-                passwordTry.setError(getString(R.string.register_activity_match_pass))
-                troubleCount++
-            }else{
-                troubleCount=0
-                passwordTry.setError(null)
-                password.setError(null)
-            }
-        }
     }
+
     private fun callEmailCheck(myList:UserListCallback){
         var emailArray=ArrayList<String>()
+
+        mFireStoreDb.collection("Users").document("l67SLXicUeBH7BWPONqh").get().addOnSuccessListener {document->
+            try {
+                var test=document.toObject(UsersModel::class.java)
+                test
+
+            }catch (ex:Exception){
+                ex.message?.let { Log.e("Prople found", it) }
+            }
+
+        }.addOnFailureListener(object:OnFailureListener{
+            override fun onFailure(p0: Exception) {
+                Log.d("eroor",p0.localizedMessage)
+            }
+        })
         mDatabase.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (data in snapshot.children){
