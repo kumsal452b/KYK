@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageView4"
+                android:orientation="vertical"
+                android:weightSum="5">
+
+                <EditText
+                    android:id="@+id/register_name_and_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_account_circle_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/name_and_surname"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+
+                    android:textColorHint="#C6B4B4" />
+
+                <EditText
+                    android:id="@+id/login_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_email_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/ema_l"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="#C6B4B4" />
+
+
+                <EditText
+                    android:id="@+id/login_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_security_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:minLines="6"
+                    android:textColor="@color/white"
+                    android:textColorHint="#C6B4B4" />
+
+                <EditText
+                    android:id="@+id/register_password_try"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_security_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/password_try"
+                    android:inputType="textPassword"
+                    android:minLines="6"
+                    android:textColor="@color/white"
+                    android:textColorHint="#C6B4B4" />
+
+                <Button
+                    android:id="@+id/register_activity_detail_regBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/layout_backgorund"
+                    android:text="@string/next"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:text="Do you Have an Account?"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"></Button>
+
+        <Button
+
+            android:layout_marginLeft="-20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ff00"
+            android:text=" Login!"
+            android:textAllCaps="false"
+            android:textSize="16sp"
+            android:background="@android:color/transparent"
+
+            >
+
+        </Button>
+    </LinearLayout>
+</RelativeLayout>
