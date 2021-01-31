@@ -124,7 +124,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val db = FirebaseFirestore.getInstance().collection("Users").document("uid")
         db.get().addOnCompleteListener { p0 ->
-            var model=p0.result?.toObject(UsersModel::class.java)
+            var model=p0.result?.toObject<UsersModel>(UsersModel::class.java)
             model?.theUserName
             Log.d(
                 "TAG",
