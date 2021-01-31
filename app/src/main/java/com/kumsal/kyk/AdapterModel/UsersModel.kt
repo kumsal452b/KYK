@@ -12,5 +12,30 @@ class UsersModel {
     constructor(){
 
     }
-    
+    constructor(
+        theEmail: String?,
+        theNameSurname: String?,
+        theUserName: String?,
+        theThmbImage: String?,
+        theTime: Timestamp?,
+        theImage: String?
+    ) {
+        this.theEmail = theEmail
+        this.theNameSurname = theNameSurname
+        this.theUserName = theUserName
+        this.theThmbImage = theThmbImage
+        this.theTime = theTime
+        this.theImage = theImage
+    }
+    fun toMap():Map<String,Any>{
+        val result=HashMap<String,Any>()
+        result.put("email",theEmail!!)
+        result.put("name",theNameSurname!!)
+        result.put("image",theImage!!)
+        result.put("thmbImage",theThmbImage!!)
+        result.put("time",theTime!!)
+        result.put("username",theUserName!!)
+        return result
+    }
+
 }
