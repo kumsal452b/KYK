@@ -9,5 +9,8 @@ class UsersModel {
     var theThmbImage:String?=null
     var theTime:Timestamp?=null
     var theImage:String?=null
+    constructor(){
+
+    }
     
 }
