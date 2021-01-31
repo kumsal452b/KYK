@@ -133,8 +133,10 @@ class RegisterActivity : AppCompatActivity() {
 
 
 
+
             for (doc in document!!) {
-                val note = doc.toObject(UsersModel::class.java)
+
+                val note = doc.toObject<UsersModel>(UsersModel::class.java)
                 println("")
             }
         })
