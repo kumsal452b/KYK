@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -122,15 +123,29 @@ class RegisterActivity : AppCompatActivity() {
     private fun callEmailCheck(myList:UserListCallback){
         var emailArray=ArrayList<String>()
 
-        val db = FirebaseFirestore.getInstance().collection("Users").document("uid")
-        db.get().addOnCompleteListener { p0 ->
-            var model=p0.result?.toObject<UsersModel>(UsersModel::class.java)
-            model?.theUserName
-            Log.d(
-                "TAG",
-                "onComplete: " + p0.result?.getString("email")
-            )
-        }
+
+        val db = FirebaseFirestore.getInstance().collection("Users")
+        db.addSnapshotListener(EventListener { document, e ->
+            if (e != null) {
+                Log.e("test", "Listen failed!", e)
+                return@EventListener
+            }
+
+
+
+            for (doc in document!!) {
+                val note = doc.toObject(UsersModel::class.java)
+                println("")
+            }
+        })
+//        db.get().addOnCompleteListener { p0 ->
+//            var model=p0.result?.toObject<UsersModel>(UsersModel::class.java)
+//            model?.theUserName
+//            Log.d(
+//                "TAG",
+//                "onComplete: " + p0.result?.getString("email")
+//            )
+//        }
         /*  mFireStoreDb.collection("Users").document("uid").get().addOnSuccessListener {document->
               try {
                   var test=document.toObject(UsersModel::class.java)?:UsersModel()
