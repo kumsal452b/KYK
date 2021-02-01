@@ -1,5 +1,6 @@
 package com.kumsal.kyk.AdapterModel
 
+import android.text.TextUtils
 import com.google.firebase.Timestamp
 
 class UsersModel {
@@ -58,6 +59,8 @@ class UsersModel {
         result.put("theThmbImage", theThmbImage!!)
         result.put("theTime", theTime!!)
         result.put("theUserName", theUserName!!)
+        if (theId==null || TextUtils.isEmpty(theId))
+            theId=""
         result.put("theId",theId!!)
         return result
     }
