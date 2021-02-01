@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -25,6 +26,8 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
@@ -53,8 +56,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
-
-    private lateinit var mUserDB: DatabaseReference
+    private lateinit var mFstoreUserDb:FirebaseFirestore
 
     private lateinit var mNavbar: NavigationView
     private lateinit var proImage: CircleImageView
@@ -135,7 +137,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         mAuth = FirebaseAuth.getInstance()
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
-        mUserDB = FirebaseDatabase.getInstance().getReference("Users")
+        mFstoreUserDb= FirebaseFirestore.getInstance()
 
         userId=mUser?.uid.toString()
         Globals.ınstance?.uid=userId
@@ -238,27 +240,39 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             startActivity(intent)
             super.finish()
         } else {
-            mUserDB.child(mUser?.uid as String)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var uriImage = snapshot.child("image").value
-                        var thmburiImage = snapshot.child("thmbImage").value
-                        var thename = snapshot.child("name_surname").value as String
-                        var thesername = snapshot.child("username").value as String
-                        if (TextUtils.isEmpty(uriImage.toString())) {
-                            uriImage = "emtpy"
-                        }
-                        imageUri=uriImage as String
-                        thmbImageUri=thmburiImage as String
-                        name.setText(thename)
-                        username.setText(thesername)
-                        Picasso.get().load(uriImage as String).into(proImage)
-                    }
+            mFstoreUserDb.collection("Users").document(mUser?.uid as String).addSnapshotListener { value, error ->
+                if (error!=null){
+                    Log.d("Error found",error.message as String)
+                    return@addSnapshotListener
+                }
+                var userModel=value?.toObject(UsersModel::class.java)
+                imageUri=userModel?.theThmbImage as String
+                name.setText(userModel?.theNameSurname)
+                username.setText(userModel?.theUserName)
+                Picasso.get().load(imageUri as String).into(proImage)
+            }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        println(error.message)
-                    }
-                })
+//            mUserDB.child(mUser?.uid as String)
+//                .addListenerForSingleValueEvent(object : ValueEventListener {
+//                    override fun onDataChange(snapshot: DataSnapshot) {
+//                        var uriImage = snapshot.child("image").value
+//                        var thmburiImage = snapshot.child("thmbImage").value
+//                        var thename = snapshot.child("name_surname").value as String
+//                        var thesername = snapshot.child("username").value as String
+//                        if (TextUtils.isEmpty(uriImage.toString())) {
+//                            uriImage = "emtpy"
+//                        }
+//                        imageUri=uriImage as String
+//                        thmbImageUri=thmburiImage as String
+//                        name.setText(thename)
+//                        username.setText(thesername)
+//                        Picasso.get().load(uriImage as String).into(proImage)
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        println(error.message)
+//                    }
+//                })
 
         }
         super.onStart()
