@@ -22,8 +22,10 @@ import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.android.gms.tasks.*
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -31,6 +33,7 @@ import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
+import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.interfaces.LoadImage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -65,6 +68,7 @@ class RegisterDetailActivity : AppCompatActivity() {
     private var mUsername: DatabaseReference? = null
     private lateinit var mDatabase: DatabaseReference
     private lateinit var mRefStorage: StorageReference
+    private lateinit var mFstoreDb:FirebaseFirestore
 
     private lateinit var imageuri: Uri
     private lateinit var tmbimageuri: Uri
@@ -124,31 +128,54 @@ class RegisterDetailActivity : AppCompatActivity() {
                         getImagePath(object : LoadImage {
                             override fun getImagePath(path: String, path2: String) {
                                 WaitDialog.dismiss()
-                                mMap.set("theNameSurname", theName)
-                                mMap.set("theImage", path)
-                                mMap.set("theUsername", theUserNames)
-                                mMap.set("email", theEmail)
-                                mMap.set("theThmbImage", path2)
-                                mDatabase.child(currId).setValue(mMap)
-                                    .addOnFailureListener { Exception ->
+                                var time=Timestamp.now()
+                                var theUserForPush=UsersModel(theEmail,theName,theUserNames,path2,time,path)
+                                theUserForPush.toMap()
+//                                mMap.set("theNameSurname", theName)
+//                                mMap.set("theImage", path)
+//                                mMap.set("theUserName", theUserNames)
+//                                mMap.set("theEmail", theEmail)
+//                                mMap.set("theThmbImage", path2)
+//                                mMap.set("theTime",Timestamp.now())
+
+                                mFstoreDb.collection("Users").document(currId).set(theUserForPush).addOnSuccessListener(
+                                    OnSuccessListener<Void> {
                                         makeText(
                                             this@RegisterDetailActivity,
-                                            Exception.localizedMessage,
+                                            "Succec",
                                             Toast.LENGTH_LONG
                                         ).show()
-                                    }.addOnSuccessListener(
-                                        OnSuccessListener<Void> {
-                                            makeText(
-                                                this@RegisterDetailActivity,
-                                                "Succec",
-                                                Toast.LENGTH_LONG
-                                            ).show()
-                                            val intent: Intent = Intent(applicationContext, MainActivity::class.java)
-                                                intent.putExtra("deneme",Globals.ınstance)
-                                            startActivity(intent)
-                                            this@RegisterDetailActivity.finish()
-                                        }
-                                    )
+                                        val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+                                        intent.putExtra("deneme",Globals.ınstance)
+                                        startActivity(intent)
+                                        this@RegisterDetailActivity.finish()
+                                    }).addOnFailureListener(OnFailureListener {
+                                    makeText(
+                                        this@RegisterDetailActivity,
+                                        it.localizedMessage,
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                })
+//                                mDatabase.child(currId).setValue(mMap)
+//                                    .addOnFailureListener { Exception ->
+//                                        makeText(
+//                                            this@RegisterDetailActivity,
+//                                            Exception.localizedMessage,
+//                                            Toast.LENGTH_LONG
+//                                        ).show()
+//                                    }.addOnSuccessListener(
+//                                        OnSuccessListener<Void> {
+//                                            makeText(
+//                                                this@RegisterDetailActivity,
+//                                                "Succec",
+//                                                Toast.LENGTH_LONG
+//                                            ).show()
+//                                            val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+//                                                intent.putExtra("deneme",Globals.ınstance)
+//                                            startActivity(intent)
+//                                            this@RegisterDetailActivity.finish()
+//                                        }
+//                                    )
                             }
                         }, currId)
 
@@ -157,7 +184,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                         WaitDialog.dismiss()
                         makeText(
                             this@RegisterDetailActivity,
-                            "test",
+                            Exception.localizedMessage,
                             Toast.LENGTH_LONG
                         ).show()
 
@@ -255,6 +282,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         mUsername = FirebaseDatabase.getInstance().getReference("Users")
         mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
         mRefStorage = FirebaseStorage.getInstance().getReference("images")
+        mFstoreDb= FirebaseFirestore.getInstance()
     }
 
 
