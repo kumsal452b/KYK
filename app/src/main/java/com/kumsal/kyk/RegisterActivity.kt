@@ -133,7 +133,7 @@ class RegisterActivity : AppCompatActivity() {
 
             for (doc in document!!) {
 
-                var testElement-doc
+                var testElement=doc.data.get("time")
                 val note = doc.toObject<UsersModel>(UsersModel::class.java)
                 println("")
             }
