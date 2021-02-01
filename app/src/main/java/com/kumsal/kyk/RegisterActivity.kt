@@ -96,13 +96,13 @@ class RegisterActivity : AppCompatActivity() {
                 intent.putExtra("name", name.text.toString())
                 intent.putExtra("email", email.text.toString())
                 intent.putExtra("pass", password.text.toString())
-                var test = email.text.toString().trimEnd().trimStart()
+                var theEmail = email.text.toString().trimEnd().trimStart()
 
                 callEmailCheck(object : UserListCallback {
                     override fun onCallBack(value: ArrayList<String>) {
                         WaitDialog.dismiss()
-                        println(value.contains(test))
-                        if (!value.contains(test)) {
+                        println(value.contains(theEmail))
+                        if (!value.contains(theEmail)) {
                             startActivity(intent)
                             Animatoo.animateSwipeLeft(this@RegisterActivity)
                         } else {
@@ -122,8 +122,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun callEmailCheck(myList:UserListCallback){
         var emailArray=ArrayList<String>()
-
-
         val db = FirebaseFirestore.getInstance().collection("Users")
         db.addSnapshotListener(EventListener { document, e ->
             if (e != null) {
@@ -134,8 +132,9 @@ class RegisterActivity : AppCompatActivity() {
                 val theUser = doc.toObject<UsersModel>(UsersModel::class.java)
                 emailArray.add(theUser.theEmail as String)
             }
+            myList.onCallBack(emailArray)
         })
-//
+
 //        mDatabase.addValueEventListener(object:ValueEventListener{
 //            override fun onDataChange(snapshot: DataSnapshot) {
 //                for (data in snapshot.children){

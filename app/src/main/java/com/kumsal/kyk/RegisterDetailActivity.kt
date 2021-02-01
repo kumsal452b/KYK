@@ -115,7 +115,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                         thePass
                     ).addOnSuccessListener {
 
-                        var mMap = HashMap<String, String>()
+                        var mMap = HashMap<String, Any>()
 
                         val currId: String = mAuth.uid.toString()
                         val globals = Globals.ınstance
@@ -124,11 +124,11 @@ class RegisterDetailActivity : AppCompatActivity() {
                         getImagePath(object : LoadImage {
                             override fun getImagePath(path: String, path2: String) {
                                 WaitDialog.dismiss()
-                                mMap.set("name_surname", theName)
-                                mMap.set("image", path)
-                                mMap.set("username", theUserNames)
+                                mMap.set("theNameSurname", theName)
+                                mMap.set("theImage", path)
+                                mMap.set("theUsername", theUserNames)
                                 mMap.set("email", theEmail)
-                                mMap.set("thmbImage", path2)
+                                mMap.set("theThmbImage", path2)
                                 mDatabase.child(currId).setValue(mMap)
                                     .addOnFailureListener { Exception ->
                                         makeText(
