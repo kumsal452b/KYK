@@ -3,15 +3,19 @@ package com.kumsal.kyk.AdapterModel
 import com.google.firebase.Timestamp
 
 class UsersModel {
-    var theEmail:String?=null
-        var theNameSurname:String?=null
-    var theUserName:String?=null
-    var theThmbImage:String?=null
-    var theTime:Timestamp?=null
-    var theImage:String?=null
-    constructor(){
+
+
+    var theEmail: String? = null
+    var theNameSurname: String? = null
+    var theUserName: String? = null
+    var theThmbImage: String? = null
+    var theTime: Timestamp? = null
+    var theImage: String? = null
+
+    constructor() {
 
     }
+
     constructor(
         theEmail: String?,
         theNameSurname: String?,
@@ -27,14 +31,15 @@ class UsersModel {
         this.theTime = theTime
         this.theImage = theImage
     }
-    fun toMap():Map<String,Any>{
-        val result=HashMap<String,Any>()
-        result.put("email",theEmail!!)
-        result.put("name",theNameSurname!!)
-        result.put("image",theImage!!)
-        result.put("thmbImage",theThmbImage!!)
-        result.put("time",theTime!!)
-        result.put("username",theUserName!!)
+
+    fun toMap(): Map<String, Any> {
+        val result = HashMap<String, Any>()
+        result.put("email", theEmail!!)
+        result.put("name", theNameSurname!!)
+        result.put("image", theImage!!)
+        result.put("thmbImage", theThmbImage!!)
+        result.put("time", theTime!!)
+        result.put("username", theUserName!!)
         return result
     }
 
