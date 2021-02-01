@@ -130,50 +130,26 @@ class RegisterActivity : AppCompatActivity() {
                 Log.e("test", "Listen failed!", e)
                 return@EventListener
             }
-
             for (doc in document!!) {
-
-                var testElement=doc.data.get("time")
-                val note = doc.toObject<UsersModel>(UsersModel::class.java)
-                println("")
+                val theUser = doc.toObject<UsersModel>(UsersModel::class.java)
+                emailArray.add(theUser.theEmail as String)
             }
         })
-//        db.get().addOnCompleteListener { p0 ->
-//            var model=p0.result?.toObject<UsersModel>(UsersModel::class.java)
-//            model?.theUserName
-//            Log.d(
-//                "TAG",
-//                "onComplete: " + p0.result?.getString("email")
-//            )
-//        }
-        /*  mFireStoreDb.collection("Users").document("uid").get().addOnSuccessListener {document->
-              try {
-                  var test=document.toObject(UsersModel::class.java)?:UsersModel()
-                  test
-
-              }catch (ex:Exception){
-                  ex.message?.let { Log.e("Prople found", it) }
-              }
-
-          }.addOnFailureListener(object:OnFailureListener{
-              override fun onFailure(p0: Exception) {
-                  Log.d("eroor",p0.localizedMessage)
-              }
-          })*/
-        mDatabase.addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (data in snapshot.children){
-                    var email=data.child("email").value as String
-                    emailArray.add(email)
-                }
-                myList.onCallBack(emailArray)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-        })
+//
+//        mDatabase.addValueEventListener(object:ValueEventListener{
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                for (data in snapshot.children){
+//                    var email=data.child("email").value as String
+//                    emailArray.add(email)
+//                }
+//                myList.onCallBack(emailArray)
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//            }
+//
+//        })
     }
     private fun register():Boolean {
 
