@@ -131,11 +131,9 @@ class RegisterActivity : AppCompatActivity() {
                 return@EventListener
             }
 
-
-
-
             for (doc in document!!) {
 
+                var testElement-doc
                 val note = doc.toObject<UsersModel>(UsersModel::class.java)
                 println("")
             }
