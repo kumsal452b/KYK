@@ -65,10 +65,9 @@ class RegisterDetailActivity : AppCompatActivity() {
     private lateinit var usernames: ArrayList<String>
 
     private lateinit var mAuth: FirebaseAuth
-    private var mUsername: DatabaseReference? = null
-    private lateinit var mDatabase: DatabaseReference
-    private lateinit var mRefStorage: StorageReference
     private lateinit var mFstoreDb:FirebaseFirestore
+    private lateinit var mFstoreUsernameDb:FirebaseFirestore
+    private lateinit var mRefStorage: StorageReference
 
     private lateinit var imageuri: Uri
     private lateinit var tmbimageuri: Uri
@@ -131,13 +130,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                                 var time=Timestamp.now()
                                 var theUserForPush=UsersModel(theEmail,theName,theUserNames,path2,time,path)
                                 theUserForPush.toMap()
-//                                mMap.set("theNameSurname", theName)
-//                                mMap.set("theImage", path)
-//                                mMap.set("theUserName", theUserNames)
-//                                mMap.set("theEmail", theEmail)
-//                                mMap.set("theThmbImage", path2)
-//                                mMap.set("theTime",Timestamp.now())
-
                                 mFstoreDb.collection("Users").document(currId).set(theUserForPush).addOnSuccessListener(
                                     OnSuccessListener<Void> {
                                         makeText(
@@ -156,26 +148,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                                         Toast.LENGTH_LONG
                                     ).show()
                                 })
-//                                mDatabase.child(currId).setValue(mMap)
-//                                    .addOnFailureListener { Exception ->
-//                                        makeText(
-//                                            this@RegisterDetailActivity,
-//                                            Exception.localizedMessage,
-//                                            Toast.LENGTH_LONG
-//                                        ).show()
-//                                    }.addOnSuccessListener(
-//                                        OnSuccessListener<Void> {
-//                                            makeText(
-//                                                this@RegisterDetailActivity,
-//                                                "Succec",
-//                                                Toast.LENGTH_LONG
-//                                            ).show()
-//                                            val intent: Intent = Intent(applicationContext, MainActivity::class.java)
-//                                                intent.putExtra("deneme",Globals.ınstance)
-//                                            startActivity(intent)
-//                                            this@RegisterDetailActivity.finish()
-//                                        }
-//                                    )
                             }
                         }, currId)
 
@@ -279,10 +251,9 @@ class RegisterDetailActivity : AppCompatActivity() {
 
         imageuri = Uri.EMPTY
         mAuth = FirebaseAuth.getInstance()
-        mUsername = FirebaseDatabase.getInstance().getReference("Users")
-        mDatabase = FirebaseDatabase.getInstance().reference.child("Users")
-        mRefStorage = FirebaseStorage.getInstance().getReference("images")
+        mFstoreUsernameDb= FirebaseFirestore.getInstance()
         mFstoreDb= FirebaseFirestore.getInstance()
+        mRefStorage = FirebaseStorage.getInstance().getReference("images")
     }
 
 
@@ -431,76 +402,74 @@ class RegisterDetailActivity : AppCompatActivity() {
         var surname: String? = null
         var fulname = ""
         WaitDialog.show(this, getString(R.string.please_wait))
-        mUsername?.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (a in snapshot.children) {
-                    usernames.add(a.child("username").value.toString())
-                }
-                fulname = ad?.trim().toString()
-                for (a in 0..fulname.length - 1) {
-                    if (fulname.get(a) == ' ') {
-                        if (fulname.get(a + 1) == ' ') {
-                            continue
-                        } else {
-                            surname = fulname.substring(a + 1, fulname.length)
-                            break
-                        }
-                    }
-                    name += fulname.get(a)
-                }
-                var surnameM = ""
-                if (surname == null || TextUtils.isEmpty(surname)) {
-                    surname = ""
-                    surnameM = ""
-                } else {
-                    surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
-                }
-                var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
-                var count = 0
-                if (!usernames.contains(ad1)) {
-                    result.add(ad1)
-                    count++
-                }
-                var ad2 = ""
-                if (surname == null) {
-                    surname = ""
-                    surnameM = ""
-                }
 
-                while (true) {
-                    var num = ThreadLocalRandom.current().nextInt(10, 10000)
-                    var num2 = ThreadLocalRandom.current().nextInt(0, 2)
-
-                    if (num2 == 1) {
-                        ad2 = name.trim().toLowerCase() + surnameM.trim() + num
-                    }
-                    if (num2 == 0) {
-                        ad2 = name.trim().toLowerCase() + surname?.toLowerCase()?.trim() + num
-                    }
-                    if (!usernames.contains(ad2)) {
-                        result.add(ad2)
-                        count++
-                    }
-                    if (count == 3) {
+        mFstoreUsernameDb.collection("Users").addSnapshotListener { value, error ->
+            if (error!=null){
+                Log.d("Error",error.message as String)
+                return@addSnapshotListener
+            }
+            for (valueof in value!!){
+                val theUser = valueof.toObject<UsersModel>(UsersModel::class.java)
+                usernames.add(theUser.theUserName as String)
+            }
+            fulname = ad?.trim().toString()
+            for (a in 0..fulname.length - 1) {
+                if (fulname.get(a) == ' ') {
+                    if (fulname.get(a + 1) == ' ') {
+                        continue
+                    } else {
+                        surname = fulname.substring(a + 1, fulname.length)
                         break
                     }
                 }
-                adapter = ArrayAdapter<String>(
-                    this@RegisterDetailActivity,
-                    R.layout.spinner_list,
-                    result
-                )
-                advice?.adapter = adapter
-                WaitDialog.dismiss()
-
+                name += fulname.get(a)
+            }
+            var surnameM = ""
+            if (surname == null || TextUtils.isEmpty(surname)) {
+                surname = ""
+                surnameM = ""
+            } else {
+                surnameM = surname?.substring(0, 1)?.toUpperCase() + surname?.substring(1)
+            }
+            var ad1 = name.trim().toLowerCase() + surname?.trim()?.toLowerCase()
+            var count = 0
+            if (!usernames.contains(ad1)) {
+                result.add(ad1)
+                count++
+            }
+            var ad2 = ""
+            if (surname == null) {
+                surname = ""
+                surnameM = ""
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                WaitDialog.dismiss()
-                println(error)
-            }
-        })
+            while (true) {
+                var num = ThreadLocalRandom.current().nextInt(10, 10000)
+                var num2 = ThreadLocalRandom.current().nextInt(0, 2)
 
+                if (num2 == 1) {
+                    ad2 = name.trim().toLowerCase() + surnameM.trim() + num
+                }
+                if (num2 == 0) {
+                    ad2 = name.trim().toLowerCase() + surname?.toLowerCase()?.trim() + num
+                }
+                if (!usernames.contains(ad2)) {
+                    result.add(ad2)
+                    count++
+                }
+                if (count == 3) {
+                    break
+                }
+            }
+            adapter = ArrayAdapter<String>(
+                this@RegisterDetailActivity,
+                R.layout.spinner_list,
+                result
+            )
+            advice?.adapter = adapter
+            WaitDialog.dismiss()
+
+        }
 
         return result
     }
