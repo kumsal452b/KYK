@@ -16,9 +16,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import com.hendraanggrian.socialview.commons.Mention
-import com.hendraanggrian.widget.SocialEditText
-import com.kongzue.dialog.interfaces.OnDismissListener
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
@@ -38,7 +35,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var profile_image: CircleImageView
     private lateinit var select_image: ImageButton
     private lateinit var share_button: Button
-    private lateinit var post_text_element: SocialEditText
+    private lateinit var post_text_element: TextView
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
@@ -75,26 +72,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         initialComponent()
         textView = TextView(this)
 
-        val mention1 = Mention("dirtyhobo")
-        val mention2 = Mention.Builder("hobo")
-            .setDisplayname("Regular Hobo")
-            .setAvatarDrawable(R.mipmap.ic_launcher)
-            .build()
-        val mention3 = Mention.Builder("hendraanggrian")
-            .setDisplayname("Hendra Anggrian")
-            .setAvatarURL("https://avatars0.githubusercontent.com/u/11507430?v=3&s=460")
-            .build()
         var uidG = Globals.ınstance?.uid
-
-//        names.add(mention2)
-//        names.add(mention1)
-//        names.add(mention3)
-//        var adapter=ArrayAdapter<Mention>(this, android.R.layout.simple_list_item_1, names)
-//        val mentions: MutableList<String> = arrayListOf()
-//        mentions.add("@hasankucuk")
-//        mentions.add("@yahya")
-//        mentions.add("@kumsal")
-//        post_text_element.setLinkedMention(mentions)
 
         //initialize intent element
         initialDynamic()
@@ -191,7 +169,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         select_privacy = findViewById(R.id.activity_create_post_select_security)
 
         selectedlistElement = ArrayList<security_model>()
-        var names = ArrayList<Mention>()
+//        var names = ArrayList<Mention>()
 
         name = intent.getStringExtra("name") as String
         imageUri = intent.getStringExtra("imageUri") as String
