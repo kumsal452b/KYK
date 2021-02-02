@@ -1,107 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
-    android:background="@drawable/back">
-
-
-    <EditText
-        android:id="@+id/register_name_and_surname"
+    android:background="@drawable/bacground_is">
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="200dp"
-        android:background="@drawable/bacground_edittext"
-        android:drawableLeft="@drawable/ic_baseline_account_circle_24"
-        android:drawablePadding="5dp"
-        android:hint="@string/name_and_surname"
-        android:inputType="text"
-        android:textColor="@color/white"
+        android:layout_height="wrap_content"
+        >
 
-        android:textColorHint="#C6B4B4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/projectlogo"/>
 
-    <EditText
-        android:id="@+id/login_mail"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/bacground_edittext"
-        android:drawableLeft="@drawable/ic_baseline_email_24"
-        android:drawablePadding="5dp"
-        android:hint="@string/ema_l"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/white"
-        android:textColorHint="#C6B4B4"
-        app:layout_constraintEnd_toEndOf="@+id/register_name_and_surname"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/register_name_and_surname"
-        app:layout_constraintTop_toBottomOf="@+id/register_name_and_surname" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="5"
+                android:layout_below="@id/imageView4"
+                android:layout_marginTop="30dp"
+                >
+
+                <EditText
+                    android:id="@+id/register_name_and_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_account_circle_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/name_and_surname"
+                    android:inputType="text"
+                    android:textColor="@color/white"
+
+                    android:textColorHint="#C6B4B4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.531"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/login_mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_email_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/ema_l"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="#C6B4B4"
+                    app:layout_constraintEnd_toEndOf="@+id/register_name_and_surname"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/register_name_and_surname"
+                    app:layout_constraintTop_toBottomOf="@+id/register_name_and_surname" />
 
 
-    <EditText
-        android:id="@+id/login_password"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/bacground_edittext"
-        android:drawableLeft="@drawable/ic_baseline_security_24"
-        android:drawablePadding="5dp"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:minLines="6"
-        android:textColor="@color/white"
-        android:textColorHint="#C6B4B4"
-        app:layout_constraintEnd_toEndOf="@+id/login_mail"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/login_mail"
-        app:layout_constraintTop_toBottomOf="@+id/login_mail" />
+                <EditText
+                    android:id="@+id/login_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_security_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:minLines="6"
+                    android:textColor="@color/white"
+                    android:textColorHint="#C6B4B4"
+                    app:layout_constraintEnd_toEndOf="@+id/login_mail"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/login_mail"
+                    app:layout_constraintTop_toBottomOf="@+id/login_mail" />
 
-    <EditText
-        android:id="@+id/register_password_try"
-        android:layout_width="300dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/bacground_edittext"
-        android:drawableLeft="@drawable/ic_baseline_security_24"
-        android:drawablePadding="5dp"
-        android:hint="@string/password_try"
-        android:inputType="textPassword"
-        android:minLines="6"
-        android:textColor="@color/white"
-        android:textColorHint="#C6B4B4"
-        app:layout_constraintEnd_toEndOf="@+id/login_password"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/login_password"
-        app:layout_constraintTop_toBottomOf="@+id/login_password" />
+                <EditText
+                    android:id="@+id/register_password_try"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bacground_edittext"
+                    android:drawableLeft="@drawable/ic_baseline_security_24"
+                    android:drawablePadding="5dp"
+                    android:hint="@string/password_try"
+                    android:inputType="textPassword"
+                    android:minLines="6"
+                    android:textColor="@color/white"
+                    android:textColorHint="#C6B4B4"
+                    app:layout_constraintEnd_toEndOf="@+id/login_password"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/login_password"
+                    app:layout_constraintTop_toBottomOf="@+id/login_password" />
 
-    <Button
-        android:id="@+id/register_activity_detail_regBtn"
-        android:layout_width="293dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/layout_backgorund"
-        android:text="@string/next"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/register_password_try"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="@+id/register_password_try"
-        app:layout_constraintTop_toBottomOf="@+id/register_password_try" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/register_name_and_surname"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/projectlogo"
-        android:scaleType="fitXY"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/register_activity_detail_regBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/layout_backgorund"
+                    android:text="@string/next"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/register_password_try"
+                    app:layout_constraintHorizontal_bias="0.571"
+                    app:layout_constraintStart_toStartOf="@+id/register_password_try"
+                    app:layout_constraintTop_toBottomOf="@+id/register_password_try" />
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
