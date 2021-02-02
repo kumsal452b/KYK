@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_starter"
+    android:background="@drawable/bacground_is"
     tools:context=".screns.LoginActivity">
 
     <EditText
@@ -93,6 +93,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.601"
-        app:srcCompat="@drawable/projectlogo"
+        app:srcCompat="@drawable/logo"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>
