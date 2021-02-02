@@ -252,28 +252,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                 Picasso.get().load(imageUri as String).into(proImage)
             }
 
-//            mUserDB.child(mUser?.uid as String)
-//                .addListenerForSingleValueEvent(object : ValueEventListener {
-//                    override fun onDataChange(snapshot: DataSnapshot) {
-//                        var uriImage = snapshot.child("image").value
-//                        var thmburiImage = snapshot.child("thmbImage").value
-//                        var thename = snapshot.child("name_surname").value as String
-//                        var thesername = snapshot.child("username").value as String
-//                        if (TextUtils.isEmpty(uriImage.toString())) {
-//                            uriImage = "emtpy"
-//                        }
-//                        imageUri=uriImage as String
-//                        thmbImageUri=thmburiImage as String
-//                        name.setText(thename)
-//                        username.setText(thesername)
-//                        Picasso.get().load(uriImage as String).into(proImage)
-//                    }
-//
-//                    override fun onCancelled(error: DatabaseError) {
-//                        println(error.message)
-//                    }
-//                })
-
         }
         super.onStart()
     }
