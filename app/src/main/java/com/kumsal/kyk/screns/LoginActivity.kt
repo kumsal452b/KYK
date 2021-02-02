@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                     )
                         .addOnFailureListener(
                             OnFailureListener { Exception ->
-                                TipDialog.show(this, "Problem has found", TipDialog.TYPE.ERROR)
+                                TipDialog.show(this, getString(R.string.problem_found), TipDialog.TYPE.ERROR)
                                 Toast.makeText(
                                     applicationContext,
                                     Exception.localizedMessage,
