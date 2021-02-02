@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back">
+    android:background="@drawable/bacground_is">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/imageView4"
                 android:orientation="vertical"
-                android:weightSum="5">
+                android:weightSum="5"
+                >
 
                 <EditText
                     android:id="@+id/register_name_and_surname"
