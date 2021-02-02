@@ -6,15 +6,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screns.StarterActivity"
-    android:background="@drawable/background_starter"
-
+    android:background="@drawable/bacground_is"
     >
+
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/pngdraw" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bacground_is">
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/starter_have_account"
