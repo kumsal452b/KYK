@@ -9,43 +9,31 @@
     android:background="@drawable/bacground_is"
     >
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/pngdraw" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bacground_is">
-
-    </LinearLayout>
-
     <Button
         android:id="@+id/starter_have_account"
         android:layout_width="137dp"
         android:layout_height="48dp"
-        android:layout_marginTop="300dp"
         android:background="@drawable/layout_backgorund_two"
         android:text="@string/have_an_account"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/starter_create_acount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.77"
+        tools:ignore="UnknownId" />
 
     <Button
         android:id="@+id/starter_create_acount"
         android:layout_width="139dp"
         android:layout_height="49dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginBottom="304dp"
         android:background="@drawable/layout_backgorund"
         android:text="@string/create_account"
         android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/starter_have_account"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/starter_have_account"
-        app:layout_constraintTop_toBottomOf="@+id/starter_have_account" />
+        app:layout_constraintStart_toStartOf="@+id/starter_have_account" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
