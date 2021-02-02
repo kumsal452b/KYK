@@ -71,7 +71,7 @@
 
     </LinearLayout>
 
-    <com.hendraanggrian.widget.SocialEditText
+    <TextView
         android:id="@+id/activity_create_post_post_text_element"
         android:layout_width="317dp"
         android:layout_height="150dp"
