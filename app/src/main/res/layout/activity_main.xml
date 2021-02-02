@@ -17,8 +17,8 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_starter"
+            android:layout_height="55dp"
+            android:background="@drawable/bacground_is"
             app:layout_constraintBottom_toTopOf="@+id/main_activity_pager_view"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="5dp">
