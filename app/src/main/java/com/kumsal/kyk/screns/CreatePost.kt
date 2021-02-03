@@ -16,11 +16,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
+import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.AdapterModel.security_adapter
 import com.kumsal.kyk.AdapterModel.security_model
+import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
@@ -66,11 +69,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mUserDbReference: DatabaseReference
+    private lateinit var mFirestore: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
         initialComponent()
         textView = TextView(this)
+        mFirestore= FirebaseFirestore.getInstance()
+
+        var dbElement=DbUsers<UsersModel>(mFirestore)
+        dbElement.getElement()
 
         var uidG = Globals.ınstance?.uid
 
