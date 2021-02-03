@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -42,7 +43,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
-
+    private lateinit var classs:Class<UsersModel>
     companion object {
         var listElement = ArrayList<security_model>()
         lateinit var textView: TextView
@@ -76,11 +77,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         initialComponent()
         textView = TextView(this)
         mFirestore= FirebaseFirestore.getInstance()
-
-        var dbElement=DbUsers<UsersModel>(mFirestore)
-        dbElement.getElement()
-
         var uidG = Globals.ınstance?.uid
+        var test:DbUsers<UsersModel>
+        test= DbUsers(mFirestore, UsersModel())
+        test.getElement()
+        var testClass:Class<UsersModel>
+        testClass=test.getModel().javaClass
+
 
         //initialize intent element
         initialDynamic()
@@ -277,26 +280,36 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             }
                         }
                         recyclerView.adapter = mAdapter
-                        mUserDbReference.addValueEventListener(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                var theModel: security_model
-                                listElement.clear()
-                                for (a in snapshot.children) {
-                                    var thename = a.child("name_surname").value as String
-                                    var theimg = a.child("thmbImage").value as String
-                                    var theUsername = a.child("username").value as String
-                                    var theModel2=a.getValue(security_model::class.java)
-                                    theModel =
-                                        security_model(thename, theUsername, theimg, false)
-                                    listElement.add(theModel)
-                                }
-                                mAdapter.notifyDataSetChanged()
+                        mFirestore.collection("Users").addSnapshotListener { document, e ->
+                            if (e!=null){
+                                Log.d("Error", e.message as String)
+                                return@addSnapshotListener
                             }
-
-                            override fun onCancelled(error: DatabaseError) {
-
+                            for (theDoc in document!!){
+                                var theData=theDoc.toObject(UsersModel::class.java)
+                                listElement.add(security_model(theData!!.theNameSurname!!,theData!!.theUserName!!,theData!!.theThmbImage!!,false))
                             }
-                        })
+                            mAdapter.notifyDataSetChanged()
+                        }
+//                        mUserDbReference.addValueEventListener(object : ValueEventListener {
+//                            override fun onDataChange(snapshot: DataSnapshot) {
+//                                var theModel: security_model
+//                                listElement.clear()
+//                                for (a in snapshot.children) {
+//                                    var thename = a.child("name_surname").value as String
+//                                    var theimg = a.child("thmbImage").value as String
+//                                    var theUsername = a.child("username").value as String
+//                                    theModel =
+//                                        security_model(thename, theUsername, theimg, false)
+//                                    listElement.add(theModel)
+//                                }
+//                                mAdapter.notifyDataSetChanged()
+//                            }
+//
+//                            override fun onCancelled(error: DatabaseError) {
+//
+//                            }
+//                        })
                     }
                 })
                 fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_IOS)

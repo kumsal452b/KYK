@@ -2,6 +2,7 @@ package com.kumsal.kyk.DBModels
 
 import android.text.TextUtils
 import android.util.Log
+import android.view.Display
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.reflect.TypeToken
 import com.kumsal.kyk.interfaces.UserListCallback
@@ -14,9 +15,16 @@ class DbUsers<Model> : Users<Model>{
     var mDbFirestore:FirebaseFirestore?=null
     var theModel:Model?=null
     var theModelList:ArrayList<Model>?=null
-    private var className=""
-    constructor(mDbFirestore: FirebaseFirestore?) {
+    var className:Class<Model>?=null
+     private var model:Model
+
+
+    constructor(mDbFirestore: FirebaseFirestore?,gClass:Model) {
         this.mDbFirestore = mDbFirestore
+        this.model=gClass
+    }
+    fun getModel():Model{
+        return model
     }
 
     fun readyElement(element: Users<Model>,collectionName:String,docName:String):ArrayList<Model>?{
@@ -27,8 +35,8 @@ class DbUsers<Model> : Users<Model>{
                     return@addSnapshotListener
                 }
                 for (theDoc in doc!!){
-                    var theData=theDoc.toObject(javaClass)
-//                    theModelList.add(theData)
+                    var theData=theDoc.toObject(model!!::class.java)
+                    theModelList?.add(theData)
                 }
 
             }
