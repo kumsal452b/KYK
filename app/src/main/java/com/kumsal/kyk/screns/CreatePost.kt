@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
@@ -29,6 +30,7 @@ import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
+import com.kumsal.kyk.interfaces.GetCenter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
@@ -44,6 +46,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
     private lateinit var classs:Class<UsersModel>
+
     companion object {
         var listElement = ArrayList<security_model>()
         lateinit var textView: TextView
@@ -60,6 +63,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
+        private lateinit var test:DbUsers<UsersModel>
     }
     //add intent element varíable
     var name = ""
@@ -76,15 +80,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         setContentView(R.layout.activity_create_post)
         initialComponent()
         textView = TextView(this)
-        mFirestore= FirebaseFirestore.getInstance()
-        var uidG = Globals.ınstance?.uid
-        var test:DbUsers<UsersModel>
-        test= DbUsers(mFirestore, UsersModel())
-        var listStaff=java.util.ArrayList<UsersModel>()
-        listStaff.addAll(test.getElement("User",""))
-        var testClass:Class<UsersModel>
-        testClass=test.getModel().javaClass
 
+        var uidG = Globals.ınstance?.uid
 
         //initialize intent element
         initialDynamic()
@@ -193,6 +190,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mPostRefDb = FirebaseDatabase.getInstance().getReference("Post")
         mUserDbReference = FirebaseDatabase.getInstance().getReference("Users")
 
+        mFirestore= FirebaseFirestore.getInstance()
+        test= DbUsers(mFirestore, UsersModel())
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
@@ -281,36 +280,26 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             }
                         }
                         recyclerView.adapter = mAdapter
-                        mFirestore.collection("Users").addSnapshotListener { document, e ->
-                            if (e!=null){
-                                Log.d("Error", e.message as String)
-                                return@addSnapshotListener
+
+                        test.readyElement(object : GetCenter<UsersModel> {
+                            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
+                                    for (get in array){
+                                        listElement.add(security_model(get!!.theNameSurname!!,get!!.theUserName!!,get!!.theThmbImage!!,false))
+                                    }
+                                mAdapter.notifyDataSetChanged()
                             }
-                            for (theDoc in document!!){
-                                var theData=theDoc.toObject(UsersModel::class.java)
-                                listElement.add(security_model(theData!!.theNameSurname!!,theData!!.theUserName!!,theData!!.theThmbImage!!,false))
-                            }
-                            mAdapter.notifyDataSetChanged()
-                        }
-//                        mUserDbReference.addValueEventListener(object : ValueEventListener {
-//                            override fun onDataChange(snapshot: DataSnapshot) {
-//                                var theModel: security_model
-//                                listElement.clear()
-//                                for (a in snapshot.children) {
-//                                    var thename = a.child("name_surname").value as String
-//                                    var theimg = a.child("thmbImage").value as String
-//                                    var theUsername = a.child("username").value as String
-//                                    theModel =
-//                                        security_model(thename, theUsername, theimg, false)
-//                                    listElement.add(theModel)
-//                                }
-//                                mAdapter.notifyDataSetChanged()
+                        }, "Users", "")
+//                        mFirestore.collection("Users").addSnapshotListener { document, e ->
+//                            if (e!=null){
+//                                Log.d("Error", e.message as String)
+//                                return@addSnapshotListener
 //                            }
-//
-//                            override fun onCancelled(error: DatabaseError) {
-//
+//                            for (theDoc in document!!){
+//                                var theData=theDoc.toObject(UsersModel::class.java)
+//                                listElement.add(security_model(theData!!.theNameSurname!!,theData!!.theUserName!!,theData!!.theThmbImage!!,false))
 //                            }
-//                        })
+//                            mAdapter.notifyDataSetChanged()
+//                        }
                     }
                 })
                 fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_IOS)
