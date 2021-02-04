@@ -13,6 +13,9 @@ class DbUsers<Model> {
     private var className: Class<Model>? = null
     private var model: Model
 
+    init {
+        theModelList= ArrayList()
+    }
 
     constructor(mDbFirestore: FirebaseFirestore?, gClass: Model) {
         this.mDbFirestore = mDbFirestore
@@ -23,7 +26,7 @@ class DbUsers<Model> {
         return model
     }
 
-    private fun readyElement(
+     fun readyElement(
         element: GetCenter<Model>,
         collectionName: String,
         docName: String
@@ -37,8 +40,19 @@ class DbUsers<Model> {
                 for (theDoc in doc!!) {
                     var theData = theDoc.toObject(model!!::class.java)
                     theModelList?.add(theData)
+                    println("test")
                 }
                 element.getUsers(theModelList!!)
+            }
+        }else{
+            mDbFirestore?.collection(collectionName)?.document(docName)?.addSnapshotListener { doc, e ->
+                if (e != null) {
+                    Log.d("Error in Dbusers", e.message as String)
+                    return@addSnapshotListener
+                }
+                    var theData = doc?.toObject(model!!::class.java)
+                    theModelList?.add(theData!!)
+                    element.getUsers(theModelList!!)
             }
         }
     }
