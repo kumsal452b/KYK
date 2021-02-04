@@ -80,7 +80,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var uidG = Globals.ınstance?.uid
         var test:DbUsers<UsersModel>
         test= DbUsers(mFirestore, UsersModel())
-        test.getElement()
+        var listStaff=java.util.ArrayList<UsersModel>()
+        listStaff.addAll(test.getElement("User",""))
         var testClass:Class<UsersModel>
         testClass=test.getModel().javaClass
 
