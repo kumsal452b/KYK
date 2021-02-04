@@ -16,8 +16,10 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.auth.User
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.FullScreenDialog
@@ -281,14 +283,21 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         }
                         recyclerView.adapter = mAdapter
 
-                        test.readyElement(object : GetCenter<UsersModel> {
-                            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
-                                    for (get in array){
-                                        listElement.add(security_model(get!!.theNameSurname!!,get!!.theUserName!!,get!!.theThmbImage!!,false))
-                                    }
-                                mAdapter.notifyDataSetChanged()
-                            }
-                        }, "Users", "")
+//                        test.readyElement(object : GetCenter<UsersModel> {
+//                            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
+//                                    for (get in array){
+//                                        listElement.add(security_model(get!!.theNameSurname!!,get!!.theUserName!!,get!!.theThmbImage!!,false))
+//                                    }
+//                                mAdapter.notifyDataSetChanged()
+//                            }
+//                        }, "Users", "")
+                        mFirestore.collection("Users").get()
+                            .addOnSuccessListener(OnSuccessListener<QuerySnapshot> {
+                                for (doc in it){
+                                    var theData=doc.toObject(UsersModel::class.java)
+                                    listElement.add(security_model(theData!!.theNameSurname!!,theData!!.theUserName!!,theData!!.theThmbImage!!,false))
+                                }
+                            })
 //                        mFirestore.collection("Users").addSnapshotListener { document, e ->
 //                            if (e!=null){
 //                                Log.d("Error", e.message as String)
