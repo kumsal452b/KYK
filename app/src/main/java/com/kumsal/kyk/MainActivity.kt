@@ -32,6 +32,7 @@ import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
+import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
 import com.squareup.picasso.Picasso
@@ -253,10 +254,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 //                Picasso.get().load(imageUri as String).into(proImage)
 //            }
             var userElement=DbUsers<UsersModel>(mFstoreUserDb, UsersModel())
-            var userList=userElement.getElement("Users",userId) as UsersModel
-            Picasso.get().load( userList.theThmbImage).into(proImage)
-            name.setText(userList?.theNameSurname)
-            username.setText(userList?.theUserName)
+            var userList=userElement.readyElement(object:GetCenter<UsersModel>{
+                override fun getUsers(array: ArrayList<UsersModel>) {
+                    Picasso.get().load( array.get(0).theThmbImage).into(proImage)
+                    name.setText(array.get(0).theNameSurname)
+                    username.setText(array.get(0).theUserName)
+                }
+            },"Users",userId)
         }
         super.onStart()
     }
