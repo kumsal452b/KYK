@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -47,7 +48,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
-    private lateinit var classs:Class<UsersModel>
+
 
     companion object {
         var listElement = ArrayList<security_model>()
@@ -57,22 +58,24 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var isActionMode = false
         var selectedlistElement = ArrayList<security_model>()
         var mcounter = 0
-        var currentWith=0
-
+        var currentWith = 0
+        private lateinit var listener: Task<QuerySnapshot>
         private lateinit var mRadioGroup: RadioGroup
         private lateinit var alfriends: RadioButton
         private lateinit var excpection: RadioButton
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
-        private lateinit var test:DbUsers<UsersModel>
+        private lateinit var test: DbUsers<UsersModel>
     }
+
     //add intent element varíable
     var name = ""
     var imageUri = ""
     var thmbImageUri = ""
     var userid = ""
     var username = ""
+
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mUserDbReference: DatabaseReference
@@ -95,6 +98,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 var ukey = mPostRefDb.child(userid).push().key.toString()
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
+
                 values.put("pc", postContent as String)
                 values.put("name", name as String)
                 values.put("username", username)
@@ -124,8 +128,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         inflater.inflate(R.menu.search_action, menu)
 
         search = menu?.findItem(R.id.search_bar_for_count)!!
-        search.isVisible =false
-        var searchView:SearchView= search?.actionView as SearchView
+        search.isVisible = false
+        var searchView: SearchView = search?.actionView as SearchView
         searchView.queryHint = getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -135,18 +139,18 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             override fun onQueryTextChange(newText: String?): Boolean {
                 mAdapter.filter.filter(newText.toString())
 
-                    var counter=0;
-                    for (i in 0..mAdapter.filerList.size-1) {
-                        var theSecureM = mAdapter.filerList.get(i);
-                        if (theSecureM.theisChecked==false){
-                            selectedAll.isChecked=false;
-                            counter++
-                            break
-                        }
+                var counter = 0;
+                for (i in 0..mAdapter.filerList.size - 1) {
+                    var theSecureM = mAdapter.filerList.get(i);
+                    if (theSecureM.theisChecked == false) {
+                        selectedAll.isChecked = false;
+                        counter++
+                        break
                     }
-                    if (counter==0){
-                        selectedAll.isChecked=true
-                    }
+                }
+                if (counter == 0) {
+                    selectedAll.isChecked = true
+                }
 
                 return true
             }
@@ -192,8 +196,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mPostRefDb = FirebaseDatabase.getInstance().getReference("Post")
         mUserDbReference = FirebaseDatabase.getInstance().getReference("Users")
 
-        mFirestore= FirebaseFirestore.getInstance()
-        test= DbUsers(mFirestore, UsersModel())
+        mFirestore = FirebaseFirestore.getInstance()
+        test = DbUsers(mFirestore, UsersModel())
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
@@ -207,81 +211,86 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                var fullScreenDialog=FullScreenDialog.build(this@CreatePost)
-                fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_KONGZUE).setCustomView(R.layout.security_bind_element,object :FullScreenDialog.OnBindView{
-                    override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
-                        recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
-                        recyclerView.setHasFixedSize(true)
-                        recyclerView.layoutManager = LinearLayoutManager(rootView.context)
-                        mRadioGroup = rootView?.findViewById(R.id.secure_rg)
-                        alfriends = rootView?.findViewById(R.id.secure_allfriends)
-                        excpection = rootView?.findViewById(R.id.secure_except)
-                        textView = rootView?.findViewById(R.id.secure_bind_element_size)
-                        textView.measure(0, 0);       //must call measure!
-                        toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
-                        accept_selected_name = rootView.findViewById(R.id.secure_bind_accept)
-                        selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
-                        checkSecurePanel()
-                        setSupportActionBar(toolbar);
-                        if (alfriends.isChecked) {
-                            recyclerView.visibility = View.GONE
-                        }
-
-                        alfriends.setOnClickListener {
-                            recyclerView.visibility = View.GONE
-                            selectedAll.visibility=View.GONE
-                            var anim=Animation(0, textView)
-                            textView.animation=anim
-                            accept_selected_name.isEnabled=false
-                            search.isVisible=false
-
-                        }
-                        excpection.setOnClickListener {
-                            search.isVisible=true
-                            recyclerView.visibility = View.VISIBLE
-                            if(isActionMode){
-                                recyclerView.visibility = View.VISIBLE
-                                selectedAll.visibility=View.VISIBLE
-                                var anim=Animation(currentWith, textView)
-                                textView.animation=anim
-                                if (selectedlistElement.size>0){
-                                    accept_selected_name.isEnabled=true
+                var fullScreenDialog = FullScreenDialog.build(this@CreatePost)
+                fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_KONGZUE)
+                    .setCustomView(R.layout.security_bind_element,
+                        object : FullScreenDialog.OnBindView {
+                            override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
+                                recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
+                                recyclerView.setHasFixedSize(true)
+                                recyclerView.layoutManager = LinearLayoutManager(rootView.context)
+                                mRadioGroup = rootView?.findViewById(R.id.secure_rg)
+                                alfriends = rootView?.findViewById(R.id.secure_allfriends)
+                                excpection = rootView?.findViewById(R.id.secure_except)
+                                textView = rootView?.findViewById(R.id.secure_bind_element_size)
+                                textView.measure(0, 0);       //must call measure!
+                                toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
+                                accept_selected_name =
+                                    rootView.findViewById(R.id.secure_bind_accept)
+                                selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
+                                checkSecurePanel()
+                                setSupportActionBar(toolbar);
+                                if (alfriends.isChecked) {
+                                    recyclerView.visibility = View.GONE
                                 }
-                            }
 
-                        }
-                        accept_selected_name.setOnClickListener {
-                            println("accept is  run")
-                        }
-                        selectedAll.setOnClickListener {
-                            if (selectedAll.isChecked) {
-                                accept_selected_name.isEnabled=true
-                                for (i in 0..mAdapter.filerList.size-1) {
-                                    var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
-                                    var theSecureM = listElement.get(mainIndex);
-                                    theSecureM.theisChecked = true
-                                    listElement.set(mainIndex, theSecureM)
-                                }
-                                mAdapter.notifyDataSetChanged()
-                                mcounter= mAdapter.filerList.size
-                                textView.text="${mcounter} person selected"
-                                selectedlistElement.addAll(mAdapter.filerList)
-                            }else{
-                                accept_selected_name.isEnabled=false
-                                for (i in 0..listElement.size-1) {
-                                    var mainIndex=listElement.indexOf(mAdapter.filerList.get(i))
-                                    var theSecureM = listElement.get(mainIndex);
-                                    theSecureM.theisChecked = false
-                                    listElement.set(mainIndex, theSecureM)
-                                }
-                                mAdapter.notifyDataSetChanged()
-                                mcounter= 0
-                                textView.text="0 person selected"
-                                selectedlistElement.clear()
+                                alfriends.setOnClickListener {
+                                    recyclerView.visibility = View.GONE
+                                    selectedAll.visibility = View.GONE
+                                    var anim = Animation(0, textView)
+                                    textView.animation = anim
+                                    accept_selected_name.isEnabled = false
+                                    search.isVisible = false
 
-                            }
-                        }
-                        recyclerView.adapter = mAdapter
+                                }
+                                excpection.setOnClickListener {
+                                    search.isVisible = true
+                                    recyclerView.visibility = View.VISIBLE
+                                    if (isActionMode) {
+                                        recyclerView.visibility = View.VISIBLE
+                                        selectedAll.visibility = View.VISIBLE
+                                        var anim = Animation(currentWith, textView)
+                                        textView.animation = anim
+                                        if (selectedlistElement.size > 0) {
+                                            accept_selected_name.isEnabled = true
+                                        }
+                                    }
+
+                                }
+                                accept_selected_name.setOnClickListener {
+                                    println("accept is  run")
+                                }
+                                selectedAll.setOnClickListener {
+                                    if (selectedAll.isChecked) {
+                                        accept_selected_name.isEnabled = true
+                                        for (i in 0..mAdapter.filerList.size - 1) {
+                                            var mainIndex =
+                                                listElement.indexOf(mAdapter.filerList.get(i))
+                                            var theSecureM = listElement.get(mainIndex);
+                                            theSecureM.theisChecked = true
+                                            listElement.set(mainIndex, theSecureM)
+                                        }
+                                        mAdapter.notifyDataSetChanged()
+                                        mcounter = mAdapter.filerList.size
+                                        textView.text = "${mcounter} person selected"
+                                        selectedlistElement.addAll(mAdapter.filerList)
+                                    } else {
+                                        accept_selected_name.isEnabled = false
+                                        for (i in 0..listElement.size - 1) {
+                                            var mainIndex =
+                                                listElement.indexOf(mAdapter.filerList.get(i))
+                                            var theSecureM = listElement.get(mainIndex);
+                                            theSecureM.theisChecked = false
+                                            listElement.set(mainIndex, theSecureM)
+                                        }
+                                        mAdapter.notifyDataSetChanged()
+                                        mcounter = 0
+                                        textView.text = "0 person selected"
+                                        selectedlistElement.clear()
+
+                                    }
+                                }
+                                recyclerView.adapter = mAdapter
 
 //                        test.readyElement(object : GetCenter<UsersModel> {
 //                            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
@@ -291,13 +300,21 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
-                        mFirestore.collection("Users").get()
-                            .addOnSuccessListener(OnSuccessListener<QuerySnapshot> {
-                                for (doc in it){
-                                    var theData=doc.toObject(UsersModel::class.java)
-                                    listElement.add(security_model(theData!!.theNameSurname!!,theData!!.theUserName!!,theData!!.theThmbImage!!,false))
-                                }
-                            })
+                                listener = mFirestore.collection("Users").get()
+                                listener.addOnSuccessListener(OnSuccessListener<QuerySnapshot> {
+                                    for (doc in it) {
+                                        var theData = doc.toObject(UsersModel::class.java)
+                                        listElement.add(
+                                            security_model(
+                                                theData!!.theNameSurname!!,
+                                                theData!!.theUserName!!,
+                                                theData!!.theThmbImage!!,
+                                                false
+                                            )
+                                        )
+                                    }
+                                    mAdapter.notifyDataSetChanged()
+                                })
 //                        mFirestore.collection("Users").addSnapshotListener { document, e ->
 //                            if (e!=null){
 //                                Log.d("Error", e.message as String)
@@ -309,8 +326,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                            }
 //                            mAdapter.notifyDataSetChanged()
 //                        }
-                    }
-                })
+                            }
+                        })
                 fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_IOS)
                 fullScreenDialog.show()
             }
@@ -319,8 +336,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     private fun checkSecurePanel() {
-        if (selectedlistElement.size>0){
-            isActionMode=true
+        if (selectedlistElement.size > 0) {
+            isActionMode = true
 
 //            for (i in 0..listElement.size-1){
 //                var theSecureM = listElement.get(i);
@@ -333,15 +350,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     fun startSelection(index: Int) {
 
         if (!isActionMode) {
+
             isActionMode = true
             if (selectedlistElement == null) {
                 selectedlistElement = ArrayList<security_model>()
             }
             textView.visibility = View.VISIBLE
-            currentWith=textView.measuredWidth;
-            var anim=Animation(currentWith, textView)
-            textView.animation=anim
-            selectedAll.visibility= View.VISIBLE
+            currentWith = textView.measuredWidth;
+            var anim = Animation(currentWith, textView)
+            textView.animation = anim
+            selectedAll.visibility = View.VISIBLE
             updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
         }
@@ -367,14 +385,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             theSecureM.theisChecked = true
             listElement.set(position, theSecureM)
         } else {
-            selectedAll.isChecked=false
+            selectedAll.isChecked = false
             mcounter--
             updateToolbarText(mcounter)
             if (mcounter == 0) {
                 isActionMode = false
                 mAdapter.notifyDataSetChanged()
                 textView.visibility = View.GONE
-                selectedAll.visibility=View.GONE
+                selectedAll.visibility = View.GONE
             }
             selectedlistElement.remove(listElement.get(position))
             var theSecureM = listElement.get(position);
@@ -382,11 +400,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             listElement.set(position, theSecureM)
         }
         accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
-        if (listElement.size== selectedlistElement.size){
-            selectedAll.isChecked=true
-        }
-        else if (listElement.size> selectedlistElement.size){
-            selectedAll.isChecked=false
+        if (listElement.size == selectedlistElement.size) {
+            selectedAll.isChecked = true
+        } else if (listElement.size > selectedlistElement.size) {
+            selectedAll.isChecked = false
         }
     }
 
