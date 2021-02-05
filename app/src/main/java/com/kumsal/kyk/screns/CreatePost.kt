@@ -51,14 +51,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
 
     companion object {
-        var listElement = ArrayList<security_model>()
-        lateinit var textView: TextView
-        lateinit var radioGroup: RadioGroup
+
+        private var listElement = ArrayList<security_model>()
+        private var isActionMode = false
+        private var selectedlistElement = ArrayList<security_model>()
+        private var mcounter = 0
+        private var currentWith = 0
+
+        private lateinit var textView: TextView
+        private lateinit var radioGroup: RadioGroup
         private lateinit var mAdapter: security_adapter
-        var isActionMode = false
-        var selectedlistElement = ArrayList<security_model>()
-        var mcounter = 0
-        var currentWith = 0
         private lateinit var listener: Task<QuerySnapshot>
         private lateinit var mRadioGroup: RadioGroup
         private lateinit var alfriends: RadioButton
@@ -302,6 +304,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                        }, "Users", "")
                                 listener = mFirestore.collection("Users").get()
                                 listener.addOnSuccessListener(OnSuccessListener<QuerySnapshot> {
+                                    listElement.clear()
                                     for (doc in it) {
                                         var theData = doc.toObject(UsersModel::class.java)
                                         listElement.add(
