@@ -7,7 +7,7 @@ import com.kumsal.kyk.interfaces.GetCenter
 import java.util.ArrayList
 
 class DbUsers<Model> {
-    private var mDbFirestore: FirebaseFirestore? = null
+
     private var theModel: Model? = null
     private var theModelList: ArrayList<Model>? = null
     private var className: Class<Model>? = null
@@ -16,9 +16,12 @@ class DbUsers<Model> {
     init {
         theModelList= ArrayList()
     }
+    companion object{
+        private var mDbFirestore: FirebaseFirestore? = null
+    }
 
     constructor(mDbFirestore: FirebaseFirestore?, gClass: Model) {
-        this.mDbFirestore = mDbFirestore
+        mDbFirestore = mDbFirestore
         this.model = gClass
     }
 
