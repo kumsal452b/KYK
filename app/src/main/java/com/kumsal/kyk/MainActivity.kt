@@ -240,17 +240,17 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             startActivity(intent)
             super.finish()
         } else {
-            mFstoreUserDb.collection("Users").document(mUser?.uid as String).addSnapshotListener { value, error ->
-                if (error!=null){
-                    Log.d("Error found",error.message as String)
-                    return@addSnapshotListener
-                }
-                var userModel=value?.toObject(UsersModel::class.java)
-                imageUri=userModel?.theThmbImage as String
-                name.setText(userModel?.theNameSurname)
-                username.setText(userModel?.theUserName)
-                Picasso.get().load(imageUri as String).into(proImage)
-            }
+//            mFstoreUserDb.collection("Users").document(mUser?.uid as String).addSnapshotListener { value, error ->
+//                if (error!=null){
+//                    Log.d("Error found",error.message as String)
+//                    return@addSnapshotListener
+//                }
+//                var userModel=value?.toObject(UsersModel::class.java)
+//                imageUri=userModel?.theThmbImage as String
+//                name.setText(userModel?.theNameSurname)
+//                username.setText(userModel?.theUserName)
+//                Picasso.get().load(imageUri as String).into(proImage)
+//            }
 
         }
         super.onStart()
