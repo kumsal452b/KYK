@@ -30,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
+import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
@@ -251,7 +252,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 //                username.setText(userModel?.theUserName)
 //                Picasso.get().load(imageUri as String).into(proImage)
 //            }
-
+            var userElement=DbUsers<UsersModel>(mFstoreUserDb, UsersModel())
+            var userList=userElement.getElement("Users",userId) as UsersModel
+            Picasso.get().load( userList.theThmbImage).into(proImage)
+            name.setText(userList?.theNameSurname)
+            username.setText(userList?.theUserName)
         }
         super.onStart()
     }

@@ -19,7 +19,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
+import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.auth.User
 import com.kongzue.dialog.util.DialogSettings
@@ -53,7 +55,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     companion object {
 
         private var listElement = ArrayList<security_model>()
-        private var isActionMode = false
+         var isActionMode = false
         private var selectedlistElement = ArrayList<security_model>()
         private var mcounter = 0
         private var currentWith = 0
@@ -61,7 +63,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var textView: TextView
         private lateinit var radioGroup: RadioGroup
         private lateinit var mAdapter: security_adapter
-        private lateinit var listener: Task<QuerySnapshot>
+        private lateinit var listener: ListenerRegistration
         private lateinit var mRadioGroup: RadioGroup
         private lateinit var alfriends: RadioButton
         private lateinit var excpection: RadioButton
@@ -302,10 +304,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
-                                listener = mFirestore.collection("Users").get()
-                                listener.addOnSuccessListener(OnSuccessListener<QuerySnapshot> {
+                                listener = mFirestore.collection("Users").addSnapshotListener { it, error ->
                                     listElement.clear()
-                                    for (doc in it) {
+                                    for (doc in it!!) {
                                         var theData = doc.toObject(UsersModel::class.java)
                                         listElement.add(
                                             security_model(
@@ -317,7 +318,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         )
                                     }
                                     mAdapter.notifyDataSetChanged()
-                                })
+                                }
 //                        mFirestore.collection("Users").addSnapshotListener { document, e ->
 //                            if (e!=null){
 //                                Log.d("Error", e.message as String)
@@ -416,5 +417,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         if (!TextUtils.isEmpty(imageUri)) {
             Picasso.get().load(imageUri).into(profile_image)
         }
+    }
+
+    override fun onStop() {
+        listener.remove()
+        super.onStop()
+    }
+    override fun onDestroy() {
+        listener.remove()
+        super.onDestroy()
     }
 }
