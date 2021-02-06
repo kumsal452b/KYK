@@ -12,16 +12,13 @@ class DbUsers<Model> {
     private var theModelList: ArrayList<Model>? = null
     private var className: Class<Model>? = null
     private var model: Model
-
+    private var mDbFirestore: FirebaseFirestore? = null
     init {
         theModelList= ArrayList()
     }
-    companion object{
-        private var mDbFirestore: FirebaseFirestore? = null
-    }
 
     constructor(mDbFirestore: FirebaseFirestore?, gClass: Model) {
-        mDbFirestore = mDbFirestore
+        this.mDbFirestore = mDbFirestore
         this.model = gClass
     }
 
