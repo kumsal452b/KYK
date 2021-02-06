@@ -2,6 +2,7 @@ package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
 import android.opengl.Visibility
+import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import androidx.cardview.widget.CardView
@@ -52,10 +53,11 @@ class security_adapter(
         var checkBox: CheckBox = itemView.findViewById(R.id.secure_single_check_box)
         var cardView: CardView = itemView.findViewById(R.id.secure_single_cardsingle)
         fun bindElement(theModel: security_model) {
-            Picasso.get().load(theModel.theimage).into(imageUrl)
+            var checkEmpty=theModel.theimage
+                Picasso.get().load(checkEmpty).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
-            checkBox.isChecked=theModel.theisChecked
+            checkBox.isChecked=theModel.theisChecked!!
         }
 
         init {
