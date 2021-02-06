@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         initializeComponent()
 
         //FAB anime zoon
-        initial()
+        initializeAnimation()
         addListener()
 
     }
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mNavbar = findViewById(R.id.nav_bar)
-        //header initialize
+        //header initializeAnimationize
 
         var view = mNavbar.getHeaderView(0)
 
@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     }
 
-    private fun initial() {
+    private fun initializeAnimation() {
         add = findViewById(R.id.fab_add)
         addPost = findViewById(R.id.fab_edit)
         addMessage = findViewById(R.id.fab_message)
@@ -292,7 +292,4 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                 startActivity(post_Activity)
         }
     }
-
-
-
 }
