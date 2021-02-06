@@ -235,6 +235,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
+
                                 listener = mFirestore.collection("Users").addSnapshotListener { it, error ->
                                     listElement.clear()
                                     for (doc in it!!) {
@@ -251,9 +252,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                 theData.theId!!
                                             )
                                         )
-                                        if (selectedlistElement.size>0){
-                                            if (selectedlistElement.contains(listElement.get(listElement.size-1))){
-                                                listElement.get(listElement.size-1).theisChecked=true
+                                    }
+                                    if (selectedlistElement.size>0){
+                                        for (i in 0..selectedlistElement.size-1){
+                                            var checck= listElement.contains(selectedlistElement.get(i))
+                                            if(checck){
+                                                var index= listElement.indexOf(selectedlistElement[i])
+                                                listElement[index].theisChecked=true
                                             }
                                         }
                                     }
