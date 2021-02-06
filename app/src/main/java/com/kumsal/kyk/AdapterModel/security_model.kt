@@ -3,20 +3,27 @@ package com.kumsal.kyk.AdapterModel
 import android.text.TextUtils
 
 class security_model{
-    var thename=""
-    var theusername=""
-    var theimage=""
-    var theisChecked=false
-    var thePersonId=""
-    constructor():this("","","",false,"")
-    init {
-        if (TextUtils.isEmpty(image) || image==null){
-            this.theimage="empty"
+    var thename:String?=null
+    var theusername:String?=null
+    var theimage:String?=null
+    var theisChecked:Boolean?=null
+    var thePersonId:String?=null
+    constructor(){}
+    constructor(
+        thename: String,
+        theusername: String,
+        theimage: String,
+        theisChecked: Boolean,
+        thePersonId: String
+    ) {
+        if (TextUtils.isEmpty(theimage) || theimage==null){
+            this.theimage = "empty"
         }else{
-            this.theimage=image
+            this.theimage =theimage
         }
-        this.thename=name
-        this.theusername=username
-        this.theisChecked=isChecked
+        this.theusername = theusername
+        this.theisChecked = theisChecked
+        this.thePersonId = thePersonId
     }
+
 }
