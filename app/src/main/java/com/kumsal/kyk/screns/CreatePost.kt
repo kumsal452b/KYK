@@ -251,6 +251,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                 theData.theId!!
                                             )
                                         )
+                                        if (selectedlistElement.size>0){
+                                            if (selectedlistElement.contains(listElement.get(listElement.size-1))){
+                                                listElement.get(listElement.size-1).theisChecked=true
+                                            }
+                                        }
                                     }
                                     mAdapter.notifyDataSetChanged()
                                 }
@@ -303,9 +308,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         accept_selected_name.setOnClickListener {
             var deniedMap=HashMap<String,Boolean>()
-            deniedMap.put("test",true)
-            deniedMap.put("test1",true)
-            deniedMap.put("test2",true)
+            for (get in selectedlistElement)
+                deniedMap.put(get.thePersonId!!,true)
+
             mFirestore.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap).addOnSuccessListener(OnSuccessListener {
                     println("succces")
