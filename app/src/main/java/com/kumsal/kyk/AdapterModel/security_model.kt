@@ -21,6 +21,7 @@ class security_model{
         }else{
             this.theimage =theimage
         }
+        this.thename=thename
         this.theusername = theusername
         this.theisChecked = theisChecked
         this.thePersonId = thePersonId
