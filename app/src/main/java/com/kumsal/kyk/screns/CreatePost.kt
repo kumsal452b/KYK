@@ -307,6 +307,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                 listener = mFirestore.collection("Users").addSnapshotListener { it, error ->
                                     listElement.clear()
                                     for (doc in it!!) {
+                                        if (doc.id==Globals.ınstance?.uid)
+                                            continue
                                         var theData = doc.toObject(UsersModel::class.java)
                                         listElement.add(
                                             security_model(
