@@ -16,6 +16,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
@@ -38,6 +39,7 @@ import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -216,85 +218,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var fullScreenDialog = FullScreenDialog.build(this@CreatePost)
+                fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_IOS)
                 fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_KONGZUE)
                     .setCustomView(R.layout.security_bind_element,
                         object : FullScreenDialog.OnBindView {
                             override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
-                                recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
-                                recyclerView.setHasFixedSize(true)
-                                recyclerView.layoutManager = LinearLayoutManager(rootView.context)
-                                mRadioGroup = rootView?.findViewById(R.id.secure_rg)
-                                alfriends = rootView?.findViewById(R.id.secure_allfriends)
-                                excpection = rootView?.findViewById(R.id.secure_except)
-                                textView = rootView?.findViewById(R.id.secure_bind_element_size)
-                                textView.measure(0, 0);       //must call measure!
-                                toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
-                                accept_selected_name =
-                                    rootView.findViewById(R.id.secure_bind_accept)
-                                selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
-                                checkSecurePanel()
-                                setSupportActionBar(toolbar);
-                                if (alfriends.isChecked) {
-                                    recyclerView.visibility = View.GONE
-                                }
+                                securityPanelInitialzed(rootView)
+                                securityPanelEventClick()
 
-                                alfriends.setOnClickListener {
-                                    recyclerView.visibility = View.GONE
-                                    selectedAll.visibility = View.GONE
-                                    var anim = Animation(0, textView)
-                                    textView.animation = anim
-                                    accept_selected_name.isEnabled = false
-                                    search.isVisible = false
-
-                                }
-                                excpection.setOnClickListener {
-                                    search.isVisible = true
-                                    recyclerView.visibility = View.VISIBLE
-                                    if (isActionMode) {
-                                        recyclerView.visibility = View.VISIBLE
-                                        selectedAll.visibility = View.VISIBLE
-                                        var anim = Animation(currentWith, textView)
-                                        textView.animation = anim
-                                        if (selectedlistElement.size > 0) {
-                                            accept_selected_name.isEnabled = true
-                                        }
-                                    }
-
-                                }
-                                accept_selected_name.setOnClickListener {
-                                    println("accept is  run")
-                                }
-                                selectedAll.setOnClickListener {
-                                    if (selectedAll.isChecked) {
-                                        accept_selected_name.isEnabled = true
-                                        for (i in 0..mAdapter.filerList.size - 1) {
-                                            var mainIndex =
-                                                listElement.indexOf(mAdapter.filerList.get(i))
-                                            var theSecureM = listElement.get(mainIndex);
-                                            theSecureM.theisChecked = true
-                                            listElement.set(mainIndex, theSecureM)
-                                        }
-                                        mAdapter.notifyDataSetChanged()
-                                        mcounter = mAdapter.filerList.size
-                                        textView.text = "${mcounter} person selected"
-                                        selectedlistElement.addAll(mAdapter.filerList)
-                                    } else {
-                                        accept_selected_name.isEnabled = false
-                                        for (i in 0..listElement.size - 1) {
-                                            var mainIndex =
-                                                listElement.indexOf(mAdapter.filerList.get(i))
-                                            var theSecureM = listElement.get(mainIndex);
-                                            theSecureM.theisChecked = false
-                                            listElement.set(mainIndex, theSecureM)
-                                        }
-                                        mAdapter.notifyDataSetChanged()
-                                        mcounter = 0
-                                        textView.text = "0 person selected"
-                                        selectedlistElement.clear()
-
-                                    }
-                                }
-                                recyclerView.adapter = mAdapter
 
 //                        test.readyElement(object : GetCenter<UsersModel> {
 //                            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
@@ -310,12 +241,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         if (doc.id==Globals.ınstance?.uid)
                                             continue
                                         var theData = doc.toObject(UsersModel::class.java)
+                                        theData.theId=doc.id
                                         listElement.add(
                                             security_model(
                                                 theData!!.theNameSurname!!,
                                                 theData!!.theUserName!!,
                                                 theData!!.theThmbImage!!,
-                                                false
+                                                false,
+                                                theData.theId!!
                                             )
                                         )
                                     }
@@ -334,11 +267,100 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                        }
                             }
                         })
-                fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_IOS)
                 fullScreenDialog.show()
             }
 
         })
+    }
+
+    private fun securityPanelEventClick() {
+        if (alfriends.isChecked) {
+            recyclerView.visibility = View.GONE
+        }
+
+        alfriends.setOnClickListener {
+            recyclerView.visibility = View.GONE
+            selectedAll.visibility = View.GONE
+            var anim = Animation(0, textView)
+            textView.animation = anim
+            accept_selected_name.isEnabled = false
+            search.isVisible = false
+
+        }
+        excpection.setOnClickListener {
+            search.isVisible = true
+            recyclerView.visibility = View.VISIBLE
+            if (isActionMode) {
+                recyclerView.visibility = View.VISIBLE
+                selectedAll.visibility = View.VISIBLE
+                var anim = Animation(currentWith, textView)
+                textView.animation = anim
+                if (selectedlistElement.size > 0) {
+                    accept_selected_name.isEnabled = true
+                }
+            }
+
+        }
+        accept_selected_name.setOnClickListener {
+            var deniedMap=HashMap<String,Boolean>()
+            deniedMap.put("test",true)
+            deniedMap.put("test1",true)
+            deniedMap.put("test2",true)
+            mFirestore.collection("Authentication").document(Globals.ınstance?.uid!!)
+                .set(deniedMap).addOnSuccessListener(OnSuccessListener {
+                    println("succces")
+                }).addOnFailureListener { OnFailureListener{exception: Exception ->
+                    Log.d("Load denied error",exception.message!!)
+                } }
+        }
+        selectedAll.setOnClickListener {
+            if (selectedAll.isChecked) {
+                accept_selected_name.isEnabled = true
+                for (i in 0..mAdapter.filerList.size - 1) {
+                    var mainIndex =
+                        listElement.indexOf(mAdapter.filerList.get(i))
+                    var theSecureM = listElement.get(mainIndex);
+                    theSecureM.theisChecked = true
+                    listElement.set(mainIndex, theSecureM)
+                }
+                mAdapter.notifyDataSetChanged()
+                mcounter = mAdapter.filerList.size
+                textView.text = "${mcounter} person selected"
+                selectedlistElement.addAll(mAdapter.filerList)
+            } else {
+                accept_selected_name.isEnabled = false
+                for (i in 0..listElement.size - 1) {
+                    var mainIndex =
+                        listElement.indexOf(mAdapter.filerList.get(i))
+                    var theSecureM = listElement.get(mainIndex);
+                    theSecureM.theisChecked = false
+                    listElement.set(mainIndex, theSecureM)
+                }
+                mAdapter.notifyDataSetChanged()
+                mcounter = 0
+                textView.text = "0 person selected"
+                selectedlistElement.clear()
+
+            }
+        }
+    }
+
+    private fun securityPanelInitialzed(rootView: View?) {
+        recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(rootView.context)
+        mRadioGroup = rootView?.findViewById(R.id.secure_rg)
+        alfriends = rootView?.findViewById(R.id.secure_allfriends)
+        excpection = rootView?.findViewById(R.id.secure_except)
+        textView = rootView?.findViewById(R.id.secure_bind_element_size)
+        textView.measure(0, 0);       //must call measure!
+        toolbar = rootView.findViewById(R.id.secure_bind_toolbar)
+        accept_selected_name =
+            rootView.findViewById(R.id.secure_bind_accept)
+        selectedAll = rootView.findViewById(R.id.secure_bind_selectAll)
+        checkSecurePanel()
+        setSupportActionBar(toolbar)
+        recyclerView.adapter = mAdapter
     }
 
     private fun checkSecurePanel() {
