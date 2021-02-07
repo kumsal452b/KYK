@@ -57,7 +57,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     companion object {
 
         private var listElement = ArrayList<security_model>()
-         var isActionMode = false
+        var isActionMode = false
         private var selectedlistElement = ArrayList<security_model>()
         private var mcounter = 0
         private var currentWith = 0
@@ -105,8 +105,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
 
-                values.put("pc", postContent as String)
-                values.put("name", name as String)
+                values.put("pc", postContent)
+                values.put("name", name)
                 values.put("username", username)
                 values.put("imageUri", imageUri)
                 values.put("time", ServerValue.TIMESTAMP)
@@ -236,34 +236,35 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                            }
 //                        }, "Users", "")
 
-                                listener = mFirestore.collection("Users").addSnapshotListener { it, error ->
-                                    listElement.clear()
-                                    for (doc in it!!) {
-                                        if (doc.id==Globals.ınstance?.uid)
-                                            continue
-                                        var theData = doc.toObject(UsersModel::class.java)
-                                        theData.theId=doc.id
-                                        listElement.add(
-                                            security_model(
-                                                theData!!.theNameSurname!!,
-                                                theData!!.theUserName!!,
-                                                theData!!.theThmbImage!!,
-                                                false,
-                                                theData.theId!!
+                                listener = mFirestore.collection("Users")
+                                    .addSnapshotListener { it, error ->
+                                        listElement.clear()
+                                        for (doc in it!!) {
+                                            if (doc.id == Globals.ınstance?.uid)
+                                                continue
+                                            var theData = doc.toObject(UsersModel::class.java)
+                                            theData.theId = doc.id
+                                            listElement.add(
+                                                security_model(
+                                                    theData!!.theNameSurname!!,
+                                                    theData!!.theUserName!!,
+                                                    theData!!.theThmbImage!!,
+                                                    false,
+                                                    theData.theId!!
+                                                )
                                             )
-                                        )
-                                    }
-                                    if (selectedlistElement.size>0){
-                                        for (i in 0..selectedlistElement.size-1){
-                                            var checck= listElement.contains(selectedlistElement.get(i))
-                                            if(checck){
-                                                var index= listElement.indexOf(selectedlistElement[i])
-                                                listElement[index].theisChecked=true
+                                        }
+                                        if (selectedlistElement.size > 0) {
+                                            for (i in 0..selectedlistElement.size - 1) {
+                                                selectedlistElement[i].theisChecked=false
+                                                var theSecureElement = selectedlistElement[i]
+                                                var index = listElement.indexOf(theSecureElement)
+                                                listElement[index].theisChecked = true
+                                                selectedlistElement[i].theisChecked=false
                                             }
                                         }
+                                        mAdapter.notifyDataSetChanged()
                                     }
-                                    mAdapter.notifyDataSetChanged()
-                                }
 //                        mFirestore.collection("Users").addSnapshotListener { document, e ->
 //                            if (e!=null){
 //                                Log.d("Error", e.message as String)
@@ -312,16 +313,18 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         }
         accept_selected_name.setOnClickListener {
-            var deniedMap=HashMap<String,Boolean>()
+            var deniedMap = HashMap<String, Boolean>()
             for (get in selectedlistElement)
-                deniedMap.put(get.thePersonId!!,true)
+                deniedMap.put(get.thePersonId!!, true)
 
             mFirestore.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap).addOnSuccessListener(OnSuccessListener {
                     println("succces")
-                }).addOnFailureListener { OnFailureListener{exception: Exception ->
-                    Log.d("Load denied error",exception.message!!)
-                } }
+                }).addOnFailureListener {
+                    OnFailureListener { exception: Exception ->
+                        Log.d("Load denied error", exception.message!!)
+                    }
+                }
         }
         selectedAll.setOnClickListener {
             if (selectedAll.isChecked) {
@@ -457,6 +460,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         listener.remove()
         super.onStop()
     }
+
     override fun onDestroy() {
         listener.remove()
         super.onDestroy()
