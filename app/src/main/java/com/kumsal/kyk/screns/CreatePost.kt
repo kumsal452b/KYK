@@ -235,10 +235,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
-                                var mUserName= arrayOf<String>()
+                                var mUserName= ArrayList<String>()
                                 if (selectedlistElement.size>0){
                                     for (i in 0..selectedlistElement.size-1){
-                                        mUserName[i]= selectedlistElement[i].theusername.toString()
+                                        mUserName.add(selectedlistElement[i].theusername.toString())
                                     }
                                 }
                                 listener = mFirestore.collection("Users")
@@ -261,17 +261,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                             }
                                             theData.theId = doc.id
                                             listElement.add(theSecureData)
-                                        }
-                                        if (selectedlistElement.size > 0) {
-                                            for (i in 0..selectedlistElement.size - 1) {
-                                                var theSecureM = selectedlistElement.get(i)
-                                                theSecureM.theisChecked = false
-                                                selectedlistElement.set(i, theSecureM)
-                                                var theSecureElement = selectedlistElement[i]
-                                                var index = listElement.indexOf(theSecureElement)
-                                                listElement[index].theisChecked = true
-                                                selectedlistElement[i].theisChecked=false
-                                            }
                                         }
                                         mAdapter.notifyDataSetChanged()
                                     }
