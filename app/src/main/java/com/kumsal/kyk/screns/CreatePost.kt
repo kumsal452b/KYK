@@ -235,28 +235,36 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
-
+                                var mUserName= arrayOf<String>()
+                                for (i in 0..selectedlistElement.size-1){
+                                    mUserName[i]= selectedlistElement[i].theusername.toString()
+                                }
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
+                                        var countPerson=0
                                         for (doc in it!!) {
                                             if (doc.id == Globals.ınstance?.uid)
                                                 continue
                                             var theData = doc.toObject(UsersModel::class.java)
-                                            theData.theId = doc.id
-                                            listElement.add(
-                                                security_model(
-                                                    theData!!.theNameSurname!!,
-                                                    theData!!.theUserName!!,
-                                                    theData!!.theThmbImage!!,
-                                                    false,
-                                                    theData.theId!!
-                                                )
+                                            var theSecureData=security_model(
+                                                theData!!.theNameSurname!!,
+                                                theData!!.theUserName!!,
+                                                theData!!.theThmbImage!!,
+                                                false,
+                                                theData.theId!!
                                             )
+                                            if (mUserName.contains(theSecureData.theusername)){
+                                                theSecureData.theisChecked=true
+                                            }
+                                            theData.theId = doc.id
+                                            listElement.add(theSecureData)
                                         }
                                         if (selectedlistElement.size > 0) {
                                             for (i in 0..selectedlistElement.size - 1) {
-                                                selectedlistElement[i].theisChecked=false
+                                                var theSecureM = selectedlistElement.get(i)
+                                                theSecureM.theisChecked = false
+                                                selectedlistElement.set(i, theSecureM)
                                                 var theSecureElement = selectedlistElement[i]
                                                 var index = listElement.indexOf(theSecureElement)
                                                 listElement[index].theisChecked = true
