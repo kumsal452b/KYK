@@ -26,13 +26,15 @@
             app:layout_constraintTop_toBottomOf="@+id/activity_create_post_post_text_element"
             app:srcCompat="@drawable/ic_baseline_security_24"
             />
+
         <TextView
+            android:id="@+id/create_post_security_tag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Everyone"
-            android:textColor="@color/white"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:layout_marginStart="4dp"/>
+            android:text="Everyone"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

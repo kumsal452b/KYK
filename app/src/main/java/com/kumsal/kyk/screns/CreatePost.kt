@@ -53,7 +53,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
-
+    private lateinit var securityTag:TextView
 
     companion object {
 
@@ -74,6 +74,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
+        private lateinit var  fullScreenDialog:FullScreenDialog
     }
 
     //add intent element varíable
@@ -192,6 +193,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
         select_privacy = findViewById(R.id.activity_create_post_select_security)
         textView = TextView(this)
+        securityTag=findViewById(R.id.create_post_security_tag)
         var uidG = Globals.ınstance?.uid
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
@@ -227,7 +229,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         select_privacy.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                var fullScreenDialog = FullScreenDialog.build(this@CreatePost)
+                fullScreenDialog = FullScreenDialog.build(this@CreatePost)
                 fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_IOS)
                 fullScreenDialog.setStyle(DialogSettings.STYLE.STYLE_KONGZUE)
                     .setCustomView(R.layout.security_bind_element,
@@ -246,40 +248,49 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                            }
 //                        }, "Users", "")
                                 var getUsernames=ArrayList<String>()
-                                accesList(object:GetDeniedList{
-                                    override fun accedDenied(map: HashMap<String, Boolean>) {
 
-                                    }
-                                })
 
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
-                                        var mUserName= ArrayList<String>()
-                                        if (selectedlistElement.size>0){
-                                            for (i in 0..selectedlistElement.size-1){
-                                                mUserName.add(selectedlistElement[i].theusername.toString())
+                                        accesList(object:GetDeniedList{
+                                            override fun accedDenied(map: HashMap<String, Boolean>) {
+                                                for (get in map){
+                                                    getUsernames.add(get.key)
+                                                }
+                                                var mUserName= ArrayList<String>()
+                                                if (selectedlistElement.size>0){
+                                                    for (i in 0..selectedlistElement.size-1){
+                                                        mUserName.add(selectedlistElement[i].theusername.toString())
+                                                    }
+                                                }
+                                                selectedlistElement.clear()
+                                                for (doc in it!!) {
+                                                    if (doc.id == Globals.ınstance?.uid)
+                                                        continue
+                                                    var theData = doc.toObject(UsersModel::class.java)
+                                                    var theSecureData=security_model(
+                                                        theData!!.theNameSurname!!,
+                                                        theData!!.theUserName!!,
+                                                        theData!!.theThmbImage!!,
+                                                        false,
+                                                        theData.theId!!
+                                                    )
+                                                    if (mUserName.contains(theSecureData.theusername)){
+                                                        theSecureData.theisChecked=true
+                                                        selectedlistElement.add(theSecureData)
+                                                    }
+                                                    if (getUsernames.contains(theSecureData.theusername)){
+                                                        theSecureData.theisChecked=true
+                                                        selectedlistElement.add(theSecureData)
+                                                        mcounter++
+                                                    }
+                                                    theData.theId = doc.id
+                                                    listElement.add(theSecureData)
+                                                }
                                             }
-                                        }
-                                        selectedlistElement.clear()
-                                        for (doc in it!!) {
-                                            if (doc.id == Globals.ınstance?.uid)
-                                                continue
-                                            var theData = doc.toObject(UsersModel::class.java)
-                                            var theSecureData=security_model(
-                                                theData!!.theNameSurname!!,
-                                                theData!!.theUserName!!,
-                                                theData!!.theThmbImage!!,
-                                                false,
-                                                theData.theId!!
-                                            )
-                                            if (mUserName.contains(theSecureData.theusername)){
-                                                theSecureData.theisChecked=true
-                                                selectedlistElement.add(theSecureData)
-                                            }
-                                            theData.theId = doc.id
-                                            listElement.add(theSecureData)
-                                        }
+                                        })
+
                                         mAdapter.notifyDataSetChanged()
                                     }
 //                        mFirestore.collection("Users").addSnapshotListener { document, e ->
@@ -334,16 +345,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         }
         accept_selected_name.setOnClickListener {
+            WaitDialog.show(this,getString(R.string.please_wait))
             var deniedMap = HashMap<String, Boolean>()
             for (get in selectedlistElement)
                 deniedMap.put(get.theusername!!, true)
 
             mFirestore.collection("Authentication").document(Globals.ınstance?.uid!!)
-                .update(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
-                    println("succces")
+                .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
+                   WaitDialog.dismiss()
+                    fullScreenDialog.isShow=false
+                    securityTag.text="Someone"
                 }).addOnFailureListener {
                     OnFailureListener { exception: Exception ->
                         Log.d("Load denied error", exception.message!!)
+                        WaitDialog.dismiss()
                     }
                 }
         }
