@@ -43,6 +43,7 @@ import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.log
 
 class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var profile_image: CircleImageView
@@ -92,10 +93,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         setContentView(R.layout.activity_create_post)
         initialComponent()
 
-
         //initialize intent element
         initialDynamic()
         canBeSent()
+        share()
+    }
+
+    private fun share() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
@@ -213,11 +217,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         deniedListListener=mFsDenied.collection("Authentication").document(userid)
             .addSnapshotListener { document, e ->
                 if (e!=null){
-                    
+                    Log.d("error denied list",e.message!!)
                 }
+                var deniedList=document?.data as HashMap<String,Boolean>
+                theDeniedElement.accedDenied(deniedList)
             }
     }
-
     private fun secure_initial() {
 
         select_privacy.setOnClickListener(object : View.OnClickListener {
@@ -240,6 +245,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
+                                var getUsernames=ArrayList<String>()
+                                accesList(object:GetDeniedList{
+                                    override fun accedDenied(map: HashMap<String, Boolean>) {
+                                        map
+                                    }
+                                })
                                 var mUserName= ArrayList<String>()
                                 if (selectedlistElement.size>0){
                                     for (i in 0..selectedlistElement.size-1){
@@ -290,7 +301,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         })
     }
-
     private fun securityPanelEventClick() {
         if (alfriends.isChecked) {
             recyclerView.visibility = View.GONE
@@ -369,7 +379,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         }
     }
-
     private fun securityPanelInitialzed(rootView: View?) {
         recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
         recyclerView.setHasFixedSize(true)
@@ -387,7 +396,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         setSupportActionBar(toolbar)
         recyclerView.adapter = mAdapter
     }
-
     private fun checkSecurePanel() {
         if (selectedlistElement.size > 0) {
             isActionMode = true
@@ -399,7 +407,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //            }
         }
     }
-
     fun startSelection(index: Int) {
 
         if (!isActionMode) {
@@ -417,7 +424,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             mAdapter.notifyDataSetChanged()
         }
     }
-
     private fun updateToolbarText(counter: Int) {
         if (counter == 0) {
             textView.setText("0 person selected ")
@@ -427,7 +433,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
 
     }
-
     override fun clickCheckBox(position: Int) {
         if (!selectedlistElement.contains(listElement.get(position))) {
 
@@ -459,7 +464,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             selectedAll.isChecked = false
         }
     }
-
     private fun initialDynamic() {
         var hint = "What's on your mind, $name?"
         post_text_element.hint = hint
@@ -467,12 +471,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             Picasso.get().load(imageUri).into(profile_image)
         }
     }
-
     override fun onStop() {
         listener.remove()
         super.onStop()
     }
-
     override fun onDestroy() {
         listener.remove()
         super.onDestroy()
