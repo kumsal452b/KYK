@@ -236,8 +236,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                            }
 //                        }, "Users", "")
                                 var mUserName= arrayOf<String>()
-                                for (i in 0..selectedlistElement.size-1){
-                                    mUserName[i]= selectedlistElement[i].theusername.toString()
+                                if (selectedlistElement.size>0){
+                                    for (i in 0..selectedlistElement.size-1){
+                                        mUserName[i]= selectedlistElement[i].theusername.toString()
+                                    }
                                 }
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
