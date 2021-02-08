@@ -248,21 +248,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                 var getUsernames=ArrayList<String>()
                                 accesList(object:GetDeniedList{
                                     override fun accedDenied(map: HashMap<String, Boolean>) {
-                                        map
+
                                     }
                                 })
-                                var mUserName= ArrayList<String>()
-                                if (selectedlistElement.size>0){
-                                    for (i in 0..selectedlistElement.size-1){
-                                        mUserName.add(selectedlistElement[i].theusername.toString())
-                                    }
 
-                                }
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
+                                        var mUserName= ArrayList<String>()
+                                        if (selectedlistElement.size>0){
+                                            for (i in 0..selectedlistElement.size-1){
+                                                mUserName.add(selectedlistElement[i].theusername.toString())
+                                            }
+                                        }
                                         selectedlistElement.clear()
-                                        var countPerson=0
                                         for (doc in it!!) {
                                             if (doc.id == Globals.ınstance?.uid)
                                                 continue
@@ -340,7 +339,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 deniedMap.put(get.theusername!!, true)
 
             mFirestore.collection("Authentication").document(Globals.ınstance?.uid!!)
-                .set(deniedMap).addOnSuccessListener(OnSuccessListener {
+                .update(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
                     println("succces")
                 }).addOnFailureListener {
                     OnFailureListener { exception: Exception ->
