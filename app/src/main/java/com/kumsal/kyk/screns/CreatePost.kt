@@ -240,10 +240,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     for (i in 0..selectedlistElement.size-1){
                                         mUserName.add(selectedlistElement[i].theusername.toString())
                                     }
+
                                 }
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
+                                        selectedlistElement.clear()
                                         var countPerson=0
                                         for (doc in it!!) {
                                             if (doc.id == Globals.ınstance?.uid)
@@ -258,6 +260,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                             )
                                             if (mUserName.contains(theSecureData.theusername)){
                                                 theSecureData.theisChecked=true
+                                                selectedlistElement.add(theSecureData)
                                             }
                                             theData.theId = doc.id
                                             listElement.add(theSecureData)
