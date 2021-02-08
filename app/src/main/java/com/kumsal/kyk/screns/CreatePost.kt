@@ -306,8 +306,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (isActionMode) {
                 recyclerView.visibility = View.VISIBLE
                 selectedAll.visibility = View.VISIBLE
+                textView.visibility=View.VISIBLE
+                textView.setText("${selectedlistElement.size} person selected ")
                 var anim = Animation(currentWith, textView)
                 textView.animation = anim
+                if (selectedlistElement.size== listElement.size){
+                    selectedAll.isChecked=true
+                }
                 if (selectedlistElement.size > 0) {
                     accept_selected_name.isEnabled = true
                 }
