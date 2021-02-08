@@ -66,13 +66,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var radioGroup: RadioGroup
         private lateinit var mAdapter: security_adapter
         private lateinit var listener: ListenerRegistration
+        private lateinit var deniedListListener: ListenerRegistration
         private lateinit var mRadioGroup: RadioGroup
         private lateinit var alfriends: RadioButton
         private lateinit var excpection: RadioButton
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
-        private lateinit var test: DbUsers<UsersModel>
     }
 
     //add intent element varíable
@@ -84,15 +84,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
-    private lateinit var mUserDbReference: DatabaseReference
     private lateinit var mFirestore: FirebaseFirestore
+    private lateinit var mFsDenied:FirebaseFirestore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
         initialComponent()
-        textView = TextView(this)
 
-        var uidG = Globals.ınstance?.uid
 
         //initialize intent element
         initialDynamic()
@@ -188,7 +187,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         share_button = findViewById(R.id.activity_create_post_share)
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
         select_privacy = findViewById(R.id.activity_create_post_select_security)
-
+        textView = TextView(this)
+        var uidG = Globals.ınstance?.uid
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
 
@@ -199,11 +199,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         username = intent.getStringExtra("username") as String
 
         //Firebase initialize zoon
-        mPostRefDb = FirebaseDatabase.getInstance().getReference("Post")
-        mUserDbReference = FirebaseDatabase.getInstance().getReference("Users")
-
         mFirestore = FirebaseFirestore.getInstance()
-        test = DbUsers(mFirestore, UsersModel())
+        mFsDenied= FirebaseFirestore.getInstance()
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
@@ -211,6 +208,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         secure_initial()
 
 
+    }
+    private fun accesList(theDeniedElement:GetDeniedList){
+        deniedListListener=mFsDenied.collection("Authentication").document(userid)
+            .addSnapshotListener { document, e ->
+                if (e!=null){
+                    
+                }
+            }
     }
 
     private fun secure_initial() {
