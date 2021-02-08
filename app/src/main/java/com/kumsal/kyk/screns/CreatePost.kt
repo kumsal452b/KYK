@@ -322,7 +322,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         accept_selected_name.setOnClickListener {
             var deniedMap = HashMap<String, Boolean>()
             for (get in selectedlistElement)
-                deniedMap.put(get.thePersonId!!, true)
+                deniedMap.put(get.theusername!!, true)
 
             mFirestore.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap).addOnSuccessListener(OnSuccessListener {
