@@ -87,6 +87,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mFirestore: FirebaseFirestore
+
+    private lateinit var mFsSaveSecurity: FirebaseFirestore
     private lateinit var mFsDenied:FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -206,6 +208,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         //Firebase initialize zoon
         mFirestore = FirebaseFirestore.getInstance()
+        mFsSaveSecurity = FirebaseFirestore.getInstance()
         mFsDenied= FirebaseFirestore.getInstance()
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
@@ -350,10 +353,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             for (get in selectedlistElement)
                 deniedMap.put(get.theusername!!, true)
 
-            mFirestore.collection("Authentication").document(Globals.ınstance?.uid!!)
+            mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
                    WaitDialog.dismiss()
-                    fullScreenDialog.isShow=false
+                    fullScreenDialog.doDismiss()
                     securityTag.text="Someone"
                 }).addOnFailureListener {
                     OnFailureListener { exception: Exception ->
