@@ -25,6 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.auth.User
+import com.hendraanggrian.appcompat.widget.Mention
+import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
+import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
@@ -53,7 +56,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var profile_image: CircleImageView
     private lateinit var select_image: ImageButton
     private lateinit var share_button: Button
-    private lateinit var post_text_element: AutoCompleteTextView
+    private lateinit var post_text_element: SocialAutoCompleteTextView
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
@@ -102,46 +105,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         canBeSent()
         share()
 
+        var arraAdapter:ArrayAdapter<Mention>
+        arraAdapter=MentionArrayAdapter<Mention>(this)
+        arraAdapter.add(Mention("Selam"))
+        arraAdapter.add(Mention("Yahya"))
+        arraAdapter.add(Mention("kumsal"))
+        post_text_element.mentionAdapter=arraAdapter
 
-        var mtList=ArrayList<Mentionable>()
-        mtList.add(object:Mentionable{
-            override fun getMentionOffset(): Int {
-                TODO("Not yet implemented")
-            }
-
-            override fun setMentionOffset(p0: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun getMentionLength(): Int {
-                TODO("Not yet implemented")
-            }
-
-            override fun setMentionLength(p0: Int) {
-                TODO("Not yet implemented")
-            }
-
-            override fun getMentionName(): String {
-                TODO("Not yet implemented")
-            }
-
-            override fun setMentionName(p0: String?) {
-                TODO("Not yet implemented")
-            }
-        })
-        var mentions:Mentions.Builder=Mentions.Builder(this,post_text_element)
-            .highlightColor(R.color.tipTextColor)
-            .maxCharacters(10)
-            .queryListener(object : QueryListener {
-                override fun onQueryReceived(p0: String?) {
-
-                }
-            }).suggestionsListener(object:SuggestionsListener{
-                override fun displaySuggestions(p0: Boolean) {
-
-                }
-            })
-            .addMentions()
     }
 
     private fun share() {
