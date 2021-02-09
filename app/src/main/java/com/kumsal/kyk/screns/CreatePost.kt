@@ -53,16 +53,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
-    private lateinit var securityTag:TextView
+    private lateinit var securityTag: TextView
 
     companion object {
-
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
         private var selectedlistElement = ArrayList<security_model>()
         private var mcounter = 0
         private var currentWith = 0
-
         private lateinit var textView: TextView
         private lateinit var radioGroup: RadioGroup
         private lateinit var mAdapter: security_adapter
@@ -74,7 +72,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
-        private lateinit var  fullScreenDialog:FullScreenDialog
+        private lateinit var fullScreenDialog: FullScreenDialog
+        private var firstControl:Boolean?=null
     }
 
     //add intent element varíable
@@ -89,7 +88,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var mFirestore: FirebaseFirestore
 
     private lateinit var mFsSaveSecurity: FirebaseFirestore
-    private lateinit var mFsDenied:FirebaseFirestore
+    private lateinit var mFsDenied: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -195,8 +194,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         post_text_element = findViewById(R.id.activity_create_post_post_text_element)
         select_privacy = findViewById(R.id.activity_create_post_select_security)
         textView = TextView(this)
-        securityTag=findViewById(R.id.create_post_security_tag)
+        securityTag = findViewById(R.id.create_post_security_tag)
         var uidG = Globals.ınstance?.uid
+        firstControl= true
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
 
@@ -209,7 +209,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         //Firebase initialize zoon
         mFirestore = FirebaseFirestore.getInstance()
         mFsSaveSecurity = FirebaseFirestore.getInstance()
-        mFsDenied= FirebaseFirestore.getInstance()
+        mFsDenied = FirebaseFirestore.getInstance()
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
@@ -218,17 +218,19 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
 
     }
-    private fun accesList(theDeniedElement:GetDeniedList){
-        deniedListListener=mFsDenied.collection("Authentication").document(userid)
+
+    private fun accesList(theDeniedElement: GetDeniedList) {
+        deniedListListener = mFsDenied.collection("Authentication").document(userid)
             .addSnapshotListener { document, e ->
-                if (e!=null){
-                    Log.d("error denied list",e.message!!)
+                if (e != null) {
+                    Log.d("error denied list", e.message!!)
                     return@addSnapshotListener
                 }
-                var deniedList=document?.data as HashMap<String,Boolean>
+                var deniedList = document?.data as HashMap<String, Boolean>
                 theDeniedElement.accedDenied(deniedList)
             }
     }
+
     private fun secure_initial() {
 
         select_privacy.setOnClickListener(object : View.OnClickListener {
@@ -251,20 +253,19 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
-                                var getUsernames=ArrayList<String>()
-
+                                var getUsernames = ArrayList<String>()
 
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
-                                        accesList(object:GetDeniedList{
+                                        accesList(object : GetDeniedList {
                                             override fun accedDenied(map: HashMap<String, Boolean>) {
-                                                for (get in map){
+                                                for (get in map) {
                                                     getUsernames.add(get.key)
                                                 }
-                                                var mUserName= ArrayList<String>()
-                                                if (selectedlistElement.size>0){
-                                                    for (i in 0..selectedlistElement.size-1){
+                                                var mUserName = ArrayList<String>()
+                                                if (selectedlistElement.size > 0) {
+                                                    for (i in 0..selectedlistElement.size - 1) {
                                                         mUserName.add(selectedlistElement[i].theusername.toString())
                                                     }
                                                 }
@@ -272,23 +273,25 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                 for (doc in it!!) {
                                                     if (doc.id == Globals.ınstance?.uid)
                                                         continue
-                                                    var theData = doc.toObject(UsersModel::class.java)
-                                                    var theSecureData=security_model(
+                                                    var theData =
+                                                        doc.toObject(UsersModel::class.java)
+                                                    var theSecureData = security_model(
                                                         theData!!.theNameSurname!!,
                                                         theData!!.theUserName!!,
                                                         theData!!.theThmbImage!!,
                                                         false,
                                                         theData.theId!!
                                                     )
-                                                    if (mUserName.contains(theSecureData.theusername)){
-                                                        theSecureData.theisChecked=true
-                                                        selectedlistElement.add(theSecureData)
-                                                    }
-                                                    if (selectedlistElement.size==0){
-                                                        if (getUsernames.contains(theSecureData.theusername)){
-                                                            theSecureData.theisChecked=true
+                                                    if (firstControl!!){
+                                                        if (getUsernames.contains(theSecureData.theusername)) {
+                                                            theSecureData.theisChecked = true
                                                             selectedlistElement.add(theSecureData)
                                                             mcounter++
+                                                        }
+                                                    }else {
+                                                        if (mUserName.contains(theSecureData.theusername)) {
+                                                            theSecureData.theisChecked = true
+                                                            selectedlistElement.add(theSecureData)
                                                         }
                                                     }
                                                     theData.theId = doc.id
@@ -296,7 +299,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                 }
                                             }
                                         })
-
+                                        firstControl=false
                                         mAdapter.notifyDataSetChanged()
                                     }
 //                        mFirestore.collection("Users").addSnapshotListener { document, e ->
@@ -317,6 +320,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         })
     }
+
     private fun securityPanelEventClick() {
         if (alfriends.isChecked) {
             recyclerView.visibility = View.GONE
@@ -337,12 +341,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (isActionMode) {
                 recyclerView.visibility = View.VISIBLE
                 selectedAll.visibility = View.VISIBLE
-                textView.visibility=View.VISIBLE
+                textView.visibility = View.VISIBLE
                 textView.setText("${selectedlistElement.size} person selected ")
                 var anim = Animation(currentWith, textView)
                 textView.animation = anim
-                if (selectedlistElement.size== listElement.size){
-                    selectedAll.isChecked=true
+                if (selectedlistElement.size == listElement.size) {
+                    selectedAll.isChecked = true
                 }
                 if (selectedlistElement.size > 0) {
                     accept_selected_name.isEnabled = true
@@ -351,16 +355,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         }
         accept_selected_name.setOnClickListener {
-            WaitDialog.show(this,getString(R.string.please_wait))
+            WaitDialog.show(this, getString(R.string.please_wait))
             var deniedMap = HashMap<String, Boolean>()
             for (get in selectedlistElement)
                 deniedMap.put(get.theusername!!, true)
 
             mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
-                   WaitDialog.dismiss()
+                    WaitDialog.dismiss()
                     fullScreenDialog.doDismiss()
-                    securityTag.text="Someone"
+                    securityTag.text = "Someone"
                 }).addOnFailureListener {
                     OnFailureListener { exception: Exception ->
                         Log.d("Load denied error", exception.message!!)
@@ -399,6 +403,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         }
     }
+
     private fun securityPanelInitialzed(rootView: View?) {
         recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
         recyclerView.setHasFixedSize(true)
@@ -416,6 +421,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         setSupportActionBar(toolbar)
         recyclerView.adapter = mAdapter
     }
+
     private fun checkSecurePanel() {
         if (selectedlistElement.size > 0) {
             isActionMode = true
@@ -427,6 +433,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //            }
         }
     }
+
     fun startSelection(index: Int) {
 
         if (!isActionMode) {
@@ -444,6 +451,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             mAdapter.notifyDataSetChanged()
         }
     }
+
     private fun updateToolbarText(counter: Int) {
         if (counter == 0) {
             textView.setText("0 person selected ")
@@ -453,6 +461,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
 
     }
+
     override fun clickCheckBox(position: Int) {
         if (!selectedlistElement.contains(listElement.get(position))) {
 
@@ -484,6 +493,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             selectedAll.isChecked = false
         }
     }
+
     private fun initialDynamic() {
         var hint = "What's on your mind, $name?"
         post_text_element.hint = hint
@@ -491,10 +501,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             Picasso.get().load(imageUri).into(profile_image)
         }
     }
+
     override fun onStop() {
         listener.remove()
         super.onStop()
     }
+
     override fun onDestroy() {
         listener.remove()
         super.onDestroy()
