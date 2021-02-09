@@ -37,6 +37,10 @@ import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenter
+import com.percolate.mentions.Mentionable
+import com.percolate.mentions.Mentions
+import com.percolate.mentions.QueryListener
+import com.percolate.mentions.SuggestionsListener
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.lang.Exception
@@ -49,7 +53,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var profile_image: CircleImageView
     private lateinit var select_image: ImageButton
     private lateinit var share_button: Button
-    private lateinit var post_text_element: TextView
+    private lateinit var post_text_element: AutoCompleteTextView
     private lateinit var select_privacy: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
@@ -97,6 +101,47 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         initialDynamic()
         canBeSent()
         share()
+
+
+        var mtList=ArrayList<Mentionable>()
+        mtList.add(object:Mentionable{
+            override fun getMentionOffset(): Int {
+                TODO("Not yet implemented")
+            }
+
+            override fun setMentionOffset(p0: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun getMentionLength(): Int {
+                TODO("Not yet implemented")
+            }
+
+            override fun setMentionLength(p0: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun getMentionName(): String {
+                TODO("Not yet implemented")
+            }
+
+            override fun setMentionName(p0: String?) {
+                TODO("Not yet implemented")
+            }
+        })
+        var mentions:Mentions.Builder=Mentions.Builder(this,post_text_element)
+            .highlightColor(R.color.tipTextColor)
+            .maxCharacters(10)
+            .queryListener(object : QueryListener {
+                override fun onQueryReceived(p0: String?) {
+
+                }
+            }).suggestionsListener(object:SuggestionsListener{
+                override fun displaySuggestions(p0: Boolean) {
+
+                }
+            })
+            .addMentions()
     }
 
     private fun share() {
