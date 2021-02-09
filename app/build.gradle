@@ -71,4 +71,5 @@ dependencies {
     implementation "com.android.support:support-annotations:28.0.0"
     implementation 'com.github.percolate:Mentions:0.1.1'
     implementation 'com.hendraanggrian.appcompat:socialview:0.3-rc1'
+    implementation "com.hendraanggrian.appcompat:socialview-commons:0.3-rc1"
 }
