@@ -107,7 +107,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         var arraAdapter:ArrayAdapter<Mention>
         arraAdapter=MentionArrayAdapter<Mention>(this)
-        arraAdapter.add(Mention("Selam"))
+        arraAdapter.add(Mention("Selam","https://firebasestorage.googleapis.com/v0/b/kyk-f7865.appspot.com/o/images%2Fprofile_imageTgLPLav6TgTM8mEDD4pct8c9AAq1.jpg?alt=media&token=e44db436-8415-47f2-958c-42997b8b4e20"))
         arraAdapter.add(Mention("Yahya"))
         arraAdapter.add(Mention("kumsal"))
         post_text_element.mentionAdapter=arraAdapter
