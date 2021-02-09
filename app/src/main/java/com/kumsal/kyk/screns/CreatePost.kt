@@ -73,7 +73,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
         private lateinit var fullScreenDialog: FullScreenDialog
-        private var firstControl:Boolean?=null
+        private var firstControl:Boolean=true
     }
 
     //add intent element varíable
@@ -82,7 +82,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     var thmbImageUri = ""
     var userid = ""
     var username = ""
-
+    var testEl=true
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mFirestore: FirebaseFirestore
@@ -94,7 +94,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
         initialComponent()
-
+        firstControl=true
         //initialize intent element
         initialDynamic()
         canBeSent()
@@ -282,6 +282,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                         false,
                                                         theData.theId!!
                                                     )
+                                                    testEl
                                                     if (firstControl!!){
                                                         if (getUsernames.contains(theSecureData.theusername)) {
                                                             theSecureData.theisChecked = true
