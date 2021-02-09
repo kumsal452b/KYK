@@ -73,7 +73,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
         private lateinit var fullScreenDialog: FullScreenDialog
-        private var firstControl:Boolean=true
     }
 
     //add intent element varíable
@@ -82,7 +81,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     var thmbImageUri = ""
     var userid = ""
     var username = ""
-    var testEl=true
+    var firstControl=true
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mFirestore: FirebaseFirestore
@@ -94,7 +93,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
         initialComponent()
-        firstControl=true
         //initialize intent element
         initialDynamic()
         canBeSent()
@@ -282,8 +280,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                         false,
                                                         theData.theId!!
                                                     )
-                                                    testEl
-                                                    if (firstControl!!){
+
+                                                    if (firstControl){
                                                         if (getUsernames.contains(theSecureData.theusername)) {
                                                             theSecureData.theisChecked = true
                                                             selectedlistElement.add(theSecureData)
@@ -298,9 +296,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                     theData.theId = doc.id
                                                     listElement.add(theSecureData)
                                                 }
+                                                firstControl=false
                                             }
                                         })
-                                        firstControl=false
+
                                         mAdapter.notifyDataSetChanged()
                                     }
 //                        mFirestore.collection("Users").addSnapshotListener { document, e ->
