@@ -223,6 +223,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             .addSnapshotListener { document, e ->
                 if (e!=null){
                     Log.d("error denied list",e.message!!)
+                    return@addSnapshotListener
                 }
                 var deniedList=document?.data as HashMap<String,Boolean>
                 theDeniedElement.accedDenied(deniedList)
@@ -283,10 +284,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                         theSecureData.theisChecked=true
                                                         selectedlistElement.add(theSecureData)
                                                     }
-                                                    if (getUsernames.contains(theSecureData.theusername)){
-                                                        theSecureData.theisChecked=true
-                                                        selectedlistElement.add(theSecureData)
-                                                        mcounter++
+                                                    if (selectedlistElement.size==0){
+                                                        if (getUsernames.contains(theSecureData.theusername)){
+                                                            theSecureData.theisChecked=true
+                                                            selectedlistElement.add(theSecureData)
+                                                            mcounter++
+                                                        }
                                                     }
                                                     theData.theId = doc.id
                                                     listElement.add(theSecureData)
