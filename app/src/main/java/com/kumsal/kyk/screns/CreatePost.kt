@@ -40,6 +40,7 @@ import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenter
+import com.kumsal.kyk.interfaces.UserListCallback
 import com.percolate.mentions.Mentionable
 import com.percolate.mentions.Mentions
 import com.percolate.mentions.QueryListener
@@ -105,13 +106,31 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         canBeSent()
         share()
 
-        var arraAdapter:ArrayAdapter<Mention>
-        arraAdapter=MentionArrayAdapter<Mention>(this)
-        arraAdapter.add(Mention("Selam","https://firebasestorage.googleapis.com/v0/b/kyk-f7865.appspot.com/o/images%2Fprofile_imageTgLPLav6TgTM8mEDD4pct8c9AAq1.jpg?alt=media&token=e44db436-8415-47f2-958c-42997b8b4e20"))
-        arraAdapter.add(Mention("Yahya"))
-        arraAdapter.add(Mention("kumsal"))
-        post_text_element.mentionAdapter=arraAdapter
-
+        var userAdapter:ArrayAdapter<Mention>
+        userAdapter=MentionArrayAdapter<Mention>(this)
+        post_text_element.mentionAdapter=userAdapter
+        getUserList(object:GetCenter<UsersModel>{
+            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
+                for (theUser in array){
+                    userAdapter.add(Mention(theUser.theUserName!!,theUser.theNameSurname,theUser.theThmbImage))
+                }
+                userAdapter.notifyDataSetChanged()
+            }
+        })
+    }
+    private fun getUserList(listInterface:GetCenter<UsersModel>){
+        mFirestore.collection("Users").addSnapshotListener { document, error ->
+            if (error!=null){
+                Log.d("Error in cp",error.message!!)
+                return@addSnapshotListener
+            }
+            var userList=ArrayList<UsersModel>()
+            for (doc in document!!){
+                var theModel=doc.toObject(UsersModel::class.java)
+                userList.add(theModel)
+            }
+            listInterface.getUsers(userList)
+        }
     }
 
     private fun share() {
