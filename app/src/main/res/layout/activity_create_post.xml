@@ -84,6 +84,7 @@
         android:inputType="textMultiLine"
         android:textColor="#E3D2D2"
         android:textColorHint="#B5A4A4"
+        android:popupTheme="@drawable/bacground_is"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
