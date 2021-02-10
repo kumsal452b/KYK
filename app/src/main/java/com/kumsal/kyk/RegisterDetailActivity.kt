@@ -406,7 +406,7 @@ class RegisterDetailActivity : AppCompatActivity() {
         for (i in 0..turkisChar.size-1){
             convert=name.replace(turkisChar[i],englishChar[i],false)
         }
-        return ""
+        return convert
     }
     fun generateUsername(ad: String?): List<String> {
         var result = ArrayList<String>()
