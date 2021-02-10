@@ -105,19 +105,30 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         initialDynamic()
         canBeSent()
         share()
+        mentionSetup()
+    }
 
-        var userAdapter:ArrayAdapter<Mention>
-        userAdapter=MentionArrayAdapter<Mention>(this)
-        post_text_element.mentionAdapter=userAdapter
-        getUserList(object:GetCenter<UsersModel>{
+    private fun mentionSetup() {
+        post_text_element.context.assets
+        var userAdapter: ArrayAdapter<Mention>
+        userAdapter = MentionArrayAdapter<Mention>(this)
+        post_text_element.mentionAdapter = userAdapter
+        getUserList(object : GetCenter<UsersModel> {
             override fun getUsers(array: java.util.ArrayList<UsersModel>) {
-                for (theUser in array){
-                    userAdapter.add(Mention(theUser.theUserName!!,theUser.theNameSurname,theUser.theThmbImage))
+                for (theUser in array) {
+                    userAdapter.add(
+                        Mention(
+                            theUser.theUserName!!,
+                            theUser.theNameSurname,
+                            theUser.theThmbImage
+                        )
+                    )
                 }
                 userAdapter.notifyDataSetChanged()
             }
         })
     }
+
     private fun getUserList(listInterface:GetCenter<UsersModel>){
         mFirestore.collection("Users").addSnapshotListener { document, error ->
             if (error!=null){
