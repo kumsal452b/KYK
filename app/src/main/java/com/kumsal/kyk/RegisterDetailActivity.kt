@@ -395,6 +395,19 @@ class RegisterDetailActivity : AppCompatActivity() {
         return true
     }
 
+    fun clearTurkishWorld(name:String):String{
+        var convert=name
+        var turkisChar= arrayOf<Char>(0x131.toChar(),
+            0x130.toChar(), 0xFC.toChar(),
+            0xDC.toChar(), 0xF6.toChar(), 0xD6.toChar(),
+            0x15F.toChar(), 0x15E.toChar(), 0xE7.toChar(), 0xC7.toChar(), 0x11F.toChar(), 0x11E.toChar()
+        )
+        var englishChar= arrayOf<Char>('i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G')
+        for (i in 0..turkisChar.size-1){
+            convert=name.replace(turkisChar[i],englishChar[i],false)
+        }
+        return ""
+    }
     fun generateUsername(ad: String?): List<String> {
         var result = ArrayList<String>()
 
