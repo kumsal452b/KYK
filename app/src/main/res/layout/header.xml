@@ -13,10 +13,9 @@
         android:layout_height="170dp"
         android:src="@drawable/common_google_signin_btn_icon_dark" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
         android:orientation="vertical">
 
         <TextView
@@ -24,11 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
+            android:layout_centerHorizontal="true"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/header_circle_user"
@@ -37,11 +34,11 @@
             android:layout_marginTop="5dp"
             android:text="-"
             android:textColor="#FFFFFF"
+            android:layout_centerHorizontal="true"
             android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/header_circle_name"
-            app:layout_constraintStart_toStartOf="@+id/header_circle_name"
-            app:layout_constraintTop_toBottomOf="@+id/header_circle_name" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_below="@id/header_circle_name"
+             />
+    </RelativeLayout>
 
 
 </LinearLayout>
