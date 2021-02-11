@@ -11,7 +11,8 @@
         android:id="@+id/header_circle_image"
         android:layout_width="match_parent"
         android:layout_height="170dp"
-        android:src="@drawable/common_google_signin_btn_icon_dark" />
+        android:src="@drawable/persontwo"
+        />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -22,7 +23,7 @@
             android:id="@+id/header_circle_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-"
+            android:text=""
             android:layout_centerHorizontal="true"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
@@ -32,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="-"
+            android:text=""
             android:textColor="#FFFFFF"
             android:layout_centerHorizontal="true"
             android:textSize="16dp"
