@@ -233,8 +233,6 @@ class RegisterDetailActivity : AppCompatActivity() {
             }
         })
     }
-
-
     private fun initializeComponent() {
         name = getIntent().getStringExtra("name")
 
@@ -255,8 +253,6 @@ class RegisterDetailActivity : AppCompatActivity() {
         mFstoreDb= FirebaseFirestore.getInstance()
         mRefStorage = FirebaseStorage.getInstance().getReference("images")
     }
-
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -404,7 +400,9 @@ class RegisterDetailActivity : AppCompatActivity() {
         )
         var englishChar= arrayOf<Char>('i', 'I', 'u', 'U', 'o', 'O', 's', 'S', 'c', 'C', 'g', 'G')
         for (i in 0..turkisChar.size-1){
-            convert=name.replace(turkisChar[i],englishChar[i],false)
+            var t=turkisChar[i]
+            var eng=englishChar[i]
+            convert=convert.replace(t,eng)
         }
         return convert
     }
@@ -425,7 +423,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                 val theUser = valueof.toObject<UsersModel>(UsersModel::class.java)
                 usernames.add(theUser.theUserName as String)
             }
-            fulname = ad?.trim().toString()
+            fulname = clearTurkishWorld(ad?.trim().toString())
             for (a in 0..fulname.length - 1) {
                 if (fulname.get(a) == ' ') {
                     if (fulname.get(a + 1) == ' ') {
