@@ -50,7 +50,6 @@ import java.util.concurrent.ThreadLocalRandom
 import kotlin.collections.ArrayList
 
 class RegisterDetailActivity : AppCompatActivity() {
-
     private lateinit var username: AutoCompleteTextView
     private lateinit var imageView: CircleImageView
     private lateinit var imageBtn: ImageButton
@@ -63,12 +62,10 @@ class RegisterDetailActivity : AppCompatActivity() {
     lateinit var adapter: ArrayAdapter<String>
     private lateinit var spinnerColor: TextView
     private lateinit var usernames: ArrayList<String>
-
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mFstoreDb:FirebaseFirestore
     private lateinit var mFstoreUsernameDb:FirebaseFirestore
     private lateinit var mRefStorage: StorageReference
-
     private lateinit var imageuri: Uri
     private lateinit var tmbimageuri: Uri
     var perm = Array<String>(1) { i: Int ->
@@ -533,7 +530,6 @@ class RegisterDetailActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-
         Animatoo.animateSwipeRight(this)
     }
 }
