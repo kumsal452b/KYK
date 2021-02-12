@@ -20,10 +20,8 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
+import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.auth.User
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
@@ -96,7 +94,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     private lateinit var mFsSaveSecurity: FirebaseFirestore
     private lateinit var mFsDenied: FirebaseFirestore
-
+    private lateinit var mFsPostDb:FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -160,6 +158,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 values.put("time", ServerValue.TIMESTAMP)
                 values.put("thmbImageUri", thmbImageUri)
 
+                var pushId = mFsPostDb.collection("Post").id
+                mFsPostDb.collection("Post").add(values).addOnFailureListener {
+                    OnFailureListener {
+                        Log.d("Post Db have error", it.message!!)
+                    }
+                }.addOnSuccessListener {
+                    println("success")
+                }
                 mPostRefDb.child(ukey).setValue(values).addOnSuccessListener {
                     WaitDialog.dismiss()
                     var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
@@ -253,6 +259,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mFirestore = FirebaseFirestore.getInstance()
         mFsSaveSecurity = FirebaseFirestore.getInstance()
         mFsDenied = FirebaseFirestore.getInstance()
+        mFsPostDb= FirebaseFirestore.getInstance()
+
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
@@ -403,9 +411,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         accept_selected_name.setOnClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
-            var deniedMap = HashMap<String, Boolean>()
+            var deniedMap = HashMap<String, Any>()
             for (get in selectedlistElement)
-                deniedMap.put(get.theusername!!, true)
+                deniedMap.put("username", get.theusername!!)
 
             mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
