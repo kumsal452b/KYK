@@ -277,9 +277,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     Log.d("error denied list", e.message!!)
                     return@addSnapshotListener
                 }
-                var deniedList = document?.data as HashMap<String, Boolean>?
+                var deniedList = document?.data as HashMap<String, String>?
                 if (deniedList==null)
-                    deniedList=HashMap<String, Boolean>()
+                    deniedList=HashMap<String, String>()
                 theDeniedElement.accedDenied(deniedList)
             }
     }
@@ -312,9 +312,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
                                         accesList(object : GetDeniedList {
-                                            override fun accedDenied(map: HashMap<String, Boolean>?) {
+                                            override fun accedDenied(map: HashMap<String, String>?) {
+
                                                 for (get in map!!) {
-                                                    getUsernames.add(get.key)
+                                                    getUsernames.add(get.value)
                                                 }
                                                 var mUserName = ArrayList<String>()
                                                 if (selectedlistElement.size > 0) {
