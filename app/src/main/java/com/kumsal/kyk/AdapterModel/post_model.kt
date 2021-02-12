@@ -1,31 +1,14 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.text.TextUtils
+import com.google.firebase.Timestamp
 
-class post_model(ad: String, username: String, postContent: String, imageUri: String,since:String,thmbImg:String) {
-    var thead = ""
-    var theusername = ""
-    var thePost = ""
-    var theImage = ""
-    var theSince = ""
-    var theThmbImg=""
-
-    constructor():this("","","","","","")
-
-    init {
-        if (TextUtils.isEmpty(imageUri) || imageUri==null){
-            this.theImage="empty"
-        }else{
-            this.theImage=imageUri
-        }
-        if (TextUtils.isEmpty(thmbImg) || thmbImg==null){
-            this.theThmbImg="empty"
-        }else{
-            this.theThmbImg=thmbImg
-        }
-        this.theusername=username
-        this.thePost=postContent
-        this.theSince=since
-        this.thead=ad
-    }
+class post_model{
+    var thead :String?=null
+    var theusername :String?=null
+    var thePost :String?=null
+    var theImage :String?=null
+    var theSince :Timestamp?=null
+    var theThmbImg :String?=null
+    
 }
