@@ -8,10 +8,12 @@
     app:cardBackgroundColor="#120909"
     app:cardCornerRadius="8dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <RelativeLayout
+        android:id="@+id/relative1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FAF7F7"
+        android:background="#DDCFCF"
         android:padding="7dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -21,16 +23,76 @@
             android:src="@mipmap/emptyuser"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:id="@+id/relative2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/post_layout_imageView">
+
+            <TextView
+                android:id="@+id/post_layout_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Yahya Alatas"
+                android:textColor="#090606"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/post_layout_username"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/post_layout_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/post_layout_name"
+                android:fontFamily="@font/rubikvariablevontwght"
+                android:text="@yahya"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/post_layout_name"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/post_layout_sinceTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/post_layout_username"
+                android:fontFamily="sans-serif-thin"
+                android:text="4h"
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/post_layout_expanded"
+                android:layout_width="23dp"
+                android:layout_height="28dp"
+                android:background="#00816666"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_expand_more_24"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_horizontal"
+                />
+        </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/relative2"
             android:layout_marginStart="4dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/post_layout_expanded"
+            android:layout_toEndOf="@id/post_layout_imageView"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/post_layout_imageView"
-            app:layout_constraintTop_toBottomOf="@+id/post_layout_username">
+            app:layout_constraintStart_toEndOf="@+id/post_layout_imageView">
 
             <TextView
                 android:id="@+id/post_layout_imageView_postContent"
@@ -45,56 +107,8 @@
                 android:textColor="#100C0C"
                 android:textSize="15sp"
                 android:textStyle="normal"
-                app:layout_constraintStart_toEndOf="@+id/post_layout_imageView"
                 tools:layout_editor_absoluteY="19dp" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/post_layout_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="Yahya Alatas"
-            android:textColor="#090606"
-            app:layout_constraintEnd_toStartOf="@id/post_layout_username"
-            app:layout_constraintStart_toEndOf="@+id/post_layout_imageView"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteY="0dp" />
-
-        <TextView
-            android:id="@+id/post_layout_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="sans-serif-black"
-            android:text="@yahya"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/post_layout_name"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/post_layout_sinceTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="sans-serif-thin"
-            android:text="4h"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            app:layout_constraintStart_toEndOf="@+id/post_layout_username"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/post_layout_expanded"
-            android:layout_width="23dp"
-            android:layout_height="28dp"
-            android:background="#00816666"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_expand_more_24" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 </androidx.cardview.widget.CardView>
