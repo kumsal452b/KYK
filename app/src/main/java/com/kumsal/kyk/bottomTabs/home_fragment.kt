@@ -15,6 +15,7 @@ import com.firebase.ui.database.SnapshotParser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.R
@@ -27,6 +28,7 @@ class home_fragment : Fragment(){
 
     private var mUser: FirebaseUser? = null
     private var mPostDb: DatabaseReference?=null
+    private var mFsPostDb:FirebaseFirestore?=null
     //Adapter section
     lateinit var adapter: post_adapter
     lateinit var post_list: ArrayList<post_model>
@@ -53,6 +55,7 @@ class home_fragment : Fragment(){
 
         //
         mPostDb = FirebaseDatabase.getInstance().getReference("Post")
+        mFsPostDb= FirebaseFirestore.getInstance()
         mUser=FirebaseAuth.getInstance().currentUser
         if (mUser!=null){
             getPostValue()
