@@ -5,30 +5,30 @@ import com.google.firebase.Timestamp
 import java.util.ArrayList
 
 class post_model{
-    var thead :String?=null
-    var theusername :String?=null
-    var thePost :String?=null
-    var theImage :String?=null
-    var theSince :Timestamp?=null
+    var name :String?=null
+    var username :String?=null
+    var pc :String?=null
+    var thmbImageUri :String?=null
+    var time :Timestamp?=null
     var theThmbImg :String?=null
     var comments:ArrayList<HashMap<String,Any>>?=null
     var likes:ArrayList<String>?=null
     constructor(){}
     constructor(
-        thead: String?,
-        theusername: String?,
-        thePost: String?,
-        theImage: String?,
-        theSince: Timestamp?,
+        name: String?,
+        username: String?,
+        pc: String?,
+        thmbImageUri: String?,
+        time: Timestamp?,
         theThmbImg: String?,
         comments: ArrayList<HashMap<String, Any>>?,
         likes: ArrayList<String>?
     ) {
-        this.thead = thead
-        this.theusername = theusername
-        this.thePost = thePost
-        this.theImage = theImage
-        this.theSince = theSince
+        this.name = name
+        this.username = username
+        this.pc = pc
+        this.thmbImageUri = thmbImageUri
+        this.time = time
         this.theThmbImg = theThmbImg
         this.comments = comments
         this.likes = likes
