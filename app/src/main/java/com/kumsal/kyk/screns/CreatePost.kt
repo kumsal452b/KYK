@@ -336,7 +336,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                         false,
                                                         theData.theId!!
                                                     )
-
+                                                    theData.theId = doc.id
                                                     if (firstControl){
                                                         if (getUsernames.contains(theSecureData.theusername)) {
                                                             theSecureData.theisChecked = true
@@ -349,7 +349,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                             selectedlistElement.add(theSecureData)
                                                         }
                                                     }
-                                                    theData.theId = doc.id
+
                                                     listElement.add(theSecureData)
                                                 }
                                                 firstControl=false
@@ -414,7 +414,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
             var deniedMap = HashMap<String, Any>()
             for (get in selectedlistElement)
-                deniedMap.put("username", get.theusername!!)
+                deniedMap.put(get.thePersonId!!, get.theusername!!)
 
             mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
