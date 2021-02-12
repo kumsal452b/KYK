@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/margin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
@@ -13,7 +14,7 @@
         android:id="@+id/relative1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#DDCFCF"
+        android:background="#FFFFFF"
         android:padding="7dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -23,6 +24,7 @@
             android:src="@mipmap/emptyuser"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <RelativeLayout
             android:id="@+id/relative2"
             android:layout_width="match_parent"
@@ -59,12 +61,27 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/post_layout_dot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_toEndOf="@id/post_layout_username"
+                android:fontFamily="sans-serif-thin"
+                android:text="."
+                android:textColor="@color/black"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
                 android:id="@+id/post_layout_sinceTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/post_layout_username"
+                android:layout_marginStart="2dp"
+                android:layout_toEndOf="@id/post_layout_dot"
                 android:fontFamily="sans-serif-thin"
                 android:text="4h"
                 android:textColor="@color/black"
@@ -75,13 +92,12 @@
                 android:id="@+id/post_layout_expanded"
                 android:layout_width="23dp"
                 android:layout_height="28dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_horizontal"
                 android:background="#00816666"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_expand_more_24"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center_horizontal"
-                />
+                app:srcCompat="@drawable/ic_baseline_expand_more_24" />
         </RelativeLayout>
 
         <LinearLayout
