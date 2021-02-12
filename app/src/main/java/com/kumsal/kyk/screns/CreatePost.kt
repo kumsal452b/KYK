@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.gms.tasks.Task
+import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.EventListener
@@ -147,7 +148,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
                 var values = HashMap<String, Any>()
-                var ukey = mPostRefDb.child(userid).push().key.toString()
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
 
@@ -155,31 +155,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 values.put("name", name)
                 values.put("username", username)
                 values.put("imageUri", imageUri)
-                values.put("time", ServerValue.TIMESTAMP)
+                values.put("time", Timestamp.now())
                 values.put("thmbImageUri", thmbImageUri)
 
                 var pushId = mFsPostDb.collection("Post").id
                 mFsPostDb.collection("Post").add(values).addOnFailureListener {
                     OnFailureListener {
+                        WaitDialog.dismiss()
                         Log.d("Post Db have error", it.message!!)
                     }
                 }.addOnSuccessListener {
-                    println("success")
-                }
-                mPostRefDb.child(ukey).setValue(values).addOnSuccessListener {
                     WaitDialog.dismiss()
                     var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
                     startActivity(main_Activity)
-                }.addOnFailureListener { Exception ->
-                    WaitDialog.dismiss()
-                    Toast.makeText(this@CreatePost, Exception.localizedMessage, Toast.LENGTH_LONG)
-                }.addOnCompleteListener {
-                    WaitDialog.dismiss()
-                    var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
-                    startActivity(main_Activity)
-                    WaitDialog.dismiss()
                 }
-            }
         })
     }
 
@@ -329,6 +318,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                         continue
                                                     var theData =
                                                         doc.toObject(UsersModel::class.java)
+                                                    theData.theId = doc.id
                                                     var theSecureData = security_model(
                                                         theData!!.theNameSurname!!,
                                                         theData!!.theUserName!!,
@@ -336,7 +326,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                         false,
                                                         theData.theId!!
                                                     )
-                                                    theData.theId = doc.id
+
                                                     if (firstControl){
                                                         if (getUsernames.contains(theSecureData.theusername)) {
                                                             theSecureData.theisChecked = true
