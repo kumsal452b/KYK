@@ -73,16 +73,26 @@ class home_fragment : Fragment(){
     }
     var getUserName=HashMap<String,String>()
     fun getDeniedPerson(theGetElement:GetCenter<String>){
-        mFsAuthDb?.collection("Authentication")?.addSnapshotListener { document, e ->
-            if (e!=null){
-                Log.d("Home fragment",e.message!!)
-                return@addSnapshotListener
-            }
-            for (the in document!!){
-                var usernames=document.documents as HashMap<String,String>
+        mFsAuthDb?.collection("Authentication")?.get()?.addOnSuccessListener{
+            documents->
+            for (doc in documents){
+                var usernames=doc.data as HashMap<String,String>
                 println("test")
             }
+        }?.addOnFailureListener{
+            Log.d("Home fragment",it.message!!)
         }
+
+//        addSnapshotListener { document, e ->
+//            if (e!=null){
+//
+//                return@addSnapshotListener
+//            }
+//            for (the in document!!){
+//                var usernames=document.documents as HashMap<String,String>
+//
+//            }
+//        }
     }
     fun getPostValue() {
         mFsPostDb?.collection("Post")?.get()?.addOnFailureListener(
@@ -93,7 +103,7 @@ class home_fragment : Fragment(){
             override fun onSuccess(p0: QuerySnapshot?) {
                 getDeniedPerson(object:GetCenter<String>{
                     override fun getUsers(array: ArrayList<String>) {
-                        
+
                     }
                 })
             }
