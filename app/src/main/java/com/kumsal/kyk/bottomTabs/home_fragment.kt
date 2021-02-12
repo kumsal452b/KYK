@@ -78,7 +78,10 @@ class home_fragment : Fragment(){
                 Log.d("Home fragment",e.message!!)
                 return@addSnapshotListener
             }
-
+            for (the in document!!){
+                var usernames=document.documents as HashMap<String,String>
+                println("test")
+            }
         }
     }
     fun getPostValue() {
