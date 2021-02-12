@@ -91,7 +91,11 @@ class home_fragment : Fragment(){
             }
         )?.addOnSuccessListener(object:OnSuccessListener<QuerySnapshot>{
             override fun onSuccess(p0: QuerySnapshot?) {
-
+                getDeniedPerson(object:GetCenter<String>{
+                    override fun getUsers(array: ArrayList<String>) {
+                        
+                    }
+                })
             }
         })
         query = mPostDb as Query
