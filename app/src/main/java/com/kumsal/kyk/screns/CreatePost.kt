@@ -249,7 +249,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mFsSaveSecurity = FirebaseFirestore.getInstance()
         mFsDenied = FirebaseFirestore.getInstance()
         mFsPostDb= FirebaseFirestore.getInstance()
-
+        listener= ListenerRegistration {}
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
