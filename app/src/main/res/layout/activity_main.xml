@@ -144,7 +144,6 @@
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
         app:menu="@menu/menu_bar"
-        android:theme="@style/Theme.AppCompat.Light.Dialog"
         android:paddingTop="25dp"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
