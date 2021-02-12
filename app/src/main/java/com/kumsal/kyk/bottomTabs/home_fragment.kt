@@ -71,13 +71,13 @@ class home_fragment : Fragment(){
         }
         return view
     }
-    var getUserName=HashMap<String,String>()
+    var getUserName=ArrayList<String>()
     fun getDeniedPerson(theGetElement:GetCenter<String>){
         mFsAuthDb?.collection("Authentication")?.get()?.addOnSuccessListener{
             documents->
             for (doc in documents){
                 var usernames=doc.data as HashMap<String,String>
-                println("test")
+                getUserName.addAll()
             }
         }?.addOnFailureListener{
             Log.d("Home fragment",it.message!!)
