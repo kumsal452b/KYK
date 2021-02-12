@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.hendraanggrian.appcompat.widget.SocialEditText
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -16,19 +17,18 @@ class post_adapter(private var list:ArrayList<post_model>,private var context:Co
 
     class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image:CircleImageView=itemView.findViewById(R.id.post_layout_imageView)
-        var postc:TextView=itemView.findViewById(R.id.post_layout_imageView_postContent)
+        var postc:SocialEditText=itemView.findViewById(R.id.post_layout_imageView_postContent)
         var name:TextView=itemView.findViewById(R.id.post_layout_name)
         var username:TextView=itemView.findViewById(R.id.post_layout_username)
         var since:TextView=itemView.findViewById(R.id.post_layout_sinceTime)
         var expanded:ImageButton=itemView.findViewById(R.id.post_layout_expanded)
 
         fun BindElement(model:post_model){
-            Picasso.get().load(model.theThmbImg).placeholder(R.drawable.persontwo).into(image)
-            postc.setText(model.thePost)
-            name.setText(model.thead)
-            since.setText(model.theSince)
-            username.setText(model.theusername)
-
+            Picasso.get().load(model.thmbImageUri).placeholder(R.drawable.persontwo).into(image)
+            postc.setText(model.pc)
+            name.setText(model.name)
+            since.setText(model.time!!.nanoseconds)
+            username.setText(model.username)
         }
     }
 
