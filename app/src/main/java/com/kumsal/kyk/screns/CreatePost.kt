@@ -144,20 +144,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     private fun share() {
-        share_button.setOnClickListener(object : View.OnClickListener {
+        share_button.setOnClickListener(object:View.OnClickListener{
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
                 var values = HashMap<String, Any>()
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
-
                 values.put("pc", postContent)
                 values.put("name", name)
                 values.put("username", username)
                 values.put("imageUri", imageUri)
                 values.put("time", Timestamp.now())
                 values.put("thmbImageUri", thmbImageUri)
-
+                values.put("likes", java.util.ArrayList<String>())
+                values.put("comments", "")
                 var pushId = mFsPostDb.collection("Post").id
                 mFsPostDb.collection("Post").add(values).addOnFailureListener {
                     OnFailureListener {
@@ -169,9 +169,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
                     startActivity(main_Activity)
                 }
+            }
         })
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_action, menu)
