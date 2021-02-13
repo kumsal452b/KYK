@@ -27,7 +27,10 @@ import com.kumsal.kyk.interfaces.GetCenter
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
+import java.util.stream.Collector
+import java.util.stream.Collectors
 import kotlin.collections.HashMap
+import kotlin.reflect.typeOf
 
 
 class home_fragment : Fragment(){
@@ -77,8 +80,16 @@ class home_fragment : Fragment(){
             documents->
             for (doc in documents){
                 var usernames=doc.data as HashMap<String,String>
-                getUserName.addAll()
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    var toList=usernames.values.stream().collect(Collectors.toList())
+                    getUserName.addAll(toList)
+                }
+
             }
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                getUserName= getUserName.stream().distinct().collect(Collectors.toList()) as ArrayList<String>
+            }
+            theGetElement.getUsers(getUserName)
         }?.addOnFailureListener{
             Log.d("Home fragment",it.message!!)
         }
@@ -99,15 +110,20 @@ class home_fragment : Fragment(){
             OnFailureListener {
                 Log.d("Home fragment",it.message!!)
             }
-        )?.addOnSuccessListener(object:OnSuccessListener<QuerySnapshot>{
-            override fun onSuccess(p0: QuerySnapshot?) {
-                getDeniedPerson(object:GetCenter<String>{
-                    override fun getUsers(array: ArrayList<String>) {
-
+        )?.addOnSuccessListener{document->
+            getDeniedPerson(object : GetCenter<String> {
+                override fun getUsers(array: ArrayList<String>) {
+                    for (doc in document) {
+                        var test = doc.data.get("comments")
+                        println()
+                        var thePost = doc.toObject(post_model::class.java)
+                        if (!array.contains(thePost.username)) {
+                            post_list.add(thePost)
+                        }
                     }
-                })
-            }
-        })
+                }
+            })
+        }
         query = mPostDb as Query
 //        mPostDb?.orderByChild("time")?.addValueEventListener(object : ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
