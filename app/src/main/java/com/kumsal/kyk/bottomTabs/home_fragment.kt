@@ -93,17 +93,6 @@ class home_fragment : Fragment(){
         }?.addOnFailureListener{
             Log.d("Home fragment",it.message!!)
         }
-
-//        addSnapshotListener { document, e ->
-//            if (e!=null){
-//
-//                return@addSnapshotListener
-//            }
-//            for (the in document!!){
-//                var usernames=document.documents as HashMap<String,String>
-//
-//            }
-//        }
     }
     fun getPostValue() {
         mFsPostDb?.collection("Post")?.get()?.addOnFailureListener(
