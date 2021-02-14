@@ -402,13 +402,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         accept_selected_name.setOnClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
-            var deniedMap = HashMap<String, Any>()
-            
+            var deniedList = ArrayList<String>()
             var fsBatch=mFsSaveSecurity.batch()
             for (get in selectedlistElement){
-                var dbRef=mFsPostDb.collection("Authentication").document(get.thePersonId!!)
-                fsBatch.update(dbRef,userid,true)
-                fsBatch.set()
+                var dbRef=mFsPostDb.collection("Users")
+                fsBatch.update(dbRef,get.thePersonId!!, deniedList)
             }
             fsBatch.commit().addOnSuccessListener{
                 println("succes")
