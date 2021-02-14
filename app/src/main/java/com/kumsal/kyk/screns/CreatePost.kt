@@ -403,9 +403,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         accept_selected_name.setOnClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
             var deniedMap = HashMap<String, Any>()
-            for (get in selectedlistElement)
-                deniedMap.put(get.thePersonId!!, get.theusername!!)
-
+            var fsBatch=mFsSaveSecurity.batch()
+            for (get in selectedlistElement){
+                var dbRef=mFsPostDb.collection("Authentication").document(get.thePersonId!!)
+                fsBatch.update(dbRef,userid,true)
+            }
+            fsBatch.commit().addOnSuccessListener{
+                println("succes")
+            }
             mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
                     WaitDialog.dismiss()
