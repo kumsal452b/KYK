@@ -102,14 +102,14 @@ class home_fragment : Fragment(){
         )?.addOnSuccessListener{document->
             getDeniedPerson(object : GetCenter<String> {
                 override fun getUsers(array: ArrayList<String>) {
-                    for (doc in document) {
-                        var test = doc.data.get("comments")
-                        println()
-                        var thePost = doc.toObject(post_model::class.java)
-                        if (!array.contains(thePost.username)) {
-                            post_list.add(thePost)
-                        }
-                    }
+//                    for (doc in document) {
+//                        var test = doc.data.get("comments")
+//                        println()
+//                        var thePost = doc.toObject(post_model::class.java)
+//                        if (!array.contains(thePost.username)) {
+//                            post_list.add(thePost)
+//                        }
+//                    }
                 }
             })
         }

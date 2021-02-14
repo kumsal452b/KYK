@@ -410,6 +410,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
             fsBatch.commit().addOnSuccessListener{
                 println("succes")
+            }.addOnFailureListener{
+                exp->
+                println(exp.localizedMessage)
             }
             mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
                 .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
