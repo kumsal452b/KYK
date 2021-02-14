@@ -403,10 +403,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         accept_selected_name.setOnClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
             var deniedMap = HashMap<String, Any>()
+            
             var fsBatch=mFsSaveSecurity.batch()
             for (get in selectedlistElement){
                 var dbRef=mFsPostDb.collection("Authentication").document(get.thePersonId!!)
                 fsBatch.update(dbRef,userid,true)
+                fsBatch.set()
             }
             fsBatch.commit().addOnSuccessListener{
                 println("succes")
@@ -414,17 +416,17 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 exp->
                 println(exp.localizedMessage)
             }
-            mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
-                .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
-                    WaitDialog.dismiss()
-                    fullScreenDialog.doDismiss()
-                    securityTag.text = "Someone"
-                }).addOnFailureListener {
-                    OnFailureListener { exception: Exception ->
-                        Log.d("Load denied error", exception.message!!)
-                        WaitDialog.dismiss()
-                    }
-                }
+//            mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
+//                .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
+//                    WaitDialog.dismiss()
+//                    fullScreenDialog.doDismiss()
+//                    securityTag.text = "Someone"
+//                }).addOnFailureListener {
+//                    OnFailureListener { exception: Exception ->
+//                        Log.d("Load denied error", exception.message!!)
+//                        WaitDialog.dismiss()
+//                    }
+//                }
         }
         selectedAll.setOnClickListener {
             if (selectedAll.isChecked) {
