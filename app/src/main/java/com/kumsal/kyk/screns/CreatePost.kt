@@ -270,9 +270,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     return@addSnapshotListener
                 }
                 var theuser = document?.toObject(UsersModel::class.java)
-                if (deniedList == null)
-                    deniedList = HashMap<String, String>()
-                theDeniedElement.accedDenied(deniedList)
+                if (theuser?.blocked == null)
+                    theuser?.blocked = HashMap<String, Any>()
+                theDeniedElement.accedDenied(theuser.blocked)
             }
     }
 
