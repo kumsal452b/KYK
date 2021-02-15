@@ -61,7 +61,7 @@ class home_fragment : Fragment(){
         recyclerView=view.findViewById(R.id.fragment_home_recycler)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager= LinearLayoutManager(view.context)
-
+        recyclerView.adapter=adapter
 
         //
         mPostDb = FirebaseDatabase.getInstance().getReference("Post")
@@ -76,20 +76,10 @@ class home_fragment : Fragment(){
     }
     var getUserName=ArrayList<String>()
     fun getDeniedPerson(theGetElement:GetCenter<String>){
-        mFsAuthDb?.collection("Authentication")?.get()?.addOnSuccessListener{
+        mFsAuthDb?.collection("Users")?.document(mUser?.uid!!)?.get()?.addOnSuccessListener{
             documents->
-            for (doc in documents){
-                var usernames=doc.data as HashMap<String,String>
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                    var toList=usernames.values.stream().collect(Collectors.toList())
-                    getUserName.addAll(toList)
-                }
-
-            }
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-                getUserName= getUserName.stream().distinct().collect(Collectors.toList()) as ArrayList<String>
-            }
-            theGetElement.getUsers(getUserName)
+            var blockerList=documents["blockers"]
+            theGetElement.getUsers(blockerList as ArrayList<String>)
         }?.addOnFailureListener{
             Log.d("Home fragment",it.message!!)
         }
@@ -102,14 +92,14 @@ class home_fragment : Fragment(){
         )?.addOnSuccessListener{document->
             getDeniedPerson(object : GetCenter<String> {
                 override fun getUsers(array: ArrayList<String>) {
-//                    for (doc in document) {
-//                        var test = doc.data.get("comments")
-//                        println()
-//                        var thePost = doc.toObject(post_model::class.java)
-//                        if (!array.contains(thePost.username)) {
-//                            post_list.add(thePost)
-//                        }
-//                    }
+                    for (doc in document) {
+
+                        var thePost = doc.toObject(post_model::class.java)
+                        if (!array.contains(thePost.username)) {
+                            post_list.add(thePost)
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
                 }
             })
         }
