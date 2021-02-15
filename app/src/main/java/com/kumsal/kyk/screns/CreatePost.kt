@@ -159,7 +159,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 values.put("time", Timestamp.now())
                 values.put("thmbImageUri", thmbImageUri)
                 values.put("likes", java.util.ArrayList<String>())
-                values.put("comments", "")
+                values.put("comments", 0)
                 var pushId = mFsPostDb.collection("Post").id
                 mFsPostDb.collection("Post").add(values).addOnFailureListener {
                     OnFailureListener {
