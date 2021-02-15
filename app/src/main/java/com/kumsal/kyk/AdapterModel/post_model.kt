@@ -10,7 +10,7 @@ class post_model{
     var pc :String?=null
     var thmbImageUri :String?=null
     var time :Timestamp?=null
-    var comments:HashMap<HashMap<String,Any>,Any>?=null
+    var comments:Int?=null
     var likes:ArrayList<String>?=null
     constructor(){}
     constructor(
@@ -19,7 +19,7 @@ class post_model{
         pc: String?,
         thmbImageUri: String?,
         time: Timestamp?,
-        comments: HashMap<HashMap<String,Any>,Any>?,
+        comments: Int,
         likes: ArrayList<String>?
     ) {
         this.name = name
