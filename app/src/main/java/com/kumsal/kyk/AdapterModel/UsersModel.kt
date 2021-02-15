@@ -4,8 +4,6 @@ import android.text.TextUtils
 import com.google.firebase.Timestamp
 
 class UsersModel {
-
-
     var theEmail: String? = null
     var theNameSurname: String? = null
     var theUserName: String? = null
@@ -13,6 +11,8 @@ class UsersModel {
     var theTime: Timestamp? = null
     var theImage: String? = null
     var theId:String?=null
+    var blocked:HashMap<String,Any>?=null
+    var blockers:HashMap<String,Any>?=null
 
     constructor() {
 
@@ -49,6 +49,11 @@ class UsersModel {
         this.theThmbImage = theThmbImage
         this.theTime = theTime
         this.theImage = theImage
+    }
+
+    constructor(blocked: HashMap<String, Any>?, blockers: HashMap<String, Any>?) {
+        this.blocked = blocked
+        this.blockers = blockers
     }
 
     fun toMap(): Map<String, Any> {
