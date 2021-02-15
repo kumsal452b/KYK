@@ -412,6 +412,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             fsBatch.commit().addOnSuccessListener{
                 fullScreenDialog.doDismiss()
                 securityTag.text = "Someone"
+                WaitDialog.dismiss()
             }.addOnFailureListener{
                 exp->
                 Log.d("Load denied error", exp.message!!)
