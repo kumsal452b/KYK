@@ -11,8 +11,8 @@ class UsersModel {
     var theTime: Timestamp? = null
     var theImage: String? = null
     var theId:String?=null
-    var blocked:HashMap<String,Any>?=null
-    var blockers:HashMap<String,Any>?=null
+    var blocked:ArrayList<String>?=null
+    var blockers:ArrayList<String>?=null
 
     constructor() {
 
@@ -51,7 +51,7 @@ class UsersModel {
         this.theImage = theImage
     }
 
-    constructor(blocked: HashMap<String, Any>?, blockers: HashMap<String, Any>?) {
+    constructor(blocked: ArrayList<String>?, blockers: ArrayList<String>?) {
         this.blocked = blocked
         this.blockers = blockers
     }
