@@ -403,28 +403,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         accept_selected_name.setOnClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
             var deniedList = ArrayList<String>()
+            deniedList.add(username)
             var fsBatch=mFsSaveSecurity.batch()
             for (get in selectedlistElement){
-                var dbRef=mFsPostDb.collection("Users")
-                fsBatch.update(dbRef,get.thePersonId!!, deniedList)
+                var dbRef=mFsPostDb.collection("Users").document(get.thePersonId!!)
+                fsBatch.update(dbRef,"blocked", deniedList)
             }
             fsBatch.commit().addOnSuccessListener{
-                println("succes")
+                fullScreenDialog.doDismiss()
+                securityTag.text = "Someone"
             }.addOnFailureListener{
                 exp->
-                println(exp.localizedMessage)
+                Log.d("Load denied error", exp.message!!)
+                WaitDialog.dismiss()
             }
-//            mFsSaveSecurity.collection("Authentication").document(Globals.ınstance?.uid!!)
-//                .set(deniedMap as Map<String, Any>).addOnSuccessListener(OnSuccessListener {
-//                    WaitDialog.dismiss()
-//                    fullScreenDialog.doDismiss()
-//                    securityTag.text = "Someone"
-//                }).addOnFailureListener {
-//                    OnFailureListener { exception: Exception ->
-//                        Log.d("Load denied error", exception.message!!)
-//                        WaitDialog.dismiss()
-//                    }
-//                }
         }
         selectedAll.setOnClickListener {
             if (selectedAll.isChecked) {
