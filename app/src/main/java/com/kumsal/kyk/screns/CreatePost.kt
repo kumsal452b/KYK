@@ -404,10 +404,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
             var deniedList = ArrayList<String>()
             deniedList.add(username)
+            var map=HashMap<String,Any>()
+            map.put("blocked",FieldValue.arrayUnion(username))
             var fsBatch=mFsSaveSecurity.batch()
             for (get in selectedlistElement){
                 var dbRef=mFsPostDb.collection("Users").document(get.thePersonId!!)
-                fsBatch.update(dbRef,"blocked", deniedList)
+                fsBatch.set(dbRef,map, SetOptions.merge())
             }
             fsBatch.commit().addOnSuccessListener{
                 fullScreenDialog.doDismiss()
