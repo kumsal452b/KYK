@@ -3,6 +3,7 @@ package com.kumsal.kyk.screns
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
+import android.text.Selection
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
@@ -88,14 +89,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     var thmbImageUri = ""
     var userid = ""
     var username = ""
-    var firstControl=true
+    var firstControl = true
+
     //Database section
     private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mFirestore: FirebaseFirestore
 
     private lateinit var mFsSaveSecurity: FirebaseFirestore
     private lateinit var mFsDenied: FirebaseFirestore
-    private lateinit var mFsPostDb:FirebaseFirestore
+    private lateinit var mFsPostDb: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -128,15 +130,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         })
     }
 
-    private fun getUserList(listInterface:GetCenter<UsersModel>){
+    private fun getUserList(listInterface: GetCenter<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
-            if (error!=null){
-                Log.d("Error in cp",error.message!!)
+            if (error != null) {
+                Log.d("Error in cp", error.message!!)
                 return@addSnapshotListener
             }
-            var userList=ArrayList<UsersModel>()
-            for (doc in document!!){
-                var theModel=doc.toObject(UsersModel::class.java)
+            var userList = ArrayList<UsersModel>()
+            for (doc in document!!) {
+                var theModel = doc.toObject(UsersModel::class.java)
                 userList.add(theModel)
             }
             listInterface.getUsers(userList)
@@ -144,7 +146,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     private fun share() {
-        share_button.setOnClickListener(object:View.OnClickListener{
+        share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
                 var postContent = post_text_element.text.toString()
                 var values = HashMap<String, Any>()
@@ -172,6 +174,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         })
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_action, menu)
@@ -234,7 +237,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         textView = TextView(this)
         securityTag = findViewById(R.id.create_post_security_tag)
         var uidG = Globals.ınstance?.uid
-        firstControl= true
+        firstControl = true
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
 
@@ -248,8 +251,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mFirestore = FirebaseFirestore.getInstance()
         mFsSaveSecurity = FirebaseFirestore.getInstance()
         mFsDenied = FirebaseFirestore.getInstance()
-        mFsPostDb= FirebaseFirestore.getInstance()
-        listener= ListenerRegistration {}
+        mFsPostDb = FirebaseFirestore.getInstance()
+        listener = ListenerRegistration {}
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
@@ -267,8 +270,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     return@addSnapshotListener
                 }
                 var deniedList = document?.data as HashMap<String, String>?
-                if (deniedList==null)
-                    deniedList=HashMap<String, String>()
+                if (deniedList == null)
+                    deniedList = HashMap<String, String>()
                 theDeniedElement.accedDenied(deniedList)
             }
     }
@@ -285,8 +288,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
                                 securityPanelInitialzed(rootView)
                                 securityPanelEventClick()
-
-
 //                        test.readyElement(object : GetCenter<UsersModel> {
 //                            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
 //                                    for (get in array){
@@ -327,13 +328,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                         theData.theId!!
                                                     )
 
-                                                    if (firstControl){
+                                                    if (firstControl) {
                                                         if (getUsernames.contains(theSecureData.theusername)) {
                                                             theSecureData.theisChecked = true
                                                             selectedlistElement.add(theSecureData)
                                                             mcounter++
                                                         }
-                                                    }else {
+                                                    } else {
                                                         if (mUserName.contains(theSecureData.theusername)) {
                                                             theSecureData.theisChecked = true
                                                             selectedlistElement.add(theSecureData)
@@ -342,7 +343,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
                                                     listElement.add(theSecureData)
                                                 }
-                                                firstControl=false
+                                                firstControl = false
                                             }
                                         })
 
@@ -402,21 +403,32 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         accept_selected_name.setOnClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
-            var deniedList = ArrayList<String>()
-            deniedList.add(username)
-            var map=HashMap<String,Any>()
-            map.put("blocked",FieldValue.arrayUnion(username))
-            var fsBatch=mFsSaveSecurity.batch()
-            for (get in selectedlistElement){
-                var dbRef=mFsPostDb.collection("Users").document(get.thePersonId!!)
-                fsBatch.set(dbRef,map, SetOptions.merge())
+            var blockers = HashMap<String, Any>()
+            blockers.put("blockers", FieldValue.arrayUnion(username))
+
+            var blocked = HashMap<String, Any>()
+            blocked.put("blocked", FieldValue.arrayUnion(selectedlistElement))
+
+
+            var fsBlockersBatch = mFsSaveSecurity.batch()
+            var fsBlockedBatch=mFsSaveSecurity.batch()
+            for (get in selectedlistElement) {
+                var dbRef = mFsPostDb.collection("Users").document(get.thePersonId!!)
+                var curUsRef = mFsPostDb.collection("Users").document(userid)
+                blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
+                fsBlockedBatch.set(curUsRef,blocked, SetOptions.merge())
+                fsBlockersBatch.set(dbRef, blockers, SetOptions.merge())
             }
-            fsBatch.commit().addOnSuccessListener{
-                fullScreenDialog.doDismiss()
-                securityTag.text = "Someone"
-                WaitDialog.dismiss()
-            }.addOnFailureListener{
-                exp->
+            fsBlockersBatch.commit().addOnSuccessListener {
+                fsBlockedBatch.commit().addOnSuccessListener {
+                    fullScreenDialog.doDismiss()
+                    securityTag.text = "Someone"
+                    WaitDialog.dismiss()
+                }.addOnFailureListener { exp ->
+                    Log.d("Load denied error", exp.message!!)
+                    WaitDialog.dismiss()
+                }
+            }.addOnFailureListener { exp ->
                 Log.d("Load denied error", exp.message!!)
                 WaitDialog.dismiss()
             }

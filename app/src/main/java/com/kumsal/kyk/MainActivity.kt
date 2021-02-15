@@ -256,7 +256,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             var userElement=DbUsers<UsersModel>(mFstoreUserDb, UsersModel())
             var userList=userElement.readyElement(object:GetCenter<UsersModel>{
                 override fun getUsers(array: ArrayList<UsersModel>) {
-                    Picasso.get().load( array.get(0).theThmbImage).into(proImage)
+                    var photoImage=array.get(0).theThmbImage
+                    if (!TextUtils.isEmpty(photoImage))
+                        Picasso.get().load( array.get(0).theThmbImage).into(proImage)
                     name.setText(array.get(0).theNameSurname)
                     username.setText(array.get(0).theUserName)
                     thmbImageUri=array[0].theThmbImage!!
