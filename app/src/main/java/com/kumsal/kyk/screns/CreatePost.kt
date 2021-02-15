@@ -271,7 +271,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 }
                 var theuser = document?.toObject(UsersModel::class.java)
                 if (theuser?.blocked == null)
-                    theuser?.blocked = HashMap<String, Any>()
+                    theuser?.blocked = ArrayList<String>()
                 theDeniedElement.accedDenied(theuser?.blocked)
             }
     }
@@ -296,17 +296,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //                                mAdapter.notifyDataSetChanged()
 //                            }
 //                        }, "Users", "")
-                                var getUsernames = ArrayList<String>()
 
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
                                         accesList(object : GetDeniedList {
-                                            override fun accedDenied(map: HashMap<String, Any>?) {
+                                            override fun accedDenied(map: ArrayList<String>?) {
 
-                                                for (get in map!!) {
-//                                                    getUsernames.add(get.value)
-                                                }
                                                 var mUserName = ArrayList<String>()
                                                 if (selectedlistElement.size > 0) {
                                                     for (i in 0..selectedlistElement.size - 1) {
@@ -329,7 +325,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                                     )
 
                                                     if (firstControl) {
-                                                        if (getUsernames.contains(theSecureData.theusername)) {
+                                                        if (map!!.contains(theSecureData.theusername!!)) {
                                                             theSecureData.theisChecked = true
                                                             selectedlistElement.add(theSecureData)
                                                             mcounter++
