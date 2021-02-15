@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.hendraanggrian.appcompat.widget.SocialEditText
+import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -17,7 +18,7 @@ class post_adapter(private var list:ArrayList<post_model>,private var context:Co
 
     class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var image:CircleImageView=itemView.findViewById(R.id.post_layout_imageView)
-        var postc:SocialEditText=itemView.findViewById(R.id.post_layout_imageView_postContent)
+        var postc:SocialTextView=itemView.findViewById(R.id.post_layout_imageView_postContent)
         var name:TextView=itemView.findViewById(R.id.post_layout_name)
         var username:TextView=itemView.findViewById(R.id.post_layout_username)
         var since:TextView=itemView.findViewById(R.id.post_layout_sinceTime)
