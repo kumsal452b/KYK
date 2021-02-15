@@ -272,7 +272,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 var theuser = document?.toObject(UsersModel::class.java)
                 if (theuser?.blocked == null)
                     theuser?.blocked = HashMap<String, Any>()
-                theDeniedElement.accedDenied(theuser.blocked)
+                theDeniedElement.accedDenied(theuser?.blocked)
             }
     }
 
@@ -302,10 +302,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
                                         accesList(object : GetDeniedList {
-                                            override fun accedDenied(map: HashMap<String, String>?) {
+                                            override fun accedDenied(map: HashMap<String, Any>?) {
 
                                                 for (get in map!!) {
-                                                    getUsernames.add(get.value)
+//                                                    getUsernames.add(get.value)
                                                 }
                                                 var mUserName = ArrayList<String>()
                                                 if (selectedlistElement.size > 0) {
