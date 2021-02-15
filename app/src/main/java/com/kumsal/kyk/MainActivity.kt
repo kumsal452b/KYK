@@ -259,6 +259,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                     Picasso.get().load( array.get(0).theThmbImage).into(proImage)
                     name.setText(array.get(0).theNameSurname)
                     username.setText(array.get(0).theUserName)
+                    thmbImageUri=array[0].theThmbImage!!
                 }
             },"Users",userId)
         }
@@ -277,7 +278,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         post_Activity.putExtra("username",username.text.toString())
         post_Activity.putExtra("uid",userId)
         post_Activity.putExtra("imageUri",imageUri)
-
         when (v?.id) {
             R.id.fab_add ->
                 if (!isOpen) {
