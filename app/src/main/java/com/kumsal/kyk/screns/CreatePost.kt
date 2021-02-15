@@ -92,10 +92,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     var firstControl = true
 
     //Database section
-    private lateinit var mPostRefDb: DatabaseReference
     private lateinit var mFirestore: FirebaseFirestore
 
     private lateinit var mFsSaveSecurity: FirebaseFirestore
+
     private lateinit var mFsDenied: FirebaseFirestore
     private lateinit var mFsPostDb: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -413,8 +413,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             var fsBlockersBatch = mFsSaveSecurity.batch()
             var fsBlockedBatch=mFsSaveSecurity.batch()
             for (get in selectedlistElement) {
-                var dbRef = mFsPostDb.collection("Users").document(get.thePersonId!!)
-                var curUsRef = mFsPostDb.collection("Users").document(userid)
+                var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
+                var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
                 blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
                 fsBlockedBatch.set(curUsRef,blocked, SetOptions.merge())
                 fsBlockersBatch.set(dbRef, blockers, SetOptions.merge())
