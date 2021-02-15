@@ -263,13 +263,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     private fun accesList(theDeniedElement: GetDeniedList) {
-        deniedListListener = mFsDenied.collection("Authentication").document(userid)
+        deniedListListener = mFsDenied.collection("Users").document(userid)
             .addSnapshotListener { document, e ->
                 if (e != null) {
                     Log.d("error denied list", e.message!!)
                     return@addSnapshotListener
                 }
-                var deniedList = document?.data as HashMap<String, String>?
+                var theuser = document?.toObject(UsersModel::class.java)
                 if (deniedList == null)
                     deniedList = HashMap<String, String>()
                 theDeniedElement.accedDenied(deniedList)
