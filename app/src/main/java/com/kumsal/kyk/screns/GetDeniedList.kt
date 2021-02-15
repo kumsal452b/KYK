@@ -1,5 +1,5 @@
 package com.kumsal.kyk.screns
 
 interface GetDeniedList {
-    fun accedDenied(map:HashMap<String,Any>?)
+    fun accedDenied(map:ArrayList<String>?)
 }
