@@ -125,5 +125,24 @@
                 tools:layout_editor_absoluteY="19dp" />
 
         </LinearLayout>
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/post_layout_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:src="@drawable/favorite"/>
+            <ImageButton
+                android:id="@+id/post_layout_comment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:src="@drawable/comment"
+                android:tint="@color/black"android:scaleType="center"
+                android:layout_toEndOf="@id/post_layout_favorite"/>
+        </RelativeLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
