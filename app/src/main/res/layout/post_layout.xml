@@ -143,7 +143,7 @@
                 android:scaleType="fitXY"
                 android:layout_centerHorizontal="true"
                 android:src="@drawable/favorite"
-                android:layout_marginStart=""/>
+                />
             <ImageButton
                 android:id="@+id/post_layout_comment"
                 android:layout_width="25dp"
