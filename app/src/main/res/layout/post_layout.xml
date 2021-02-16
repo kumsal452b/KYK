@@ -100,6 +100,7 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout32"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/relative2"
@@ -126,24 +127,32 @@
 
         </LinearLayout>
         <RelativeLayout
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
+            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout32"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/post_layout_imageView"
+            >
             <ImageButton
                 android:id="@+id/post_layout_favorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="#00FFFFFF"
                 android:scaleType="fitXY"
-                android:src="@drawable/favorite"/>
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/favorite"
+                android:layout_marginStart=""/>
             <ImageButton
                 android:id="@+id/post_layout_comment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="#00FFFFFF"
                 android:src="@drawable/comment"
-                android:tint="@color/black"android:scaleType="center"
-                android:layout_toEndOf="@id/post_layout_favorite"/>
+                android:scaleType="fitXY"
+                android:layout_toEndOf="@id/post_layout_favorite"
+                android:layout_marginStart="5dp"/>
         </RelativeLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
