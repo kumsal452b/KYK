@@ -126,7 +126,7 @@
                 tools:layout_editor_absoluteY="19dp" />
 
         </LinearLayout>
-        <RelativeLayout
+        <LinearLayout
 
             android:layout_alignParentRight="true"
             android:layout_width="match_parent"
@@ -135,24 +135,26 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/post_layout_imageView"
             >
+
             <ImageButton
                 android:id="@+id/post_layout_favorite"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
                 android:background="#00FFFFFF"
                 android:scaleType="fitXY"
-                android:layout_centerHorizontal="true"
                 android:src="@drawable/favorite"
-                />
+                android:layout_marginStart="100dp"/>
+
             <ImageButton
                 android:id="@+id/post_layout_comment"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:background="#00FFFFFF"
-                android:src="@drawable/comment"
-                android:scaleType="fitXY"
+                android:layout_marginStart="75dp"
                 android:layout_toEndOf="@id/post_layout_favorite"
-                android:layout_marginStart="5dp"/>
-        </RelativeLayout>
+                android:background="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/comment" />
+        </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
