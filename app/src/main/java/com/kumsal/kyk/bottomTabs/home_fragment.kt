@@ -79,7 +79,10 @@ class home_fragment : Fragment(){
         mFsAuthDb?.collection("Users")?.document(mUser?.uid!!)?.get()?.addOnSuccessListener{
             documents->
             var blockerList=documents["blockers"]
+            if (blockerList==null)
+                blockerList=ArrayList<String>()
             theGetElement.getUsers(blockerList as ArrayList<String>)
+
         }?.addOnFailureListener{
             Log.d("Home fragment",it.message!!)
         }
