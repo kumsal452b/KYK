@@ -28,7 +28,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
 
         fun BindElement(model: post_model) {
             if (!TextUtils.isEmpty(model.thmbImageUri))
-                Picasso.get().load(model.thmbImageUri).placeholder(R.drawable.persontwo).into(image)
+//                Picasso.get().load(model.thmbImageUri).placeholder(R.drawable.persontwo).into(image)
             postc.setText(model.pc)
             name.setText(model.name)
 //            since.setText(model.time!!.nanoseconds)
