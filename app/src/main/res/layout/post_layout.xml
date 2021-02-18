@@ -65,7 +65,7 @@
                 android:layout_width="5dp"
                 android:layout_height="5dp"
                 android:layout_centerVertical="true"
-            
+
                 android:layout_marginStart="2dp"
                 android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/post_layout_username"
