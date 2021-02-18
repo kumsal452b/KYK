@@ -78,7 +78,7 @@ class home_fragment : Fragment(){
     fun getDeniedPerson(theGetElement:GetCenter<String>){
         mFsAuthDb?.collection("Users")?.document(mUser?.uid!!)?.get()?.addOnSuccessListener{
             documents->
-            var blockerList=documents["blockers"]
+            var blockerList=documents["blocked"]
             if (blockerList==null)
                 blockerList=ArrayList<String>()
             theGetElement.getUsers(blockerList as ArrayList<String>)
@@ -98,8 +98,8 @@ class home_fragment : Fragment(){
                     for (doc in document) {
 
                         var thePost = doc.toObject(post_model::class.java)
-                            post_list.add(thePost)
                         if (!array.contains(thePost.username)) {
+                            post_list.add(thePost)
                         }
                     }
                     adapter.notifyDataSetChanged()
