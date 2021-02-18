@@ -65,11 +65,11 @@
                 android:layout_width="5dp"
                 android:layout_height="5dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/dot"
+            
                 android:layout_marginStart="2dp"
                 android:layout_marginBottom="2dp"
                 android:layout_toEndOf="@id/post_layout_username"
-                android:fontFamily="sans-serif-thin"
+
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 android:textStyle="bold" />
