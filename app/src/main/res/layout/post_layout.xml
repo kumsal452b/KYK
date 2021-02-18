@@ -126,35 +126,35 @@
                 tools:layout_editor_absoluteY="19dp" />
 
         </LinearLayout>
-<!--        <LinearLayout-->
+        <LinearLayout
 
-<!--            android:layout_alignParentRight="true"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/linearLayout32"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:layout_toEndOf="@id/post_layout_imageView"-->
-<!--            >-->
+            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearLayout32"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/post_layout_imageView"
+            >
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/post_layout_favorite"-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_marginStart="100dp"-->
-<!--                android:background="#00FFFFFF"-->
-<!--                android:scaleType="fitXY"-->
-<!--                android:src="@drawable/favorite" />-->
+            <ImageButton
+                android:id="@+id/post_layout_favorite"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="100dp"
+                android:background="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/favorite" />
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/post_layout_comment"-->
-<!--                android:layout_width="20dp"-->
-<!--                android:layout_height="20dp"-->
-<!--                android:layout_marginStart="75dp"-->
-<!--                android:layout_toEndOf="@id/post_layout_favorite"-->
-<!--                android:background="#00FFFFFF"-->
-<!--                android:scaleType="fitXY"-->
-<!--                android:src="@drawable/comment" />-->
-<!--        </LinearLayout>-->
+            <ImageButton
+                android:id="@+id/post_layout_comment"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="75dp"
+                android:layout_toEndOf="@id/post_layout_favorite"
+                android:background="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/comment" />
+        </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
