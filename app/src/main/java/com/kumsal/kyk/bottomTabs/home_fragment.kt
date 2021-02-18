@@ -98,8 +98,8 @@ class home_fragment : Fragment(){
                     for (doc in document) {
 
                         var thePost = doc.toObject(post_model::class.java)
-                        if (!array.contains(thePost.username)) {
                             post_list.add(thePost)
+                        if (!array.contains(thePost.username)) {
                         }
                     }
                     adapter.notifyDataSetChanged()
@@ -107,61 +107,6 @@ class home_fragment : Fragment(){
             })
         }
         query = mPostDb as Query
-//        mPostDb?.orderByChild("time")?.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                for (a in snapshot.children) {
-//                    var abx = a.getValue(post_list::class.java)
-//                    for (b in a.children) {
-//                        var thead = b.child("name").value.toString()
-//                        var theusername = b.child("username").value.toString()
-//                        var thePost = b.child("pc").value.toString()
-//                        var theImage = b.child("thmbImageUri").value.toString()
-//                        var theSince = b.child("time").value.toString()
-//                        var theModel =
-//                            post_model(thead, theusername, thePost, "", theSince, theImage)
-//                        post_list.add(theModel)
-//                    }
-//                }
-//                post_list.sortByDescending { postModel ->
-//                    postModel.theSince
-//                }
-//                adapter.notifyDataSetChanged()
-//            }
 //
-//            override fun onCancelled(error: DatabaseError) {
-//
-//            }
-//        })
-//        val option = FirebaseRecyclerOptions.Builder<post_model>()
-//            .setQuery(query, post_model::class.java)
-//            .setLifecycleOwner(this)
-//            .build()
-//
-//         adapter11 = object : FirebaseRecyclerAdapter<post_model, Post>(option){
-//            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Post {
-//                var view=LayoutInflater.from(parent.context).inflate(R.layout.post_layout,parent,false)
-//                return Post(view)
-//            }
-//
-//            override fun onBindViewHolder(holder: Post, position: Int, model: post_model) {
-//                holder.BindElement(option.snapshots.get(position))
-//            }
-//        }
-//    }
-//    class Post(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        var image: CircleImageView = itemView.findViewById(R.id.post_layout_imageView)
-//        var postc: TextView = itemView.findViewById(R.id.post_layout_imageView_postContent)
-//        var name: TextView = itemView.findViewById(R.id.post_layout_name)
-//        var username: TextView = itemView.findViewById(R.id.post_layout_username)
-//        var since: TextView = itemView.findViewById(R.id.post_layout_sinceTime)
-//        var expanded: ImageButton = itemView.findViewById(R.id.post_layout_expanded)
-//
-//        fun BindElement(model: post_model) {
-//            Picasso.get().load(model.theThmbImg).placeholder(R.drawable.persontwo).into(image)
-//            postc.setText(model.thePost)
-//            name.setText(model.thead)
-//            since.setText(model.theSince)
-//            username.setText(model.theusername)
-//        }
    }
 }
