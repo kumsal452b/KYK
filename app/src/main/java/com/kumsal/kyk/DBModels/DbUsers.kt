@@ -4,6 +4,7 @@ import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kumsal.kyk.interfaces.GetCenter
+import com.kumsal.kyk.interfaces.GetCenterSimilar
 import java.util.ArrayList
 
 class DbUsers<Model> {
@@ -27,7 +28,7 @@ class DbUsers<Model> {
     }
 
      fun readyElement(
-        element: GetCenter<Model>,
+        element: GetCenterSimilar<Model>,
         collectionName: String,
         docName: String
     ) {
@@ -58,7 +59,7 @@ class DbUsers<Model> {
     }
 
     fun getElement(collectionName:String,docName: String?) :ArrayList<Model>{
-        readyElement(object:GetCenter<Model>{
+        readyElement(object:GetCenterSimilar<Model>{
             override fun getUsers(array: ArrayList<Model>) {
                 theModelList=array
             }
