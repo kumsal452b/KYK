@@ -33,6 +33,7 @@ import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.kumsal.kyk.interfaces.GetCenter
+import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
 import com.squareup.picasso.Picasso
@@ -244,7 +245,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         } else {
 
             var userElement=DbUsers<UsersModel>(mFstoreUserDb, UsersModel())
-            var userList=userElement.readyElement(object:GetCenter<UsersModel>{
+            var userList=userElement.readyElement(object:GetCenterSimilar<UsersModel>{
                 override fun getUsers(array: ArrayList<UsersModel>) {
                     var photoImage=array.get(0).theThmbImage
                     if (!TextUtils.isEmpty(photoImage))

@@ -40,6 +40,7 @@ import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenter
+import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.UserListCallback
 import com.percolate.mentions.Mentionable
 import com.percolate.mentions.Mentions
@@ -114,7 +115,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var userAdapter: ArrayAdapter<Mention>
         userAdapter = MentionArrayAdapter<Mention>(this)
         post_text_element.mentionAdapter = userAdapter
-        getUserList(object : GetCenter<UsersModel> {
+        getUserList(object : GetCenterSimilar<UsersModel> {
             override fun getUsers(array: java.util.ArrayList<UsersModel>) {
                 for (theUser in array) {
                     userAdapter.add(
@@ -130,7 +131,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         })
     }
 
-    private fun getUserList(listInterface: GetCenter<UsersModel>) {
+    private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
             if (error != null) {
                 Log.d("Error in cp", error.message!!)
