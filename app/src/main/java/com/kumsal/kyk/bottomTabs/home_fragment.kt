@@ -18,6 +18,7 @@ import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class home_fragment : Fragment(){
@@ -70,7 +71,9 @@ class home_fragment : Fragment(){
 
             if (blockerList==null)
                 blockerList=ArrayList<String>()
-            theGetElement.getUsers(blockerList as ArrayList<String>)
+            if (blockedList==null)
+                blockedList=ArrayList<String>()
+            theGetElement.getUsers(blockedList as ArrayList<String>,blockerList as ArrayList<String>)
 
         }?.addOnFailureListener{
             Log.d("Home fragment",it.message!!)
@@ -82,12 +85,15 @@ class home_fragment : Fragment(){
                 Log.d("Home fragment",it.message!!)
             }
         )?.addOnSuccessListener{document->
-            getDeniedPerson(object : GetCenter<String> {
-                override fun getUsers(array: ArrayList<String>) {
+            getDeniedPerson(object : GetCenter<String>{
+                override fun getUsers(
+                    blocked: java.util.ArrayList<String>,
+                    blocker: java.util.ArrayList<String>
+                ) {
                     for (doc in document) {
 
                         var thePost = doc.toObject(post_model::class.java)
-                        if (!array.contains(thePost.username)) {
+                        if (!blocked.contains(thePost.username) || !blocker.contains(thePost.username)) {
                             post_list.add(thePost)
                         }
                     }
