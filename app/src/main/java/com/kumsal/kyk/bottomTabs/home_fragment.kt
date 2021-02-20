@@ -5,32 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.database.FirebaseRecyclerAdapter
-import com.firebase.ui.database.FirebaseRecyclerOptions
-import com.firebase.ui.database.SnapshotParser
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
-import com.squareup.picasso.Picasso
-import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
-import java.util.stream.Collector
-import java.util.stream.Collectors
-import kotlin.collections.HashMap
-import kotlin.reflect.typeOf
 
 
 class home_fragment : Fragment(){
@@ -78,7 +65,9 @@ class home_fragment : Fragment(){
     fun getDeniedPerson(theGetElement:GetCenter<String>){
         mFsAuthDb?.collection("Users")?.document(mUser?.uid!!)?.get()?.addOnSuccessListener{
             documents->
-            var blockerList=documents["blocked"]
+            var blockerList=documents["blocker"]
+            var blockedList=documents["blocked"]
+
             if (blockerList==null)
                 blockerList=ArrayList<String>()
             theGetElement.getUsers(blockerList as ArrayList<String>)
