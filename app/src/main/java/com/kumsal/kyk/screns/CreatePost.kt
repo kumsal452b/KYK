@@ -3,7 +3,9 @@ package com.kumsal.kyk.screns
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.Selection
@@ -15,11 +17,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.*
+import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnFailureListener
@@ -38,9 +44,7 @@ import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
-import com.kumsal.kyk.AdapterModel.UsersModel
-import com.kumsal.kyk.AdapterModel.security_adapter
-import com.kumsal.kyk.AdapterModel.security_model
+import com.kumsal.kyk.AdapterModel.*
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
@@ -57,6 +61,9 @@ import com.squareup.picasso.Picasso
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import de.hdodenhof.circleimageview.CircleImageView
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
+import java.io.File
 import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
@@ -72,7 +79,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
     private lateinit var securityTag: TextView
-
+    private lateinit var mImageListRecyclerView: RecyclerView
+    private lateinit var mlistAdapter:imageSelected_adapter
+    private lateinit var mImageListView:java.util.ArrayList<imageSelected_model>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -114,6 +123,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     var perm2 = Array<String>(1) { i: Int ->
         Manifest.permission.CAMERA
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -145,6 +155,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         })
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -164,28 +175,50 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
                 ) {
-                    Toast.makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
-                    CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(2, 2)
-                        .start(this)
+                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(camera_intent, 12345);
                 } else {
-                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                    makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
             } else if (grantResults.size == 1) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                    Toast.makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
-                    CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(2, 2)
-                        .start(this)
+                    makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
+                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(camera_intent, 12345);
                 } else {
-                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                    makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
             }
 
         }
+
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 100) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    var uri: Uri?
+                    uri = data.data
+                    CropImage.activity(uri)
+                        .setAspectRatio(2, 2)
+                        .setActivityTitle(getString(R.string.crop_title))
+                        .setCropMenuCropButtonTitle(getString(R.string.crop_))
+                        .setAutoZoomEnabled(true)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .start(this)
+                }
+            }
+        }
+        if (requestCode == 12345) {
+            if (resultCode == RESULT_OK) {
+                image
+
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
@@ -299,6 +332,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
 
+        mImageListRecyclerView=findViewById(R.id.activity_create_post_imageSelected)
+        mImageListRecyclerView.setHasFixedSize(true)
+        mImageListRecyclerView.layoutManager=GridLayoutManager(this,3)
+        mImageListView= ArrayList()
+        mlistAdapter=imageSelected_adapter(mImageListView)
+        recyclerView.adapter=mlistAdapter
+
         name = intent.getStringExtra("name") as String
         imageUri = intent.getStringExtra("imageUri") as String
         thmbImageUri = intent.getStringExtra("thmburi") as String
@@ -316,7 +356,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mAdapter.setOnITemClickListener(this)
         //Test section
         secure_initial()
-        select_image.setOnClickListener{
+        select_image.setOnClickListener {
             val myArray3 = arrayOf<String>("Camera", "Galery")
             BottomMenu.show(
                 this@CreatePost,
@@ -357,6 +397,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
 
     }
+
     fun checkAndRequestPermissions(): Boolean {
         var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         var permWrtStrg =
@@ -530,12 +571,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
 
             var fsBlockersBatch = mFsSaveSecurity.batch()
-            var fsBlockedBatch=mFsSaveSecurity.batch()
+            var fsBlockedBatch = mFsSaveSecurity.batch()
             for (get in selectedlistElement) {
                 var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
                 var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
                 blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
-                fsBlockedBatch.set(curUsRef,blocked, SetOptions.merge())
+                fsBlockedBatch.set(curUsRef, blocked, SetOptions.merge())
                 fsBlockersBatch.set(dbRef, blockers, SetOptions.merge())
             }
             fsBlockersBatch.commit().addOnSuccessListener {
