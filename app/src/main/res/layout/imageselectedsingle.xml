@@ -2,5 +2,16 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
-    <
+
+    <ImageView
+        android:id="@+id/image_selected_single_imageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/black" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_selected_single_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/close" />
 </androidx.cardview.widget.CardView>
