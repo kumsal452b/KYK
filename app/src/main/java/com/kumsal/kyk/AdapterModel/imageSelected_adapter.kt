@@ -34,11 +34,11 @@ class imageSelected_adapter(imageList: ArrayList<imageSelected_model>) :
     }
 
     override fun onBindViewHolder(holder: selectedHolder, position: Int) {
-        var theModel=imageList.get(position)
-        holder.bindElement(theModel)
+        var theModel=imageList?.get(position)
+        holder.bindElement(theModel!!)
     }
 
     override fun getItemCount(): Int {
-        return imageList.size
+        return imageList?.size!!
     }
 }

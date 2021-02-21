@@ -171,7 +171,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                     myArray3,
                     object : OnMenuItemClickListener {
                         override fun onClick(text: String?, index: Int) {
-                            print(index)
                             when (index) {
                                 0 ->
                                     if (checkAndRequestPermissions()) {

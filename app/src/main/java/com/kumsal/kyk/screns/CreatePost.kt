@@ -1,7 +1,10 @@
 package com.kumsal.kyk.screns
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.Selection
 import android.text.TextUtils
@@ -15,6 +18,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnFailureListener
@@ -28,7 +33,9 @@ import com.google.firebase.firestore.auth.User
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
+import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.util.DialogSettings
+import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.AdapterModel.UsersModel
@@ -47,6 +54,8 @@ import com.percolate.mentions.Mentions
 import com.percolate.mentions.QueryListener
 import com.percolate.mentions.SuggestionsListener
 import com.squareup.picasso.Picasso
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import de.hdodenhof.circleimageview.CircleImageView
 import java.lang.Exception
 import java.util.*
@@ -99,6 +108,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     private lateinit var mFsDenied: FirebaseFirestore
     private lateinit var mFsPostDb: FirebaseFirestore
+    var perm = Array<String>(1) { i: Int ->
+        Manifest.permission.READ_EXTERNAL_STORAGE
+    }
+    var perm2 = Array<String>(1) { i: Int ->
+        Manifest.permission.CAMERA
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_post)
@@ -129,6 +144,48 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 userAdapter.notifyDataSetChanged()
             }
         })
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == 546) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                var mediaWindow =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                startActivityForResult(mediaWindow, 100)
+            } else {
+                Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
+            }
+        }
+        if (requestCode == 1234) {
+            if (grantResults.size >= 2) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
+                ) {
+                    Toast.makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
+                    CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(2, 2)
+                        .start(this)
+                } else {
+                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                }
+            } else if (grantResults.size == 1) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
+                    Toast.makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
+                    CropImage.activity()
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(2, 2)
+                        .start(this)
+                } else {
+                    Toast.makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
+                }
+            }
+
+        }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
@@ -259,8 +316,73 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mAdapter.setOnITemClickListener(this)
         //Test section
         secure_initial()
+        select_image.setOnClickListener{
+            val myArray3 = arrayOf<String>("Camera", "Galery")
+            BottomMenu.show(
+                this@CreatePost,
+                myArray3,
+                object : OnMenuItemClickListener {
+                    override fun onClick(text: String?, index: Int) {
+                        when (index) {
+                            0 ->
+                                if (checkAndRequestPermissions()) {
+                                    ActivityCompat.requestPermissions(
+                                        this@CreatePost,
+                                        perm2, 1234
+                                    )
+                                }
+                            1 ->
+                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(
+                                        this@CreatePost,
+                                        perm,
+                                        546
+                                    )
+                                } else {
+                                    var mediaWindow =
+                                        Intent(
+                                            Intent.ACTION_PICK,
+                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                        )
+                                    startActivityForResult(mediaWindow, 100)
+
+                                }
+
+                        }
+                    }
+
+                })
+                .cancelButtonText = "Close"
+        }
 
 
+    }
+    fun checkAndRequestPermissions(): Boolean {
+        var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        var permWrtStrg =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        var permReadStrg =
+            ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        var listPermissionsNeeded = ArrayList<String>()
+        if (permCam != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.CAMERA)
+        }
+        if (permWrtStrg != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (permReadStrg != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+
+            ActivityCompat.requestPermissions(
+                this,
+                listPermissionsNeeded.toTypedArray(), 1234
+            )
+            return false
+        }
+        return true
     }
 
     private fun accesList(theDeniedElement: GetDeniedList) {
