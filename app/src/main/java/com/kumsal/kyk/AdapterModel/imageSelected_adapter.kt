@@ -10,28 +10,35 @@ import com.kumsal.kyk.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.ArrayList
 
-class imageSelected_adapter:RecyclerView.Adapter<imageSelected_adapter.selectedHolder>() {
-    var imageList:ArrayList<Uri>?=null
-    constructor(imageList: ArrayList<Uri>?) : super() {
+class imageSelected_adapter(imageList: ArrayList<imageSelected_model>) :
+    RecyclerView.Adapter<imageSelected_adapter.selectedHolder>() {
+    var imageList: ArrayList<imageSelected_model>? = null
+
+    init {
         this.imageList = imageList
     }
 
-    inner class selectedHolder(itemView: View) :RecyclerView.ViewHolder(itemView){
-        var closeButton:CircleImageView=itemView.findViewById(R.id.image_selected_single_close)
-        var imageView:ImageView=itemView.findViewById(R.id.image_selected_single_imageView);
-        fun bindElement()
+    inner class selectedHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var closeButton: CircleImageView = itemView.findViewById(R.id.image_selected_single_close)
+        var imageView: ImageView = itemView.findViewById(R.id.image_selected_single_imageView);
+        fun bindElement(element: imageSelected_model) {
+            imageView.setImageURI(element.imageUrl)
+        }
 
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): selectedHolder {
-        var view=LayoutInflater.from(parent.context).inflate(R.layout.imageselectedsingle,parent,false)
+        var view =
+            LayoutInflater.from(parent.context).inflate(R.layout.imageselectedsingle, parent, false)
         return selectedHolder(view)
     }
 
     override fun onBindViewHolder(holder: selectedHolder, position: Int) {
-        TODO("Not yet implemented")
+        var theModel=imageList.get(position)
+        holder.bindElement(theModel)
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return imageList.size
     }
 }
