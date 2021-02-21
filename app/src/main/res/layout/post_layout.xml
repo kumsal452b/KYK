@@ -94,6 +94,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_horizontal"
                 android:background="#00816666"
+                android:src="@drawable/ic_baseline_expand_more_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                />
@@ -141,10 +142,18 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="100dp"
                 android:background="#00FFFFFF"
+                android:layout_marginStart="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/favorite" />
+
+            <TextView
+                android:id="@+id/post_layout_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="0"
+                android:textSize="16sp" />
 
             <ImageButton
                 android:id="@+id/post_layout_comment"
@@ -155,6 +164,14 @@
                 android:background="#00FFFFFF"
                 android:scaleType="fitXY"
                 android:src="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/post_layout_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="0"
+                android:textSize="16sp" />
         </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
