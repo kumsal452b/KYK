@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -90,12 +91,7 @@ class home_fragment : Fragment() {
 
     fun getPostValue() {
         var collectionReference = mFsPostDb?.collection("Post")
-        var query = collectionReference?.orderBy(
-            "theTime",
-            com.google.firebase.firestore.Query.Direction.ASCENDING
-        )
-
-           query?.get()?.addOnFailureListener(
+        collectionReference?.get()?.addOnFailureListener(
                 OnFailureListener {
                     Log.d("Home fragment", it.message!!)
                 }
