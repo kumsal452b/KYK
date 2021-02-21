@@ -19,11 +19,12 @@ import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
+import com.kumsal.kyk.interfaces.PostClick
 import java.util.*
 import kotlin.collections.ArrayList
 
 
-class home_fragment : Fragment() {
+class home_fragment : Fragment(),PostClick {
 
     private var mUser: FirebaseUser? = null
     private var mPostDb: DatabaseReference? = null
@@ -49,6 +50,7 @@ class home_fragment : Fragment() {
         //Adapter initial
         post_list = ArrayList()
         adapter = post_adapter(post_list, view.context)
+        adapter.setOnClickListener(this)
 
         //Recycler initialze
         recyclerView = view.findViewById(R.id.fragment_home_recycler)
@@ -114,5 +116,17 @@ class home_fragment : Fragment() {
             }
 //        query = mPostDb as Query
 //
+    }
+
+    override fun favClick(position: Int) {
+
+    }
+
+    override fun commClick(position: Int) {
+
+    }
+
+    override fun expandClick(position: Int) {
+        TODO("Not yet implemented")
     }
 }
