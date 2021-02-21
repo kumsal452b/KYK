@@ -66,7 +66,7 @@ class home_fragment : Fragment(){
     fun getDeniedPerson(theGetElement:GetCenter<String>){
         mFsAuthDb?.collection("Users")?.document(mUser?.uid!!)?.get()?.addOnSuccessListener{
             documents->
-            var blockerList=documents["blocker"]
+            var blockerList=documents["blockers"]
             var blockedList=documents["blocked"]
 
             if (blockerList==null)
