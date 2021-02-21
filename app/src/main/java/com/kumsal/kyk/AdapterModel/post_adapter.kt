@@ -18,23 +18,28 @@ import java.util.ArrayList
 
 class post_adapter(private var list: ArrayList<post_model>, private var context: Context) :
     RecyclerView.Adapter<post_adapter.postHolder>() {
-    var thePostClick:PostClick?=null
-    fun setOnClickListener(thePostClick: PostClick){
-        this.thePostClick=thePostClick
+    var thePostClick: PostClick? = null
+    fun setOnClickListener(thePostClick: PostClick) {
+        this.thePostClick = thePostClick
     }
 
-   inner class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
+    inner class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
         var image: CircleImageView = itemView.findViewById(R.id.post_layout_imageView)
         var postc: SocialTextView = itemView.findViewById(R.id.post_layout_imageView_postContent)
         var name: TextView = itemView.findViewById(R.id.post_layout_name)
         var username: TextView = itemView.findViewById(R.id.post_layout_username)
         var since: TextView = itemView.findViewById(R.id.post_layout_sinceTime)
         var expanded: ImageButton = itemView.findViewById(R.id.post_layout_expanded)
-        var favorite:ImageButton = itemView.findViewById(R.id.post_layout_favorite)
-        var favoriteCount:ImageButton = itemView.findViewById(R.id.post_layout_favorite_count)
-        var commit:ImageButton = itemView.findViewById(R.id.post_layout_comment)
-        var commitCount:TextView = itemView.findViewById(R.id.post_layout_comment_count)
-
+        var favorite: ImageButton = itemView.findViewById(R.id.post_layout_favorite)
+        var favoriteCount: TextView = itemView.findViewById(R.id.post_layout_favorite_count)
+        var commit: ImageButton = itemView.findViewById(R.id.post_layout_comment)
+        var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
+        init {
+            favorite.setOnClickListener(this)
+            commit.setOnClickListener(this)
+            expanded.setOnClickListener(this)
+        }
         fun BindElement(model: post_model) {
             if (!TextUtils.isEmpty(model.thmbImageUri))
                 Picasso.get().load(model.thmbImageUri).placeholder(R.drawable.persontwo).into(image)
@@ -45,7 +50,22 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         }
 
         override fun onClick(v: View?) {
-            if (!thePostClick)
+            if (thePostClick != null) {
+                var position=adapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    when (v?.id){
+                        favorite.id->{
+                            thePostClick!!.favClick(position)
+                        }
+                        commit.id->{
+                            thePostClick!!.commClick(position)
+                        }
+                        expanded.id->{
+                            thePostClick!!.expandClick(position)
+                        }
+                    }
+                }
+            }
         }
     }
 

@@ -119,7 +119,7 @@ class home_fragment : Fragment(),PostClick {
     }
 
     override fun favClick(position: Int) {
-
+        println("tiklandin")
     }
 
     override fun commClick(position: Int) {
@@ -127,6 +127,6 @@ class home_fragment : Fragment(),PostClick {
     }
 
     override fun expandClick(position: Int) {
-        TODO("Not yet implemented")
+
     }
 }
