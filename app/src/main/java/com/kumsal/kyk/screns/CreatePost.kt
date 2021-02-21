@@ -213,8 +213,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
-                image
-
+                var theModel=imageSelected_model(data?.data)
+                mImageListView.add(theModel)
+                mlistAdapter.notifyDataSetChanged()
             }
 
         }
@@ -337,7 +338,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mImageListRecyclerView.layoutManager=GridLayoutManager(this,3)
         mImageListView= ArrayList()
         mlistAdapter=imageSelected_adapter(mImageListView)
-        recyclerView.adapter=mlistAdapter
+        mImageListRecyclerView.adapter=mlistAdapter
 
         name = intent.getStringExtra("name") as String
         imageUri = intent.getStringExtra("imageUri") as String
