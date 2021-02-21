@@ -90,7 +90,7 @@ class home_fragment : Fragment() {
     }
 
     fun getPostValue() {
-        var collectionReference = mFsPostDb?.collection("Post")
+        var collectionReference = mFsPostDb?.collection("Post")?.orderBy("time",com.google.firebase.firestore.Query.Direction.DESCENDING)
         collectionReference?.get()?.addOnFailureListener(
                 OnFailureListener {
                     Log.d("Home fragment", it.message!!)
