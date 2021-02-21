@@ -80,11 +80,12 @@ class home_fragment : Fragment(){
         }
     }
     fun getPostValue() {
-        mFsPostDb?.collection("Post")?.get()?.addOnFailureListener(
+        mFsPostDb?.collection("Post")?.orderBy("theTime")?.get()?.addOnFailureListener(
             OnFailureListener {
                 Log.d("Home fragment",it.message!!)
             }
         )?.addOnSuccessListener{document->
+            
             getDeniedPerson(object : GetCenter<String>{
                 override fun getUsers(
                     blocked: java.util.ArrayList<String>,
