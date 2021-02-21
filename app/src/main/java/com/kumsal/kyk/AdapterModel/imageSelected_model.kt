@@ -2,9 +2,8 @@ package com.kumsal.kyk.AdapterModel
 
 import android.net.Uri
 
-class imageSelectedModel {
+class imageSelected_model {
     var imageUrl:Uri?=null
-
     constructor()
     constructor(imageUrl: Uri?) {
         this.imageUrl = imageUrl
