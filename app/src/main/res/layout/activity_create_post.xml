@@ -99,6 +99,18 @@
         app:layout_constraintTop_toBottomOf="@+id/activity_create_post_post_text_element"
         app:srcCompat="@drawable/image" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/activity_create_post_imageSelected"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/activity_create_post_post_text_element"
+        app:layout_constraintStart_toStartOf="@id/activity_create_post_select_image"
+        app:layout_constraintTop_toBottomOf="@id/activity_create_post_select_image">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/activity_create_post_image"
         android:layout_width="60dp"
