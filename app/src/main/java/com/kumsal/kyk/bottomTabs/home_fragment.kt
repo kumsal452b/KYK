@@ -93,7 +93,7 @@ class home_fragment : Fragment(){
                     for (doc in document) {
 
                         var thePost = doc.toObject(post_model::class.java)
-                        if (!blocked.contains(thePost.username) || !blocker.contains(thePost.username)) {
+                        if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
                             post_list.add(thePost)
                         }
                     }
