@@ -268,21 +268,16 @@ class RegisterDetailActivity : AppCompatActivity() {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
                 ) {
-                    makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
-                    CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(2, 2)
-                        .start(this)
+                    var camera_intent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(camera_intent, 12345);
                 } else {
                     makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
             } else if (grantResults.size == 1) {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
                     makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
-                    CropImage.activity()
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(2, 2)
-                        .start(this)
+                    var camera_intent =Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(camera_intent, 12345);
                 } else {
                     makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
                 }
