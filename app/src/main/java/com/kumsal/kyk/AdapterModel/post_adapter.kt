@@ -11,20 +11,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hendraanggrian.appcompat.widget.SocialEditText
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.R
+import com.kumsal.kyk.interfaces.PostClick
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.ArrayList
 
 class post_adapter(private var list: ArrayList<post_model>, private var context: Context) :
     RecyclerView.Adapter<post_adapter.postHolder>() {
+    var thePostClick:PostClick?=null
+    fun setOnClickListener(thePostClick: PostClick){
+        this.thePostClick=thePostClick
+    }
 
-    class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+   inner class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
         var image: CircleImageView = itemView.findViewById(R.id.post_layout_imageView)
         var postc: SocialTextView = itemView.findViewById(R.id.post_layout_imageView_postContent)
         var name: TextView = itemView.findViewById(R.id.post_layout_name)
         var username: TextView = itemView.findViewById(R.id.post_layout_username)
         var since: TextView = itemView.findViewById(R.id.post_layout_sinceTime)
         var expanded: ImageButton = itemView.findViewById(R.id.post_layout_expanded)
+        var favorite:ImageButton = itemView.findViewById(R.id.post_layout_favorite)
+        var favoriteCount:ImageButton = itemView.findViewById(R.id.post_layout_favorite_count)
+        var commit:ImageButton = itemView.findViewById(R.id.post_layout_comment)
+        var commitCount:TextView = itemView.findViewById(R.id.post_layout_comment_count)
 
         fun BindElement(model: post_model) {
             if (!TextUtils.isEmpty(model.thmbImageUri))
@@ -33,6 +42,10 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             name.setText(model.name)
 //            since.setText(model.time!!.nanoseconds)
             username.setText(model.username)
+        }
+
+        override fun onClick(v: View?) {
+            if (!thePostClick)
         }
     }
 
