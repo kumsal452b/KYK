@@ -112,9 +112,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     //Database section
     private lateinit var mFirestore: FirebaseFirestore
-
     private lateinit var mFsSaveSecurity: FirebaseFirestore
-
     private lateinit var mFsDenied: FirebaseFirestore
     private lateinit var mFsPostDb: FirebaseFirestore
 
