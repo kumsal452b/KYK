@@ -117,6 +117,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     private lateinit var mFsDenied: FirebaseFirestore
     private lateinit var mFsPostDb: FirebaseFirestore
+
+
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
     }
@@ -165,6 +167,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
                 var mediaWindow =
                     Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                mediaWindow.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                 startActivityForResult(mediaWindow, 100)
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
@@ -200,14 +203,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
                     var uri: Uri?
-                    uri = data.data
-                    CropImage.activity(uri)
-                        .setAspectRatio(2, 2)
-                        .setActivityTitle(getString(R.string.crop_title))
-                        .setCropMenuCropButtonTitle(getString(R.string.crop_))
-                        .setAutoZoomEnabled(true)
-                        .setGuidelines(CropImageView.Guidelines.ON)
-                        .start(this)
+                    var theModel=imageSelected_model(data?.data)
+                    mImageListView.add(theModel)
+
                 }
             }
         }
