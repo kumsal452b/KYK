@@ -220,6 +220,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
+    private fun capturePhoto(){
+        
+    }
 
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
@@ -366,10 +369,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         when (index) {
                             0 ->
                                 if (checkAndRequestPermissions()) {
-                                    ActivityCompat.requestPermissions(
-                                        this@CreatePost,
-                                        perm2, 1234
-                                    )
+                                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                    startActivityForResult(camera_intent, 12345);
                                 }
                             1 ->
                                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
