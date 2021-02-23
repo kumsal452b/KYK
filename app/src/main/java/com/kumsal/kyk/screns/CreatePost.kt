@@ -211,7 +211,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var file = dir.path+ android.text.format.DateFormat.format("yyyy-MM-dd_hhmmss", Date()).toString()+".jpg"
 
         var newFile=File(file + "")
-        var outputFileUri = FileProvider.getUriForFile(this,"com.kumsal.kyk.screns",newFile)
+        var outputFileUri = FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.CreatePost.provider",newFile)
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
