@@ -8,14 +8,12 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
-import android.text.Selection
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.*
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
@@ -23,19 +21,13 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
-import com.google.firebase.firestore.EventListener
-import com.google.firebase.firestore.auth.User
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
@@ -45,30 +37,18 @@ import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.AdapterModel.*
-import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
-import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.GetCenterSimilar
-import com.kumsal.kyk.interfaces.UserListCallback
-import com.percolate.mentions.Mentionable
-import com.percolate.mentions.Mentions
-import com.percolate.mentions.QueryListener
-import com.percolate.mentions.SuggestionsListener
 import com.squareup.picasso.Picasso
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
 import de.hdodenhof.circleimageview.CircleImageView
-import id.zelory.compressor.Compressor
-import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.Exception
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.math.log
+
 
 class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var profile_image: CircleImageView
@@ -220,8 +200,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-    private fun capturePhoto(){
-        
+
+    private fun capturePhoto() {
+        var dir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Folder/";
+        var uuid=UUID.randomUUID()
+        var newdir = File(dir + "")
+        newdir.mkdirs();
+        var file = dir+ android.text.format.DateFormat.format("yyyy-MM-dd_hhmmss", Date()).toString()+".jpg"
+
+        var newFile=File(file + "")
+        var outputFileUri = Uri.fromFile(newFile)
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
+        startActivityForResult(cameraIntent, 12345)
     }
 
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
