@@ -27,7 +27,7 @@
         android:theme="@style/AppTheme">
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.kumsal.kyk.screns.CreatePost.provider"
+            android:authorities="com.kumsal.kyk.screns.CreatePost.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <!-- ressource file to create -->
