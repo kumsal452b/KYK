@@ -21,6 +21,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -203,14 +204,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     private fun capturePhoto() {
         var dir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/Folder/";
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES+"/Folder/")
         var uuid=UUID.randomUUID()
-        var newdir = File(dir + "")
+        var newdir = File(dir.toString())
         newdir.mkdirs();
-        var file = dir+ android.text.format.DateFormat.format("yyyy-MM-dd_hhmmss", Date()).toString()+".jpg"
+        var file = dir.path+ android.text.format.DateFormat.format("yyyy-MM-dd_hhmmss", Date()).toString()+".jpg"
 
         var newFile=File(file + "")
-        var outputFileUri = Uri.fromFile(newFile)
+        var outputFileUri = FileProvider.getUriForFile(this,"com.kumsal.kyk.screns",newFile)
+
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
         startActivityForResult(cameraIntent, 12345)
@@ -361,8 +363,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         when (index) {
                             0 ->
                                 if (checkAndRequestPermissions()) {
-                                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                                    startActivityForResult(camera_intent, 12345);
+//                                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//                                    startActivityForResult(camera_intent, 12345);
+                                    capturePhoto()
                                 }
                             1 ->
                                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
