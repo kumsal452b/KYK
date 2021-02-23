@@ -203,7 +203,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 if (data != null) {
                     var uri: Uri?
                     for (a in 0..data.clipData!!.itemCount - 1) {
-                        var theModel = imageSelected_model(data.clipData?.getItemAt(1)?.uri)
+                        var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
                         mImageListView.add(theModel)
                     }
                     mlistAdapter.notifyDataSetChanged()
@@ -212,7 +212,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
-                var theModel = imageSelected_model(data?.data)
+                var theModel = imageSelected_model(data?.clipData?.getItemAt(0)?.uri)
                 mImageListView.add(theModel)
                 mlistAdapter.notifyDataSetChanged()
             }
