@@ -80,8 +80,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var toolbar: Toolbar
     private lateinit var securityTag: TextView
     private lateinit var mImageListRecyclerView: RecyclerView
-    private lateinit var mlistAdapter:imageSelected_adapter
-    private lateinit var mImageListView:java.util.ArrayList<imageSelected_model>
+    private lateinit var mlistAdapter: imageSelected_adapter
+    private lateinit var mImageListView: java.util.ArrayList<imageSelected_model>
+
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -201,15 +202,17 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             if (resultCode == RESULT_OK) {
                 if (data != null) {
                     var uri: Uri?
-                    var theModel=imageSelected_model(data?.data)
-                    mImageListView.add(theModel)
-
+                    for (a in 0..data.clipData!!.itemCount - 1) {
+                        var theModel = imageSelected_model(data.clipData?.getItemAt(1)?.uri)
+                        mImageListView.add(theModel)
+                    }
+                    mlistAdapter.notifyDataSetChanged()
                 }
             }
         }
         if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
-                var theModel=imageSelected_model(data?.data)
+                var theModel = imageSelected_model(data?.data)
                 mImageListView.add(theModel)
                 mlistAdapter.notifyDataSetChanged()
             }
@@ -329,12 +332,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
 
-        mImageListRecyclerView=findViewById(R.id.activity_create_post_imageSelected)
+        mImageListRecyclerView = findViewById(R.id.activity_create_post_imageSelected)
         mImageListRecyclerView.setHasFixedSize(true)
-        mImageListRecyclerView.layoutManager=GridLayoutManager(this,3)
-        mImageListView= ArrayList()
-        mlistAdapter=imageSelected_adapter(mImageListView)
-        mImageListRecyclerView.adapter=mlistAdapter
+        mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
+        mImageListView = ArrayList()
+        mlistAdapter = imageSelected_adapter(mImageListView)
+        mImageListRecyclerView.adapter = mlistAdapter
 
         name = intent.getStringExtra("name") as String
         imageUri = intent.getStringExtra("imageUri") as String
@@ -381,6 +384,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                             Intent.ACTION_PICK,
                                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                                         )
+                                    mediaWindow.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                                     startActivityForResult(mediaWindow, 100)
 
                                 }
