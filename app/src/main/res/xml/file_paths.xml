@@ -2,7 +2,7 @@
 
     <files-path
         name="my_images"
-        path="images/" />
+        path="/storage/emulated/0/Pictures/Folder/" />
 
     <files-path
         name="my_docs"
