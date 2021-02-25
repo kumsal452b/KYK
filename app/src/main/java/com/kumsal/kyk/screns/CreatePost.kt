@@ -210,11 +210,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var imageFile=File.createTempFile(imagename,".jpg",storageDir)
         var outputFileUri = imageFile.absolutePath
+        var test=FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",imageFile)
 
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(cameraIntent.resolveActivity(packageManager)!=null){
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, test)
             startActivityForResult(cameraIntent, 12345)
         }
 
