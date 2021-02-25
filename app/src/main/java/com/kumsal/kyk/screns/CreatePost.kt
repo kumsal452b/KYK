@@ -22,6 +22,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -81,7 +82,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
         private lateinit var search: MenuItem
-        private lateinit var fullScreenDialog: FullScreenDialog
+        lateinit var fullScreenDialog: FullScreenDialog
     }
 
     //add intent element varíable
@@ -212,9 +213,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         var newFile=File(file + "")
 
+        this.grantUriPermission(packageName, newFile.toUri() , Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
         var outputFileUri = FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.CreatePost.fileprovider",newFile)
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if(cameraIntent.resolveActivity(packageManager)!=null){
+
+        }
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
         startActivityForResult(cameraIntent, 12345)
     }
