@@ -206,10 +206,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     private fun capturePhoto() {
         var timeStamp= SimpleDateFormat("yyyyMMdd").format(Date())
-        
+        var imagename="${timeStamp}"
+        var storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        var imageFile=File.createTempFile(imagename,".jpg",storageDir)
+        var outputFileUri = imageFile.absolutePath
 
-        this.grantUriPermission(packageName, newFile.toUri() , Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-        var outputFileUri = FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",newFile)
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(cameraIntent.resolveActivity(packageManager)!=null){
