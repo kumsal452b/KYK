@@ -47,6 +47,7 @@ import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
@@ -204,24 +205,18 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     }
 
     private fun capturePhoto() {
-        var dir =
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES+"/Folder/")
-        var uuid=UUID.randomUUID()
-        var newdir = File(dir.toString())
-        newdir.mkdirs();
-        var file = dir.path+"/"+ android.text.format.DateFormat.format("yyyy-MM-dd_hhmmss", Date()).toString()+".jpg"
-
-        var newFile=File(file + "")
+        var timeStamp= SimpleDateFormat("yyyyMMdd").format(Date())
+        
 
         this.grantUriPermission(packageName, newFile.toUri() , Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-        var outputFileUri = FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.CreatePost.fileprovider",newFile)
+        var outputFileUri = FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",newFile)
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(cameraIntent.resolveActivity(packageManager)!=null){
-
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
+            startActivityForResult(cameraIntent, 12345)
         }
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri)
-        startActivityForResult(cameraIntent, 12345)
+
     }
 
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {

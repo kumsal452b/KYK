@@ -2,7 +2,7 @@
 
     <files-path
         name="my_images"
-        path="Android/Data/com.kumsal.kyk/files/Pictures"/>
+        path="Android/Data/com.kumsal.kyk/files/Pictures/Folder/"/>
 
     <files-path
         name="my_docs"
@@ -10,8 +10,11 @@
 
     <external-files-path
         name="external_files_dir"
-        path="/" />
+        path="Android/Data/com.kumsal.kyk/files/Pictures/Folder/" />
 
+    <external-path
+        name="my_images"
+        path="Android/Data/com.kumsal.kyk/files/Pictures/Folder/"/>
     <cache-path
         name="cache_dir"
         path="/" />
