@@ -195,7 +195,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
-                var theModel = imageSelected_model(data?.clipData?.getItemAt(0)?.uri)
+                var theModel = imageSelected_model(data?.data)
                 mImageListView.add(theModel)
                 mlistAdapter.notifyDataSetChanged()
             }
