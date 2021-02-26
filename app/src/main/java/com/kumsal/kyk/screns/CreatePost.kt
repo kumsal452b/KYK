@@ -99,7 +99,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var mFsSaveSecurity: FirebaseFirestore
     private lateinit var mFsDenied: FirebaseFirestore
     private lateinit var mFsPostDb: FirebaseFirestore
-
+    private lateinit var currentUri:Uri
 
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
@@ -195,7 +195,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
-                var theModel = imageSelected_model(data?.data)
+                var theModel = imageSelected_model(currentUri)
                 mImageListView.add(theModel)
                 mlistAdapter.notifyDataSetChanged()
             }
@@ -210,12 +210,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var imageFile=File.createTempFile(imagename,".jpg",storageDir)
         var outputFileUri = imageFile.absolutePath
-        var test=FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",imageFile)
-
+        currentUri=FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",imageFile)
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(cameraIntent.resolveActivity(packageManager)!=null){
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, test)
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentUri)
             startActivityForResult(cameraIntent, 12345)
         }
 
@@ -331,6 +330,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         firstControl = true
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
+        currentUri= Uri.EMPTY
 
         mImageListRecyclerView = findViewById(R.id.activity_create_post_imageSelected)
         mImageListRecyclerView.setHasFixedSize(true)
