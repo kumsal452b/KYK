@@ -184,7 +184,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
@@ -208,8 +207,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
-
     private fun capturePhoto() {
         var timeStamp= SimpleDateFormat("yyyyMMdd").format(Date())
         var imagename="${timeStamp}"
@@ -235,7 +232,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }.addOnSuccessListener { OnSuccessListener<UploadTask.TaskSnapshot>(){
                 taskSnapshot ->
                 filePath.downloadUrl.addOnSuccessListener { uri->
-
+                    tempArray.add(uri)
+                    if (a==mImageListView.size-1){
+                        theList.getLoadImage(tempArray)
+                    }
+                }.addOnFailureListener{
+                        it->
+                    Log.d("Error for create post",it.message!!)
                 }
             } }
         }
@@ -257,29 +260,33 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private fun share() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                var postContent = post_text_element.text.toString()
-                var values = HashMap<String, Any>()
-                WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
-                WaitDialog.dismiss(10000)
-                values.put("pc", postContent)
-                values.put("name", name)
-                values.put("username", username)
-                values.put("imageUri", imageUri)
-                values.put("time", Timestamp.now())
-                values.put("thmbImageUri", thmbImageUri)
-                values.put("likes", java.util.ArrayList<String>())
-                values.put("comments", 0)
-                var pushId = mFsPostDb.collection("Post").id
-                mFsPostDb.collection("Post").add(values).addOnFailureListener {
-                    OnFailureListener {
-                        WaitDialog.dismiss()
-                        Log.d("Post Db have error", it.message!!)
+                getImagesList(object:imageLoadCall{
+                    override fun getLoadImage(imageList: ArrayList<Uri>) {
+                        var postContent = post_text_element.text.toString()
+                        var values = HashMap<String, Any>()
+                        WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
+                        WaitDialog.dismiss(10000)
+                        values.put("pc", postContent)
+                        values.put("name", name)
+                        values.put("username", username)
+                        values.put("imageUri", imageUri)
+                        values.put("time", Timestamp.now())
+                        values.put("thmbImageUri", thmbImageUri)
+                        values.put("likes", java.util.ArrayList<String>())
+                        values.put("comments", 0)
+                        var pushId = mFsPostDb.collection("Post").id
+                        mFsPostDb.collection("Post").add(values).addOnFailureListener {
+                            OnFailureListener {
+                                WaitDialog.dismiss()
+                                Log.d("Post Db have error", it.message!!)
+                            }
+                        }.addOnSuccessListener {
+                            WaitDialog.dismiss()
+                            var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
+                            startActivity(main_Activity)
+                        }
                     }
-                }.addOnSuccessListener {
-                    WaitDialog.dismiss()
-                    var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
-                    startActivity(main_Activity)
-                }
+                })
             }
         })
     }
