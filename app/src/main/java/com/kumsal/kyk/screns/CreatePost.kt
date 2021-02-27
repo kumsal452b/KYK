@@ -26,6 +26,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Timestamp
@@ -230,7 +231,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 it->
                 Log.d("Error for create post",it.message!!)
             }.addOnSuccessListener { OnSuccessListener<UploadTask.TaskSnapshot>(){
-                taskSnapshot ->
                 filePath.downloadUrl.addOnSuccessListener { uri->
                     tempArray.add(uri)
                     if (a==mImageListView.size-1){
@@ -240,7 +240,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         it->
                     Log.d("Error for create post",it.message!!)
                 }
-            } }
+            } }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
+                item->
+                if (item.isSuccessful){
+                    
+                }
+            })
         }
     }
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
