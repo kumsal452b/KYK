@@ -44,6 +44,7 @@ import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
+import com.kumsal.kyk.interfaces.imageLoadCall
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.File
@@ -218,6 +219,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentUri)
             startActivityForResult(cameraIntent, 12345)
         }
+    }
+    private fun getImagesList(theList:imageLoadCall){
+        
     }
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->

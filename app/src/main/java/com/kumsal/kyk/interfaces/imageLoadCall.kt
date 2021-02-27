@@ -1,5 +1,6 @@
 package com.kumsal.kyk.interfaces
 
+import android.net.Uri
 interface imageLoadCall{
-    fun getLoadImage()
+    fun getLoadImage(imageList:ArrayList<Uri>)
 }
