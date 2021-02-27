@@ -204,6 +204,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+
     private fun capturePhoto() {
         var timeStamp= SimpleDateFormat("yyyyMMdd").format(Date())
         var imagename="${timeStamp}"
@@ -217,9 +218,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentUri)
             startActivityForResult(cameraIntent, 12345)
         }
-
     }
-
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
             if (error != null) {
@@ -234,7 +233,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             listInterface.getUsers(userList)
         }
     }
-
     private fun share() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -264,7 +262,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         })
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_action, menu)
@@ -300,7 +297,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         })
         return super.onCreateOptionsMenu(menu)
     }
-
     private fun canBeSent() {
         post_text_element.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -317,7 +313,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         })
     }
-
     private fun initialComponent() {
         profile_image = findViewById(R.id.activity_create_post_image)
         select_image = findViewById(R.id.activity_create_post_select_image)
@@ -397,8 +392,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
 
     }
-
-    fun checkAndRequestPermissions(): Boolean {
+    private fun checkAndRequestPermissions(): Boolean {
         var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         var permWrtStrg =
             ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -425,7 +419,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         return true
     }
-
     private fun accesList(theDeniedElement: GetDeniedList) {
         deniedListListener = mFsDenied.collection("Users").document(userid)
             .addSnapshotListener { document, e ->
@@ -439,7 +432,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 theDeniedElement.accedDenied(theuser?.blocked)
             }
     }
-
     private fun secure_initial() {
 
         select_privacy.setOnClickListener(object : View.OnClickListener {
@@ -527,7 +519,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         })
     }
-
     private fun securityPanelEventClick() {
         if (alfriends.isChecked) {
             recyclerView.visibility = View.GONE
@@ -624,7 +615,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
         }
     }
-
     private fun securityPanelInitialzed(rootView: View?) {
         recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
         recyclerView.setHasFixedSize(true)
@@ -642,7 +632,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         setSupportActionBar(toolbar)
         recyclerView.adapter = mAdapter
     }
-
     private fun checkSecurePanel() {
         if (selectedlistElement.size > 0) {
             isActionMode = true
@@ -654,8 +643,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //            }
         }
     }
-
-    fun startSelection(index: Int) {
+    private fun startSelection(index: Int) {
 
         if (!isActionMode) {
 
@@ -672,7 +660,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             mAdapter.notifyDataSetChanged()
         }
     }
-
     private fun updateToolbarText(counter: Int) {
         if (counter == 0) {
             textView.setText("0 person selected ")
@@ -682,7 +669,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
 
     }
-
     override fun clickCheckBox(position: Int) {
         if (!selectedlistElement.contains(listElement.get(position))) {
 
@@ -714,7 +700,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             selectedAll.isChecked = false
         }
     }
-
     private fun initialDynamic() {
         var hint = "What's on your mind, $name?"
         post_text_element.hint = hint
@@ -722,12 +707,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             Picasso.get().load(imageUri).into(profile_image)
         }
     }
-
     override fun onStop() {
         listener.remove()
         super.onStop()
     }
-
     override fun onDestroy() {
         listener.remove()
         super.onDestroy()
