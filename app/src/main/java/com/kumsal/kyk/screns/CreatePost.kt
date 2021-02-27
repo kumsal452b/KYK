@@ -27,9 +27,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
@@ -66,7 +70,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var mImageListRecyclerView: RecyclerView
     private lateinit var mlistAdapter: imageSelected_adapter
     private lateinit var mImageListView: java.util.ArrayList<imageSelected_model>
-
+    private lateinit var mStorageReference: StorageReference
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -221,7 +225,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
     }
     private fun getImagesList(theList:imageLoadCall){
-        
+        var tempArray=ArrayList<Uri>()
+        for (a in 0..mImageListView.size-1) {
+            var imagePath = SimpleDateFormat("yyyyMMdd").format(Date()) + a
+            var filePath=mStorageReference.child("PostImage").child(imagePath+",jpg")
+            filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
+                it->
+                Log.d("Error for create post",it.message!!)
+            }.addOnSuccessListener { OnSuccessListener<UploadTask.TaskSnapshot>(){
+                taskSnapshot ->
+                filePath.downloadUrl.addOnSuccessListener { uri->
+
+                }
+            } }
+        }
     }
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
@@ -330,7 +347,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
         currentUri= Uri.EMPTY
-
+        mStorageReference=FirebaseStorage.getInstance().getReference()
         mImageListRecyclerView = findViewById(R.id.activity_create_post_imageSelected)
         mImageListRecyclerView.setHasFixedSize(true)
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
@@ -647,7 +664,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 //            }
         }
     }
-    private fun startSelection(index: Int) {
+    public fun startSelection(index: Int) {
 
         if (!isActionMode) {
 

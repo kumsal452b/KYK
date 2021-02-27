@@ -178,13 +178,6 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             this@RegisterDetailActivity,
                                             perm2, 1234
                                         )
-                                    } else {
-
-                                        //                                        CropImage.activity()
-                                        //                                            .setGuidelines(CropImageView.Guidelines.ON)
-                                        //                                            .setAspectRatio(2,2)
-                                        //                                            .start(this@RegisterDetailActivity)
-
                                     }
                                 1 ->
                                     if (checkSelfPermission(READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -193,16 +186,14 @@ class RegisterDetailActivity : AppCompatActivity() {
                                             perm,
                                             546
                                         )
-                                    } else {
+                                    }else{
                                         var mediaWindow =
                                             Intent(
                                                 Intent.ACTION_PICK,
                                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                                             )
                                         startActivityForResult(mediaWindow, 100)
-
                                     }
-
                             }
                         }
 
@@ -286,7 +277,6 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 100) {
             if (resultCode == RESULT_OK) {
@@ -324,7 +314,6 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-
     fun checkAndRequestPermissions(): Boolean {
         var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         var permWrtStrg =
@@ -352,7 +341,6 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         return true
     }
-
     fun isEmpty(): Boolean {
         var troubleCount = 0;
         if (!usernameCheckBox.isChecked) {
@@ -381,7 +369,6 @@ class RegisterDetailActivity : AppCompatActivity() {
         }
         return true
     }
-
     fun clearTurkishWorld(name:String):String{
         var convert=name
         var turkisChar= arrayOf<Char>(0x131.toChar(),
@@ -521,7 +508,6 @@ class RegisterDetailActivity : AppCompatActivity() {
             myLoadImage.getImagePath("", "")
         }
     }
-
     override fun onBackPressed() {
         super.onBackPressed()
         Animatoo.animateSwipeRight(this)
