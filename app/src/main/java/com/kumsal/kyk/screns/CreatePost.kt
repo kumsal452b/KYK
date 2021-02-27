@@ -222,28 +222,31 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             startActivityForResult(cameraIntent, 12345)
         }
     }
+    private var freeCount=0;
     private fun getImagesList(theList:imageLoadCall){
         var tempArray=ArrayList<Uri>()
         for (a in 0..mImageListView.size-1) {
-            var imagePath = SimpleDateFormat("yyyyMMdd").format(Date()) + a
+            var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
             var filePath=mStorageReference.child("PostImage").child(imagePath+",jpg")
             filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
                 it->
                 Log.d("Error for create post",it.message!!)
             }.addOnSuccessListener { OnSuccessListener<UploadTask.TaskSnapshot>(){
-                filePath.downloadUrl.addOnSuccessListener { uri->
-                    tempArray.add(uri)
-                    if (a==mImageListView.size-1){
-                        theList.getLoadImage(tempArray)
-                    }
-                }.addOnFailureListener{
-                        it->
-                    Log.d("Error for create post",it.message!!)
-                }
+
             } }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
                 item->
                 if (item.isSuccessful){
-                    
+                    filePath.downloadUrl.addOnSuccessListener { uri->
+                        tempArray.add(uri)
+                        if (freeCount==mImageListView.size-1){
+                            theList.getLoadImage(tempArray)
+                            freeCount=0
+                        }
+                        freeCount++
+                    }.addOnFailureListener{
+                            it->
+                        Log.d("Error for create post",it.message!!)
+                    }
                 }
             })
         }
@@ -271,6 +274,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         var values = HashMap<String, Any>()
                         WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                         WaitDialog.dismiss(10000)
+                        imageList[0]
                         values.put("pc", postContent)
                         values.put("name", name)
                         values.put("username", username)
