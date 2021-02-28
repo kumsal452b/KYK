@@ -29,11 +29,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
 import com.google.firebase.storage.UploadTask
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
@@ -52,6 +54,7 @@ import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import org.intellij.lang.annotations.RegExp
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -225,10 +228,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private var freeCount=0;
     private fun getImagesList(theList:imageLoadCall){
         var tempArray=ArrayList<Uri>()
+        var task:StorageTask<UploadTask.TaskSnapshot>?=null
         for (a in 0..mImageListView.size-1) {
             var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
             var filePath=mStorageReference.child("PostImage").child(imagePath+",jpg")
-            filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
+            task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
                 it->
                 Log.d("Error for create post",it.message!!)
             }.addOnSuccessListener { OnSuccessListener<UploadTask.TaskSnapshot>(){
@@ -238,6 +242,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 if (item.isSuccessful){
                     filePath.downloadUrl.addOnSuccessListener { uri->
                         tempArray.add(uri)
+                        var stringS=uri.toString()
+                            print( stringS.split(Regex("r(%2F)..*(%2F)"))[0].split(".")[0]);
+
                         if (freeCount==mImageListView.size-1){
                             theList.getLoadImage(tempArray)
                             freeCount=0
@@ -250,6 +257,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 }
             })
         }
+        task?.addOnCompleteListener(OnCompleteListener { task ->
+            println(task.isCanceled)
+        })
     }
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
@@ -275,6 +285,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                         WaitDialog.dismiss(10000)
                         imageList[0]
+
                         values.put("pc", postContent)
                         values.put("name", name)
                         values.put("username", username)
