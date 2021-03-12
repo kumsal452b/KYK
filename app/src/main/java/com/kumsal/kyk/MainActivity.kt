@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
 
+
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
@@ -86,6 +87,11 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         initializeAnimation()
         addListener()
 
+    }
+    companion object{
+        public fun dialog(value:Boolean){
+
+        }
     }
 
     private fun addListener() {
@@ -120,6 +126,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             true
         }
     }
+
 
     private fun initializeComponent() {
         toolbar = findViewById(R.id.main_activity_toolbar)
