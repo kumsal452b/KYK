@@ -1,8 +1,11 @@
 package com.kumsal.kyk
 
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
@@ -78,6 +81,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     var userId=""
     var thmbImageUri=""
     var networkChangeReceiver:NetworkChangeReceiver?=null
+    var broadCastReceiver:BroadcastReceiver?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -87,7 +91,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         //FAB anime zoon
         initializeAnimation()
         addListener()
-        networkChangeReceiver=NetworkChangeReceiver();
+        
+        broadCastReceiver=NetworkChangeReceiver()
+
     }
     companion object{
         public fun dialog(value:Boolean){

@@ -16,6 +16,7 @@ class NetworkChangeReceiver : BroadcastReceiver() {
             if (isOnline(context!!)) {
                 dialog(true);
                 Log.e("keshav", "Online Connect Intenet ");
+
             } else {
                 dialog(false);
                 Log.e("keshav", "Conectivity Failure !!! ");
