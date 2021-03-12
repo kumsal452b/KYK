@@ -242,9 +242,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 if (item.isSuccessful){
                     filePath.downloadUrl.addOnSuccessListener { uri->
                         tempArray.add(uri)
-                        var stringS=uri.toString()
-                            print( stringS.split(Regex("r(%2F)..*(%2F)"))[0].split(".")[0]);
-
                         if (freeCount==mImageListView.size-1){
                             theList.getLoadImage(tempArray)
                             freeCount=0

@@ -281,7 +281,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             R.id.fab_message ->
                 println("")
             R.id.fab_edit ->
-
                 startActivity(post_Activity)
         }
     }
