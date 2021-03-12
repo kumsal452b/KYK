@@ -249,16 +249,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         Log.d("Error for create post",it.message!!)
                     }
                 }
-            }).addOnProgressListener { OnProgressListener<UploadTask.TaskSnapshot>(){
-                item->
-                var progress = (100.0 * item.getBytesTransferred()) / item.getTotalByteCount()
-                println(progress)
-
-            } }
+            })
         }
-        task?.addOnCompleteListener(OnCompleteListener { task ->
-            println(task.isCanceled)
-        })
+        task?.addOnProgressListener { tasksnapshot->
+            var progress = (100.0 * tasksnapshot.getBytesTransferred()) / tasksnapshot.getTotalByteCount()
+            println(progress)
+        }
     }
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
