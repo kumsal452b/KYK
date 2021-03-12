@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
@@ -31,6 +32,7 @@ import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.kumsal.kyk.interfaces.GetCenterSimilar
+import com.kumsal.kyk.interfaces.checkInternet
 import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
 import com.squareup.picasso.Picasso
@@ -40,7 +42,7 @@ import me.ibrahimsn.lib.SmoothBottomBar
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickListener {
+class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickListener,checkInternet {
 
     private var toolbar: Toolbar? = null
     private var mViewPager: ViewPager? = null
@@ -56,26 +58,26 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
     private var mAuth: FirebaseAuth? = null
     private var mUser: FirebaseUser? = null
-    private lateinit var mFstoreUserDb:FirebaseFirestore
+    private lateinit var mFstoreUserDb: FirebaseFirestore
 
     private lateinit var mNavbar: NavigationView
     private lateinit var proImage: CircleImageView
     private lateinit var name: TextView
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
-    private lateinit var connectionState:TextView
+    lateinit var connectionState: TextView
 
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
 
     //Image send element
-    var imageUri=""
-    var userId=""
-    var thmbImageUri=""
-    var networkChangeReceiver:NetworkChangeReceiver?=null
-    var broadCastReceiver:BroadcastReceiver?=null
-    override fun onCreate(savedInstanceState: Bundle?) {
+    var imageUri = ""
+    var userId = ""
+    var thmbImageUri = ""
+    var networkChangeReceiver: NetworkChangeReceiver? = null
+    var broadCastReceiver: BroadcastReceiver? = null
+    override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //initialzed
@@ -85,19 +87,26 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         initializeAnimation()
         addListener()
 
-        broadCastReceiver=NetworkChangeReceiver()
+        broadCastReceiver = NetworkChangeReceiver(this)
         registerNetworkBroadcastForNougat()
 
     }
-    companion object{
-        public fun dialog(value: Boolean){
-            if(value)
-                println("connection")
+
+    companion object {
+        fun dialog(value: Boolean) {
+            if (value){
+                var test = MainActivity()
+                test.connectionState.text="Connection"
+                test.connectionState.setBackgroundColor(Color.GREEN)
+                test.setVisible(true)
+            }
             else
-                println("lost")
+            println("lost")
         }
     }
-    fun registerNetworkBroadcastForNougat(){
+
+    fun registerNetworkBroadcastForNougat() {
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             this.registerReceiver(
                 broadCastReceiver,
@@ -111,6 +120,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             )
         }
     }
+
     protected fun unregisterNetworkChanges() {
         try {
             unregisterReceiver(broadCastReceiver)
@@ -158,7 +168,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         mViewPager = findViewById(R.id.main_activity_pager_view)
         sectionPagerAdapter = SectionPagerAdapter(supportFragmentManager)
         mBottomBar = findViewById(R.id.main_activity_bottomBar)
-
+        connectionState = findViewById(R.id.main_page_connectionStatte)
         mDrawerLayout = findViewById(R.id.main_activity_drawer)
         mNavbar = findViewById(R.id.nav_bar)
         //header initializeAnimationize
@@ -172,10 +182,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         mAuth = FirebaseAuth.getInstance()
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
-        mFstoreUserDb= FirebaseFirestore.getInstance()
+        mFstoreUserDb = FirebaseFirestore.getInstance()
 
-        userId=mUser?.uid.toString()
-        Globals.ınstance?.uid=userId
+        userId = mUser?.uid.toString()
+        Globals.ınstance?.uid = userId
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         actionBarDrawerToggle =
@@ -215,13 +225,15 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private fun closeFABMenu() {
         isOpen = false
         add?.animate()?.setInterpolator(interPolator)?.rotationBy(45f)?.setDuration(300)?.start()
-        addMessage?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(
-            300
-        )
+        addMessage?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)
+            ?.setDuration(
+                300
+            )
             ?.start()
-        addPost?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(
-            300
-        )
+        addPost?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)
+            ?.setDuration(
+                300
+            )
             ?.start()
 
     }
@@ -229,9 +241,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private fun showFABMenu() {
         isOpen = true
         add?.animate()?.setInterpolator(interPolator)?.rotationBy(45f)?.setDuration(300)?.start()
-        addMessage?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(
-            300
-        )
+        addMessage?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)
+            ?.setDuration(
+                300
+            )
             ?.start()
         addPost?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(
             300
@@ -251,25 +264,25 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     override fun onItemSelect(pos: Int): Boolean {
         if (pos == 0) {
             mViewPager?.setCurrentItem(0)
-            if (isOpen){
+            if (isOpen) {
                 closeFABMenu()
             }
         }
         if (pos == 1) {
             mViewPager?.setCurrentItem(1)
-            if (isOpen){
+            if (isOpen) {
                 closeFABMenu()
             }
         }
         if (pos == 2) {
             mViewPager?.setCurrentItem(2)
-            if (isOpen){
+            if (isOpen) {
                 closeFABMenu()
             }
         }
         if (pos == 3) {
             mViewPager?.setCurrentItem(3)
-            if (isOpen){
+            if (isOpen) {
                 closeFABMenu()
             }
         }
@@ -284,8 +297,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             super.finish()
         } else {
 
-            var userElement=DbUsers<UsersModel>(mFstoreUserDb, UsersModel())
-            var userList=userElement.readyElement(object : GetCenterSimilar<UsersModel> {
+            var userElement = DbUsers<UsersModel>(mFstoreUserDb, UsersModel())
+            var userList = userElement.readyElement(object : GetCenterSimilar<UsersModel> {
                 override fun getUsers(array: ArrayList<UsersModel>) {
                     var photoImage = array.get(0).theThmbImage
                     if (!TextUtils.isEmpty(photoImage))
@@ -305,7 +318,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     }
 
     override fun onClick(v: View?) {
-        var post_Activity=Intent(this, CreatePost::class.java)
+        var post_Activity = Intent(this, CreatePost::class.java)
         post_Activity.putExtra("thmburi", thmbImageUri)
         post_Activity.putExtra("name", name.text.toString())
         post_Activity.putExtra("username", username.text.toString())
@@ -322,6 +335,18 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
                 println("")
             R.id.fab_edit ->
                 startActivity(post_Activity)
+        }
+    }
+
+    override fun isOnline(value: Boolean) {
+        if (value){
+            connectionState.text="Connection"
+            connectionState.setBackgroundColor(Color.GREEN)
+            setVisible(true)
+        }else{
+            connectionState.text="Connection Lose"
+            connectionState.setBackgroundColor(Color.RED)
+            setVisible(true)
         }
     }
 

@@ -7,18 +7,26 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.util.Log
 import com.kumsal.kyk.MainActivity.Companion.dialog
+import com.kumsal.kyk.interfaces.checkInternet
 import java.lang.NullPointerException
 
-class NetworkChangeReceiver : BroadcastReceiver() {
+class NetworkChangeReceiver : BroadcastReceiver {
+    private var checkInternet:checkInternet?=null
+    constructor(checkInternet: checkInternet?){
+        this.checkInternet = checkInternet
+    }
+    constructor(){}
     override fun onReceive(context: Context?, intent: Intent?) {
         try
         {
             if (isOnline(context!!)) {
                 dialog(true);
+                checkInternet?.isOnline(true)
                 Log.e("keshav", "Online Connect Intenet ");
 
             } else {
-                dialog(false);
+                dialog(false)
+                checkInternet?.isOnline(true)
                 Log.e("keshav", "Conectivity Failure !!! ");
             }
         } catch (e:NullPointerException) {
