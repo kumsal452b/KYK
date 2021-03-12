@@ -21,7 +21,8 @@
             android:background="@drawable/bacground_is"
             app:layout_constraintBottom_toTopOf="@+id/main_activity_pager_view"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="5dp">
+            tools:layout_editor_absoluteX="5dp"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/main_activity_toolbar"
@@ -36,8 +37,22 @@
                 <include layout="@layout/custom_app_bar_text" />
             </androidx.appcompat.widget.Toolbar>
 
+
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/main_page_connectionStatte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/connection"
+            android:textColor="#F3F3F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="18sp"
+            android:background="#10A35E"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout"
+            android:visibility="gone"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_activity_pager_view"

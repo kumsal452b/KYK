@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private lateinit var name: TextView
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
-
+    private lateinit var connectionState:TextView
 
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()

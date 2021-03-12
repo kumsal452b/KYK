@@ -56,4 +56,5 @@
     <string name="cancel">Cancel</string>
     <string name="search_hint">Search something</string>
     <string name="problem_found">Problem found</string>
+    <string name="connection">Connection</string>
 </resources>
