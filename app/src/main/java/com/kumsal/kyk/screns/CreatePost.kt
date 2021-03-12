@@ -33,10 +33,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.StorageTask
-import com.google.firebase.storage.UploadTask
+import com.google.firebase.storage.*
 import com.hendraanggrian.appcompat.widget.Mention
 import com.hendraanggrian.appcompat.widget.MentionArrayAdapter
 import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
@@ -252,7 +249,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         Log.d("Error for create post",it.message!!)
                     }
                 }
-            })
+            }).addOnProgressListener { OnProgressListener<UploadTask.TaskSnapshot>(){
+                item->
+                var progress = (100.0 * item.getBytesTransferred()) / item.getTotalByteCount()
+                println(progress)
+
+            } }
         }
         task?.addOnCompleteListener(OnCompleteListener { task ->
             println(task.isCanceled)
