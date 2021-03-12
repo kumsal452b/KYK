@@ -2,14 +2,13 @@ package com.kumsal.kyk
 
 
 import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.text.TextUtils
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,10 +19,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -31,12 +27,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kumsal.kyk.AdapterModel.UsersModel
-import com.kumsal.kyk.AdapterModel.post_adapter
-import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
-import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
@@ -44,7 +37,7 @@ import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
-import java.util.ArrayList
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickListener {
@@ -91,16 +84,38 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         //FAB anime zoon
         initializeAnimation()
         addListener()
-        
+
         broadCastReceiver=NetworkChangeReceiver()
+        registerNetworkBroadcastForNougat()
 
     }
     companion object{
-        public fun dialog(value:Boolean){
+        public fun dialog(value: Boolean){
             if(value)
                 println("connection")
             else
                 println("lost")
+        }
+    }
+    fun registerNetworkBroadcastForNougat(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            this.registerReceiver(
+                broadCastReceiver,
+                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            )
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            this.registerReceiver(
+                broadCastReceiver,
+                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            )
+        }
+    }
+    protected fun unregisterNetworkChanges() {
+        try {
+            unregisterReceiver(broadCastReceiver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
         }
     }
 
@@ -120,7 +135,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
 
             override fun onPageSelected(position: Int) {
                 mBottomBar?.itemActiveIndex = position
-                if (isOpen){
+                if (isOpen) {
                     closeFABMenu()
                 }
             }
@@ -200,9 +215,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private fun closeFABMenu() {
         isOpen = false
         add?.animate()?.setInterpolator(interPolator)?.rotationBy(45f)?.setDuration(300)?.start()
-        addMessage?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
+        addMessage?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(
+            300
+        )
             ?.start()
-        addPost?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(300)
+        addPost?.animate()?.translationY(100F)?.alpha(0F)?.setInterpolator(interPolator)?.setDuration(
+            300
+        )
             ?.start()
 
     }
@@ -210,9 +229,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     private fun showFABMenu() {
         isOpen = true
         add?.animate()?.setInterpolator(interPolator)?.rotationBy(45f)?.setDuration(300)?.start()
-        addMessage?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(300)
+        addMessage?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(
+            300
+        )
             ?.start()
-        addPost?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(300)
+        addPost?.animate()?.translationY(0F)?.alpha(1F)?.setInterpolator(interPolator)?.setDuration(
+            300
+        )
             ?.start()
 
 
@@ -262,16 +285,16 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         } else {
 
             var userElement=DbUsers<UsersModel>(mFstoreUserDb, UsersModel())
-            var userList=userElement.readyElement(object:GetCenterSimilar<UsersModel>{
+            var userList=userElement.readyElement(object : GetCenterSimilar<UsersModel> {
                 override fun getUsers(array: ArrayList<UsersModel>) {
-                    var photoImage=array.get(0).theThmbImage
+                    var photoImage = array.get(0).theThmbImage
                     if (!TextUtils.isEmpty(photoImage))
-                        Picasso.get().load( array.get(0).theThmbImage).into(proImage)
+                        Picasso.get().load(array.get(0).theThmbImage).into(proImage)
                     name.setText(array.get(0).theNameSurname)
                     username.setText(array.get(0).theUserName)
-                    thmbImageUri=array[0].theThmbImage!!
+                    thmbImageUri = array[0].theThmbImage!!
                 }
-            },"Users",userId)
+            }, "Users", userId)
         }
         super.onStart()
     }
@@ -282,12 +305,12 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     }
 
     override fun onClick(v: View?) {
-        var post_Activity=Intent(this,CreatePost::class.java)
-        post_Activity.putExtra("thmburi",thmbImageUri)
-        post_Activity.putExtra("name",name.text.toString())
-        post_Activity.putExtra("username",username.text.toString())
-        post_Activity.putExtra("uid",userId)
-        post_Activity.putExtra("imageUri",imageUri)
+        var post_Activity=Intent(this, CreatePost::class.java)
+        post_Activity.putExtra("thmburi", thmbImageUri)
+        post_Activity.putExtra("name", name.text.toString())
+        post_Activity.putExtra("username", username.text.toString())
+        post_Activity.putExtra("uid", userId)
+        post_Activity.putExtra("imageUri", imageUri)
         when (v?.id) {
             R.id.fab_add ->
                 if (!isOpen) {
@@ -300,5 +323,10 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
             R.id.fab_edit ->
                 startActivity(post_Activity)
         }
+    }
+
+    override fun onDestroy() {
+        unregisterNetworkChanges()
+        super.onDestroy()
     }
 }
