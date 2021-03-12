@@ -31,6 +31,7 @@ import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.DBModels.DbUsers
+import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.GetCenterSimilar
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
     var imageUri=""
     var userId=""
     var thmbImageUri=""
-
+    var networkChangeReceiver:NetworkChangeReceiver?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -86,11 +87,14 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener,View.OnClickLis
         //FAB anime zoon
         initializeAnimation()
         addListener()
-
+        networkChangeReceiver=NetworkChangeReceiver();
     }
     companion object{
         public fun dialog(value:Boolean){
-
+            if(value)
+                println("connection")
+            else
+                println("lost")
         }
     }
 
