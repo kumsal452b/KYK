@@ -9,4 +9,5 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         System.out.println("connection change");
     }
+
 }
