@@ -28,7 +28,8 @@ class NetworkChangeReceiver : BroadcastReceiver() {
     private fun isOnline(context: Context):Boolean {
         try {
         var cm=context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        var networkInfo=cm.activeNetwork as NetworkInfo
+        var networkInfo:NetworkInfo
+        networkInfo=cm.activeNetworkInfo!!
          return (networkInfo != null && networkInfo.isConnected)
         }catch (e:NullPointerException){
             return false
