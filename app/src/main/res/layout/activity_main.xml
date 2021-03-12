@@ -51,8 +51,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="18sp"
             android:background="#10A35E"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/main_activity_pager_view"

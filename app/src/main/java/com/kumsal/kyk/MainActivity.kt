@@ -95,10 +95,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     companion object {
         fun dialog(value: Boolean) {
             if (value){
-                var test = MainActivity()
-                test.connectionState.text="Connection"
-                test.connectionState.setBackgroundColor(Color.GREEN)
-                test.setVisible(true)
+
             }
             else
             println("lost")

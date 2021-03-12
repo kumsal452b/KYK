@@ -26,7 +26,7 @@ class NetworkChangeReceiver : BroadcastReceiver {
 
             } else {
                 dialog(false)
-                checkInternet?.isOnline(true)
+                checkInternet?.isOnline(false)
                 Log.e("keshav", "Conectivity Failure !!! ");
             }
         } catch (e:NullPointerException) {
