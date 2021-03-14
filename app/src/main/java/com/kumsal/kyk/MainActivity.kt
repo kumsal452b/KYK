@@ -8,15 +8,13 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.opengl.Visibility
-import android.os.Build
-import android.os.Bundle
-import android.os.Handler
-import android.os.HandlerThread
+import android.os.*
 import android.text.TextUtils
+import android.util.AttributeSet
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.animation.OvershootInterpolator
+import android.view.animation.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -75,13 +73,17 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
     var thread=Thread()
-
+    var thread2=Thread()
     //Image send element
     var imageUri = ""
     var userId = ""
     var thmbImageUri = ""
     var networkChangeReceiver: NetworkChangeReceiver? = null
     var broadCastReceiver: BroadcastReceiver? = null
+    val fadeIn = AlphaAnimation(0f, 1f)
+    val fadeOut = AlphaAnimation(1f, 0f)
+
+
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -203,8 +205,12 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
             }
         }
+        fadeIn.interpolator = DecelerateInterpolator() //add this
+        fadeIn.duration = 1000
 
-
+        fadeOut.interpolator = AccelerateInterpolator() //and this
+        fadeOut.startOffset = 1000
+        fadeOut.duration = 1000
     }
 
     private fun initializeAnimation() {
@@ -342,26 +348,46 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
     override fun isOnline(value: Boolean) {
         if (value){
+
+
             connectionState.visibility=View.VISIBLE
+            connectionState.animation=fadeOut
             connectionState.text="Connection"
             connectionState.setBackgroundColor(Color.GREEN)
             setVisible(true)
-            thread=Thread(Runnable { kotlin.run {
-                connectionState.visibility=View.GONE
-            }})
-            thread.join(3000)
-            thread.start()
+            var timer1=object:CountDownTimer(3000,1000){
+                override fun onTick(millisUntilFinished: Long) {
+                }
+
+                override fun onFinish() {
+                    connectionState.animation=fadeIn
+                    connectionState.visibility=View.GONE
+                }
+            }
+            timer1.start();
         }else{
+            val fadeIn = AlphaAnimation(0f, 1f)
+            fadeIn.interpolator = DecelerateInterpolator() //add this
+            fadeIn.duration = 1000
+
+            val fadeOut = AlphaAnimation(1f, 0f)
+            fadeOut.interpolator = AccelerateInterpolator() //and this
+            fadeOut.startOffset = 1000
+            fadeOut.duration = 1000
+
             connectionState.visibility=View.VISIBLE
+            connectionState.animation=fadeOut
             connectionState.text="Connection Lose"
             connectionState.setBackgroundColor(Color.RED)
-            thread=Thread(Runnable { kotlin.run {
-                connectionState.visibility=View.GONE
-            }})
-            thread.run()
-            thread.join(3000)
-            thread.start()
-            setVisible(true)
+            var timer2=object:CountDownTimer(3000,1000){
+                override fun onTick(millisUntilFinished: Long) {
+                }
+                override fun onFinish() {
+                    connectionState.animation=fadeIn
+                    connectionState.animation
+                }
+            }
+            timer2.start()
         }
     }
 
