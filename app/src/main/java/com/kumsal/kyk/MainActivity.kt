@@ -80,8 +80,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var thmbImageUri = ""
     var networkChangeReceiver: NetworkChangeReceiver? = null
     var broadCastReceiver: BroadcastReceiver? = null
-    val fadeIn = AlphaAnimation(0f, 1f)
-    val fadeOut = AlphaAnimation(1f, 0f)
+    val fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
+    val fadeOut = AnimationUtils.loadAnimation(this,R.anim.fade_out)
 
 
     override fun onCreate(savedInstanceState: Bundle?)  {
@@ -205,13 +205,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
             }
         }
-        fadeIn.interpolator = DecelerateInterpolator() //add this
-        fadeIn.duration = 1000
-
-        fadeOut.interpolator = AccelerateInterpolator() //and this
-        fadeOut.startOffset = 1000
-        fadeOut.duration = 1000
-
         connectionState.visibility=View.VISIBLE;
         connectionState.animation=fadeOut
     }
