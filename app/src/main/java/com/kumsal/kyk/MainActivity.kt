@@ -361,29 +361,20 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
                 override fun onFinish() {
                     connectionState.animation=fadeIn
-                    connectionState.visibility=View.GONE
                 }
             }
             timer1.start();
         }else{
-            val fadeIn = AlphaAnimation(0f, 1f)
-            fadeIn.interpolator = DecelerateInterpolator() //add this
-            fadeIn.duration = 1000
-
-            val fadeOut = AlphaAnimation(1f, 0f)
-            fadeOut.interpolator = AccelerateInterpolator() //and this
-            fadeOut.startOffset = 1000
-            fadeOut.duration = 1000
 
             connectionState.visibility=View.VISIBLE
-            connectionState.animation=fadeOut
+            connectionState.animation=fadeIn
             connectionState.text="Connection Lose"
             connectionState.setBackgroundColor(Color.RED)
             var timer2=object:CountDownTimer(3000,1000){
                 override fun onTick(millisUntilFinished: Long) {
                 }
                 override fun onFinish() {
-                    connectionState.animation=fadeIn
+                    connectionState.animation=fadeOut
                     connectionState.animation
                 }
             }
