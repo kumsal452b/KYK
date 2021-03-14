@@ -351,30 +351,28 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
     override fun isOnline(value: Boolean) {
         if (value){
-            connectionState.animation=fadeIn
+            connectionState.startAnimation(fadeIn)
             connectionState.text="Connection"
             connectionState.setBackgroundColor(Color.GREEN)
             setVisible(true)
             var timer1=object:CountDownTimer(3000,1000){
                 override fun onTick(millisUntilFinished: Long) {
                 }
-
                 override fun onFinish() {
-                    connectionState.animation=fadeOut
+                    connectionState.startAnimation(fadeOut)
                 }
             }
             timer1.start();
         }else{
 
-            connectionState.animation=fadeIn
+            connectionState.startAnimation(fadeIn)
             connectionState.text="Connection Lose"
             connectionState.setBackgroundColor(Color.RED)
             var timer2=object:CountDownTimer(3000,1000){
                 override fun onTick(millisUntilFinished: Long) {
                 }
                 override fun onFinish() {
-                    connectionState.animation=fadeOut
-                    connectionState.animation
+                    connectionState.startAnimation(fadeOut)
                 }
             }
             timer2.start()
