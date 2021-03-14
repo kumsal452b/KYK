@@ -1,6 +1,7 @@
 package com.kumsal.kyk
 
 
+import android.app.job.JobScheduler
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
@@ -9,6 +10,8 @@ import android.net.ConnectivityManager
 import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.HandlerThread
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
@@ -37,6 +40,7 @@ import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import io.grpc.SynchronizationContext
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 import java.util.*
@@ -70,6 +74,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
+    var thread=Thread()
 
     //Image send element
     var imageUri = ""
@@ -337,12 +342,25 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
     override fun isOnline(value: Boolean) {
         if (value){
+            connectionState.visibility=View.VISIBLE
             connectionState.text="Connection"
             connectionState.setBackgroundColor(Color.GREEN)
             setVisible(true)
+            thread=Thread(Runnable { kotlin.run {
+                connectionState.visibility=View.GONE
+            }})
+            thread.join(3000)
+            thread.start()
         }else{
+            connectionState.visibility=View.VISIBLE
             connectionState.text="Connection Lose"
             connectionState.setBackgroundColor(Color.RED)
+            thread=Thread(Runnable { kotlin.run {
+                connectionState.visibility=View.GONE
+            }})
+            thread.run()
+            thread.join(3000)
+            thread.start()
             setVisible(true)
         }
     }
