@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.opengl.Visibility
 import android.os.*
+import android.support.v4.media.session.PlaybackStateCompat
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.Menu
@@ -80,9 +81,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var thmbImageUri = ""
     var networkChangeReceiver: NetworkChangeReceiver? = null
     var broadCastReceiver: BroadcastReceiver? = null
-    val fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
-    val fadeOut = AnimationUtils.loadAnimation(this,R.anim.fade_out)
-
+    var fadeIn:Animation?=null
+    var fadeOut:Animation?=null
 
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
@@ -205,8 +205,12 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
             }
         }
+        fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
+        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fade_out)
+        fadeIn?.setRepeatCount(0)
+        fadeOut?.setRepeatCount(0)
         connectionState.visibility=View.VISIBLE;
-        connectionState.animation=fadeOut
+        connectionState.startAnimation(fadeOut)
     }
 
     private fun initializeAnimation() {
