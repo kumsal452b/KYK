@@ -211,6 +211,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         fadeOut.interpolator = AccelerateInterpolator() //and this
         fadeOut.startOffset = 1000
         fadeOut.duration = 1000
+
+        connectionState.visibility=View.VISIBLE;
+        connectionState.animation=fadeOut
     }
 
     private fun initializeAnimation() {
@@ -348,10 +351,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
     override fun isOnline(value: Boolean) {
         if (value){
-
-
-            connectionState.visibility=View.VISIBLE
-            connectionState.animation=fadeOut
+            connectionState.animation=fadeIn
             connectionState.text="Connection"
             connectionState.setBackgroundColor(Color.GREEN)
             setVisible(true)
@@ -360,13 +360,12 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                 }
 
                 override fun onFinish() {
-                    connectionState.animation=fadeIn
+                    connectionState.animation=fadeOut
                 }
             }
             timer1.start();
         }else{
 
-            connectionState.visibility=View.VISIBLE
             connectionState.animation=fadeIn
             connectionState.text="Connection Lose"
             connectionState.setBackgroundColor(Color.RED)
