@@ -207,8 +207,34 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         }
         fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
         fadeOut = AnimationUtils.loadAnimation(this,R.anim.fade_out)
-        fadeIn?.setRepeatCount(0)
-        fadeOut?.setRepeatCount(0)
+        fadeIn?.setRepeatCount(1)
+        fadeOut?.setRepeatCount(1)
+        fadeOut?.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationEnd(animation: Animation?) {
+                connectionState.visibility = View.INVISIBLE;
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                connectionState.visibility = View.VISIBLE;
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+        })
+        fadeIn?.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationEnd(animation: Animation?) {
+                connectionState.visibility = View.INVISIBLE;
+            }
+
+            override fun onAnimationStart(animation: Animation?) {
+                connectionState.visibility = View.VISIBLE;
+            }
+
+            override fun onAnimationRepeat(animation: Animation?) {
+
+            }
+        })
         connectionState.visibility=View.VISIBLE;
         connectionState.startAnimation(fadeOut)
     }

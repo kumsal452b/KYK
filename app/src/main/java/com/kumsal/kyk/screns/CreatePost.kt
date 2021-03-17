@@ -434,6 +434,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
 
 
+
     }
     private fun checkAndRequestPermissions(): Boolean {
         var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -487,14 +488,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
                                 securityPanelInitialzed(rootView)
                                 securityPanelEventClick()
-//                        test.readyElement(object : GetCenter<UsersModel> {
-//                            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
-//                                    for (get in array){
-//                                        listElement.add(security_model(get!!.theNameSurname!!,get!!.theUserName!!,get!!.theThmbImage!!,false))
-//                                    }
-//                                mAdapter.notifyDataSetChanged()
-//                            }
-//                        }, "Users", "")
 
                                 listener = mFirestore.collection("Users")
                                     .addSnapshotListener { it, error ->
@@ -544,17 +537,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
                                         mAdapter.notifyDataSetChanged()
                                     }
-//                        mFirestore.collection("Users").addSnapshotListener { document, e ->
-//                            if (e!=null){
-//                                Log.d("Error", e.message as String)
-//                                return@addSnapshotListener
-//                            }
-//                            for (theDoc in document!!){
-//                                var theData=theDoc.toObject(UsersModel::class.java)
-//                                listElement.add(security_model(theData!!.theNameSurname!!,theData!!.theUserName!!,theData!!.theThmbImage!!,false))
-//                            }
-//                            mAdapter.notifyDataSetChanged()
-//                        }
                             }
                         })
                 fullScreenDialog.show()
@@ -744,7 +726,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
     }
     private fun initialDynamic() {
-        var hint = "What's on your mind, $name?"
+        var hint = "What's on your mind, " + name + "?"
         post_text_element.hint = hint
         if (!TextUtils.isEmpty(imageUri)) {
             Picasso.get().load(imageUri).into(profile_image)
