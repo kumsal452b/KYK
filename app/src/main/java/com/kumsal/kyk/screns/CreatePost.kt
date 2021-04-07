@@ -198,6 +198,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     var uri: Uri?
                     for (a in 0..data.clipData!!.itemCount - 1) {
                         var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
+
+                        var timeStamp= SimpleDateFormat("yyyyMMdd").format(Date())
+                        var imagename="thmn${timeStamp}"
+                        var storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                        var imageFile=File.createTempFile(imagename,".jpg",storageDir)
+                        var outputFileUri = imageFile.absolutePath
+                        currentUri=FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",imageFile)
+
                         lifecycleScope.launch() {
                             var copresorImage = Compressor.compress(
                                 this@CreatePost,
