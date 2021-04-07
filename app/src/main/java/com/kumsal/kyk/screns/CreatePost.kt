@@ -203,7 +203,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                 this@CreatePost,
                                 File(theModel.imageUrl?.path)
                             )
-                            tmbimageuri = copresorImage.toUri();
+                            var tmbimageuri = copresorImage.toUri()
+                            var modelForThmb=imageSelected_model(tmbimageuri)
 
                         }
                         mImageListView.add(theModel)
