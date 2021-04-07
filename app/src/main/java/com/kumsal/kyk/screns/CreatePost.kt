@@ -73,7 +73,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var securityTag: TextView
     private lateinit var mImageListRecyclerView: RecyclerView
     private lateinit var mlistAdapter: imageSelected_adapter
+
     private lateinit var mImageListView: java.util.ArrayList<imageSelected_model>
+    private lateinit var mthmbImageLis:java.util.ArrayList<imageSelected_model>
+
     private lateinit var mStorageReference: StorageReference
     companion object {
         private var listElement = ArrayList<security_model>()
@@ -195,6 +198,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     var uri: Uri?
                     for (a in 0..data.clipData!!.itemCount - 1) {
                         var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
+                        lifecycleScope.launch() {
+                            var copresorImage = Compressor.compress(
+                                this@CreatePost,
+                                File(theModel.imageUrl?.path)
+                            )
+                            tmbimageuri = copresorImage.toUri();
+
+                        }
                         mImageListView.add(theModel)
                     }
                     mlistAdapter.notifyDataSetChanged()
