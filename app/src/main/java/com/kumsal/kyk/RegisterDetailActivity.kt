@@ -486,7 +486,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                                     if (it.isSuccessful) {
                                         myLoadImage.getImagePath(Uri.toString(), Uri.toString())
                                     } else {
-                                        Log.d("problem", "Problem has been solved")
+                                        Log.d("problem", "Problem has been found")
                                     }
                                 }
 

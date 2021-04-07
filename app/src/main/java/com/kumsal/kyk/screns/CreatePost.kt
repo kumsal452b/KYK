@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +52,8 @@ import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
+import id.zelory.compressor.Compressor
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.RegExp
 import java.io.File
 import java.text.SimpleDateFormat
@@ -214,6 +217,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var imageFile=File.createTempFile(imagename,".jpg",storageDir)
         var outputFileUri = imageFile.absolutePath
+
         currentUri=FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",imageFile)
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
