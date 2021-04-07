@@ -232,9 +232,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
                 it->
                 Log.d("Error for create post",it.message!!)
-            }.addOnSuccessListener { OnSuccessListener<UploadTask.TaskSnapshot>(){
-
-            } }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
+            }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
                 item->
                 if (item.isSuccessful){
                     filePath.downloadUrl.addOnSuccessListener { uri->
