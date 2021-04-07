@@ -75,7 +75,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var mlistAdapter: imageSelected_adapter
 
     private lateinit var mImageListView: java.util.ArrayList<imageSelected_model>
-    private lateinit var mthmbImageLis:java.util.ArrayList<imageSelected_model>
+    private lateinit var mthmbImageList:java.util.ArrayList<imageSelected_model>
 
     private lateinit var mStorageReference: StorageReference
     companion object {
@@ -205,6 +205,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                             )
                             var tmbimageuri = copresorImage.toUri()
                             var modelForThmb=imageSelected_model(tmbimageuri)
+                            mthmbImageList.add(modelForThmb)
 
                         }
                         mImageListView.add(theModel)
