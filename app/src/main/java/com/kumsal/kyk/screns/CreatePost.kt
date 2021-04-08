@@ -51,6 +51,9 @@ import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
 import com.squareup.picasso.Picasso
+import com.vincent.filepicker.Constant
+import com.vincent.filepicker.activity.ImagePickActivity
+import com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA
 import de.hdodenhof.circleimageview.CircleImageView
 import java.io.*
 import java.text.SimpleDateFormat
@@ -262,6 +265,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
 
         }
+        if (requestCode)
         super.onActivityResult(requestCode, resultCode, data)
     }
     private fun capturePhoto() {
@@ -477,14 +481,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                         546
                                     )
                                 } else {
-                                    var mediaWindow =
-                                    var ıntent = Intent(
-                                        this@CreatePost,
-                                        ImagePickActivity::class.java
-                                    )
-                                    mediaWindow.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                                    startActivityForResult(mediaWindow, 100)
 
+                                    var intent1 = Intent(this@CreatePost, ImagePickActivity::class.java)
+                                    intent1.putExtra(IS_NEED_CAMERA, true);
+                                    intent1.putExtra(Constant.MAX_NUMBER, 6);
+                                    startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
                                 }
 
                         }
