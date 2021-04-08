@@ -353,12 +353,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         storageMD.build()
         var file=File(fileUri.path)
         lifecycleScope.launch() {
+            var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()
+            var filePath=mStorageReference.child("PostImage").child(imagePath + ",jpg")
+
             val compressedImageFile = Compressor.compress(this@CreatePost, file) {
                 resolution(300, 300)
                 quality(80)
                 format(Bitmap.CompressFormat.JPEG)
             }
-            var storageref=mStorageReference.storage.reference.putFile(compressedImageFile.toUri(),storageMD.build())
+            var storageref=mStorageReference.child("PostImage").storage.reference.putFile(compressedImageFile.toUri(),storageMD.build())
             storageref.addOnCompleteListener(OnCompleteListener {
                 if (it.isSuccessful) {
                     it.result?.metadata?.reference?.downloadUrl?.addOnCompleteListener {
@@ -370,8 +373,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     }
                 }
             })
-                 //ara
-
         }
 
 
