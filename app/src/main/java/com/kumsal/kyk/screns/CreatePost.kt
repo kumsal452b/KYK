@@ -86,8 +86,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private lateinit var mImageListRecyclerView: RecyclerView
     private lateinit var mlistAdapter: imageSelected_adapter
 
-    private lateinit var mImageListView: java.util.ArrayList<imageSelected_model>
-    private lateinit var mthmbImageList:java.util.ArrayList<imageSelected_model>
+    private lateinit var mImageListView: java.util.ArrayList<Uri>
+    private lateinit var mthmbImageList:java.util.ArrayList<Uri>
     private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
     companion object {
@@ -261,8 +261,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     for (a in 0..data.clipData!!.itemCount - 1) {
                         var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
                        var thmbUri=getFilePathFromUri(theModel.imageUrl, this)
-                        mthmbImageList.add(theModel)
-                        mImageListView.add(theModel)
+
                     }
                     mlistAdapter.notifyDataSetChanged()
                 }
@@ -367,12 +366,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
            filePath.putFile(file.toUri(),storageMD.build()).
            addOnCompleteListener(OnCompleteListener {forfile->
                if (forfile.isSuccessful) {
-                   filePath.downloadUrl.addOnCompleteListener {
+                   filePath.downloadUrl.addOnCompleteListener {urlForFile->
                        filePathForThmn.putFile(compressedImageFile.toUri(),storageMD.build()).
                        addOnCompleteListener(OnCompleteListener {forfileThmb->
                            if (forfileThmb.isSuccessful) {
-                               filePathForThmn.downloadUrl.addOnCompleteListener {
-                                   
+                               filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail->
+                                   mImageListView.add(urlForFile.result!!)
+                                   mthmbImageList.add(urlForThumnail.result!!)
                                }
                            }
                        })
