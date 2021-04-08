@@ -361,7 +361,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                 quality(80)
                 format(Bitmap.CompressFormat.JPEG)
             }
-            var storageref=mStorageReference.child("PostImage").storage.reference.putFile(compressedImageFile.toUri(),storageMD.build())
+            var storageref=mStorageReference.child("PostImage").putFile(compressedImageFile.toUri(),storageMD.build())
             storageref.addOnCompleteListener(OnCompleteListener {
                 if (it.isSuccessful) {
                     it.result?.metadata?.reference?.downloadUrl?.addOnCompleteListener {
