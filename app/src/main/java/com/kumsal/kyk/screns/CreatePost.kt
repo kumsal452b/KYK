@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -26,11 +27,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
@@ -54,12 +58,20 @@ import com.squareup.picasso.Picasso
 import com.vincent.filepicker.Constant
 import com.vincent.filepicker.activity.ImagePickActivity
 import com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA
+import com.vincent.filepicker.filter.entity.ImageFile
 import de.hdodenhof.circleimageview.CircleImageView
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+import kotlinx.coroutines.launch
 import java.io.*
+import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.log
 
 
 class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
@@ -76,7 +88,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
     private lateinit var mImageListView: java.util.ArrayList<imageSelected_model>
     private lateinit var mthmbImageList:java.util.ArrayList<imageSelected_model>
-
+    private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
     companion object {
         private var listElement = ArrayList<security_model>()
@@ -266,7 +278,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         }
         if (requestCode==Constant.REQUEST_CODE_PICK_IMAGE){
-
+            if(resultCode== RESULT_OK){
+                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
+                for (a in getdata){
+                    var file=File(a.path)
+                    var uri=Uri.fromFile(file)
+//                    var theModel=newDataPosModel(file.name,uri,a.path,null,".jpg","Image/jpg")
+//                    mAllFileDataModel.add(theModel)
+                    uploadData(".jpg","image/jpg",uri)
+                }
+            }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -289,31 +310,34 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private fun getImagesList(theList: imageLoadCall){
         var tempArray=ArrayList<Uri>()
         var task:StorageTask<UploadTask.TaskSnapshot>?=null
-        for (a in 0..mImageListView.size-1) {
+        for (a in 0..mAllFileDataModel.size-1) {
             //this for normalimage
-            var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
-            var filePath=mStorageReference.child("PostImage").child(imagePath + ",jpg")
+//            var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
+//            var filePath=mStorageReference.child("PostImage").child(imagePath + ",jpg")
+//            var storageMetadataChanges = StorageMetadata.Builder();
+//            var file=File(a.)
+//            storageMetadataChanges.contentType=
+//            //this for thumbnail image
+//            var thmnTmagePath = "thmn"+SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
+//            var filePathThmn=mStorageReference.child("PostThmmImage").child(imagePath + ",jpg")
+//
+//            task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{ it->
+//                Log.d("Error for create post", it.message!!)
+//            }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> { item ->
+//                if (item.isSuccessful) {
+//                    filePath.downloadUrl.addOnSuccessListener { uri ->
+//                        tempArray.add(uri)
+//                        if (freeCount == mImageListView.size - 1) {
+//                            theList.getLoadImage(tempArray)
+//                            freeCount = 0
+//                        }
+//                        freeCount++
+//                    }.addOnFailureListener { it ->
+//                        Log.d("Error for create post", it.message!!)
+//                    }
+//                }
+//            })
 
-            //this for thumbnail image
-            var thmnTmagePath = "thmn"+SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
-            var filePathThmn=mStorageReference.child("PostThmmImage").child(imagePath + ",jpg")
-
-            task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{ it->
-                Log.d("Error for create post", it.message!!)
-            }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> { item ->
-                if (item.isSuccessful) {
-                    filePath.downloadUrl.addOnSuccessListener { uri ->
-                        tempArray.add(uri)
-                        if (freeCount == mImageListView.size - 1) {
-                            theList.getLoadImage(tempArray)
-                            freeCount = 0
-                        }
-                        freeCount++
-                    }.addOnFailureListener { it ->
-                        Log.d("Error for create post", it.message!!)
-                    }
-                }
-            })
         }
         task?.addOnProgressListener { tasksnapshot->
             var progress = (100.0 * tasksnapshot.getBytesTransferred()) / tasksnapshot.getTotalByteCount()
@@ -322,6 +346,35 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         task?.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
             println("gorev sonlandi")
         })
+    }
+    private fun uploadData(mimeType:String,contentType:String, fileUri:Uri){
+        var storageMD=StorageMetadata.Builder()
+        storageMD.contentType=contentType
+        storageMD.build()
+        var file=File(fileUri.path)
+        lifecycleScope.launch() {
+            val compressedImageFile = Compressor.compress(this@CreatePost, file) {
+                resolution(300, 300)
+                quality(80)
+                format(Bitmap.CompressFormat.JPEG)
+            }
+            var storageref=mStorageReference.storage.reference.putFile(compressedImageFile.toUri(),storageMD.build())
+            storageref.addOnCompleteListener(OnCompleteListener {
+                if (it.isSuccessful) {
+                    it.result?.metadata?.reference?.downloadUrl?.addOnCompleteListener {
+                        OnCompleteListener<Uri> {
+                            if (it.isSuccessful) {
+                                Log.d("TAG", "uploadData: " + it.getResult().toString())
+                            }
+                        }
+                    }
+                }
+            })
+                 //ara
+
+        }
+
+
     }
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
@@ -441,6 +494,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mImageListRecyclerView.setHasFixedSize(true)
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
         mImageListView = ArrayList()
+        mthmbImageList= ArrayList()
+        mAllFileDataModel= ArrayList()
+
         mlistAdapter = imageSelected_adapter(mImageListView)
         mImageListRecyclerView.adapter = mlistAdapter
 

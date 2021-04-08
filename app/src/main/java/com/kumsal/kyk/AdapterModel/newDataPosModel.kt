@@ -3,12 +3,26 @@ package com.kumsal.kyk.AdapterModel
 import android.net.Uri
 
 class newDataPosModel {
-    private var dataName:String?=null
-    private var file:Uri?=null
-    private var fileUrl:String?=null
-    private var thmbUrl:String?=null
-    private var mimeType:String?=null
-    private var contentType:String?=null
-    
+     var dataName:String?=null
+     var file:Uri?=null
+     var fileUrl:String?=null
+     var thmbUrl:String?=null
+     var mimeType:String?=null
+     var contentType:String?=null
 
+    constructor(
+        dataName: String?,
+        file: Uri?,
+        fileUrl: String?,
+        thmbUrl: String?,
+        mimeType: String?,
+        contentType: String?
+    ) {
+        this.dataName = dataName
+        this.file = file
+        this.fileUrl = fileUrl
+        this.thmbUrl = thmbUrl
+        this.mimeType = mimeType
+        this.contentType = contentType
+    }
 }
