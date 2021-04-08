@@ -296,6 +296,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             var filePath=mStorageReference.child("PostImage").child(imagePath+",jpg")
 
             //this for thumbnail image
+            var thmnTmagePath = "thmn"+SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a+
+            var filePathThmn=mStorageReference.child("PostThmmImage").child(imagePath+",jpg")
+
             task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
                 it->
                 Log.d("Error for create post",it.message!!)
@@ -320,6 +323,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             var progress = (100.0 * tasksnapshot.getBytesTransferred()) / tasksnapshot.getTotalByteCount()
             println(progress)
         }
+        task?.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
+            println("gorev sonlandi")
+        })
     }
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
