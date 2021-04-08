@@ -26,15 +26,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
@@ -56,9 +52,6 @@ import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import id.zelory.compressor.Compressor
-import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.RegExp
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -252,7 +245,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     var uri: Uri?
                     for (a in 0..data.clipData!!.itemCount - 1) {
                         var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
-                       var thmbUri=getFilePathFromUri(theModel.imageUrl,this)
+                       var thmbUri=getFilePathFromUri(theModel.imageUrl, this)
                         mthmbImageList.add(theModel)
                         mImageListView.add(theModel)
                     }
@@ -275,10 +268,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var timeStamp= SimpleDateFormat("yyyyMMdd").format(Date())
         var imagename="${timeStamp}"
         var storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        var imageFile=File.createTempFile(imagename,".jpg",storageDir)
+        var imageFile=File.createTempFile(imagename, ".jpg", storageDir)
         var outputFileUri = imageFile.absolutePath
 
-        currentUri=FileProvider.getUriForFile(this,"com.kumsal.kyk.screns.fileprovider",imageFile)
+        currentUri=FileProvider.getUriForFile(this, "com.kumsal.kyk.screns.fileprovider", imageFile)
 
         val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         if(cameraIntent.resolveActivity(packageManager)!=null){
@@ -287,34 +280,31 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
     }
     private var freeCount=0;
-    private fun getImagesList(theList:imageLoadCall){
+    private fun getImagesList(theList: imageLoadCall){
         var tempArray=ArrayList<Uri>()
         var task:StorageTask<UploadTask.TaskSnapshot>?=null
         for (a in 0..mImageListView.size-1) {
             //this for normalimage
             var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
-            var filePath=mStorageReference.child("PostImage").child(imagePath+",jpg")
+            var filePath=mStorageReference.child("PostImage").child(imagePath + ",jpg")
 
             //this for thumbnail image
-            var thmnTmagePath = "thmn"+SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a+
-            var filePathThmn=mStorageReference.child("PostThmmImage").child(imagePath+",jpg")
+            var thmnTmagePath = "thmn"+SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
+            var filePathThmn=mStorageReference.child("PostThmmImage").child(imagePath + ",jpg")
 
-            task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
-                it->
-                Log.d("Error for create post",it.message!!)
-            }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
-                item->
-                if (item.isSuccessful){
-                    filePath.downloadUrl.addOnSuccessListener { uri->
+            task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{ it->
+                Log.d("Error for create post", it.message!!)
+            }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> { item ->
+                if (item.isSuccessful) {
+                    filePath.downloadUrl.addOnSuccessListener { uri ->
                         tempArray.add(uri)
-                        if (freeCount==mImageListView.size-1){
+                        if (freeCount == mImageListView.size - 1) {
                             theList.getLoadImage(tempArray)
-                            freeCount=0
+                            freeCount = 0
                         }
                         freeCount++
-                    }.addOnFailureListener{
-                            it->
-                        Log.d("Error for create post",it.message!!)
+                    }.addOnFailureListener { it ->
+                        Log.d("Error for create post", it.message!!)
                     }
                 }
             })
@@ -344,7 +334,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private fun share() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
-                getImagesList(object:imageLoadCall{
+                getImagesList(object : imageLoadCall {
                     override fun getLoadImage(imageList: ArrayList<Uri>) {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
@@ -488,10 +478,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                     )
                                 } else {
                                     var mediaWindow =
-                                        Intent(
-                                            Intent.ACTION_PICK,
-                                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                                        )
+                                    var ıntent = Intent(
+                                        this@CreatePost,
+                                        ImagePickActivity::class.java
+                                    )
                                     mediaWindow.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                                     startActivityForResult(mediaWindow, 100)
 
