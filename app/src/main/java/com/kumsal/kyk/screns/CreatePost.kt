@@ -364,7 +364,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
            filePath.putFile(compressedImageFile.toUri(),storageMD.build()).
            addOnCompleteListener(OnCompleteListener {
                 if (it.isSuccessful) {
-                    it.result?.metadata?.reference?.downloadUrl?.addOnCompleteListener {
+                    filePath.downloadUrl.addOnCompleteListener {
                         OnCompleteListener<Uri> {
                             if (it.isSuccessful) {
                                 Log.d("TAG", "uploadData: " + it.getResult().toString())
