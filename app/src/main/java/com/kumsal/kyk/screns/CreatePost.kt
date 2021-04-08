@@ -265,7 +265,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             }
 
         }
-        if (requestCode)
+        if (requestCode==Constant.REQUEST_CODE_PICK_IMAGE){
+
+        }
         super.onActivityResult(requestCode, resultCode, data)
     }
     private fun capturePhoto() {
