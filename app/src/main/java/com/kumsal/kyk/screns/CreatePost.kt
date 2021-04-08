@@ -356,16 +356,26 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
             var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()
             var filePath=mStorageReference.child("PostImage").child(imagePath + ",jpg")
 
+            //referance for thmb
+            var filePathForThmn=mStorageReference.child("PostImageThmb").child(imagePath + ",jpg")
+
             val compressedImageFile = Compressor.compress(this@CreatePost, file) {
                 resolution(300, 300)
                 quality(80)
                 format(Bitmap.CompressFormat.JPEG)
             }
-           filePath.putFile(compressedImageFile.toUri(),storageMD.build()).
-           addOnCompleteListener(OnCompleteListener {
-               if (it.isSuccessful) {
+           filePath.putFile(file.toUri(),storageMD.build()).
+           addOnCompleteListener(OnCompleteListener {forfile->
+               if (forfile.isSuccessful) {
                    filePath.downloadUrl.addOnCompleteListener {
-                       println(it)
+                       filePathForThmn.putFile(compressedImageFile.toUri(),storageMD.build()).
+                       addOnCompleteListener(OnCompleteListener {forfileThmb->
+                           if (forfileThmb.isSuccessful) {
+                               filePathForThmn.downloadUrl.addOnCompleteListener {
+                                   
+                               }
+                           }
+                       })
                    }
                }
            })
