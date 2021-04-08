@@ -256,14 +256,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         mthmbImageList.add(theModel)
                         mImageListView.add(theModel)
                     }
-
-                    for (a in mImageListView){
-                        if(File(a.imageUrl?.path).exists()){
-                            println("dosya var")
-                        }else{
-                            println("dosya yok")
-                        }
-                    }
                     mlistAdapter.notifyDataSetChanged()
                 }
             }
@@ -271,6 +263,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         if (requestCode == 12345) {
             if (resultCode == RESULT_OK) {
                 var theModel = imageSelected_model(currentUri)
+                mImageListView.add(theModel)
                 mImageListView.add(theModel)
                 mlistAdapter.notifyDataSetChanged()
             }
@@ -298,8 +291,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         var tempArray=ArrayList<Uri>()
         var task:StorageTask<UploadTask.TaskSnapshot>?=null
         for (a in 0..mImageListView.size-1) {
+            //this for normalimage
             var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
             var filePath=mStorageReference.child("PostImage").child(imagePath+",jpg")
+
+            //this for thumbnail image
             task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{
                 it->
                 Log.d("Error for create post",it.message!!)
