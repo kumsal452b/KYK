@@ -35,6 +35,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
@@ -54,6 +55,7 @@ import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
+import com.kumsal.kyk.interfaces.isEnd
 import com.squareup.picasso.Picasso
 import com.vincent.filepicker.Constant
 import com.vincent.filepicker.activity.ImagePickActivity
@@ -171,102 +173,17 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     ) {
         if (requestCode == 546) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                var mediaWindow =
-                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                mediaWindow.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                startActivityForResult(mediaWindow, 100)
+                var intent1 = Intent(this@CreatePost, ImagePickActivity::class.java)
+                intent1.putExtra(IS_NEED_CAMERA, true);
+                intent1.putExtra(Constant.MAX_NUMBER, 6);
+                startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
             }
         }
-        if (requestCode == 1234) {
-            if (grantResults.size >= 2) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[1] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0
-                ) {
-                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivityForResult(camera_intent, 12345);
-                } else {
-                    makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
-                }
-            } else if (grantResults.size == 1) {
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                    makeText(this, getString(R.string.permissin_deniad), Toast.LENGTH_LONG)
-                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                    startActivityForResult(camera_intent, 12345);
-                } else {
-                    makeText(this, getString(R.string.permision), Toast.LENGTH_LONG).show()
-                }
-            }
-
-        }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-//    @Throws(IOException::class)
-//    fun getFilePathFromUri(uri: Uri?, context: Context?): Uri? {
-//        val fileName: String? = getFileName(uri, context)
-//        val file = File(context?.externalCacheDir, fileName)
-//        file.createNewFile()
-//        FileOutputStream(file).use { outputStream ->
-//            context?.contentResolver?.openInputStream(uri!!).use { inputStream ->
-//                copyFile(inputStream, outputStream)
-//                outputStream.flush()
-//            }
-//        }
-//        return Uri.fromFile(file)
-//    }
-//    @Throws(IOException::class)
-//    private fun copyFile(`in`: InputStream?, out: OutputStream) {
-//        val buffer = ByteArray(1024)
-//        var read: Int? = null
-//        while (`in`?.read(buffer).also({ read = it!! }) != -1) {
-//            read?.let { out.write(buffer, 0, it) }
-//        }
-//    }//copyFile ends
-//
-//    fun getFileName(uri: Uri?, context: Context?): String? {
-//        var fileName: String? = getFileNameFromCursor(uri, context)
-//        if (fileName == null) {
-//            val fileExtension: String? = getFileExtension(uri, context)
-//            fileName = "temp_file" + if (fileExtension != null) ".$fileExtension" else ""
-//        } else if (!fileName.contains(".")) {
-//            val fileExtension: String? = getFileExtension(uri, context)
-//            fileName = "$fileName.$fileExtension"
-//        }
-//        return fileName
-//    }
-//
-//    fun getFileExtension(uri: Uri?, context: Context?): String? {
-//        val fileType: String? = context?.contentResolver?.getType(uri!!)
-//        return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
-//    }
-//    fun getFileNameFromCursor(uri: Uri?, context: Context?): String? {
-//        val fileCursor: Cursor? = context?.contentResolver
-//            ?.query(uri!!, arrayOf<String>(OpenableColumns.DISPLAY_NAME), null, null, null)
-//        var fileName: String? = null
-//        if (fileCursor != null && fileCursor.moveToFirst()) {
-//            val cIndex: Int = fileCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-//            if (cIndex != -1) {
-//                fileName = fileCursor.getString(cIndex)
-//            }
-//        }
-//        return fileName
-//    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (requestCode == 100) {
-//            if (resultCode == RESULT_OK) {
-//                if (data != null) {
-//                    var uri: Uri?
-//                    for (a in 0..data.clipData!!.itemCount - 1) {
-//                        var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
-//                       var thmbUri=getFilePathFromUri(theModel.imageUrl, this)
-//
-//                    }
-//                    mlistAdapter.notifyDataSetChanged()
-//                }
-//            }
-//        }
         if (requestCode==Constant.REQUEST_CODE_PICK_IMAGE){
             if(resultCode== RESULT_OK){
                 var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
@@ -281,63 +198,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-    private fun capturePhoto() {
-        var timeStamp= SimpleDateFormat("yyyyMMdd").format(Date())
-        var imagename="${timeStamp}"
-        var storageDir=getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        var imageFile=File.createTempFile(imagename, ".jpg", storageDir)
-        var outputFileUri = imageFile.absolutePath
-
-        currentUri=FileProvider.getUriForFile(this, "com.kumsal.kyk.screns.fileprovider", imageFile)
-
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if(cameraIntent.resolveActivity(packageManager)!=null){
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, currentUri)
-            startActivityForResult(cameraIntent, 12345)
-        }
-    }
     private var freeCount=0;
     private fun getImagesList(theList: imageLoadCall){
         var tempArray=ArrayList<Uri>()
-        var task:StorageTask<UploadTask.TaskSnapshot>?=null
-        for (a in 0..mAllFileDataModel.size-1) {
-            //this for normalimage
-//            var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
-//            var filePath=mStorageReference.child("PostImage").child(imagePath + ",jpg")
-//            var storageMetadataChanges = StorageMetadata.Builder();
-//            var file=File(a.)
-//            storageMetadataChanges.contentType=
-//            //this for thumbnail image
-//            var thmnTmagePath = "thmn"+SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()+ a
-//            var filePathThmn=mStorageReference.child("PostThmmImage").child(imagePath + ",jpg")
-//
-//            task=filePath.putFile(mImageListView.get(a).imageUrl!!).addOnFailureListener{ it->
-//                Log.d("Error for create post", it.message!!)
-//            }.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> { item ->
-//                if (item.isSuccessful) {
-//                    filePath.downloadUrl.addOnSuccessListener { uri ->
-//                        tempArray.add(uri)
-//                        if (freeCount == mImageListView.size - 1) {
-//                            theList.getLoadImage(tempArray)
-//                            freeCount = 0
-//                        }
-//                        freeCount++
-//                    }.addOnFailureListener { it ->
-//                        Log.d("Error for create post", it.message!!)
-//                    }
-//                }
-//            })
-
+        for (an in mAllFileDataModel) {
+            var theModel=an
+           var isEnd=mAllFileDataModel.indexOf(an)==mAllFileDataModel.size-1
+           uploadData(theModel.mimeType!!,"images/jpg",an.file!!,isEnd,)
         }
-        task?.addOnProgressListener { tasksnapshot->
-            var progress = (100.0 * tasksnapshot.getBytesTransferred()) / tasksnapshot.getTotalByteCount()
-            println(progress)
-        }
-        task?.addOnCompleteListener(OnCompleteListener<UploadTask.TaskSnapshot> {
-            println("gorev sonlandi")
-        })
     }
-    private fun uploadData(mimeType:String,contentType:String, fileUri:Uri){
+    private fun uploadData(mimeType:String,contentType:String, fileUri:Uri,isEnd:Boolean){
         var storageMD=StorageMetadata.Builder()
         storageMD.contentType=contentType
         storageMD.build()
@@ -364,6 +234,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail->
                                    mImageListView.add(urlForFile.result!!)
                                    mthmbImageList.add(urlForThumnail.result!!)
+                                   if (isEnd){
+
+                                   }
                                }
                            }
                        })
@@ -516,7 +389,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         //Test section
         secure_initial()
         select_image.setOnClickListener {
-            val myArray3 = arrayOf<String>("Camera", "Galery")
+            val myArray3 = arrayOf<String>("Camera or Galery")
             BottomMenu.show(
                 this@CreatePost,
                 myArray3,
@@ -524,12 +397,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     override fun onClick(text: String?, index: Int) {
                         when (index) {
                             0 ->
-                                if (checkAndRequestPermissions()) {
-//                                    var camera_intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//                                    startActivityForResult(camera_intent, 12345);
-                                    capturePhoto()
-                                }
-                            1 ->
                                 if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                                     ActivityCompat.requestPermissions(
                                         this@CreatePost,
