@@ -192,8 +192,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     var uri=Uri.fromFile(file)
                     var theModel=newDataPosModel(file.name,uri,a.path,null,".jpg","Image/jpg")
                     mAllFileDataModel.add(theModel)
-
                 }
+                mlistAdapter.notifyDataSetChanged()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -271,16 +271,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
 
-                        imageList[0]
-
                         values.put("pc", postContent)
                         values.put("name", name)
                         values.put("username", username)
-                        values.put("imageUri", imageUri)
+                        values.put("uImage", imageUri)
                         values.put("time", Timestamp.now())
-                        values.put("thmbImageUri", thmbImageUri)
+                        values.put("uImageThmb", thmbImageUri)
                         values.put("likes", java.util.ArrayList<String>())
-                        values.put("comments", 0)
+                        values.put("uid", Globals.ınstance?.uid!!)
+
                         var pushId = mFsPostDb.collection("Post").id
                         mFsPostDb.collection("Post").add(values).addOnFailureListener {
                             OnFailureListener {
