@@ -87,8 +87,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var mImageListRecyclerView: RecyclerView
     private lateinit var mlistAdapter: imageSelected_adapter
 
-    private lateinit var mImageListView: java.util.ArrayList<Uri>
-    private lateinit var mthmbImageList:java.util.ArrayList<Uri>
+    private lateinit var mImageListView: java.util.ArrayList<String>
+    private lateinit var mthmbImageList:java.util.ArrayList<String>
     private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
     companion object {
@@ -231,8 +231,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                        addOnCompleteListener(OnCompleteListener {forfileThmb->
                            if (forfileThmb.isSuccessful) {
                                filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail->
-                                   mImageListView.add(urlForFile.result!!)
-                                   mthmbImageList.add(urlForThumnail.result!!)
+                                   mImageListView.add(urlForFile.result.toString())
+                                   mthmbImageList.add(urlForThumnail.result.toString())
                                    if ((mthmbImageList.size==mAllFileDataModel.size|| mthmbImageList.size==mAllFileDataModel.size)){
                                        theList.getLoadImage(mImageListView,mthmbImageList)
                                    }
@@ -266,19 +266,19 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
                 getImagesList(object : imageLoadCall {
-                    override fun getLoadImage(imageList: ArrayList<Uri>,imageThmbList:ArrayList<Uri>) {
+                    override fun getLoadImage(imageList: ArrayList<String>,imageThmbList:ArrayList<String>) {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
                         values.put("pc", postContent)
                         values.put("name", name)
                         values.put("username", username)
-                        values.put("uImage", imageUri)
+                        values.put("uImage", imageUri.toString())
                         values.put("time", Timestamp.now())
                         values.put("uImageThmb", thmbImageUri)
                         values.put("likes", java.util.ArrayList<String>())
                         values.put("uid", Globals.ınstance?.uid!!)
-                        values.put("imageUri",imageList)
-                        values.put("uImageThmb",imageThmbList)
+                        values.put("imageUri", imageList)
+                        values.put("uImageThmb", imageThmbList)
 
                         var pushId = mFsPostDb.collection("Post").id
                         mFsPostDb.collection("Post").add(values).addOnFailureListener {
