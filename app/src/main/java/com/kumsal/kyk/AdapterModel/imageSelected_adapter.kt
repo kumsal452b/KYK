@@ -12,6 +12,15 @@ import java.util.ArrayList
 
 class imageSelected_adapter(imageList: ArrayList<newDataPosModel>) :
     RecyclerView.Adapter<imageSelected_adapter.selectedHolder>() {
+    interface ItemClickListner {
+        fun onItemClickListener(position: Int)
+    }
+
+    var itemClickElement: ItemClickListner? = null
+    fun setItemClikElement(clickItem: ItemClickListner) {
+        this.itemClickElement = clickItem
+    }
+
     var imageList: ArrayList<newDataPosModel>? = null
 
     init {
@@ -25,6 +34,18 @@ class imageSelected_adapter(imageList: ArrayList<newDataPosModel>) :
             imageView.setImageURI(element.file)
         }
 
+        init {
+            closeButton.setOnClickListener(View.OnClickListener {
+                if (itemClickElement != null) {
+                    var position = adapterPosition
+                    if (position!=RecyclerView.NO_POSITION){
+                        itemClickElement!!.onItemClickListener(position)
+                    }
+                }
+
+            })
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): selectedHolder {
@@ -34,7 +55,7 @@ class imageSelected_adapter(imageList: ArrayList<newDataPosModel>) :
     }
 
     override fun onBindViewHolder(holder: selectedHolder, position: Int) {
-        var theModel=imageList?.get(position)
+        var theModel = imageList?.get(position)
         holder.bindElement(theModel!!)
     }
 

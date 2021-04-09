@@ -55,7 +55,6 @@ import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
-import com.kumsal.kyk.interfaces.isEnd
 import com.squareup.picasso.Picasso
 import com.vincent.filepicker.Constant
 import com.vincent.filepicker.activity.ImagePickActivity
@@ -76,7 +75,7 @@ import kotlin.collections.HashMap
 import kotlin.math.log
 
 
-class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
+class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,imageSelected_adapter.ItemClickListner {
     private lateinit var profile_image: CircleImageView
     private lateinit var select_image: ImageButton
     private lateinit var share_button: Button
@@ -365,11 +364,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mImageListRecyclerView = findViewById(R.id.activity_create_post_imageSelected)
         mImageListRecyclerView.setHasFixedSize(true)
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
+
         mImageListView = ArrayList()
         mthmbImageList= ArrayList()
         mAllFileDataModel= ArrayList()
 
         mlistAdapter = imageSelected_adapter(mAllFileDataModel)
+        mlistAdapter.itemClickElement=this
         mImageListRecyclerView.adapter = mlistAdapter
 
         name = intent.getStringExtra("name") as String
@@ -421,6 +422,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
 
 
+    }
+    override fun onItemClickListener(position: Int) {
+        mAllFileDataModel.removeAt(position)
+        mlistAdapter.notifyDataSetChanged()
     }
     private fun checkAndRequestPermissions(): Boolean {
         var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
