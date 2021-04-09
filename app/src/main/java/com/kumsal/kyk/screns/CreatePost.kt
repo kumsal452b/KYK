@@ -270,7 +270,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     override fun getLoadImage(imageList: ArrayList<Uri>,imageThmbList:ArrayList<Uri>) {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
-
+                        
                         values.put("pc", postContent)
                         values.put("name", name)
                         values.put("username", username)
