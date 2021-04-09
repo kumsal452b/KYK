@@ -266,7 +266,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                 WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
                 WaitDialog.dismiss(10000)
                 getImagesList(object : imageLoadCall {
-                    override fun getLoadImage(imageList: ArrayList<String>,imageThmbList:ArrayList<String>) {
+                    override fun getLoadImage(
+                        imageList: ArrayList<String>,
+                        imageThmbList: ArrayList<String>
+                    ) {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
                         values.put("pc", postContent)
@@ -287,6 +290,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                                 Log.d("Post Db have error", it.message!!)
                             }
                         }.addOnSuccessListener {
+                            println(it.id)
                             WaitDialog.dismiss()
                             var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
                             startActivity(main_Activity)
