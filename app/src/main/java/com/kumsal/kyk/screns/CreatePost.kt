@@ -204,20 +204,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         for (an in mAllFileDataModel) {
             var theModel=an
            var isEnd=mAllFileDataModel.indexOf(an)==mAllFileDataModel.size-1
-           uploadData(theModel.mimeType!!,"images/jpg",an.file!!,isEnd,)
+           uploadData(theModel.mimeType!!,"images/jpg",an.file!!,isEnd,theList)
         }
     }
-    private fun uploadData(mimeType:String,contentType:String, fileUri:Uri,isEnd:Boolean){
+    private fun uploadData(mimeType:String,contentType:String, fileUri:Uri,isEnd:Boolean,theList: imageLoadCall){
         var storageMD=StorageMetadata.Builder()
         storageMD.contentType=contentType
         storageMD.build()
         var file=File(fileUri.path)
         lifecycleScope.launch() {
             var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()
-            var filePath=mStorageReference.child("PostImage").child(imagePath + ",jpg")
+            var filePath=mStorageReference.child("PostImage").child(imagePath + ".jpg")
 
             //referance for thmb
-            var filePathForThmn=mStorageReference.child("PostImageThmb").child(imagePath + ",jpg")
+            var filePathForThmn=mStorageReference.child("PostImageThmb").child(imagePath + ".jpg")
 
             val compressedImageFile = Compressor.compress(this@CreatePost, file) {
                 resolution(300, 300)
@@ -234,8 +234,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                                filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail->
                                    mImageListView.add(urlForFile.result!!)
                                    mthmbImageList.add(urlForThumnail.result!!)
-                                   if (isEnd){
-
+                                   if ((mthmbImageList.size==mAllFileDataModel.size|| mthmbImageList.size==mAllFileDataModel.size)){
+                                       theList.getLoadImage(mImageListView,mthmbImageList)
                                    }
                                }
                            }
@@ -264,12 +264,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
     private fun share() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
+                WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
+                WaitDialog.dismiss(10000)
                 getImagesList(object : imageLoadCall {
-                    override fun getLoadImage(imageList: ArrayList<Uri>) {
+                    override fun getLoadImage(imageList: ArrayList<Uri>,imageThmbList:ArrayList<Uri>) {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
-                        WaitDialog.show(this@CreatePost, getString(R.string.please_wait));
-                        WaitDialog.dismiss(10000)
+
                         imageList[0]
 
                         values.put("pc", postContent)
@@ -397,7 +398,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     override fun onClick(text: String?, index: Int) {
                         when (index) {
                             0 ->
-                                if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                if (checkAndRequestPermissions()) {
                                     ActivityCompat.requestPermissions(
                                         this@CreatePost,
                                         perm,
@@ -442,7 +443,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
             ActivityCompat.requestPermissions(
                 this,
-                listPermissionsNeeded.toTypedArray(), 1234
+                listPermissionsNeeded.toTypedArray(), 546
             )
             return false
         }
