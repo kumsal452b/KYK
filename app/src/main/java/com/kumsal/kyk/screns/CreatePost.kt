@@ -495,7 +495,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
         mthmbImageList= ArrayList()
         mAllFileDataModel= ArrayList()
 
-        mlistAdapter = imageSelected_adapter(mImageListView)
+        mlistAdapter = imageSelected_adapter(mAllFileDataModel)
         mImageListRecyclerView.adapter = mlistAdapter
 
         name = intent.getStringExtra("name") as String

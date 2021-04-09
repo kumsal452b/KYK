@@ -10,9 +10,9 @@ import com.kumsal.kyk.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.ArrayList
 
-class imageSelected_adapter(imageList: ArrayList<imageSelected_model>) :
+class imageSelected_adapter(imageList: ArrayList<newDataPosModel>) :
     RecyclerView.Adapter<imageSelected_adapter.selectedHolder>() {
-    var imageList: ArrayList<imageSelected_model>? = null
+    var imageList: ArrayList<newDataPosModel>? = null
 
     init {
         this.imageList = imageList
@@ -21,8 +21,8 @@ class imageSelected_adapter(imageList: ArrayList<imageSelected_model>) :
     inner class selectedHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var closeButton: CircleImageView = itemView.findViewById(R.id.image_selected_single_close)
         var imageView: ImageView = itemView.findViewById(R.id.image_selected_single_imageView);
-        fun bindElement(element: imageSelected_model) {
-            imageView.setImageURI(element.imageUrl)
+        fun bindElement(element: newDataPosModel) {
+            imageView.setImageURI(element.file)
         }
 
     }
