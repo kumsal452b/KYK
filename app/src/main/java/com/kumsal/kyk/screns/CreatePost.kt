@@ -203,88 +203,79 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
-    @Throws(IOException::class)
-    fun getFilePathFromUri(uri: Uri?, context: Context?): Uri? {
-        val fileName: String? = getFileName(uri, context)
-        val file = File(context?.externalCacheDir, fileName)
-        file.createNewFile()
-        FileOutputStream(file).use { outputStream ->
-            context?.contentResolver?.openInputStream(uri!!).use { inputStream ->
-                copyFile(inputStream, outputStream)
-                outputStream.flush()
-            }
-        }
-        return Uri.fromFile(file)
-    }
-    @Throws(IOException::class)
-    private fun copyFile(`in`: InputStream?, out: OutputStream) {
-        val buffer = ByteArray(1024)
-        var read: Int? = null
-        while (`in`?.read(buffer).also({ read = it!! }) != -1) {
-            read?.let { out.write(buffer, 0, it) }
-        }
-    }//copyFile ends
-
-    fun getFileName(uri: Uri?, context: Context?): String? {
-        var fileName: String? = getFileNameFromCursor(uri, context)
-        if (fileName == null) {
-            val fileExtension: String? = getFileExtension(uri, context)
-            fileName = "temp_file" + if (fileExtension != null) ".$fileExtension" else ""
-        } else if (!fileName.contains(".")) {
-            val fileExtension: String? = getFileExtension(uri, context)
-            fileName = "$fileName.$fileExtension"
-        }
-        return fileName
-    }
-
-    fun getFileExtension(uri: Uri?, context: Context?): String? {
-        val fileType: String? = context?.contentResolver?.getType(uri!!)
-        return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
-    }
-    fun getFileNameFromCursor(uri: Uri?, context: Context?): String? {
-        val fileCursor: Cursor? = context?.contentResolver
-            ?.query(uri!!, arrayOf<String>(OpenableColumns.DISPLAY_NAME), null, null, null)
-        var fileName: String? = null
-        if (fileCursor != null && fileCursor.moveToFirst()) {
-            val cIndex: Int = fileCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (cIndex != -1) {
-                fileName = fileCursor.getString(cIndex)
-            }
-        }
-        return fileName
-    }
+//    @Throws(IOException::class)
+//    fun getFilePathFromUri(uri: Uri?, context: Context?): Uri? {
+//        val fileName: String? = getFileName(uri, context)
+//        val file = File(context?.externalCacheDir, fileName)
+//        file.createNewFile()
+//        FileOutputStream(file).use { outputStream ->
+//            context?.contentResolver?.openInputStream(uri!!).use { inputStream ->
+//                copyFile(inputStream, outputStream)
+//                outputStream.flush()
+//            }
+//        }
+//        return Uri.fromFile(file)
+//    }
+//    @Throws(IOException::class)
+//    private fun copyFile(`in`: InputStream?, out: OutputStream) {
+//        val buffer = ByteArray(1024)
+//        var read: Int? = null
+//        while (`in`?.read(buffer).also({ read = it!! }) != -1) {
+//            read?.let { out.write(buffer, 0, it) }
+//        }
+//    }//copyFile ends
+//
+//    fun getFileName(uri: Uri?, context: Context?): String? {
+//        var fileName: String? = getFileNameFromCursor(uri, context)
+//        if (fileName == null) {
+//            val fileExtension: String? = getFileExtension(uri, context)
+//            fileName = "temp_file" + if (fileExtension != null) ".$fileExtension" else ""
+//        } else if (!fileName.contains(".")) {
+//            val fileExtension: String? = getFileExtension(uri, context)
+//            fileName = "$fileName.$fileExtension"
+//        }
+//        return fileName
+//    }
+//
+//    fun getFileExtension(uri: Uri?, context: Context?): String? {
+//        val fileType: String? = context?.contentResolver?.getType(uri!!)
+//        return MimeTypeMap.getSingleton().getExtensionFromMimeType(fileType)
+//    }
+//    fun getFileNameFromCursor(uri: Uri?, context: Context?): String? {
+//        val fileCursor: Cursor? = context?.contentResolver
+//            ?.query(uri!!, arrayOf<String>(OpenableColumns.DISPLAY_NAME), null, null, null)
+//        var fileName: String? = null
+//        if (fileCursor != null && fileCursor.moveToFirst()) {
+//            val cIndex: Int = fileCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+//            if (cIndex != -1) {
+//                fileName = fileCursor.getString(cIndex)
+//            }
+//        }
+//        return fileName
+//    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 100) {
-            if (resultCode == RESULT_OK) {
-                if (data != null) {
-                    var uri: Uri?
-                    for (a in 0..data.clipData!!.itemCount - 1) {
-                        var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
-                       var thmbUri=getFilePathFromUri(theModel.imageUrl, this)
-
-                    }
-                    mlistAdapter.notifyDataSetChanged()
-                }
-            }
-        }
-        if (requestCode == 12345) {
-            if (resultCode == RESULT_OK) {
-                var theModel = imageSelected_model(currentUri)
-                mImageListView.add(theModel)
-                mImageListView.add(theModel)
-                mlistAdapter.notifyDataSetChanged()
-            }
-
-        }
+//        if (requestCode == 100) {
+//            if (resultCode == RESULT_OK) {
+//                if (data != null) {
+//                    var uri: Uri?
+//                    for (a in 0..data.clipData!!.itemCount - 1) {
+//                        var theModel = imageSelected_model(data.clipData?.getItemAt(a)?.uri)
+//                       var thmbUri=getFilePathFromUri(theModel.imageUrl, this)
+//
+//                    }
+//                    mlistAdapter.notifyDataSetChanged()
+//                }
+//            }
+//        }
         if (requestCode==Constant.REQUEST_CODE_PICK_IMAGE){
             if(resultCode== RESULT_OK){
                 var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
                 for (a in getdata){
                     var file=File(a.path)
                     var uri=Uri.fromFile(file)
-//                    var theModel=newDataPosModel(file.name,uri,a.path,null,".jpg","Image/jpg")
-//                    mAllFileDataModel.add(theModel)
-                    uploadData(".jpg","image/jpg",uri)
+                    var theModel=newDataPosModel(file.name,uri,a.path,null,".jpg","Image/jpg")
+                    mAllFileDataModel.add(theModel)
+
                 }
             }
         }
