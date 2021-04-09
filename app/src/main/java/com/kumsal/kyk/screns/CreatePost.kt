@@ -270,7 +270,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                     override fun getLoadImage(imageList: ArrayList<Uri>,imageThmbList:ArrayList<Uri>) {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
-                        
                         values.put("pc", postContent)
                         values.put("name", name)
                         values.put("username", username)
@@ -279,6 +278,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener {
                         values.put("uImageThmb", thmbImageUri)
                         values.put("likes", java.util.ArrayList<String>())
                         values.put("uid", Globals.ınstance?.uid!!)
+                        values.put("imageUri",imageList)
+                        values.put("uImageThmb",imageThmbList)
 
                         var pushId = mFsPostDb.collection("Post").id
                         mFsPostDb.collection("Post").add(values).addOnFailureListener {
