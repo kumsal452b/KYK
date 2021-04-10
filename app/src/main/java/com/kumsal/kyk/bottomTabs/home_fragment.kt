@@ -9,18 +9,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.kumsal.kyk.AdapterModel.UsersModel
+import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -106,6 +104,8 @@ class home_fragment : Fragment(),PostClick {
                         for (doc in document) {
                             var thePost = doc.toObject(post_model::class.java)
                             if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
+                                var sliderImagePageAdapter=SliderImagePageAdapter(context,thePost.uImage)
+                                thePost.slider_adapter=sliderImagePageAdapter
                                 post_list.add(thePost)
                             }
                         }
@@ -113,8 +113,6 @@ class home_fragment : Fragment(),PostClick {
                     }
                 })
             }
-//        query = mPostDb as Query
-//
     }
 
     override fun favClick(position: Int) {

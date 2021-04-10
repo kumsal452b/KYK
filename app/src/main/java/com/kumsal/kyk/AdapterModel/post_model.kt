@@ -1,5 +1,6 @@
 package com.kumsal.kyk.AdapterModel
 
+import android.net.Uri
 import android.text.TextUtils
 import com.google.firebase.Timestamp
 import java.util.ArrayList
@@ -14,8 +15,8 @@ class post_model{
     var likes:ArrayList<String>?=null
     var slider_adapter:SliderImagePageAdapter?=null
 
-    var uImageThmb:ArrayList<String>?=null
-    var uImage:ArrayList<String>?=null
+    var uImageThmb:ArrayList<Uri>?=null
+    var uImage:ArrayList<Uri>?=null
 
     constructor(){}
     constructor(
@@ -27,8 +28,8 @@ class post_model{
         comments: Int,
         likes: ArrayList<String>?,
         slider_adapter:SliderImagePageAdapter?=null,
-        uImageThmb:ArrayList<String>?=null,
-        uImage:ArrayList<String>?=null
+        uImageThmb:ArrayList<Uri>?=null,
+        uImage:ArrayList<Uri>?=null
     ) {
         this.name = name
         this.username = username
