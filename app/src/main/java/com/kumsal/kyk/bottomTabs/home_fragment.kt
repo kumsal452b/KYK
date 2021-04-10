@@ -64,7 +64,7 @@ class home_fragment : Fragment(),PostClick {
         mFsAuthDb = FirebaseFirestore.getInstance()
         mUser = FirebaseAuth.getInstance().currentUser
         if (mUser != null) {
-//            getPostValue()
+            getPostValue()
 //            recyclerView.adapter=adapter11
         }
         return view

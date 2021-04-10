@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.hendraanggrian.appcompat.widget.SocialEditText
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.R
@@ -35,6 +37,8 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var favoriteCount: TextView = itemView.findViewById(R.id.post_layout_favorite_count)
         var commit: ImageButton = itemView.findViewById(R.id.post_layout_comment)
         var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
+        var pagerView:ViewPager2=itemView.findViewById(R.id.post_layout_pagerView)
+
         init {
             favorite.setOnClickListener(this)
             commit.setOnClickListener(this)
