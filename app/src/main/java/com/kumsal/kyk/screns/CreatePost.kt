@@ -292,12 +292,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                             }
                         }.addOnSuccessListener {
                             var dataMap = HashMap<String, Any>()
-                            dataMap.put("userOfPost", FieldValue.arrayUnion(pushId))
-                            var deneme = it.id
-                            println(deneme)
+                            dataMap.put("userOfPost", FieldValue.arrayUnion(it.id))
                             var task =
                                 mFsPostDb.collection("Users").document(Globals!!.ınstance!!.uid!!)
-                                    .set(dataMap)
+                                    .set(dataMap,SetOptions.merge())
                             task.addOnCompleteListener(OnCompleteListener {
                                 if (it.isSuccessful) {
                                     WaitDialog.dismiss()
