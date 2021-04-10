@@ -14,6 +14,9 @@ class post_model{
     var likes:ArrayList<String>?=null
     var slider_adapter:SliderImagePageAdapter?=null
 
+    var uImageThmb:ArrayList<String>?=null
+    var uImage:ArrayList<String>?=null
+
     constructor(){}
     constructor(
         name: String?,
@@ -23,7 +26,9 @@ class post_model{
         time: Timestamp?,
         comments: Int,
         likes: ArrayList<String>?,
-        slider_adapter:SliderImagePageAdapter?=null
+        slider_adapter:SliderImagePageAdapter?=null,
+        uImageThmb:ArrayList<String>?=null,
+        uImage:ArrayList<String>?=null
     ) {
         this.name = name
         this.username = username

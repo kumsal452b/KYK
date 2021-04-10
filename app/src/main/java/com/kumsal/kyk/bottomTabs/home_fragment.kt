@@ -104,7 +104,6 @@ class home_fragment : Fragment(),PostClick {
                         blocker: java.util.ArrayList<String>
                     ) {
                         for (doc in document) {
-
                             var thePost = doc.toObject(post_model::class.java)
                             if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
                                 post_list.add(thePost)
