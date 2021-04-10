@@ -9,8 +9,11 @@ import androidx.viewpager.widget.PagerAdapter
 class SliderImagePageAdapter : PagerAdapter() {
     var context:Context?=null
     var uriList:ArrayList<Uri>?=null
+    constructor(context: Context?, uriList: ArrayList<Uri>?) : super() {
+        this.context = context
+        this.uriList = uriList
+    }
 
-    
     override fun getCount(): Int {
         TODO("Not yet implemented")
     }
