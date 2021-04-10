@@ -47,6 +47,7 @@ import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.util.DialogSettings
 import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.FullScreenDialog
+import com.kongzue.dialog.v3.TipDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.AdapterModel.*
 import com.kumsal.kyk.Globals
@@ -70,6 +71,7 @@ import java.io.*
 import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.microedition.khronos.opengles.GL11ExtensionPack
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 import kotlin.math.log
@@ -187,9 +189,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             if(resultCode== RESULT_OK){
                 var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
                 for (a in getdata){
-                    var file=File(a.path)
-                    var uri=Uri.fromFile(file)
-                    var theModel=newDataPosModel(file.name,uri,a.path,null,".jpg","Image/jpg")
+                    val file=File(a.path)
+                    val uri=Uri.fromFile(file)
+                    val theModel=newDataPosModel(file.name,uri,a.path,null,".jpg","Image/jpg")
                     mAllFileDataModel.add(theModel)
                 }
                 mlistAdapter.notifyDataSetChanged()
@@ -283,17 +285,28 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                         values.put("imageUri", imageList)
                         values.put("uImageThmb", imageThmbList)
 
-                        var pushId = mFsPostDb.collection("Post").id
+//                        var pushId = mFsPostDb.collection("Post").id
                         mFsPostDb.collection("Post").add(values).addOnFailureListener {
                             OnFailureListener {
                                 WaitDialog.dismiss()
                                 Log.d("Post Db have error", it.message!!)
                             }
                         }.addOnSuccessListener {
-                            println(it.id)
-                            WaitDialog.dismiss()
-                            var main_Activity = Intent(this@CreatePost, MainActivity::class.java)
-                            startActivity(main_Activity)
+                            var dataMap = HashMap<String, Any>()
+//                            dataMap.put("userOfPost", FieldValue.arrayUnion(pushId))
+                            var task =
+                                mFsPostDb.collection("Users").document(Globals!!.ınstance!!.uid!!)
+                                    .set(dataMap)
+                            task.addOnCompleteListener(OnCompleteListener {
+                                if (it.isSuccessful) {
+                                    WaitDialog.dismiss()
+                                    var main_Activity =
+                                        Intent(this@CreatePost, MainActivity::class.java)
+                                    startActivity(main_Activity)
+                                }else{
+                                    WaitDialog.show(this@CreatePost,getString(R.string.an_error),TipDialog.TYPE.ERROR)
+                                }
+                            })
                         }
                     }
                 })
