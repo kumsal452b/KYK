@@ -284,7 +284,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                         values.put("uid", Globals.ınstance?.uid!!)
                         values.put("imageUri", imageList)
                         values.put("uImageThmb", imageThmbList)
-                        var pushId = mFsPostDb.collection("Post").id
+                        var pushId = mFsPostDb.collection("Post")
                         mFsPostDb.collection("Post").add(values).addOnFailureListener {
                             OnFailureListener {
                                 WaitDialog.dismiss()
@@ -293,6 +293,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                         }.addOnSuccessListener {
                             var dataMap = HashMap<String, Any>()
                             dataMap.put("userOfPost", FieldValue.arrayUnion(pushId))
+                            var deneme = it.id
+                            println(deneme)
                             var task =
                                 mFsPostDb.collection("Users").document(Globals!!.ınstance!!.uid!!)
                                     .set(dataMap)
@@ -302,8 +304,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                                     var main_Activity =
                                         Intent(this@CreatePost, MainActivity::class.java)
                                     startActivity(main_Activity)
-                                }else{
-                                    WaitDialog.show(this@CreatePost,getString(R.string.an_error),TipDialog.TYPE.ERROR)
+                                } else {
+                                    WaitDialog.show(
+                                        this@CreatePost,
+                                        getString(R.string.an_error),
+                                        TipDialog.TYPE.ERROR
+                                    )
                                 }
                             })
                         }
