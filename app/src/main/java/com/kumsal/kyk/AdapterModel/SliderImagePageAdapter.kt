@@ -30,7 +30,13 @@ class SliderImagePageAdapter : PagerAdapter {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         var itemView=mlayoutInflater?.inflate(R.layout.slider_image_for_post,container,false) as View
+        var imageView=itemView.findViewById<ImageView>(R.id.slider_image_for_post_imageView)
+        imageView.setImageURI(uriList?.get(position))
+        container.addView(imageView)
+        return itemView
+    }
 
-        return super.instantiateItem(container, position)
+    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+        container.removeView(`object` as LinearLayout)
     }
 }
