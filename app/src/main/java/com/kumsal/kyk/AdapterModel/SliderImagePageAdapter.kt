@@ -9,12 +9,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
+import com.squareup.picasso.Picasso
 
 class SliderImagePageAdapter : PagerAdapter {
     var context:Context?=null
-    var uriList:ArrayList<Uri>?=null
+    var uriList:ArrayList<String>?=null
     var mlayoutInflater:LayoutInflater?=null
-    constructor(context: Context?, uriList: ArrayList<Uri>?) : super() {
+    constructor(context: Context?, uriList: ArrayList<String>?) : super() {
         this.context = context
         this.uriList = uriList
         mlayoutInflater=context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -31,7 +32,7 @@ class SliderImagePageAdapter : PagerAdapter {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         var itemView=mlayoutInflater?.inflate(R.layout.slider_image_for_post,container,false) as View
         var imageView=itemView.findViewById<ImageView>(R.id.slider_image_for_post_imageView)
-        imageView.setImageURI(uriList?.get(position))
+        Picasso.get().load(uriList?.get(position)).into(imageView)
         container.addView(imageView)
         return itemView
     }

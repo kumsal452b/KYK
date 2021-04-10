@@ -15,8 +15,8 @@ class post_model{
     var likes:ArrayList<String>?=null
     var slider_adapter:SliderImagePageAdapter?=null
 
-    var uImageThmb:ArrayList<Uri>?=null
-    var uImage:ArrayList<Uri>?=null
+    var uImageThmb:ArrayList<String>?=null
+    var uImage:ArrayList<String>?=null
 
     constructor(){}
     constructor(
@@ -28,8 +28,8 @@ class post_model{
         comments: Int,
         likes: ArrayList<String>?,
         slider_adapter:SliderImagePageAdapter?=null,
-        uImageThmb:ArrayList<Uri>?=null,
-        uImage:ArrayList<Uri>?=null
+        uImageThmb:ArrayList<String>?=null,
+        uImage:ArrayList<String>?=null
     ) {
         this.name = name
         this.username = username
