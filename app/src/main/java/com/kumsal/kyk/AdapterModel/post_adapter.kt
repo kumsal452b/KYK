@@ -37,7 +37,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var favoriteCount: TextView = itemView.findViewById(R.id.post_layout_favorite_count)
         var commit: ImageButton = itemView.findViewById(R.id.post_layout_comment)
         var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
-        var pagerView:ViewPager2=itemView.findViewById(R.id.post_layout_pagerView)
+        var pagerView:ViewPager=itemView.findViewById(R.id.post_layout_pagerView)
 
         init {
             favorite.setOnClickListener(this)
@@ -51,6 +51,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             name.setText(model.name)
 //            since.setText(model.time!!.nanoseconds)
             username.setText(model.username)
+            pagerView.adapter=model.slider_adapter
         }
 
         override fun onClick(v: View?) {

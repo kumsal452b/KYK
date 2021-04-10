@@ -124,12 +124,12 @@
                 android:textSize="15sp"
                 android:textStyle="normal"
                 tools:layout_editor_absoluteY="19dp" />
-            <androidx.viewpager2.widget.ViewPager2
+            <androidx.viewpager.widget.ViewPager
                 android:id="@+id/post_layout_pagerView"
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
 
-            </androidx.viewpager2.widget.ViewPager2>
+            </androidx.viewpager.widget.ViewPager>
 
         </LinearLayout>
         <LinearLayout
