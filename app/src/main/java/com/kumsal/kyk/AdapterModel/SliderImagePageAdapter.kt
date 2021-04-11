@@ -10,8 +10,10 @@ import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import jp.wasabeef.picasso.transformations.CropCircleTransformation
 
 class SliderImagePageAdapter : PagerAdapter {
     var context: Context? = null
@@ -39,9 +41,7 @@ class SliderImagePageAdapter : PagerAdapter {
         var itemView =
             mlayoutInflater?.inflate(R.layout.slider_image_for_post, container, false) as View
         var imageView = itemView.findViewById<ImageView>(R.id.slider_image_for_post_imageView)
-        CropImageView
-        Picasso.get().load(uriList?.get(position)).into(imageView)
-
+        Picasso.get().load(uriList?.get(position)).transform(CropCircleTransformation()).into(imageView)
         container.addView(itemView)
         return itemView
     }
