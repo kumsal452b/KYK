@@ -73,4 +73,5 @@ dependencies {
     implementation 'com.hendraanggrian.appcompat:socialview:0.3-rc1'
     implementation "com.hendraanggrian.appcompat:socialview-commons:0.3-rc1"
     implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.8'
+    implementation 'jp.wasabeef:picasso-transformations:2.4.0'
 }
