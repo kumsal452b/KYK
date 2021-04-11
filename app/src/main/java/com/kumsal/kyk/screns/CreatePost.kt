@@ -418,10 +418,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                                     )
                                 } else {
 
-                                    var intent1 = Intent(this@CreatePost, ImagePickActivity::class.java)
-                                    intent1.putExtra(IS_NEED_CAMERA, true);
-                                    intent1.putExtra(Constant.MAX_NUMBER, 6);
-                                    startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
+//                                    var intent1 = Intent(this@CreatePost, ImagePickActivity::class.java)
+//                                    intent1.putExtra(IS_NEED_CAMERA, true);
+//                                    intent1.putExtra(Constant.MAX_NUMBER, 6);
+//                                    startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
+                                    
                                 }
 
                         }
