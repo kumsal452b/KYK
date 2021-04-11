@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
@@ -38,11 +39,29 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var commit: ImageButton = itemView.findViewById(R.id.post_layout_comment)
         var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
         var pagerView:ViewPager=itemView.findViewById(R.id.post_layout_pagerView)
-
+        var pagerItemCountForImage:TextView=itemView.findViewById(R.id.post_layout_piecesOfPicture)
         init {
             favorite.setOnClickListener(this)
             commit.setOnClickListener(this)
             expanded.setOnClickListener(this)
+            pagerView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+
+                override fun onPageScrollStateChanged(state: Int) {
+                }
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    pagerItemCountForImage.setText("${position}/${}")
+
+                }
+                override fun onPageSelected(position: Int) {
+
+                }
+
+            })
         }
         fun BindElement(model: post_model) {
             if (!TextUtils.isEmpty(model.thmbImageUri))

@@ -132,9 +132,16 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/post_layout_pagerView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="307dp">
 
             </androidx.viewpager.widget.ViewPager>
+
+            <TextView
+                android:id="@+id/post_layout_piecesOfPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1/1"
+                android:textAlignment="center" />
 
         </LinearLayout>
         <LinearLayout
