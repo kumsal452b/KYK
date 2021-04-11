@@ -23,7 +23,9 @@
             android:layout_height="60dp"
             android:src="@mipmap/emptyuser"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/relative2"
+            />
 
         <RelativeLayout
             android:id="@+id/relative2"
@@ -97,19 +99,20 @@
                 android:src="@drawable/ic_baseline_expand_more_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+
                />
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout32"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/relative2"
+            android:layout_below="@+id/post_layout_imageView"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@id/post_layout_imageView"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/post_layout_imageView">
+            app:layout_constraintTop_toBottomOf="@id/post_layout_imageView">
 
             <com.hendraanggrian.appcompat.widget.SocialTextView
                 android:id="@+id/post_layout_imageView_postContent"
@@ -118,12 +121,14 @@
                 android:contextClickable="false"
                 android:elegantTextHeight="false"
                 android:freezesText="true"
+                android:text="dfgdfgdf"
                 android:textAlignment="inherit"
                 android:textAllCaps="false"
                 android:textColor="#100C0C"
                 android:textSize="15sp"
                 android:textStyle="normal"
                 tools:layout_editor_absoluteY="19dp" />
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/post_layout_pagerView"
                 android:layout_width="match_parent"
