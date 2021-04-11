@@ -54,8 +54,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                     positionOffset: Float,
                     positionOffsetPixels: Int
                 ) {
-                    pagerItemCountForImage.setText("${position}/${}")
-
+                    pagerItemCountForImage.setText("${position}/${pagerView.adapter?.count}")
                 }
                 override fun onPageSelected(position: Int) {
 
