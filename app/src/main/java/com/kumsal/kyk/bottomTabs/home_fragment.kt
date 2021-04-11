@@ -104,7 +104,7 @@ class home_fragment : Fragment(),PostClick {
                         for (doc in document) {
                             var thePost = doc.toObject(post_model::class.java)
                             if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
-                                if (thePost.uImage?.size!! >0){
+                                if (thePost.uImageThmb?.size!! >0){
                                     var sliderImagePageAdapter=SliderImagePageAdapter(context,thePost.uImage)
                                     thePost.slider_adapter=sliderImagePageAdapter
                                 }

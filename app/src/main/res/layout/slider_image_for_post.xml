@@ -6,5 +6,5 @@
         android:id="@+id/slider_image_for_post_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitCenter"/>
+        android:scaleType="center"/>
 </LinearLayout>
