@@ -54,7 +54,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                     positionOffset: Float,
                     positionOffsetPixels: Int
                 ) {
-                    pagerItemCountForImage.setText("${position}/${pagerView.adapter?.count}")
+                    pagerItemCountForImage.setText("${position+1}/${pagerView.adapter?.count}")
                 }
                 override fun onPageSelected(position: Int) {
 
@@ -69,7 +69,15 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             name.setText(model.name)
 //            since.setText(model.time!!.nanoseconds)
             username.setText(model.username)
-            pagerView.adapter=model.slider_adapter
+            if (model.slider_adapter!=null){
+                pagerView.visibility=View.VISIBLE
+                pagerItemCountForImage.visibility=View.VISIBLE
+                pagerView.adapter=model.slider_adapter
+            }else{
+                pagerView.visibility=View.GONE
+                pagerItemCountForImage.visibility=View.GONE
+            }
+
         }
 
         override fun onClick(v: View?) {

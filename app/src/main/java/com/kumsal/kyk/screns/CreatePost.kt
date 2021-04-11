@@ -1,16 +1,11 @@
 package com.kumsal.kyk.screns
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
@@ -18,15 +13,12 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.MimeTypeMap
 import android.widget.*
-import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,8 +26,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.firestore.*
@@ -68,13 +58,10 @@ import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
 import kotlinx.coroutines.launch
 import java.io.*
-import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.microedition.khronos.opengles.GL11ExtensionPack
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
-import kotlin.math.log
 
 
 class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,imageSelected_adapter.ItemClickListner {
@@ -202,10 +189,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private var freeCount=0;
     private fun getImagesList(theList: imageLoadCall){
         var tempArray=ArrayList<Uri>()
-        for (an in mAllFileDataModel) {
-            var theModel=an
-           var isEnd=mAllFileDataModel.indexOf(an)==mAllFileDataModel.size-1
-           uploadData(theModel.mimeType!!,"images/jpg",an.file!!,isEnd,theList)
+        if (mAllFileDataModel.size>0){
+            for (an in mAllFileDataModel) {
+                var theModel=an
+                var isEnd=mAllFileDataModel.indexOf(an)==mAllFileDataModel.size-1
+                uploadData(theModel.mimeType!!,"images/jpg",an.file!!,isEnd,theList)
+            }
+        }else{
+            theList.getLoadImage(ArrayList<String>(),ArrayList<String>())
         }
     }
     private fun uploadData(mimeType:String,contentType:String, fileUri:Uri,isEnd:Boolean,theList: imageLoadCall){
@@ -269,21 +260,21 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                 WaitDialog.dismiss(10000)
                 getImagesList(object : imageLoadCall {
                     override fun getLoadImage(
-                        imageList: ArrayList<String>,
-                        imageThmbList: ArrayList<String>
+                        imageList: ArrayList<String>?,
+                        imageThmbList: ArrayList<String>?
                     ) {
                         var postContent = post_text_element.text.toString()
                         var values = HashMap<String, Any>()
                         values.put("pc", postContent)
                         values.put("name", name)
                         values.put("username", username)
-                        values.put("uImage", imageList)
+                        values.put("uImage", imageList!!)
                         values.put("time", Timestamp.now())
                         values.put("uImageThmb", thmbImageUri)
                         values.put("likes", java.util.ArrayList<String>())
                         values.put("uid", Globals.ınstance?.uid!!)
                         values.put("imageUri",imageUri.toString() )
-                        values.put("uImageThmb", imageThmbList)
+                        values.put("uImageThmb", imageThmbList!!)
                         var pushId = mFsPostDb.collection("Post")
                         mFsPostDb.collection("Post").add(values).addOnFailureListener {
                             OnFailureListener {
