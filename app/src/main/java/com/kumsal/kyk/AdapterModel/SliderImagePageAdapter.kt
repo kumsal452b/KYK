@@ -1,12 +1,15 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
+import android.content.res.Resources
 import android.net.Uri
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.graphics.PathUtils
 import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
@@ -14,6 +17,7 @@ import com.squareup.picasso.Transformation
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
+import jp.wasabeef.picasso.transformations.CropSquareTransformation
 
 class SliderImagePageAdapter : PagerAdapter {
     var context: Context? = null
@@ -41,7 +45,14 @@ class SliderImagePageAdapter : PagerAdapter {
         var itemView =
             mlayoutInflater?.inflate(R.layout.slider_image_for_post, container, false) as View
         var imageView = itemView.findViewById<ImageView>(R.id.slider_image_for_post_imageView)
-        Picasso.get().load(uriList?.get(position)).transform(CropCircleTransformation()).into(imageView)
+        val dip = 300f
+        val r: Resources = Resources.getSystem()
+        val px = TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dip,
+            r.displayMetrics
+        )
+        Picasso.get().load(uriList?.get(position)).resize(300,300).transform(CropSquareTransformation()).into(imageView)
         container.addView(itemView)
         return itemView
     }
