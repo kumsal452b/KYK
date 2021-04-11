@@ -74,6 +74,6 @@ dependencies {
     implementation "com.hendraanggrian.appcompat:socialview-commons:0.3-rc1"
     implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.8'
     implementation 'jp.wasabeef:picasso-transformations:2.4.0'
-    implementation 'com.github.akvelon.android-image-picker:imagepicker:1.0.1'
+    implementation 'com.github.dhaval2404:imagepicker:1.8'
 
 }

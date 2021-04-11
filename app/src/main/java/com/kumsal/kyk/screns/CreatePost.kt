@@ -24,6 +24,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.Timestamp
@@ -422,7 +423,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //                                    intent1.putExtra(IS_NEED_CAMERA, true);
 //                                    intent1.putExtra(Constant.MAX_NUMBER, 6);
 //                                    startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
-                                    ImageP
+                                    ImagePicker.with(this@CreatePost)
+                                        .crop()
+                                        .start()
                                 }
 
                         }
