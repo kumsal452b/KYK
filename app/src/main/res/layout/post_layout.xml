@@ -14,18 +14,17 @@
         android:id="@+id/relative1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:padding="7dp">
+        android:background="#FFFFFF">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/post_layout_imageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:paddingStart="7dp"
             android:src="@mipmap/emptyuser"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/relative2"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
             android:id="@+id/relative2"
@@ -100,7 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
 
-               />
+                />
         </RelativeLayout>
 
         <LinearLayout
@@ -108,7 +107,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/post_layout_imageView"
-            android:layout_marginStart="4dp"
             android:layout_marginTop="0dp"
             android:orientation="vertical"
             app:layout_constraintHorizontal_bias="0.0"
@@ -121,6 +119,7 @@
                 android:contextClickable="false"
                 android:elegantTextHeight="false"
                 android:freezesText="true"
+                android:paddingStart="7dp"
                 android:text="dfgdfgdf"
                 android:textAlignment="inherit"
                 android:textAllCaps="false"
@@ -146,23 +145,23 @@
                 android:visibility="gone" />
 
         </LinearLayout>
+
         <LinearLayout
 
-            android:layout_alignParentRight="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/linearLayout32"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/post_layout_imageView"
-            >
+            android:layout_toEndOf="@id/post_layout_imageView">
 
             <ImageButton
                 android:id="@+id/post_layout_favorite"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
-                android:background="#00FFFFFF"
                 android:layout_marginStart="5dp"
+                android:background="#00FFFFFF"
                 android:scaleType="fitXY"
                 android:src="@drawable/favorite" />
 
