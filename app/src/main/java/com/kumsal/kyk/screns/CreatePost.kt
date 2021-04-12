@@ -174,6 +174,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //                intent1.putExtra(IS_NEED_CAMERA, true);
 //                intent1.putExtra(Constant.MAX_NUMBER, 6);
 //                startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
+                openCamara()
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
             }
@@ -442,19 +443,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //                                        .crop()
 //
 //                                        .start()
-                                    TedRxBottomPicker.with(this@CreatePost)
-                                        .setPeekHeight(1600)
-                                        .showTitle(false)
-                                        .setCompleteButtonText("Done")
-                                        .setEmptySelectionText("No Select")
-                                        .setOnMultiImageSelectedListener { object:TedBottomSheetDialogFragment.OnMultiImageSelectedListener{
-                                            override fun onImagesSelected(uriList: MutableList<Uri>?) {
-                                                    this@CreatePost.uriList!!.addAll(uriList!!)
-                                            }
-                                        }}
-                                        .setSelectedUriList(uriList)
-                                        .showMultiImage()
-                                        .subscribe({ uris -> })
+                                    openCamara()
                                 }
 
                         }
@@ -467,6 +456,25 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 
 
     }
+
+    private fun openCamara() {
+        TedRxBottomPicker.with(this@CreatePost)
+            .setPeekHeight(1600)
+            .showTitle(false)
+            .setCompleteButtonText("Done")
+            .setEmptySelectionText("No Select")
+            .setOnMultiImageSelectedListener {
+                object : TedBottomSheetDialogFragment.OnMultiImageSelectedListener {
+                    override fun onImagesSelected(uriList: MutableList<Uri>?) {
+                        this@CreatePost.uriList!!.addAll(uriList!!)
+                    }
+                }
+            }
+            .setSelectedUriList(uriList)
+            .showMultiImage()
+            .subscribe({ uris -> })
+    }
+
     override fun onItemClickListener(position: Int) {
         mAllFileDataModel.removeAt(position)
         mlistAdapter.notifyDataSetChanged()
