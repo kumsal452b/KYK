@@ -24,7 +24,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.Timestamp
@@ -48,21 +47,29 @@ import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
 import com.squareup.picasso.Picasso
-import com.vincent.filepicker.Constant
-import com.vincent.filepicker.activity.ImagePickActivity
-import com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA
-import com.vincent.filepicker.filter.entity.ImageFile
 import de.hdodenhof.circleimageview.CircleImageView
+import gun0912.tedbottompicker.TedBottomSheetDialogFragment
+import gun0912.tedbottompicker.TedRxBottomPicker
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
 import kotlinx.coroutines.launch
 import java.io.*
+import java.lang.Throwable
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.Any
+import kotlin.Array
+import kotlin.Boolean
+import kotlin.CharSequence
+import kotlin.Int
+import kotlin.IntArray
+import kotlin.String
+import kotlin.arrayOf
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.toString
 
 
 class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,imageSelected_adapter.ItemClickListner {
@@ -81,6 +88,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var mthmbImageList:java.util.ArrayList<String>
     private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
+    private lateinit var uriList: MutableList<Uri>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -162,10 +170,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     ) {
         if (requestCode == 546) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults.size > 0) {
-                var intent1 = Intent(this@CreatePost, ImagePickActivity::class.java)
-                intent1.putExtra(IS_NEED_CAMERA, true);
-                intent1.putExtra(Constant.MAX_NUMBER, 6);
-                startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
+//                var intent1 = Intent(this@CreatePost, ImagePickActivity::class.java)
+//                intent1.putExtra(IS_NEED_CAMERA, true);
+//                intent1.putExtra(Constant.MAX_NUMBER, 6);
+//                startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
             }
@@ -173,18 +181,18 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode==Constant.REQUEST_CODE_PICK_IMAGE){
-            if(resultCode== RESULT_OK){
-                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
-                for (a in getdata){
-                    val file=File(a.path)
-                    val uri=Uri.fromFile(file)
-                    val theModel=newDataPosModel(file.name,uri,a.path,null,".jpg","Image/jpg")
-                    mAllFileDataModel.add(theModel)
-                }
-                mlistAdapter.notifyDataSetChanged()
-            }
-        }
+//        if (requestCode==Constant.REQUEST_CODE_PICK_IMAGE){
+//            if(resultCode== RESULT_OK){
+//                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
+//                for (a in getdata){
+//                    val file=File(a.path)
+//                    val uri=Uri.fromFile(file)
+//                    val theModel=newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
+//                    mAllFileDataModel.add(theModel)
+//                }
+//                mlistAdapter.notifyDataSetChanged()
+//            }
+//        }
         super.onActivityResult(requestCode, resultCode, data)
     }
     private var freeCount=0;
@@ -194,13 +202,19 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             for (an in mAllFileDataModel) {
                 var theModel=an
                 var isEnd=mAllFileDataModel.indexOf(an)==mAllFileDataModel.size-1
-                uploadData(theModel.mimeType!!,"images/jpg",an.file!!,isEnd,theList)
+                uploadData(theModel.mimeType!!, "images/jpg", an.file!!, isEnd, theList)
             }
         }else{
-            theList.getLoadImage(ArrayList<String>(),ArrayList<String>())
+            theList.getLoadImage(ArrayList<String>(), ArrayList<String>())
         }
     }
-    private fun uploadData(mimeType:String,contentType:String, fileUri:Uri,isEnd:Boolean,theList: imageLoadCall){
+    private fun uploadData(
+        mimeType: String,
+        contentType: String,
+        fileUri: Uri,
+        isEnd: Boolean,
+        theList: imageLoadCall
+    ){
         var storageMD=StorageMetadata.Builder()
         storageMD.contentType=contentType
         storageMD.build()
@@ -217,22 +231,22 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                 quality(80)
                 format(Bitmap.CompressFormat.JPEG)
             }
-           filePath.putFile(file.toUri(),storageMD.build()).
-           addOnCompleteListener(OnCompleteListener {forfile->
+           filePath.putFile(file.toUri(), storageMD.build()).
+           addOnCompleteListener(OnCompleteListener { forfile ->
                if (forfile.isSuccessful) {
-                   filePath.downloadUrl.addOnCompleteListener {urlForFile->
-                       filePathForThmn.putFile(compressedImageFile.toUri(),storageMD.build()).
-                       addOnCompleteListener(OnCompleteListener {forfileThmb->
-                           if (forfileThmb.isSuccessful) {
-                               filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail->
-                                   mImageListView.add(urlForFile.result.toString())
-                                   mthmbImageList.add(urlForThumnail.result.toString())
-                                   if ((mthmbImageList.size==mAllFileDataModel.size|| mthmbImageList.size==mAllFileDataModel.size)){
-                                       theList.getLoadImage(mImageListView,mthmbImageList)
+                   filePath.downloadUrl.addOnCompleteListener { urlForFile ->
+                       filePathForThmn.putFile(compressedImageFile.toUri(), storageMD.build())
+                           .addOnCompleteListener(OnCompleteListener { forfileThmb ->
+                               if (forfileThmb.isSuccessful) {
+                                   filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail ->
+                                       mImageListView.add(urlForFile.result.toString())
+                                       mthmbImageList.add(urlForThumnail.result.toString())
+                                       if ((mthmbImageList.size == mAllFileDataModel.size || mthmbImageList.size == mAllFileDataModel.size)) {
+                                           theList.getLoadImage(mImageListView, mthmbImageList)
+                                       }
                                    }
                                }
-                           }
-                       })
+                           })
                    }
                }
            })
@@ -274,7 +288,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                         values.put("uImageThmb", thmbImageUri)
                         values.put("likes", java.util.ArrayList<String>())
                         values.put("uid", Globals.ınstance?.uid!!)
-                        values.put("imageUri",imageUri.toString() )
+                        values.put("imageUri", imageUri.toString())
                         values.put("uImageThmb", imageThmbList!!)
                         var pushId = mFsPostDb.collection("Post")
                         mFsPostDb.collection("Post").add(values).addOnFailureListener {
@@ -287,7 +301,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                             dataMap.put("userOfPost", FieldValue.arrayUnion(it.id))
                             var task =
                                 mFsPostDb.collection("Users").document(Globals!!.ınstance!!.uid!!)
-                                    .set(dataMap,SetOptions.merge())
+                                    .set(dataMap, SetOptions.merge())
                             task.addOnCompleteListener(OnCompleteListener {
                                 if (it.isSuccessful) {
                                     WaitDialog.dismiss()
@@ -377,6 +391,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         mImageListRecyclerView.setHasFixedSize(true)
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
 
+        uriList=ArrayList()
         mImageListView = ArrayList()
         mthmbImageList= ArrayList()
         mAllFileDataModel= ArrayList()
@@ -423,9 +438,23 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //                                    intent1.putExtra(IS_NEED_CAMERA, true);
 //                                    intent1.putExtra(Constant.MAX_NUMBER, 6);
 //                                    startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
-                                    ImagePicker.with(this@CreatePost)
-                                        .crop()
-                                        .start()
+//                                    ImagePicker.with(this@CreatePost)
+//                                        .crop()
+//
+//                                        .start()
+                                    TedRxBottomPicker.with(this@CreatePost)
+                                        .setPeekHeight(1600)
+                                        .showTitle(false)
+                                        .setCompleteButtonText("Done")
+                                        .setEmptySelectionText("No Select")
+                                        .setOnMultiImageSelectedListener { object:TedBottomSheetDialogFragment.OnMultiImageSelectedListener{
+                                            override fun onImagesSelected(uriList: MutableList<Uri>?) {
+                                                    this@CreatePost.uriList!!.addAll(uriList!!)
+                                            }
+                                        }}
+                                        .setSelectedUriList(uriList)
+                                        .showMultiImage()
+                                        .subscribe({ uris -> })
                                 }
 
                         }
