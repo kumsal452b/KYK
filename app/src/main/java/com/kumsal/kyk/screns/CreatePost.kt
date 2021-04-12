@@ -460,19 +460,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private fun openCamara() {
         TedRxBottomPicker.with(this@CreatePost)
             .setPeekHeight(1600)
+
             .showTitle(false)
             .setCompleteButtonText("Done")
             .setEmptySelectionText("No Select")
-            .setOnMultiImageSelectedListener {
-                object : TedBottomSheetDialogFragment.OnMultiImageSelectedListener {
-                    override fun onImagesSelected(uriList: MutableList<Uri>?) {
-                        this@CreatePost.uriList!!.addAll(uriList!!)
-                    }
-                }
-            }
+
             .setSelectedUriList(uriList)
-            .showMultiImage()
-            .subscribe({ uris -> })
+            .show()
     }
 
     override fun onItemClickListener(position: Int) {
