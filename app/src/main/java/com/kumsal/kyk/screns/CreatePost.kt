@@ -187,6 +187,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                     .setMaxSize(10)
                     .setLimitMessage("You can select up to 10 images")
                     .setSelectedImages(uriList)
+                    .setShowCamera(true)
                     .setRequestCode(100)
                     .start()
 
