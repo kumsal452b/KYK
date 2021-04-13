@@ -47,6 +47,13 @@
             </meta-data>
         </provider>
 
+        <activity android:name="ir.shahabazimi.instagrampicker.gallery.SelectActivity" />
+        <activity android:name="ir.shahabazimi.instagrampicker.filter.FilterActivity" />
+        <activity android:name="ir.shahabazimi.instagrampicker.gallery.MultiSelectActivity"/>
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".screns.CreatePost" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

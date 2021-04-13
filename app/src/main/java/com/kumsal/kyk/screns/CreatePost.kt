@@ -54,6 +54,8 @@ import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
+import ir.shahabazimi.instagrampicker.InstagramPicker
+import ir.shahabazimi.instagrampicker.classes.MultiListener
 import kotlinx.coroutines.launch
 import java.io.*
 import java.lang.Throwable
@@ -174,7 +176,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //                intent1.putExtra(IS_NEED_CAMERA, true);
 //                intent1.putExtra(Constant.MAX_NUMBER, 6);
 //                startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
-                openCamara()
+//                openCamara()
+                var ipicker=InstagramPicker(this@CreatePost)
+                ipicker.show(1,2,5, MultiListener { item->
+
+                })
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
             }
@@ -443,7 +449,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //                                        .crop()
 //
 //                                        .start()
-                                    openCamara()
+//                                    openCamara()
+                                    var ipicker=InstagramPicker(this@CreatePost)
+                                    ipicker.show(1,2,5, MultiListener { item->
+
+                                    })
                                 }
 
                         }
