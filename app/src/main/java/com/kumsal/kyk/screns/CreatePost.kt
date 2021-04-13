@@ -458,13 +458,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     }
 
     private fun openCamara() {
-        TedRxBottomPicker.with(this@CreatePost)
-            .setPeekHeight(1600)
 
+            var deneme=TedRxBottomPicker.with(this@CreatePost)
+            .setPeekHeight(1600)
             .showTitle(false)
             .setCompleteButtonText("Done")
             .setEmptySelectionText("No Select")
-
             .setSelectedUriList(uriList)
             .show()
     }
