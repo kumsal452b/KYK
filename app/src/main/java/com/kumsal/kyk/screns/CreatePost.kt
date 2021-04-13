@@ -48,8 +48,6 @@ import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import gun0912.tedbottompicker.TedBottomSheetDialogFragment
-import gun0912.tedbottompicker.TedRxBottomPicker
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
@@ -469,13 +467,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 
     private fun openCamara() {
 
-            var deneme=TedRxBottomPicker.with(this@CreatePost)
-            .setPeekHeight(1600)
-            .showTitle(false)
-            .setCompleteButtonText("Done")
-            .setEmptySelectionText("No Select")
-            .setSelectedUriList(uriList)
-            .show()
+//            var deneme=TedRxBottomPicker.with(this@CreatePost)
+//            .setPeekHeight(1600)
+//            .showTitle(false)
+//            .setCompleteButtonText("Done")
+//            .setEmptySelectionText("No Select")
+//            .setSelectedUriList(uriList)
+//            .show()
     }
 
     override fun onItemClickListener(position: Int) {
