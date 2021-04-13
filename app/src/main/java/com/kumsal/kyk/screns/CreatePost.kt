@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.media.audiofx.DynamicsProcessing
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -46,14 +47,15 @@ import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
+import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
+import com.nguyenhoanglam.imagepicker.model.Image
+import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import id.zelory.compressor.Compressor
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
-import ir.shahabazimi.instagrampicker.InstagramPicker
-import ir.shahabazimi.instagrampicker.classes.MultiListener
 import kotlinx.coroutines.launch
 import java.io.*
 import java.lang.Throwable
@@ -81,6 +83,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var recyclerView: RecyclerView
     private lateinit var toolbar: Toolbar
     private lateinit var securityTag: TextView
+
     private lateinit var mImageListRecyclerView: RecyclerView
     private lateinit var mlistAdapter: imageSelected_adapter
 
@@ -88,7 +91,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var mthmbImageList:java.util.ArrayList<String>
     private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
-    private lateinit var uriList: MutableList<Uri>
+    private lateinit var uriList: java.util.ArrayList<Image>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -175,10 +178,18 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //                intent1.putExtra(Constant.MAX_NUMBER, 6);
 //                startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE)
 //                openCamara()
-                var ipicker=InstagramPicker(this@CreatePost)
-                ipicker.show(1,2,5, MultiListener { item->
+                ImagePicker.with(this@CreatePost)
+                    .setFolderMode(true)
+                    .setFolderTitle("Album")
+                    .setDirectoryName("Image Picker")
+                    .setMultipleMode(true)
+                    .setShowNumberIndicator(true)
+                    .setMaxSize(10)
+                    .setLimitMessage("You can select up to 10 images")
+                    .setSelectedImages(uriList)
+                    .setRequestCode(100)
+                    .start()
 
-                })
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
             }
@@ -186,18 +197,19 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if (requestCode==Constant.REQUEST_CODE_PICK_IMAGE){
-//            if(resultCode== RESULT_OK){
+        if (requestCode==100){
+            if(resultCode== RESULT_OK){
+                val getdata: ArrayList<Image> = ImagePicker.getImages(data)
 //                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
-//                for (a in getdata){
-//                    val file=File(a.path)
-//                    val uri=Uri.fromFile(file)
-//                    val theModel=newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
-//                    mAllFileDataModel.add(theModel)
-//                }
-//                mlistAdapter.notifyDataSetChanged()
-//            }
-//        }
+                for (a in getdata){
+                    val file=File(a.path)
+                    val uri=Uri.fromFile(file)
+                    val theModel=newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
+                    mAllFileDataModel.add(theModel)
+                }
+                mlistAdapter.notifyDataSetChanged()
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data)
     }
     private var freeCount=0;
@@ -448,10 +460,35 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //
 //                                        .start()
 //                                    openCamara()
-                                    var ipicker = InstagramPicker(this@CreatePost)
-                                    ipicker.show(1, 2, 5, MultiListener { item ->
-                                        println(item)
-                                    })
+//                                    var ipicker = InstagramPicker(this@CreatePost)
+//                                    ipicker.show(1, 2, 5, MultiListener { item ->
+//                                        for (ab in item) {
+//                                            val a=Uri.parse(ab)
+//                                            val file = File(a.path)
+//                                            val uri = Uri.fromFile(file)
+//                                            val theModel = newDataPosModel(
+//                                                file.name,
+//                                                uri,
+//                                                a.path,
+//                                                null,
+//                                                ".jpg",
+//                                                "Image/jpg"
+//                                            )
+//                                            mAllFileDataModel.add(theModel)
+//                                        }
+//                                        mlistAdapter.notifyDataSetChanged()
+//                                    })
+                                    ImagePicker.with(this@CreatePost)
+                                        .setFolderMode(true)
+                                        .setFolderTitle("Album")
+                                        .setDirectoryName("Image Picker")
+                                        .setMultipleMode(true)
+                                        .setShowNumberIndicator(true)
+                                        .setMaxSize(10)
+                                        .setLimitMessage("You can select up to 10 images")
+                                        .setSelectedImages(uriList)
+                                        .setRequestCode(100)
+                                        .start()
                                 }
 
                         }
