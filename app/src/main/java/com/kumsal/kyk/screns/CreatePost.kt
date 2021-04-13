@@ -448,9 +448,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //
 //                                        .start()
 //                                    openCamara()
-                                    var ipicker=InstagramPicker(this@CreatePost)
-                                    ipicker.show(1,2,5, MultiListener { item->
-
+                                    var ipicker = InstagramPicker(this@CreatePost)
+                                    ipicker.show(1, 2, 5, MultiListener { item ->
+                                        println(item)
                                     })
                                 }
 
