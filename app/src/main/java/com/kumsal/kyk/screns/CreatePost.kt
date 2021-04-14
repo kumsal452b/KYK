@@ -50,6 +50,7 @@ import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
+import com.kumsal.kyk.interfaces.myObservableCallBack
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
 import com.nguyenhoanglam.imagepicker.model.Image
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
@@ -204,8 +205,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode==100){
+            uriList.clear()
             if(resultCode== RESULT_OK){
-                uriList = ImagePicker.getImages(data) as ObservableArrayList<Image>
+                for (item in ImagePicker.getImages(data)){
+                    uriList.add(item)
+                }
 //                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
                 for (a in uriList){
                     val file=File(a.path)
@@ -438,7 +442,46 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
-        uriList.addOnListChangedCallback(object:ObservableList.OnListChangedCallback<Uri>{})
+        uriList.addOnListChangedCallback(object:ObservableList.OnListChangedCallback<ObservableList<Uri>>(){
+            override fun onChanged(sender: ObservableList<Uri>?) {
+
+            }
+
+            override fun onItemRangeChanged(
+                sender: ObservableList<Uri>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+                if (itemCount>0){
+                    post_text_element.isEnabled=true
+                }
+            }
+
+            override fun onItemRangeInserted(
+                sender: ObservableList<Uri>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+
+            }
+
+            override fun onItemRangeMoved(
+                sender: ObservableList<Uri>?,
+                fromPosition: Int,
+                toPosition: Int,
+                itemCount: Int
+            ) {
+
+            }
+
+            override fun onItemRangeRemoved(
+                sender: ObservableList<Uri>?,
+                positionStart: Int,
+                itemCount: Int
+            ) {
+
+            }
+        })
         //Test section
         secure_initial()
         select_image.setOnClickListener {
@@ -509,18 +552,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 
 
     }
-
-    private fun openCamara() {
-
-//            var deneme=TedRxBottomPicker.with(this@CreatePost)
-//            .setPeekHeight(1600)
-//            .showTitle(false)
-//            .setCompleteButtonText("Done")
-//            .setEmptySelectionText("No Select")
-//            .setSelectedUriList(uriList)
-//            .show()
-    }
-
     override fun onItemClickListener(position: Int) {
         mAllFileDataModel.removeAt(position)
         mlistAdapter.notifyDataSetChanged()
