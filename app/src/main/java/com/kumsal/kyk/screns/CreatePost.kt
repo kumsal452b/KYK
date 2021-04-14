@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Config
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -184,6 +185,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                     .setDirectoryName("Image Picker")
                     .setMultipleMode(true)
                     .setShowNumberIndicator(true)
+                    .setCameraOnly(true)
+                    .setRootDirectoryName(ROOT_DIR_DCIM)
                     .setMaxSize(10)
                     .setLimitMessage("You can select up to 10 images")
                     .setSelectedImages(uriList)
@@ -200,9 +203,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode==100){
             if(resultCode== RESULT_OK){
-                val getdata: ArrayList<Image> = ImagePicker.getImages(data)
+                uriList = ImagePicker.getImages(data)
 //                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
-                for (a in getdata){
+                for (a in uriList){
                     val file=File(a.path)
                     val uri=Uri.fromFile(file)
                     val theModel=newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
@@ -484,6 +487,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                                         .setFolderTitle("Album")
                                         .setDirectoryName("Image Picker")
                                         .setMultipleMode(true)
+                                        .setRootDirectoryName(ROOT_DIR_DCIM)
                                         .setShowNumberIndicator(true)
                                         .setMaxSize(10)
                                         .setLimitMessage("You can select up to 10 images")
