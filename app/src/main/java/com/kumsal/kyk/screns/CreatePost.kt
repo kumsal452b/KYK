@@ -22,6 +22,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableList
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -92,7 +94,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var mthmbImageList:java.util.ArrayList<String>
     private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
-    private lateinit var uriList: java.util.ArrayList<Image>
+    private lateinit var uriList:ObservableArrayList<Image>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -185,7 +187,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                     .setDirectoryName("Image Picker")
                     .setMultipleMode(true)
                     .setShowNumberIndicator(true)
-                    .setCameraOnly(true)
                     .setRootDirectoryName(ROOT_DIR_DCIM)
                     .setMaxSize(10)
                     .setLimitMessage("You can select up to 10 images")
@@ -193,6 +194,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                     .setShowCamera(true)
                     .setRequestCode(100)
                     .start()
+
 
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
@@ -203,7 +205,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode==100){
             if(resultCode== RESULT_OK){
-                uriList = ImagePicker.getImages(data)
+                uriList = ImagePicker.getImages(data) as ObservableArrayList<Image>
 //                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
                 for (a in uriList){
                     val file=File(a.path)
@@ -385,7 +387,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                share_button.isEnabled = post_text_element.length() > 0
+                share_button.isEnabled = post_text_element.length() > 0 || uriList.size>0
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -412,7 +414,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         mImageListRecyclerView.setHasFixedSize(true)
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        uriList=ArrayList()
+        uriList= ObservableArrayList()
         mImageListView = ArrayList()
         mthmbImageList= ArrayList()
         mAllFileDataModel= ArrayList()
@@ -436,6 +438,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
+        uriList.addOnListChangedCallback(object:ObservableList.OnListChangedCallback<Uri>{})
         //Test section
         secure_initial()
         select_image.setOnClickListener {
