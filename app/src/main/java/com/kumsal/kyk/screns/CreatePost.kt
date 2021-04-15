@@ -95,7 +95,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var mthmbImageList:java.util.ArrayList<String>
     private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
-    private lateinit var uriList:ObservableArrayList<Image>
+    private lateinit var uriList:ArrayList<Image>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -207,8 +207,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         if (requestCode==100){
             uriList.clear()
             if(resultCode== RESULT_OK){
-                for (item in ImagePicker.getImages(data)){
-                    uriList.add(item)
+                uriList=ImagePicker.getImages(data)
+                if (uriList.size>0){
+                    share_button.isEnabled=true
                 }
 //                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
                 for (a in uriList){
@@ -442,46 +443,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         //secure initialize section
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
-        uriList.addOnListChangedCallback(object:ObservableList.OnListChangedCallback<ObservableList<Uri>>(){
-            override fun onChanged(sender: ObservableList<Uri>?) {
 
-            }
-
-            override fun onItemRangeChanged(
-                sender: ObservableList<Uri>?,
-                positionStart: Int,
-                itemCount: Int
-            ) {
-                if (itemCount>0){
-                    post_text_element.isEnabled=true
-                }
-            }
-
-            override fun onItemRangeInserted(
-                sender: ObservableList<Uri>?,
-                positionStart: Int,
-                itemCount: Int
-            ) {
-
-            }
-
-            override fun onItemRangeMoved(
-                sender: ObservableList<Uri>?,
-                fromPosition: Int,
-                toPosition: Int,
-                itemCount: Int
-            ) {
-
-            }
-
-            override fun onItemRangeRemoved(
-                sender: ObservableList<Uri>?,
-                positionStart: Int,
-                itemCount: Int
-            ) {
-
-            }
-        })
         //Test section
         secure_initial()
         select_image.setOnClickListener {
