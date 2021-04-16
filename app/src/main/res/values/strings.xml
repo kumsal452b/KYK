@@ -59,4 +59,5 @@
     <string name="connection">Connection</string>
     <string name="an_error">An error occurred</string>
     <string name="checkInternet">Please check internet connection</string>
+    <string name="success">Success</string>
 </resources>
