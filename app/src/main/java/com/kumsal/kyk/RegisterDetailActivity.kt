@@ -123,15 +123,16 @@ class RegisterDetailActivity : AppCompatActivity() {
 
                         getImagePath(object : LoadImage {
                             override fun getImagePath(path: String, path2: String) {
-                                WaitDialog.dismiss()
                                 var time=Timestamp.now()
                                 var theUserForPush=UsersModel(theEmail,theName,theUserNames,path2,time,path)
+                                theUserForPush.theId=currId
                                 theUserForPush.toMap()
                                 mFstoreDb.collection("Users").document(currId).set(theUserForPush).addOnSuccessListener(
                                     OnSuccessListener<Void> {
+                                        WaitDialog.dismiss()
                                         makeText(
                                             this@RegisterDetailActivity,
-                                            "Succec",
+                                            getString(R.string.success),
                                             Toast.LENGTH_LONG
                                         ).show()
                                         val intent: Intent = Intent(applicationContext, MainActivity::class.java)
@@ -139,6 +140,7 @@ class RegisterDetailActivity : AppCompatActivity() {
                                         startActivity(intent)
                                         this@RegisterDetailActivity.finish()
                                     }).addOnFailureListener(OnFailureListener {
+                                    WaitDialog.dismiss()
                                     makeText(
                                         this@RegisterDetailActivity,
                                         it.localizedMessage,
