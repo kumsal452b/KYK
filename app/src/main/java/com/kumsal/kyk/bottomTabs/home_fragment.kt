@@ -133,7 +133,8 @@ class home_fragment : Fragment(),PostClick {
         dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
         dataMapForUser.put("postOfLiked",FieldValue.arrayUnion(theClickPost.id))
         var task=mFsPostDb?.collection("Post")?.document(theClickPost.id!!)?.set(dataMap, SetOptions.merge())
-        var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(dataMapForUser)
+        var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(dataMapForUser,
+            SetOptions.merge())
         task?.addOnCompleteListener { OnCompleteListener<Void>{
             if (it.isSuccessful){
                 if (taskForUsers?.isSuccessful!!){
