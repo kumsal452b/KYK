@@ -6,6 +6,7 @@ import com.google.firebase.Timestamp
 import java.util.ArrayList
 
 class post_model{
+    var id:String?=null
     var name :String?=null
     var username :String?=null
     var pc :String?=null
@@ -40,4 +41,9 @@ class post_model{
         this.likes = likes
         this.slider_adapter=slider_adapter
     }
+
+    constructor(id: String?) {
+        this.id = id
+    }
+
 }
