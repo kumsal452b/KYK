@@ -8,14 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
+import com.kumsal.kyk.Globals
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
@@ -122,6 +126,17 @@ class home_fragment : Fragment(),PostClick {
 
     override fun favClick(position: Int) {
         var theClickPost=post_list.get(position)
+        var dataMap = HashMap<String, Any>()
+        var dataMapForUser = HashMap<String, Any>()
+        dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
+        dataMapForUser.put("postOfLiked")
+        var task=mFsPostDb?.collection("Post")?.document(theClickPost.id!!)?.set(dataMap, SetOptions.merge())
+        var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!).set()
+        task?.addOnCompleteListener { OnCompleteListener<Void>{
+            if (it.isSuccessful){
+
+            }
+        } }
         
     }
 
