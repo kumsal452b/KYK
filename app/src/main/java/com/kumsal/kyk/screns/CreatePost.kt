@@ -196,7 +196,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                     .setRequestCode(100)
                     .start()
 
-
             } else {
                 Toast.makeText(this, getString(R.string.galery_perm), Toast.LENGTH_LONG).show()
             }
@@ -417,6 +416,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         mStorageReference=FirebaseStorage.getInstance().getReference()
         mImageListRecyclerView = findViewById(R.id.activity_create_post_imageSelected)
         mImageListRecyclerView.setHasFixedSize(true)
+        
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
 
         uriList= ObservableArrayList()
