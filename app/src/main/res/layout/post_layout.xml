@@ -155,7 +155,7 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/post_layout_imageView">
 
-            <ImageButton
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/post_layout_favorite"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -163,7 +163,8 @@
                 android:layout_marginStart="5dp"
                 android:background="#00FFFFFF"
                 android:scaleType="fitXY"
-                android:src="@drawable/favorite" />
+                app:lottie_imageAssetsFolder="@assests/likes.json"
+                />
 
             <TextView
                 android:id="@+id/post_layout_favorite_count"
