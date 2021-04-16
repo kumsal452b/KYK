@@ -163,7 +163,7 @@
                 android:layout_marginStart="5dp"
                 android:background="#00FFFFFF"
                 android:scaleType="fitXY"
-                app:lottie_imageAssetsFolder="@assests/likes.json"
+                app:lottie_imageAssetsFolder="@assets/likes.json"
                 />
 
             <TextView
