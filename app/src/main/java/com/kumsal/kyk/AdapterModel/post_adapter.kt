@@ -16,6 +16,7 @@ import com.hendraanggrian.appcompat.widget.SocialEditText
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
+import com.sackcentury.shinebuttonlib.ShineButton
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.ArrayList
@@ -35,7 +36,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var username: TextView = itemView.findViewById(R.id.post_layout_username)
         var since: TextView = itemView.findViewById(R.id.post_layout_sinceTime)
         var expanded: ImageButton = itemView.findViewById(R.id.post_layout_expanded)
-        var favorite: LottieAnimationView = itemView.findViewById(R.id.post_layout_favorite)
+        var favorite: ShineButton = itemView.findViewById(R.id.post_layout_favorite)
         var favoriteCount: TextView = itemView.findViewById(R.id.post_layout_favorite_count)
         var commit: ImageButton = itemView.findViewById(R.id.post_layout_comment)
         var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
