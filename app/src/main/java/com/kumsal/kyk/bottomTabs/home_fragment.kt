@@ -118,6 +118,7 @@ class home_fragment : Fragment(),PostClick {
     }
 
     override fun favClick(position: Int) {
+        var theC
         
     }
 
