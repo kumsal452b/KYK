@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +24,7 @@ import com.kumsal.kyk.Globals
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
+import java.time.Duration
 import kotlin.collections.ArrayList
 
 
@@ -129,12 +131,20 @@ class home_fragment : Fragment(),PostClick {
         var dataMap = HashMap<String, Any>()
         var dataMapForUser = HashMap<String, Any>()
         dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
-        dataMapForUser.put("postOfLiked")
+        dataMapForUser.put("postOfLiked",FieldValue.arrayUnion(theClickPost.id))
         var task=mFsPostDb?.collection("Post")?.document(theClickPost.id!!)?.set(dataMap, SetOptions.merge())
-        var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!).set()
+        var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(dataMapForUser)
         task?.addOnCompleteListener { OnCompleteListener<Void>{
             if (it.isSuccessful){
+                if (taskForUsers?.isSuccessful!!){
 
+
+                }else{
+                    Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
+                }
+            }
+            else{
+                Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
             }
         } }
         

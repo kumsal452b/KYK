@@ -58,4 +58,5 @@
     <string name="problem_found">Problem found</string>
     <string name="connection">Connection</string>
     <string name="an_error">An error occurred</string>
+    <string name="checkInternet">Please check internet connection</string>
 </resources>
