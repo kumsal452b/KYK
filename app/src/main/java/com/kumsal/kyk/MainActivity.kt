@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var fadeIn:Animation?=null
     var fadeOut:Animation?=null
 
+
     override fun onCreate(savedInstanceState: Bundle?)  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -107,6 +108,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
             else
             println("lost")
         }
+        var stateOfInternet:Boolean?=null
     }
 
     fun registerNetworkBroadcastForNougat() {
@@ -204,6 +206,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
             }
         }
+        stateOfInternet=false
         fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
         fadeOut = AnimationUtils.loadAnimation(this,R.anim.fade_out)
         fadeIn?.setRepeatCount(1)
@@ -372,6 +375,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     }
 
     override fun isOnline(value: Boolean) {
+        stateOfInternet=value
         if (value){
             connectionState.startAnimation(fadeIn)
             connectionState.text="Connection"

@@ -1,10 +1,12 @@
 package com.kumsal.kyk.bottomTabs
 
 import android.content.BroadcastReceiver
+import android.content.ContentValues
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.BaseColumns
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,10 +28,12 @@ import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
+import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.checkInternet
+import com.kumsal.voice_newspaper.DbElements
 import java.time.Duration
 import kotlin.collections.ArrayList
 
@@ -51,6 +55,15 @@ class home_fragment : Fragment(),PostClick {
 
     //Broadcast receiver
     var broadCastReceiver: BroadcastReceiver? = null
+
+    object FeedReaderContract {
+        // Table contents are grouped together in an anonymous object.
+        object FeedEntry : BaseColumns {
+            const val TABLE_NAME="likes"
+            const val COLUMN_NAME_UID = "uid"
+            const val COLUMN_NAME_PID = "pid"
+        }
+    }
 
     //
 //    lateinit var adapter11: FirebaseRecyclerAdapter<post_model, Post>
@@ -80,8 +93,6 @@ class home_fragment : Fragment(),PostClick {
             getPostValue()
 //            recyclerView.adapter=adapter11
         }
-        broadCastReceiver = NetworkChangeReceiver(this)
-        registerNetworkBroadcastForNougat()
         return view
     }
 
@@ -138,8 +149,8 @@ class home_fragment : Fragment(),PostClick {
     }
 
     override fun favClick(position: Int) {
-        if(){
-            var theClickPost=post_list.get(position)
+        var theClickPost=post_list.get(position)
+        if(MainActivity.stateOfInternet!!){
             var dataMap = HashMap<String, Any>()
             var dataMapForUser = HashMap<String, Any>()
             dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
@@ -160,6 +171,14 @@ class home_fragment : Fragment(),PostClick {
                     Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
                 }
             } }
+        }else{
+            var theDB=DbElements(requireContext(),1,"likes")
+            var writeElement=theDB.writableDatabase
+            val values = ContentValues().apply {
+                put(FeedReaderContract.FeedEntry.COLUMN_NAME_UID, Globals.ınstance?.uid)
+                put(FeedReaderContract.FeedEntry.COLUMN_NAME_PID,theClickPost.id)
+            }
+            writeElement.insert(FeedReaderContract.FeedEntry.TABLE_NAME,null,values)
         }
         
     }
@@ -171,31 +190,5 @@ class home_fragment : Fragment(),PostClick {
     override fun expandClick(position: Int) {
 
     }
-    fun isOnlineOnInternet(theCheckElement:checkInternet){
 
-        theCheckElement.isOnline()
-    }
-    fun registerNetworkBroadcastForNougat() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            context?.registerReceiver(
-                broadCastReceiver,
-                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-            )
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context?.registerReceiver(
-                broadCastReceiver,
-                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-            )
-        }
-    }
-
-    protected fun unregisterNetworkChanges() {
-        try {
-            context?.unregisterReceiver(broadCastReceiver)
-        } catch (e: IllegalArgumentException) {
-            e.printStackTrace()
-        }
-    }
 }
