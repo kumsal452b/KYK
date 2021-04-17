@@ -166,7 +166,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         }
     }
 
-
     private fun initializeComponent() {
         toolbar = findViewById(R.id.main_activity_toolbar)
         mViewPager = findViewById(R.id.main_activity_pager_view)

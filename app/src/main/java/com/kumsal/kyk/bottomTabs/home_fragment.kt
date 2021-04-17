@@ -1,5 +1,9 @@
 package com.kumsal.kyk.bottomTabs
 
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,9 +25,11 @@ import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.Globals
+import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
+import com.kumsal.kyk.interfaces.checkInternet
 import java.time.Duration
 import kotlin.collections.ArrayList
 
@@ -42,6 +48,9 @@ class home_fragment : Fragment(),PostClick {
 
     //reccler
     private lateinit var recyclerView: RecyclerView
+
+    //Broadcast receiver
+    var broadCastReceiver: BroadcastReceiver? = null
 
     //
 //    lateinit var adapter11: FirebaseRecyclerAdapter<post_model, Post>
@@ -71,6 +80,8 @@ class home_fragment : Fragment(),PostClick {
             getPostValue()
 //            recyclerView.adapter=adapter11
         }
+        broadCastReceiver = NetworkChangeReceiver(this)
+        registerNetworkBroadcastForNougat()
         return view
     }
 
@@ -160,5 +171,31 @@ class home_fragment : Fragment(),PostClick {
     override fun expandClick(position: Int) {
 
     }
-    fun isOnlineOnInternet()
+    fun isOnlineOnInternet(theCheckElement:checkInternet){
+
+        theCheckElement.isOnline()
+    }
+    fun registerNetworkBroadcastForNougat() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            context?.registerReceiver(
+                broadCastReceiver,
+                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            )
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            context?.registerReceiver(
+                broadCastReceiver,
+                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+            )
+        }
+    }
+
+    protected fun unregisterNetworkChanges() {
+        try {
+            context?.unregisterReceiver(broadCastReceiver)
+        } catch (e: IllegalArgumentException) {
+            e.printStackTrace()
+        }
+    }
 }
