@@ -52,7 +52,8 @@ import me.ibrahimsn.lib.SmoothBottomBar
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickListener,checkInternet {
+class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickListener,
+    checkInternet {
 
     private var toolbar: Toolbar? = null
     private var mViewPager: ViewPager? = null
@@ -81,19 +82,20 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
 
-    var thread=Thread()
-    var thread2=Thread()
+    var thread = Thread()
+    var thread2 = Thread()
+
     //Image send element
     var imageUri = ""
     var userId = ""
     var thmbImageUri = ""
     var networkChangeReceiver: NetworkChangeReceiver? = null
     var broadCastReceiver: BroadcastReceiver? = null
-    var fadeIn:Animation?=null
-    var fadeOut:Animation?=null
+    var fadeIn: Animation? = null
+    var fadeOut: Animation? = null
 
 
-    override fun onCreate(savedInstanceState: Bundle?)  {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //initialzed
@@ -110,13 +112,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
     companion object {
         fun dialog(value: Boolean) {
-            if (value){
+            if (value) {
 
-            }
-            else
-            println("lost")
+            } else
+                println("lost")
         }
-        var stateOfInternet:Boolean?=null
+
+        var stateOfInternet: Boolean? = null
     }
 
     fun registerNetworkBroadcastForNougat() {
@@ -196,7 +198,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
         mFstoreUserDb = FirebaseFirestore.getInstance()
-        mFsPostDb= FirebaseFirestore.getInstance()
+        mFsPostDb = FirebaseFirestore.getInstance()
 
         userId = mUser?.uid.toString()
         Globals.ınstance?.uid = userId
@@ -215,9 +217,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
             }
         }
-        stateOfInternet=false
-        fadeIn = AnimationUtils.loadAnimation(this,R.anim.fade_in)
-        fadeOut = AnimationUtils.loadAnimation(this,R.anim.fade_out)
+        stateOfInternet = false
+        fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        fadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
         fadeIn?.setRepeatCount(1)
         fadeOut?.setRepeatCount(1)
         fadeOut?.setAnimationListener(object : Animation.AnimationListener {
@@ -246,7 +248,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
             }
         })
-        connectionState.visibility=View.VISIBLE
+        connectionState.visibility = View.VISIBLE
         connectionState.startAnimation(fadeOut)
 
     }
@@ -385,58 +387,68 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     }
 
     override fun isOnline(value: Boolean) {
-        stateOfInternet=value
-        if (value){
-            var theDbElement=DbElements(this,1,"likes")
-            var theDBReadElement=theDbElement.readableDatabase
-            var cursor=theDBReadElement.rawQuery("SELECT * from likes",null)
-            if (cursor.moveToFirst()){
-                while (cursor.moveToNext()){
-                    var dataMap = HashMap<String, Any>()
-                    var dataMapForUser = HashMap<String, Any>()
-                    dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(1)))
-                    dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(2)))
-                    var task=mFsPostDb?.collection("Post")?.document(cursor.getString(2))?.set(dataMap, SetOptions.merge())
-                    var taskForUsers=mFsPostDb?.collection("Users")?.document(cursor.getString(1))?.set(dataMapForUser,
-                        SetOptions.merge())
-                    task?.addOnCompleteListener { OnCompleteListener<Void>{
-                        if (it.isSuccessful){
-                            if (taskForUsers?.isSuccessful!!){
-                                var theDbWritable=theDbElement.writableDatabase
-                                var array=
-                                theDbWritable.delete(home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                "WHERE uid=?,pid=?", arrayOf(cursor.getString(1),cursor.getString(2)))
+        stateOfInternet = value
+        if (value) {
+            var theDbElement = DbElements(this, 1, "likes")
+            var theDBReadElement = theDbElement.readableDatabase
+            var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
+            cursor.moveToFirst()
+            var test=cursor.moveToNext()
+            while (cursor.moveToNext()) {
+                var dataMap = HashMap<String, Any>()
+                var dataMapForUser = HashMap<String, Any>()
+                dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(1)))
+                dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(2)))
+                var task = mFsPostDb?.collection("Post")?.document(cursor.getString(2))
+                    ?.set(dataMap, SetOptions.merge())
+                var taskForUsers =
+                    mFsPostDb?.collection("Users")?.document(cursor.getString(1))?.set(
+                        dataMapForUser,
+                        SetOptions.merge()
+                    )
+                task?.addOnCompleteListener {
+                    OnCompleteListener<Void> {
+                        if (it.isSuccessful) {
+                            if (taskForUsers?.isSuccessful!!) {
+                                var theDbWritable = theDbElement.writableDatabase
+                                var array =
+                                    theDbWritable.delete(
+                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                        "WHERE uid=?,pid=?",
+                                        arrayOf(cursor.getString(1), cursor.getString(2))
+                                    )
 
-                            }else{
-                                Log.d("Error","Error occures")
+                            } else {
+                                Log.d("Error", "Error occures")
                             }
+                        } else {
+                            Log.d("Error", "Error occures")
                         }
-                        else{
-                            Log.d("Error","Error occures")
-                        }
-                    } }
+                    }
                 }
             }
             connectionState.startAnimation(fadeIn)
-            connectionState.text="Connection"
+            connectionState.text = "Connection"
             connectionState.setBackgroundColor(Color.GREEN)
             setVisible(true)
-            var timer1=object:CountDownTimer(3000,1000){
+            var timer1 = object : CountDownTimer(3000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
+
                 override fun onFinish() {
                     connectionState.startAnimation(fadeOut)
                 }
             }
             timer1.start();
-        }else{
+        } else {
 
             connectionState.startAnimation(fadeIn)
-            connectionState.text="Connection Lose"
+            connectionState.text = "Connection Lose"
             connectionState.setBackgroundColor(Color.RED)
-            var timer2=object:CountDownTimer(3000,1000){
+            var timer2 = object : CountDownTimer(3000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
+
                 override fun onFinish() {
                     connectionState.startAnimation(fadeOut)
                 }
