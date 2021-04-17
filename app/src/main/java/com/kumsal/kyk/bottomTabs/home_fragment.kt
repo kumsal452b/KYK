@@ -180,7 +180,7 @@ class home_fragment : Fragment(),PostClick {
             }
             writeElement.insert(FeedReaderContract.FeedEntry.TABLE_NAME,null,values)
             Toast.makeText(context,getString(R.string.warnconnection),Toast.LENGTH_LONG)
-            
+
         }
         
     }

@@ -37,6 +37,7 @@ import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.checkInternet
 import com.kumsal.kyk.screns.CreatePost
 import com.kumsal.kyk.screns.StarterActivity
+import com.kumsal.voice_newspaper.DbElements
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import io.grpc.SynchronizationContext
@@ -377,6 +378,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     override fun isOnline(value: Boolean) {
         stateOfInternet=value
         if (value){
+            var theDbElement=DbElements(this,1,"likes")
+            var theDBReadElement=theDbElement.readableDatabase
+            theDBReadElement.query()
             connectionState.startAnimation(fadeIn)
             connectionState.text="Connection"
             connectionState.setBackgroundColor(Color.GREEN)
