@@ -380,7 +380,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         if (value){
             var theDbElement=DbElements(this,1,"likes")
             var theDBReadElement=theDbElement.readableDatabase
-            theDBReadElement.query()
+            theDBReadElement.rawQuery("SELECT * from likes",null,)
             connectionState.startAnimation(fadeIn)
             connectionState.text="Connection"
             connectionState.setBackgroundColor(Color.GREEN)
