@@ -12,27 +12,33 @@ import android.os.*
 import android.support.v4.media.session.PlaybackStateCompat
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.*
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
+import com.kumsal.kyk.bottomTabs.home_fragment
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.checkInternet
 import com.kumsal.kyk.screns.CreatePost
@@ -70,6 +76,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     private lateinit var username: TextView
     private lateinit var layout: LinearLayout
     lateinit var connectionState: TextView
+    private var mFsPostDb: FirebaseFirestore? = null
 
     var isOpen: Boolean = false
     var interPolator: OvershootInterpolator = OvershootInterpolator()
@@ -189,6 +196,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         val mUser1: FirebaseUser? = mAuth?.currentUser
         mUser = mUser1
         mFstoreUserDb = FirebaseFirestore.getInstance()
+        mFsPostDb= FirebaseFirestore.getInstance()
 
         userId = mUser?.uid.toString()
         Globals.ınstance?.uid = userId
@@ -238,8 +246,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
             }
         })
-        connectionState.visibility=View.VISIBLE;
+        connectionState.visibility=View.VISIBLE
         connectionState.startAnimation(fadeOut)
+
     }
 
     private fun initializeAnimation() {
@@ -380,7 +389,34 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         if (value){
             var theDbElement=DbElements(this,1,"likes")
             var theDBReadElement=theDbElement.readableDatabase
-            theDBReadElement.rawQuery("SELECT * from likes",null,)
+            var cursor=theDBReadElement.rawQuery("SELECT * from likes",null)
+            if (cursor.moveToFirst()){
+                while (cursor.moveToNext()){
+                    var dataMap = HashMap<String, Any>()
+                    var dataMapForUser = HashMap<String, Any>()
+                    dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(1)))
+                    dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(2)))
+                    var task=mFsPostDb?.collection("Post")?.document(cursor.getString(2))?.set(dataMap, SetOptions.merge())
+                    var taskForUsers=mFsPostDb?.collection("Users")?.document(cursor.getString(1))?.set(dataMapForUser,
+                        SetOptions.merge())
+                    task?.addOnCompleteListener { OnCompleteListener<Void>{
+                        if (it.isSuccessful){
+                            if (taskForUsers?.isSuccessful!!){
+                                var theDbWritable=theDbElement.writableDatabase
+                                var array=
+                                theDbWritable.delete(home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                "WHERE uid=?,pid=?", arrayOf(cursor.getString(1),cursor.getString(2)))
+
+                            }else{
+                                Log.d("Error","Error occures")
+                            }
+                        }
+                        else{
+                            Log.d("Error","Error occures")
+                        }
+                    } }
+                }
+            }
             connectionState.startAnimation(fadeIn)
             connectionState.text="Connection"
             connectionState.setBackgroundColor(Color.GREEN)
