@@ -127,27 +127,29 @@ class home_fragment : Fragment(),PostClick {
     }
 
     override fun favClick(position: Int) {
-        var theClickPost=post_list.get(position)
-        var dataMap = HashMap<String, Any>()
-        var dataMapForUser = HashMap<String, Any>()
-        dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
-        dataMapForUser.put("postOfLiked",FieldValue.arrayUnion(theClickPost.id))
-        var task=mFsPostDb?.collection("Post")?.document(theClickPost.id!!)?.set(dataMap, SetOptions.merge())
-        var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(dataMapForUser,
-            SetOptions.merge())
-        task?.addOnCompleteListener { OnCompleteListener<Void>{
-            if (it.isSuccessful){
-                if (taskForUsers?.isSuccessful!!){
+        if(){
+            var theClickPost=post_list.get(position)
+            var dataMap = HashMap<String, Any>()
+            var dataMapForUser = HashMap<String, Any>()
+            dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
+            dataMapForUser.put("postOfLiked",FieldValue.arrayUnion(theClickPost.id))
+            var task=mFsPostDb?.collection("Post")?.document(theClickPost.id!!)?.set(dataMap, SetOptions.merge())
+            var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(dataMapForUser,
+                SetOptions.merge())
+            task?.addOnCompleteListener { OnCompleteListener<Void>{
+                if (it.isSuccessful){
+                    if (taskForUsers?.isSuccessful!!){
 
 
-                }else{
+                    }else{
+                        Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
+                    }
+                }
+                else{
                     Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
                 }
-            }
-            else{
-                Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
-            }
-        } }
+            } }
+        }
         
     }
 
@@ -158,4 +160,5 @@ class home_fragment : Fragment(),PostClick {
     override fun expandClick(position: Int) {
 
     }
+    fun isOnlineOnInternet()
 }
