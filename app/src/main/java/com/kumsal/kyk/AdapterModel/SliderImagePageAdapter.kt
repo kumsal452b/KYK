@@ -45,7 +45,7 @@ class SliderImagePageAdapter : PagerAdapter {
         var itemView =
             mlayoutInflater?.inflate(R.layout.slider_image_for_post, container, false) as View
         var imageView = itemView.findViewById<ImageView>(R.id.slider_image_for_post_imageView)
-        val dip = 300f
+        val dip = 450f
         val r: Resources = Resources.getSystem()
         val px = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
