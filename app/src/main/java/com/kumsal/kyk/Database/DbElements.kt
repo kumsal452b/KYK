@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper
 class DbElements(context: Context, version: Int, dbName: String) : SQLiteOpenHelper(context, dbName, null, version) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        var create_Post_table = "CREATE table likes (content TEXT, " +
+        var create_Post_table = "CREATE table likes (" +
                 "uid TEXT," +
-                "pid TEXT," +
+                "pid TEXT" +
                 ");"
         db?.execSQL(create_Post_table)
     }
