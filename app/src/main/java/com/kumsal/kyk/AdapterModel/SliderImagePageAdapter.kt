@@ -52,7 +52,7 @@ class SliderImagePageAdapter : PagerAdapter {
             dip,
             r.displayMetrics
         )
-        Picasso.get().load(uriList?.get(position)).resize(px.toInt(), imageView.height).transform(CropSquareTransformation()).into(imageView)
+        Picasso.get().load(uriList?.get(position)).resize(px.toInt(), px.toInt()).transform(CropSquareTransformation()).into(imageView)
         container.addView(itemView)
         return itemView
     }
