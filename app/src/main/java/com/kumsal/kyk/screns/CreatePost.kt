@@ -254,7 +254,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             var filePathForThmn=mStorageReference.child("PostImageThmb").child(imagePath + ".jpg")
 
             val compressedImageFile = Compressor.compress(this@CreatePost, file) {
-                resolution(300, 300)
+                resolution(430, 430)
                 quality(80)
                 format(Bitmap.CompressFormat.JPEG)
             }
