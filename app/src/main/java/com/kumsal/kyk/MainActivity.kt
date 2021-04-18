@@ -26,6 +26,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -425,6 +426,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                         }
                     }
                 }
+                task?.addOnFailureListener(OnFailureListener {
+                    println(it.localizedMessage)
+                })
             }while (cursor.moveToNext())
 
             connectionState.startAnimation(fadeIn)
