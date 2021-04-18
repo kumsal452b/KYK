@@ -45,14 +45,14 @@ class SliderImagePageAdapter : PagerAdapter {
         var itemView =
             mlayoutInflater?.inflate(R.layout.slider_image_for_post, container, false) as View
         var imageView = itemView.findViewById<ImageView>(R.id.slider_image_for_post_imageView)
-        val dip = 450f
+        val dip = 430f
         val r: Resources = Resources.getSystem()
         val px = TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
             dip,
             r.displayMetrics
         )
-        Picasso.get().load(uriList?.get(position)).resize(px.toInt(), px.toInt()).transform(CropSquareTransformation()).into(imageView)
+        Picasso.get().load(uriList?.get(position)).resize(px.toInt(), imageView.height).transform(CropSquareTransformation()).into(imageView)
         container.addView(itemView)
         return itemView
     }
