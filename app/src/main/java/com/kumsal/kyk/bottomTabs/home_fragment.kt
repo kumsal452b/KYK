@@ -179,8 +179,7 @@ class home_fragment : Fragment(),PostClick {
                 put(FeedReaderContract.FeedEntry.COLUMN_NAME_PID,theClickPost.id)
             }
             writeElement.insert(FeedReaderContract.FeedEntry.TABLE_NAME,null,values)
-            Toast.makeText(context,getString(R.string.warnconnection),Toast.LENGTH_LONG)
-
+            Toast.makeText(context,getString(R.string.warnconnection),Toast.LENGTH_LONG).show()
         }
         
     }
