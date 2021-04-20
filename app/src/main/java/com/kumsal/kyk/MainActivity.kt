@@ -410,7 +410,22 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                             SetOptions.merge()
                         )
                     task?.addOnCompleteListener {
-                        println(it.isSuccessful)
+                        if (it.isSuccessful) {
+                            if (taskForUsers?.isSuccessful!!) {
+                                var theDbWritable = theDbElement.writableDatabase
+                                var array =
+                                    theDbWritable.delete(
+                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                        "WHERE uid=?,pid=?",
+                                        arrayOf(cursor.getString(0), cursor.getString(1))
+                                    )
+                                Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
+                            } else {
+                                Log.d("Error", taskForUsers.exception?.message!!)
+                            }
+                        } else {
+                            Log.d("Error", it.exception?.message!!)
+                        }
                     }
                     task?.addOnFailureListener(OnFailureListener {
                         println(it.localizedMessage)
