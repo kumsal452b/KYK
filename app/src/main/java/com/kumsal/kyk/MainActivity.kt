@@ -419,7 +419,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                                     var array =
                                         theDbWritable.delete(
                                             home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                            "WHERE uid=?,pid=?",
+                                            "uid=?,pid=?",
                                             arrayOf(cursor.getString(0), cursor.getString(1))
                                         )
                                     Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
