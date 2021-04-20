@@ -410,24 +410,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                             SetOptions.merge()
                         )
                     task?.addOnCompleteListener {
-                        OnCompleteListener<Void> {
-                            if (it.isSuccessful) {
-                                if (taskForUsers?.isSuccessful!!) {
-                                    var theDbWritable = theDbElement.writableDatabase
-                                    var array =
-                                        theDbWritable.delete(
-                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                            "WHERE uid=?,pid=?",
-                                            arrayOf(cursor.getString(1), cursor.getString(2))
-                                        )
-
-                                } else {
-                                    Log.d("Error", "Error occures")
-                                }
-                            } else {
-                                Log.d("Error", "Error occures")
-                            }
-                        }
+                        println(it.isSuccessful)
                     }
                     task?.addOnFailureListener(OnFailureListener {
                         println(it.localizedMessage)
