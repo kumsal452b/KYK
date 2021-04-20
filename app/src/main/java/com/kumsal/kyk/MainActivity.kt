@@ -390,47 +390,48 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     override fun isOnline(value: Boolean) {
         stateOfInternet = value
         if (value) {
-            var theDbElement = DbElements(this, 1, "likes")
-            var theDBReadElement = theDbElement.readableDatabase
-            var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
-            cursor.moveToFirst()
-            do{
-                var dataMap = HashMap<String, Any>()
-                var dataMapForUser = HashMap<String, Any>()
-                dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(0)))
-                dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(1)))
-                var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
-                    ?.set(dataMap, SetOptions.merge())
-                var taskForUsers =
-                    mFsPostDb?.collection("Users")?.document(cursor.getString(0))?.set(
-                        dataMapForUser,
-                        SetOptions.merge()
-                    )
-                task?.addOnCompleteListener {
-                    OnCompleteListener<Void> {
-                        if (it.isSuccessful) {
-                            if (taskForUsers?.isSuccessful!!) {
-                                var theDbWritable = theDbElement.writableDatabase
-                                var array =
-                                    theDbWritable.delete(
-                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                        "WHERE uid=?,pid=?",
-                                        arrayOf(cursor.getString(1), cursor.getString(2))
-                                    )
+//            var theDbElement = DbElements(this, 1, "likes")
+//            var theDBReadElement = theDbElement.readableDatabase
+//            var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
+//            cursor.moveToFirst()
+//            do{
+//                var dataMap = HashMap<String, Any>()
+//                var dataMapForUser = HashMap<String, Any>()
+//                dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(0)))
+//                dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(1)))
+//                var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
+//                    ?.set(dataMap, SetOptions.merge())
+//                var taskForUsers =
+//                    mFsPostDb?.collection("Users")?.document(cursor.getString(0))?.set(
+//                        dataMapForUser,
+//                        SetOptions.merge()
+//                    )
+//                task?.addOnCompleteListener {
+//                    OnCompleteListener<Void> {
+//                        if (it.isSuccessful) {
+//                            if (taskForUsers?.isSuccessful!!) {
+//                                var theDbWritable = theDbElement.writableDatabase
+//                                var array =
+//                                    theDbWritable.delete(
+//                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+//                                        "WHERE uid=?,pid=?",
+//                                        arrayOf(cursor.getString(1), cursor.getString(2))
+//                                    )
+//
+//                            } else {
+//                                Log.d("Error", "Error occures")
+//                            }
+//                        } else {
+//                            Log.d("Error", "Error occures")
+//                        }
+//                    }
+//                }
+//                task?.addOnFailureListener(OnFailureListener {
+//                    println(it.localizedMessage)
+//                })
+//            }while (cursor.moveToNext())
 
-                            } else {
-                                Log.d("Error", "Error occures")
-                            }
-                        } else {
-                            Log.d("Error", "Error occures")
-                        }
-                    }
-                }
-                task?.addOnFailureListener(OnFailureListener {
-                    println(it.localizedMessage)
-                })
-            }while (cursor.moveToNext())
-
+            println("is online funtion have runn")
             connectionState.startAnimation(fadeIn)
             connectionState.text = "Connection"
             connectionState.setBackgroundColor(Color.GREEN)
