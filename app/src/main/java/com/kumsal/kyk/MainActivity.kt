@@ -411,17 +411,21 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                         )
                     task?.addOnCompleteListener {
                         if (it.isSuccessful) {
-                            if (taskForUsers?.isSuccessful!!) {
-                                var theDbWritable = theDbElement.writableDatabase
-                                var array =
-                                    theDbWritable.delete(
-                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                        "WHERE uid=?,pid=?",
-                                        arrayOf(cursor.getString(0), cursor.getString(1))
-                                    )
-                                Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
-                            } else {
-                                Log.d("Error", taskForUsers.exception?.message!!)
+                            taskForUsers?.addOnFailureListener(OnFailureListener {
+                                Log.d("Error",it.localizedMessage)
+                            })?.addOnCompleteListener{
+                                if (it.isSuccessful!!) {
+                                    var theDbWritable = theDbElement.writableDatabase
+                                    var array =
+                                        theDbWritable.delete(
+                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                            "WHERE uid=?,pid=?",
+                                            arrayOf(cursor.getString(0), cursor.getString(1))
+                                        )
+                                    Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
+                                } else {
+                                    Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
+                                }
                             }
                         } else {
                             Log.d("Error", it.exception?.message!!)
