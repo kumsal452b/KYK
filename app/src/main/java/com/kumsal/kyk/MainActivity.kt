@@ -419,7 +419,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                                     var array =
                                         theDbWritable.delete(
                                             home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                            "uid=?,pid=?",
+                                            "uid=? AND pid=?",
                                             arrayOf(cursor.getString(0), cursor.getString(1))
                                         )
                                     Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
@@ -434,7 +434,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                     task?.addOnFailureListener(OnFailureListener {
                         println(it.localizedMessage)
                     })
-                    break
                 }while (cursor.moveToNext())
 
                 println("is online funtion have runn")
