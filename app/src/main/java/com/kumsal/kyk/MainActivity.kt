@@ -94,6 +94,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var broadCastReceiver: BroadcastReceiver? = null
     var fadeIn: Animation? = null
     var fadeOut: Animation? = null
+    var forbidDoubleCircle:Boolean=true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -387,78 +388,83 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         }
     }
 
+
     override fun isOnline(value: Boolean) {
         stateOfInternet = value
-        if (value) {
-//            var theDbElement = DbElements(this, 1, "likes")
-//            var theDBReadElement = theDbElement.readableDatabase
-//            var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
-//            cursor.moveToFirst()
-//            do{
-//                var dataMap = HashMap<String, Any>()
-//                var dataMapForUser = HashMap<String, Any>()
-//                dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(0)))
-//                dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(1)))
-//                var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
-//                    ?.set(dataMap, SetOptions.merge())
-//                var taskForUsers =
-//                    mFsPostDb?.collection("Users")?.document(cursor.getString(0))?.set(
-//                        dataMapForUser,
-//                        SetOptions.merge()
-//                    )
-//                task?.addOnCompleteListener {
-//                    OnCompleteListener<Void> {
-//                        if (it.isSuccessful) {
-//                            if (taskForUsers?.isSuccessful!!) {
-//                                var theDbWritable = theDbElement.writableDatabase
-//                                var array =
-//                                    theDbWritable.delete(
-//                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-//                                        "WHERE uid=?,pid=?",
-//                                        arrayOf(cursor.getString(1), cursor.getString(2))
-//                                    )
-//
-//                            } else {
-//                                Log.d("Error", "Error occures")
-//                            }
-//                        } else {
-//                            Log.d("Error", "Error occures")
-//                        }
-//                    }
-//                }
-//                task?.addOnFailureListener(OnFailureListener {
-//                    println(it.localizedMessage)
-//                })
-//            }while (cursor.moveToNext())
+        if (forbidDoubleCircle){
+            if (value) {
+                var theDbElement = DbElements(this, 1, "likes")
+                var theDBReadElement = theDbElement.readableDatabase
+                var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
+                cursor.moveToFirst()
+                do{
+                    var dataMap = HashMap<String, Any>()
+                    var dataMapForUser = HashMap<String, Any>()
+                    dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(0)))
+                    dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(1)))
+                    var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
+                        ?.set(dataMap, SetOptions.merge())
+                    var taskForUsers =
+                        mFsPostDb?.collection("Users")?.document(cursor.getString(0))?.set(
+                            dataMapForUser,
+                            SetOptions.merge()
+                        )
+                    task?.addOnCompleteListener {
+                        OnCompleteListener<Void> {
+                            if (it.isSuccessful) {
+                                if (taskForUsers?.isSuccessful!!) {
+                                    var theDbWritable = theDbElement.writableDatabase
+                                    var array =
+                                        theDbWritable.delete(
+                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                            "WHERE uid=?,pid=?",
+                                            arrayOf(cursor.getString(1), cursor.getString(2))
+                                        )
 
-            println("is online funtion have runn")
-            connectionState.startAnimation(fadeIn)
-            connectionState.text = "Connection"
-            connectionState.setBackgroundColor(Color.GREEN)
-            setVisible(true)
-            var timer1 = object : CountDownTimer(3000, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                }
+                                } else {
+                                    Log.d("Error", "Error occures")
+                                }
+                            } else {
+                                Log.d("Error", "Error occures")
+                            }
+                        }
+                    }
+                    task?.addOnFailureListener(OnFailureListener {
+                        println(it.localizedMessage)
+                    })
+                    break
+                }while (cursor.moveToNext())
 
-                override fun onFinish() {
-                    connectionState.startAnimation(fadeOut)
+                println("is online funtion have runn")
+                connectionState.startAnimation(fadeIn)
+                connectionState.text = "Connection"
+                connectionState.setBackgroundColor(Color.GREEN)
+                setVisible(true)
+                var timer1 = object : CountDownTimer(3000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                    }
+
+                    override fun onFinish() {
+//                    connectionState.startAnimation(fadeOut)
+                    }
                 }
+                timer1.start();
+            } else {
+
+                connectionState.startAnimation(fadeIn)
+                connectionState.text = "Connection Lose"
+                connectionState.setBackgroundColor(Color.RED)
+                var timer2 = object : CountDownTimer(3000, 1000) {
+                    override fun onTick(millisUntilFinished: Long) {
+                    }
+
+                    override fun onFinish() {
+                        connectionState.startAnimation(fadeOut)
+                    }
+                }
+                timer2.start()
             }
-            timer1.start();
-        } else {
-
-            connectionState.startAnimation(fadeIn)
-            connectionState.text = "Connection Lose"
-            connectionState.setBackgroundColor(Color.RED)
-            var timer2 = object : CountDownTimer(3000, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                }
-
-                override fun onFinish() {
-                    connectionState.startAnimation(fadeOut)
-                }
-            }
-            timer2.start()
+            forbidDoubleCircle=false
         }
     }
 
