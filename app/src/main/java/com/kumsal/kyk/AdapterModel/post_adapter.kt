@@ -25,7 +25,6 @@ import java.util.ArrayList
 class post_adapter(private var list: ArrayList<post_model>, private var context: Context) :
     RecyclerView.Adapter<post_adapter.postHolder>() {
     var thePostClick: PostClick? = null
-    var fSForUsers:FirebaseFirestore?=null
     fun setOnClickListener(thePostClick: PostClick) {
         this.thePostClick = thePostClick
     }
@@ -49,7 +48,6 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             commit.setOnClickListener(this)
             expanded.setOnClickListener(this)
             pagerView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-
                 override fun onPageScrollStateChanged(state: Int) {
                 }
 
