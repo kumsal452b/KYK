@@ -210,10 +210,10 @@ class home_fragment : Fragment(), PostClick {
 
     }
 
-    fun isPostClick(pid: String, theExistPostCheck: PostClick): Boolean {
-        mFsPostDb.document(pid).get().addOnFailureListener(OnFailureListener {
+    fun isPostClick(pid: String, theExistPostCheck: PostClick){
+        mFsPostDb?.document(pid)?.get()?.addOnFailureListener(OnFailureListener {
             Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
-        }).addOnCompleteListener {
+        })?.addOnCompleteListener {
             OnCompleteListener<DocumentSnapshot> {
                 var thePost = it.result?.toObject(post_model::class.java)
                 if (thePost?.likes?.contains(pid)!!)
