@@ -166,7 +166,9 @@ class home_fragment : Fragment(), PostClick {
                                     SliderImagePageAdapter(context, thePost.uImage)
                                 thePost.slider_adapter = sliderImagePageAdapter
                             }
-
+                            if (currentUserLikeList.contains(Globals.ınstance?.uid))
+                                thePost.hasLiked=true
+                            thePost.hasLiked=false
                             post_list.add(thePost)
                         }
                     }
