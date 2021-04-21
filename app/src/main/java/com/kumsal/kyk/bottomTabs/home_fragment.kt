@@ -133,7 +133,7 @@ class home_fragment : Fragment(), PostClick {
                         theGetElement.getUsers(
                             blockedList as ArrayList<String>,
                             blockerList as ArrayList<String>,
-                            useLinkList 
+                            useLinkList
                         )
                     }
             }?.addOnFailureListener {
@@ -152,10 +152,12 @@ class home_fragment : Fragment(), PostClick {
             getDeniedPerson(object : GetCenter<String> {
                 override fun getUsers(
                     blocked: java.util.ArrayList<String>,
-                    blocker: java.util.ArrayList<String>
+                    blocker: java.util.ArrayList<String>,
+                    currentUserLikeList: java.util.ArrayList<String>
                 ) {
                     for (doc in document) {
                         var thePost = doc.toObject(post_model::class.java)
+
                         thePost.id = doc.id
                         println(thePost.id)
                         if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
@@ -164,6 +166,7 @@ class home_fragment : Fragment(), PostClick {
                                     SliderImagePageAdapter(context, thePost.uImage)
                                 thePost.slider_adapter = sliderImagePageAdapter
                             }
+
                             post_list.add(thePost)
                         }
                     }

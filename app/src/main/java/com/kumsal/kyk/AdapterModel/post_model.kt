@@ -15,7 +15,7 @@ class post_model{
     var comments:Int?=null
     var likes:ArrayList<String>?=null
     var slider_adapter:SliderImagePageAdapter?=null
-
+    var hasLiked:Boolean?=null
     var uImageThmb:ArrayList<String>?=null
     var uImage:ArrayList<String>?=null
 
@@ -45,5 +45,10 @@ class post_model{
     constructor(id: String?) {
         this.id = id
     }
+
+    constructor(hasLiked: Boolean?) {
+        this.hasLiked = hasLiked
+    }
+
 
 }
