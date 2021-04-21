@@ -184,6 +184,10 @@ class home_fragment : Fragment(),PostClick {
         
     }
 
+    fun postIsClick(pid:Int):Boolean{
+
+    }
+
     override fun commClick(position: Int) {
 
     }
