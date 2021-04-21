@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -184,8 +185,15 @@ class home_fragment : Fragment(),PostClick {
         
     }
 
-    fun postIsClick(pid:Int):Boolean{
-
+    fun isPostClick(pid:String,theExistPostCheck:PostClick):Boolean{
+        mFsPostDb.document(pid).get().addOnFailureListener(OnFailureListener {
+            Log.d("Error in fav element", it.localizedMessage,it.fillInStackTrace())
+        }).addOnCompleteListener { OnCompleteListener<DocumentSnapshot>{
+            var thePost=it.result?.toObject(post_model::class.java)
+            if (thePost?.likes?.contains(pid)!!)
+                theExistPostCheck.isPostClick(true)
+            theExistPostCheck.isPostClick(false)
+        } }
     }
 
     override fun commClick(position: Int) {
