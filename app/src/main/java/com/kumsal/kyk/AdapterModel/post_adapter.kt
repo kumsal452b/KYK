@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.airbnb.lottie.LottieAnimationView
+import com.google.firebase.firestore.FirebaseFirestore
 import com.hendraanggrian.appcompat.widget.SocialEditText
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.R
@@ -24,6 +25,7 @@ import java.util.ArrayList
 class post_adapter(private var list: ArrayList<post_model>, private var context: Context) :
     RecyclerView.Adapter<post_adapter.postHolder>() {
     var thePostClick: PostClick? = null
+    var fSForUsers:FirebaseFirestore?=null
     fun setOnClickListener(thePostClick: PostClick) {
         this.thePostClick = thePostClick
     }
