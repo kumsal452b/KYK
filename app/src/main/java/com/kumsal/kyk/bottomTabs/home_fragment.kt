@@ -101,18 +101,41 @@ class home_fragment : Fragment(), PostClick {
     fun getDeniedPerson(theGetElement: GetCenter<String>) {
         mFsAuthDb?.collection("Users")?.document(mUser?.uid!!)?.get()
             ?.addOnSuccessListener { documents ->
-                var blockerList = documents["blockers"]
-                var blockedList = documents["blocked"]
+                mFsPostDb?.document(Globals.ınstance?.uid!!)?.get()
+                    ?.addOnSuccessListener { documentForLiked ->
 
-                if (blockerList == null)
-                    blockerList = ArrayList<String>()
-                if (blockedList == null)
-                    blockedList = ArrayList<String>()
-                theGetElement.getUsers(
-                    blockedList as ArrayList<String>,
-                    blockerList as ArrayList<String>
-                )
+                        var useLinkList = documentForLiked["likes'"]
+                        var blockerList = documents["blockers"]
+                        var blockedList = documents["blocked"]
 
+                        if (blockerList == null)
+                            blockerList = ArrayList<String>()
+                        if (blockedList == null)
+                            blockedList = ArrayList<String>()
+                        if (useLinkList == null)
+                            useLinkList = ArrayList<String>()
+                        theGetElement.getUsers(
+                            blockedList as ArrayList<String>,
+                            blockerList as ArrayList<String>,
+                            useLinkList as ArrayList<String>
+                        )
+                    }?.addOnFailureListener { exp->
+                        var useLinkList = ArrayList<String>()
+                        var blockerList = documents["blockers"]
+                        var blockedList = documents["blocked"]
+
+                        if (blockerList == null)
+                            blockerList = ArrayList<String>()
+                        if (blockedList == null)
+                            blockedList = ArrayList<String>()
+                        if (useLinkList == null)
+                            useLinkList = ArrayList<String>()
+                        theGetElement.getUsers(
+                            blockedList as ArrayList<String>,
+                            blockerList as ArrayList<String>,
+                            useLinkList 
+                        )
+                    }
             }?.addOnFailureListener {
                 Log.d("Home fragment", it.message!!)
             }
@@ -154,7 +177,7 @@ class home_fragment : Fragment(), PostClick {
         var theClickPost = post_list.get(position)
         if (MainActivity.stateOfInternet!!) {
             isPostClick(theClickPost.id!!, this)
-        }else{
+        } else {
             var theDB = DbElements(requireContext(), 1, "likes")
             var writeElement = theDB.writableDatabase
             val values = ContentValues().apply {
@@ -166,32 +189,25 @@ class home_fragment : Fragment(), PostClick {
         }
     }
 
-    override fun isPostClick(isExist: Boolean, pid: String,likeList:ArrayList<String>) {
-            if (!isExist){
-                var dataMap = HashMap<String, Any>()
-                var dataMapForUser = HashMap<String, Any>()
-                dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
-                dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(pid))
-                var task =
-                    mFsPostDb?.collection("Post")?.document(pid!!)?.set(dataMap, SetOptions.merge())
-                var taskForUsers =
-                    mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(
-                        dataMapForUser,
-                        SetOptions.merge()
-                    )
-                task?.addOnCompleteListener {
-                    OnCompleteListener<Void> {
-                        if (it.isSuccessful) {
-                            if (taskForUsers?.isSuccessful!!) {
+    override fun isPostClick(isExist: Boolean, pid: String, likeList: ArrayList<String>) {
+        if (!isExist) {
+            var dataMap = HashMap<String, Any>()
+            var dataMapForUser = HashMap<String, Any>()
+            dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
+            dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(pid))
+            var task =
+                mFsPostDb?.collection("Post")?.document(pid!!)?.set(dataMap, SetOptions.merge())
+            var taskForUsers =
+                mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(
+                    dataMapForUser,
+                    SetOptions.merge()
+                )
+            task?.addOnCompleteListener {
+                OnCompleteListener<Void> {
+                    if (it.isSuccessful) {
+                        if (taskForUsers?.isSuccessful!!) {
 
 
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    getString(R.string.checkInternet),
-                                    Toast.LENGTH_LONG
-                                )
-                            }
                         } else {
                             Toast.makeText(
                                 context,
@@ -199,26 +215,33 @@ class home_fragment : Fragment(), PostClick {
                                 Toast.LENGTH_LONG
                             )
                         }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            getString(R.string.checkInternet),
+                            Toast.LENGTH_LONG
+                        )
                     }
                 }
-            }else{
-                var theLikeList=ArrayList<String>()
-                theLikeList.addAll(likeList)
-                theLikeList.remove(pid)
-                mFsPostDb?.document(pid)?.update("likes",theLikeList)
             }
+        } else {
+            var theLikeList = ArrayList<String>()
+            theLikeList.addAll(likeList)
+            theLikeList.remove(pid)
+            mFsPostDb?.document(pid)?.update("likes", theLikeList)
+        }
 
     }
 
-    fun isPostClick(pid: String, theExistPostCheck: PostClick){
+    fun isPostClick(pid: String, theExistPostCheck: PostClick) {
         mFsPostDb?.document(pid)?.get()?.addOnFailureListener(OnFailureListener {
             Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
         })?.addOnCompleteListener {
             OnCompleteListener<DocumentSnapshot> {
                 var thePost = it.result?.toObject(post_model::class.java)
                 if (thePost?.likes?.contains(pid)!!)
-                    theExistPostCheck.isPostClick(true, pid,thePost.likes!!)
-                theExistPostCheck.isPostClick(false, pid,thePost.likes!!)
+                    theExistPostCheck.isPostClick(true, pid, thePost.likes!!)
+                theExistPostCheck.isPostClick(false, pid, thePost.likes!!)
             }
         }
     }
