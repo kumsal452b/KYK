@@ -39,7 +39,7 @@ import java.time.Duration
 import kotlin.collections.ArrayList
 
 
-class home_fragment : Fragment(),PostClick {
+class home_fragment : Fragment(), PostClick {
 
     private var mUser: FirebaseUser? = null
     private var mPostDb: DatabaseReference? = null
@@ -60,7 +60,7 @@ class home_fragment : Fragment(),PostClick {
     object FeedReaderContract {
         // Table contents are grouped together in an anonymous object.
         object FeedEntry : BaseColumns {
-            const val TABLE_NAME="likes"
+            const val TABLE_NAME = "likes"
             const val COLUMN_NAME_UID = "uid"
             const val COLUMN_NAME_PID = "pid"
         }
@@ -114,86 +114,113 @@ class home_fragment : Fragment(),PostClick {
                 )
 
             }?.addOnFailureListener {
-            Log.d("Home fragment", it.message!!)
-        }
+                Log.d("Home fragment", it.message!!)
+            }
     }
 
     fun getPostValue() {
-        var collectionReference = mFsPostDb?.collection("Post")?.orderBy("time",com.google.firebase.firestore.Query.Direction.DESCENDING)
+        var collectionReference = mFsPostDb?.collection("Post")
+            ?.orderBy("time", com.google.firebase.firestore.Query.Direction.DESCENDING)
         collectionReference?.get()?.addOnFailureListener(
-                OnFailureListener {
-                    Log.d("Home fragment", it.message!!)
-                }
-            )?.addOnSuccessListener { document ->
-                getDeniedPerson(object : GetCenter<String> {
-                    override fun getUsers(
-                        blocked: java.util.ArrayList<String>,
-                        blocker: java.util.ArrayList<String>
-                    ) {
-                        for (doc in document) {
-                            var thePost = doc.toObject(post_model::class.java)
-                            thePost.id = doc.id
-                            println(thePost.id)
-                            if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
-                                if (thePost.uImageThmb?.size!! > 0) {
-                                    var sliderImagePageAdapter =
-                                        SliderImagePageAdapter(context, thePost.uImage)
-                                    thePost.slider_adapter = sliderImagePageAdapter
-                                }
-                                post_list.add(thePost)
-                            }
-                        }
-                        adapter.notifyDataSetChanged()
-                    }
-                })
+            OnFailureListener {
+                Log.d("Home fragment", it.message!!)
             }
+        )?.addOnSuccessListener { document ->
+            getDeniedPerson(object : GetCenter<String> {
+                override fun getUsers(
+                    blocked: java.util.ArrayList<String>,
+                    blocker: java.util.ArrayList<String>
+                ) {
+                    for (doc in document) {
+                        var thePost = doc.toObject(post_model::class.java)
+                        thePost.id = doc.id
+                        println(thePost.id)
+                        if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
+                            if (thePost.uImageThmb?.size!! > 0) {
+                                var sliderImagePageAdapter =
+                                    SliderImagePageAdapter(context, thePost.uImage)
+                                thePost.slider_adapter = sliderImagePageAdapter
+                            }
+                            post_list.add(thePost)
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+            })
+        }
     }
 
     override fun favClick(position: Int) {
-        var theClickPost=post_list.get(position)
-        if(MainActivity.stateOfInternet!!){
-            var dataMap = HashMap<String, Any>()
-            var dataMapForUser = HashMap<String, Any>()
-            dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
-            dataMapForUser.put("postOfLiked",FieldValue.arrayUnion(theClickPost.id))
-            var task=mFsPostDb?.collection("Post")?.document(theClickPost.id!!)?.set(dataMap, SetOptions.merge())
-            var taskForUsers=mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(dataMapForUser,
-                SetOptions.merge())
-            task?.addOnCompleteListener { OnCompleteListener<Void>{
-                if (it.isSuccessful){
-                    if (taskForUsers?.isSuccessful!!){
-
-
-                    }else{
-                        Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
-                    }
-                }
-                else{
-                    Toast.makeText(context,getString(R.string.checkInternet),Toast.LENGTH_LONG)
-                }
-            } }
+        var theClickPost = post_list.get(position)
+        if (MainActivity.stateOfInternet!!) {
+            isPostClick(theClickPost.id!!, this)
         }else{
-            var theDB=DbElements(requireContext(),1,"likes")
-            var writeElement=theDB.writableDatabase
+            var theDB = DbElements(requireContext(), 1, "likes")
+            var writeElement = theDB.writableDatabase
             val values = ContentValues().apply {
                 put(FeedReaderContract.FeedEntry.COLUMN_NAME_UID, Globals.ınstance?.uid)
-                put(FeedReaderContract.FeedEntry.COLUMN_NAME_PID,theClickPost.id)
+                put(FeedReaderContract.FeedEntry.COLUMN_NAME_PID, theClickPost.id)
             }
-            writeElement.insert(FeedReaderContract.FeedEntry.TABLE_NAME,null,values)
-            Toast.makeText(context,getString(R.string.warnconnection),Toast.LENGTH_LONG).show()
+            writeElement.insert(FeedReaderContract.FeedEntry.TABLE_NAME, null, values)
+            Toast.makeText(context, getString(R.string.warnconnection), Toast.LENGTH_LONG).show()
         }
-        
     }
 
-    fun isPostClick(pid:String,theExistPostCheck:PostClick):Boolean{
+    override fun isPostClick(isExist: Boolean, pid: String,likeList:ArrayList<String>) {
+            if (!isExist){
+                var dataMap = HashMap<String, Any>()
+                var dataMapForUser = HashMap<String, Any>()
+                dataMap.put("likes", FieldValue.arrayUnion(Globals.ınstance?.uid))
+                dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(pid))
+                var task =
+                    mFsPostDb?.collection("Post")?.document(pid!!)?.set(dataMap, SetOptions.merge())
+                var taskForUsers =
+                    mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.set(
+                        dataMapForUser,
+                        SetOptions.merge()
+                    )
+                task?.addOnCompleteListener {
+                    OnCompleteListener<Void> {
+                        if (it.isSuccessful) {
+                            if (taskForUsers?.isSuccessful!!) {
+
+
+                            } else {
+                                Toast.makeText(
+                                    context,
+                                    getString(R.string.checkInternet),
+                                    Toast.LENGTH_LONG
+                                )
+                            }
+                        } else {
+                            Toast.makeText(
+                                context,
+                                getString(R.string.checkInternet),
+                                Toast.LENGTH_LONG
+                            )
+                        }
+                    }
+                }
+            }else{
+                var theLikeList=ArrayList<String>()
+                theLikeList.addAll(likeList)
+                theLikeList.remove(pid)
+                mFsPostDb?.document(pid)?.update("likes",theLikeList)
+            }
+
+    }
+
+    fun isPostClick(pid: String, theExistPostCheck: PostClick): Boolean {
         mFsPostDb.document(pid).get().addOnFailureListener(OnFailureListener {
-            Log.d("Error in fav element", it.localizedMessage,it.fillInStackTrace())
-        }).addOnCompleteListener { OnCompleteListener<DocumentSnapshot>{
-            var thePost=it.result?.toObject(post_model::class.java)
-            if (thePost?.likes?.contains(pid)!!)
-                theExistPostCheck.isPostClick(true)
-            theExistPostCheck.isPostClick(false)
-        } }
+            Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
+        }).addOnCompleteListener {
+            OnCompleteListener<DocumentSnapshot> {
+                var thePost = it.result?.toObject(post_model::class.java)
+                if (thePost?.likes?.contains(pid)!!)
+                    theExistPostCheck.isPostClick(true, pid,thePost.likes!!)
+                theExistPostCheck.isPostClick(false, pid,thePost.likes!!)
+            }
+        }
     }
 
     override fun commClick(position: Int) {
