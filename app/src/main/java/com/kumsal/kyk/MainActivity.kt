@@ -421,8 +421,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                                             theDbWritable.delete(
                                                 home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
                                                 "uid=? AND pid=?",
-                                                arrayOf(cursor.getString(0),
-                                                    cursor.getString(1))
+                                                arrayOf(cursor.getString(cursor.getColumnIndex("uid")),
+                                                    cursor.getString(cursor.getColumnIndex("pid")))
                                             )
                                         Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
                                     } else {
