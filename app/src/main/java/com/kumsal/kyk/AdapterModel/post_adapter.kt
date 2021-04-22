@@ -1,6 +1,7 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
+import android.graphics.Color
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -71,6 +72,16 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             name.setText(model.name)
 //            since.setText(model.time!!.nanoseconds)
             username.setText(model.username)
+
+            if (model.hasLiked!!){
+                favorite.setBtnColor(Color.RED);
+                favorite.setBtnFillColor(Color.GRAY)
+                favorite.setAllowRandomColor(true)
+            }else{
+                favorite.setBtnColor(Color.GRAY);
+                favorite.setBtnFillColor(Color.RED)
+                favorite.setAllowRandomColor(true)
+            }
             if (model.slider_adapter!=null){
                 pagerView.visibility=View.VISIBLE
                 pagerItemCountForImage.visibility=View.VISIBLE
