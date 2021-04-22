@@ -35,6 +35,7 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.kumsal.kyk.AdapterModel.RemovedItemOnDatabaseModel
 import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
@@ -51,6 +52,7 @@ import io.grpc.SynchronizationContext
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickListener,
@@ -96,7 +98,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var fadeIn: Animation? = null
     var fadeOut: Animation? = null
     var forbidDoubleCircle: Boolean = true
-    var deletedDataStorageOnSQL
+    var deletedDataStorageOnSQL:ArrayList<RemovedItemOnDatabaseModel>?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -212,6 +214,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         actionBarDrawerToggle?.drawerArrowDrawable?.color = Color.WHITE
         mDrawerLayout?.addDrawerListener(actionBarDrawerToggle!!)
         actionBarDrawerToggle?.syncState()
+
+        deletedDataStorageOnSQL= ArrayList()
 
         mViewPager?.adapter = sectionPagerAdapter
         mBottomBar?.onItemSelectedListener = this
@@ -414,34 +418,39 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                                 dataMapForUser,
                                 SetOptions.merge()
                             )
-                        task?.addOnCompleteListener {
-                            if (it.isSuccessful) {
-                                taskForUsers?.addOnFailureListener(OnFailureListener {
-                                    Log.d("Error", it.localizedMessage)
-                                })?.addOnCompleteListener {
-                                    if (it.isSuccessful!!) {
-                                        var test=cursor.getColumnIndex("uid")
-                                        var theDbWritable = theDbElement.writableDatabase
-                                        var theUID = cursor.getString(test)
-                                        var thePID = cursor.getString(cursor.getColumnIndex("pid"))
-                                        theDbWritable.delete(
-                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                            "uid=? AND pid=?",
-                                            arrayOf(theUID,thePID)
-                                        )
-                                        Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
-                                            .show()
-                                    } else {
-                                        Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
-                                    }
-                                }
-                            } else {
-                                Log.d("Error", it.exception?.message!!)
-                            }
-                        }
-                        task?.addOnFailureListener(OnFailureListener {
-                            println(it.localizedMessage)
-                        })
+                        var test=cursor.getColumnIndex("uid")
+                        var theDbWritable = theDbElement.writableDatabase
+                        var theUID = cursor.getString(test)
+                        var thePID = cursor.getString(cursor.getColumnIndex("pid"))
+
+//                        task?.addOnCompleteListener {
+//                            if (it.isSuccessful) {
+//                                taskForUsers?.addOnFailureListener(OnFailureListener {
+//                                    Log.d("Error", it.localizedMessage)
+//                                })?.addOnCompleteListener {
+//                                    if (it.isSuccessful!!) {
+//                                        var test=cursor.getColumnIndex("uid")
+//                                        var theDbWritable = theDbElement.writableDatabase
+//                                        var theUID = cursor.getString(test)
+//                                        var thePID = cursor.getString(cursor.getColumnIndex("pid"))
+//                                        theDbWritable.delete(
+//                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+//                                            "uid=? AND pid=?",
+//                                            arrayOf(theUID,thePID)
+//                                        )
+//                                        Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
+//                                            .show()
+//                                    } else {
+//                                        Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
+//                                    }
+//                                }
+//                            } else {
+//                                Log.d("Error", it.exception?.message!!)
+//                            }
+//                        }
+//                        task?.addOnFailureListener(OnFailureListener {
+//                            println(it.localizedMessage)
+//                        })
                     } while (cursor.moveToNext())
                 }
 
