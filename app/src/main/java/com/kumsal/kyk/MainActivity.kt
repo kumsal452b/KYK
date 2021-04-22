@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var broadCastReceiver: BroadcastReceiver? = null
     var fadeIn: Animation? = null
     var fadeOut: Animation? = null
-    var forbidDoubleCircle:Boolean=true
+    var forbidDoubleCircle: Boolean = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -391,18 +391,21 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 
     override fun isOnline(value: Boolean) {
         stateOfInternet = value
-        if (forbidDoubleCircle){
+        if (forbidDoubleCircle) {
             if (value) {
                 var theDbElement = DbElements(this, 1, "likes")
                 var theDBReadElement = theDbElement.readableDatabase
                 var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
                 cursor.moveToFirst()
-                if (cursor.count>0 && cursor!=null){
-                    do{
+                if (cursor.count > 0 && cursor != null) {
+                    do {
                         var dataMap = HashMap<String, Any>()
                         var dataMapForUser = HashMap<String, Any>()
                         dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(0)))
-                        dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(1)))
+                        dataMapForUser.put(
+                            "postOfLiked",
+                            FieldValue.arrayUnion(cursor.getString(1))
+                        )
                         var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
                             ?.set(dataMap, SetOptions.merge())
                         var taskForUsers =
@@ -413,18 +416,19 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                         task?.addOnCompleteListener {
                             if (it.isSuccessful) {
                                 taskForUsers?.addOnFailureListener(OnFailureListener {
-                                    Log.d("Error",it.localizedMessage)
-                                })?.addOnCompleteListener{
+                                    Log.d("Error", it.localizedMessage)
+                                })?.addOnCompleteListener {
                                     if (it.isSuccessful!!) {
                                         var theDbWritable = theDbElement.writableDatabase
-                                        var array =
-                                            theDbWritable.delete(
-                                                home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                                "uid=? AND pid=?",
-                                                arrayOf(cursor.getString(cursor.getColumnIndex("uid")),
-                                                    cursor.getString(cursor.getColumnIndex("pid")))
-                                            )
-                                        Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
+                                        var theUID = cursor.getString(cursor.getColumnIndex("uid"))
+                                        var thePID = cursor.getString(cursor.getColumnIndex("pid"))
+                                        theDbWritable.delete(
+                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                            "uid=? AND pid=?",
+                                            arrayOf(theUID,thePID)
+                                        )
+                                        Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
+                                            .show()
                                     } else {
                                         Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
                                     }
@@ -436,7 +440,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                         task?.addOnFailureListener(OnFailureListener {
                             println(it.localizedMessage)
                         })
-                    }while (cursor.moveToNext())
+                    } while (cursor.moveToNext())
                 }
 
                 println("is online funtion have runn")
@@ -468,7 +472,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                 }
                 timer2.start()
             }
-            forbidDoubleCircle=false
+            forbidDoubleCircle = false
         }
     }
 
