@@ -27,6 +27,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var fadeIn: Animation? = null
     var fadeOut: Animation? = null
     var forbidDoubleCircle: Boolean = true
-    var deletedDataStorageOnSQL:ArrayList<RemovedItemOnDatabaseModel>?=null
+    var deletedDataStorageOnSQL: ArrayList<RemovedItemOnDatabaseModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -215,7 +216,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         mDrawerLayout?.addDrawerListener(actionBarDrawerToggle!!)
         actionBarDrawerToggle?.syncState()
 
-        deletedDataStorageOnSQL= ArrayList()
+        deletedDataStorageOnSQL = ArrayList()
 
         mViewPager?.adapter = sectionPagerAdapter
         mBottomBar?.onItemSelectedListener = this
@@ -398,6 +399,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         stateOfInternet = value
         if (forbidDoubleCircle) {
             if (value) {
+                var task:Task<Void>?=null
+                var taskForUsers:Task<Void>?=null
                 var theDbElement = DbElements(this, 1, "likes")
                 var theDBReadElement = theDbElement.readableDatabase
                 var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
@@ -411,47 +414,50 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                             "postOfLiked",
                             FieldValue.arrayUnion(cursor.getString(1))
                         )
-                        var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
+                        task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
                             ?.set(dataMap, SetOptions.merge())
-                        var taskForUsers =
+                        taskForUsers =
                             mFsPostDb?.collection("Users")?.document(cursor.getString(0))?.set(
                                 dataMapForUser,
                                 SetOptions.merge()
                             )
-                        var test=cursor.getColumnIndex("uid")
+                        var test = cursor.getColumnIndex("uid")
                         var theDbWritable = theDbElement.writableDatabase
                         var theUID = cursor.getString(test)
                         var thePID = cursor.getString(cursor.getColumnIndex("pid"))
+                        var theRemoveModel = RemovedItemOnDatabaseModel(thePID, theUID)
+                        deletedDataStorageOnSQL?.add(theRemoveModel)
 
-//                        task?.addOnCompleteListener {
-//                            if (it.isSuccessful) {
-//                                taskForUsers?.addOnFailureListener(OnFailureListener {
-//                                    Log.d("Error", it.localizedMessage)
-//                                })?.addOnCompleteListener {
-//                                    if (it.isSuccessful!!) {
-//                                        var test=cursor.getColumnIndex("uid")
-//                                        var theDbWritable = theDbElement.writableDatabase
-//                                        var theUID = cursor.getString(test)
-//                                        var thePID = cursor.getString(cursor.getColumnIndex("pid"))
-//                                        theDbWritable.delete(
-//                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-//                                            "uid=? AND pid=?",
-//                                            arrayOf(theUID,thePID)
-//                                        )
-//                                        Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
-//                                            .show()
-//                                    } else {
-//                                        Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
-//                                    }
-//                                }
-//                            } else {
-//                                Log.d("Error", it.exception?.message!!)
-//                            }
-//                        }
-//                        task?.addOnFailureListener(OnFailureListener {
-//                            println(it.localizedMessage)
-//                        })
                     } while (cursor.moveToNext())
+                    var countCircle=0;
+                    task?.addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            taskForUsers?.addOnFailureListener(OnFailureListener {
+                                Log.d("Error", it.localizedMessage)
+                            })?.addOnCompleteListener {
+                                if (it.isSuccessful!!) {
+                                    var test=cursor.getColumnIndex("uid")
+                                    var theDbWritable = theDbElement.writableDatabase
+                                    var theUID = cursor.getString(test)
+                                    var thePID = cursor.getString(cursor.getColumnIndex("pid"))
+                                    theDbWritable.delete(
+                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                        "uid=? AND pid=?",
+                                        arrayOf(theUID,thePID)
+                                    )
+                                    Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
+                                        .show()
+                                } else {
+                                    Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
+                                }
+                            }
+                        } else {
+                            Log.d("Error", it.exception?.message!!)
+                        }
+                    }
+                    task?.addOnFailureListener(OnFailureListener {
+                        println(it.localizedMessage)
+                    })
                 }
 
                 println("is online funtion have runn")
