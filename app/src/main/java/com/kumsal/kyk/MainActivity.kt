@@ -429,22 +429,24 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                         deletedDataStorageOnSQL?.add(theRemoveModel)
 
                     } while (cursor.moveToNext())
-                    var countCircle=0;
+                    var countCircle=1;
                     task?.addOnCompleteListener {
                         if (it.isSuccessful) {
                             taskForUsers?.addOnFailureListener(OnFailureListener {
                                 Log.d("Error", it.localizedMessage)
                             })?.addOnCompleteListener {
                                 if (it.isSuccessful!!) {
-                                    var test=cursor.getColumnIndex("uid")
-                                    var theDbWritable = theDbElement.writableDatabase
-                                    var theUID = cursor.getString(test)
-                                    var thePID = cursor.getString(cursor.getColumnIndex("pid"))
-                                    theDbWritable.delete(
-                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                        "uid=? AND pid=?",
-                                        arrayOf(theUID,thePID)
-                                    )
+//                                    var test=cursor.getColumnIndex("uid")
+//                                    var theDbWritable = theDbElement.writableDatabase
+//                                    var theUID = cursor.getString(test)
+//                                    var thePID = cursor.getString(cursor.getColumnIndex("pid"))
+//                                    theDbWritable.delete(
+//                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+//                                        "uid=? AND pid=?",
+//                                        arrayOf(theUID,thePID)
+//                                    )
+                                    println(countCircle)
+                                    countCircle++
                                     Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
                                         .show()
                                 } else {
