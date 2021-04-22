@@ -13,7 +13,7 @@ class UsersModel {
     var theId:String?=null
     var blocked:ArrayList<String>?=null
     var blockers:ArrayList<String>?=null
-
+    var postOfLiked:ArrayList<String>?=null
     constructor() {
 
     }
@@ -54,6 +54,10 @@ class UsersModel {
     constructor(blocked: ArrayList<String>?, blockers: ArrayList<String>?) {
         this.blocked = blocked
         this.blockers = blockers
+    }
+
+    constructor(postOfLiked: ArrayList<String>?) {
+        this.postOfLiked = postOfLiked
     }
 
     fun toMap(): Map<String, Any> {

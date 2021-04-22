@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
+import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.AdapterModel.post_adapter
 import com.kumsal.kyk.AdapterModel.post_model
 import com.kumsal.kyk.Globals
@@ -239,10 +240,10 @@ class home_fragment : Fragment(), PostClick {
     }
 
     fun isPostClick(pid: String, theExistPostCheck: PostClick) {
-        mFsPostDb?.collection("Post")?.document(pid)?.get()?.addOnFailureListener(OnFailureListener {
+        mFsPostDb?.collection("Users")?.document(pid)?.get()?.addOnFailureListener(OnFailureListener {
             Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
         })?.addOnCompleteListener {
-                var thePost = it.result?.toObject(post_model::class.java)
+                var thePost = it.result?.toObject(UsersModel::class.java)
                 if (thePost?.likes?.contains(pid)!!)
                     theExistPostCheck.isPostClick(true, pid, thePost.likes!!)
                 theExistPostCheck.isPostClick(false, pid, thePost.likes!!)
