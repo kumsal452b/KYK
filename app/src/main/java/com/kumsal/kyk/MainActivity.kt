@@ -397,7 +397,7 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                 var theDBReadElement = theDbElement.readableDatabase
                 var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
                 cursor.moveToFirst()
-                if (cursor.count>0){
+                if (cursor.count>0 && cursor!=null){
                     do{
                         var dataMap = HashMap<String, Any>()
                         var dataMapForUser = HashMap<String, Any>()
