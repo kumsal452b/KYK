@@ -90,12 +90,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
     var imageUri = ""
     var userId = ""
     var thmbImageUri = ""
+
     var networkChangeReceiver: NetworkChangeReceiver? = null
     var broadCastReceiver: BroadcastReceiver? = null
     var fadeIn: Animation? = null
     var fadeOut: Animation? = null
     var forbidDoubleCircle: Boolean = true
-
+    var deletedDataStorageOnSQL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -419,8 +420,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                                     Log.d("Error", it.localizedMessage)
                                 })?.addOnCompleteListener {
                                     if (it.isSuccessful!!) {
+                                        var test=cursor.getColumnIndex("uid")
                                         var theDbWritable = theDbElement.writableDatabase
-                                        var theUID = cursor.getString(cursor.getColumnIndex("uid"))
+                                        var theUID = cursor.getString(test)
                                         var thePID = cursor.getString(cursor.getColumnIndex("pid"))
                                         theDbWritable.delete(
                                             home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
