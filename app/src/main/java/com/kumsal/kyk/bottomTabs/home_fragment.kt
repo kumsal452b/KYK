@@ -244,9 +244,9 @@ class home_fragment : Fragment(), PostClick {
             Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
         })?.addOnCompleteListener {
                 var thePost = it.result?.toObject(UsersModel::class.java)
-                if (thePost?.likes?.contains(pid)!!)
-                    theExistPostCheck.isPostClick(true, pid, thePost.likes!!)
-                theExistPostCheck.isPostClick(false, pid, thePost.likes!!)
+                if (thePost?.postOfLiked?.contains(pid)!!)
+                    theExistPostCheck.isPostClick(true, pid, thePost.postOfLiked!!)
+                theExistPostCheck.isPostClick(false, pid, thePost.postOfLiked!!)
         }
     }
 
