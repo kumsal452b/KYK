@@ -101,7 +101,7 @@ class home_fragment : Fragment(), PostClick {
     fun getDeniedPerson(theGetElement: GetCenter<String>) {
         mFsAuthDb?.collection("Users")?.document(mUser?.uid!!)?.get()
             ?.addOnSuccessListener { documents ->
-                mFsPostDb?.document(Globals.ınstance?.uid!!)?.get()
+                mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.get()
                     ?.addOnSuccessListener { documentForLiked ->
 
                         var useLinkList = documentForLiked["likes'"]

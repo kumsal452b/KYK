@@ -397,44 +397,47 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                 var theDBReadElement = theDbElement.readableDatabase
                 var cursor = theDBReadElement.rawQuery("SELECT * from likes", null)
                 cursor.moveToFirst()
-                do{
-                    var dataMap = HashMap<String, Any>()
-                    var dataMapForUser = HashMap<String, Any>()
-                    dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(0)))
-                    dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(1)))
-                    var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
-                        ?.set(dataMap, SetOptions.merge())
-                    var taskForUsers =
-                        mFsPostDb?.collection("Users")?.document(cursor.getString(0))?.set(
-                            dataMapForUser,
-                            SetOptions.merge()
-                        )
-                    task?.addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            taskForUsers?.addOnFailureListener(OnFailureListener {
-                                Log.d("Error",it.localizedMessage)
-                            })?.addOnCompleteListener{
-                                if (it.isSuccessful!!) {
-                                    var theDbWritable = theDbElement.writableDatabase
-                                    var array =
-                                        theDbWritable.delete(
-                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-                                            "uid=? AND pid=?",
-                                            arrayOf(cursor.getString(0), cursor.getString(1))
-                                        )
-                                    Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
-                                } else {
-                                    Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
+                if (cursor.count>0){
+                    do{
+                        var dataMap = HashMap<String, Any>()
+                        var dataMapForUser = HashMap<String, Any>()
+                        dataMap.put("likes", FieldValue.arrayUnion(cursor.getString(0)))
+                        dataMapForUser.put("postOfLiked", FieldValue.arrayUnion(cursor.getString(1)))
+                        var task = mFsPostDb?.collection("Post")?.document(cursor.getString(1))
+                            ?.set(dataMap, SetOptions.merge())
+                        var taskForUsers =
+                            mFsPostDb?.collection("Users")?.document(cursor.getString(0))?.set(
+                                dataMapForUser,
+                                SetOptions.merge()
+                            )
+                        task?.addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                taskForUsers?.addOnFailureListener(OnFailureListener {
+                                    Log.d("Error",it.localizedMessage)
+                                })?.addOnCompleteListener{
+                                    if (it.isSuccessful!!) {
+                                        var theDbWritable = theDbElement.writableDatabase
+                                        var array =
+                                            theDbWritable.delete(
+                                                home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                                "uid=? AND pid=?",
+                                                arrayOf(cursor.getString(0),
+                                                    cursor.getString(1))
+                                            )
+                                        Toast.makeText(this,"Sync. succesful",Toast.LENGTH_LONG).show()
+                                    } else {
+                                        Log.d("Error", taskForUsers?.exception?.localizedMessage!!)
+                                    }
                                 }
+                            } else {
+                                Log.d("Error", it.exception?.message!!)
                             }
-                        } else {
-                            Log.d("Error", it.exception?.message!!)
                         }
-                    }
-                    task?.addOnFailureListener(OnFailureListener {
-                        println(it.localizedMessage)
-                    })
-                }while (cursor.moveToNext())
+                        task?.addOnFailureListener(OnFailureListener {
+                            println(it.localizedMessage)
+                        })
+                    }while (cursor.moveToNext())
+                }
 
                 println("is online funtion have runn")
                 connectionState.startAnimation(fadeIn)
