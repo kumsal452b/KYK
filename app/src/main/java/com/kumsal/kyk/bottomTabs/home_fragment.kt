@@ -209,8 +209,7 @@ class home_fragment : Fragment(), PostClick {
                 OnCompleteListener<Void> {
                     if (it.isSuccessful) {
                         if (taskForUsers?.isSuccessful!!) {
-
-
+                            adapter.notifyDataSetChanged()
                         } else {
                             Toast.makeText(
                                 context,

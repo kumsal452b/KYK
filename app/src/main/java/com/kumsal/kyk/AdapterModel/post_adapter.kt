@@ -72,7 +72,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             name.setText(model.name)
 //            since.setText(model.time!!.nanoseconds)
             username.setText(model.username)
-            favoriteCount.setText(model.likesCount)
+            favoriteCount.setText(model.likesCount.toString())
             if (model.hasLiked!!){
                 favorite.setBtnColor(Color.RED);
                 favorite.setBtnFillColor(Color.GRAY)
