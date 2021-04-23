@@ -20,10 +20,8 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FieldValue
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
+import com.google.firebase.database.Query
+import com.google.firebase.firestore.*
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import com.kumsal.kyk.AdapterModel.UsersModel
 import com.kumsal.kyk.AdapterModel.post_adapter
@@ -234,13 +232,14 @@ class home_fragment : Fragment(), PostClick {
             var theLikeList = ArrayList<String>()
             theLikeList.addAll(likeList)
             theLikeList.remove(pid)
-            mFsPostDb?.document(pid)?.update("likes", theLikeList)
+            mFsPostDb?.collection("Users")?.document(pid)?.update("postOfLiked", theLikeList)
         }
 
     }
 
     fun isPostClick(pid: String, theExistPostCheck: PostClick) {
-        mFsPostDb?.collection("Users")?.document(pid)?.get()?.addOnFailureListener(OnFailureListener {
+        mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.get()?.addOnFailureListener(OnFailureListener {
+            FirebaseFirestoreException.Code.CANCELLED
             Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
         })?.addOnCompleteListener {
                 var thePost = it.result?.toObject(UsersModel::class.java)
