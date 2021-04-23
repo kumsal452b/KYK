@@ -4,5 +4,5 @@ interface PostClick {
     fun favClick(position:Int)
     fun commClick(position: Int)
     fun expandClick(position: Int)
-    fun isPostClick(isExist:Boolean,pid:String,likeList:ArrayList<String>)
+    fun isPostClick(isExist:Boolean,pid:String,likeList:ArrayList<String>,likedListForUser:ArrayList<String>)
 }

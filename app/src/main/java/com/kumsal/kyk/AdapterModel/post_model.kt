@@ -3,7 +3,7 @@ package com.kumsal.kyk.AdapterModel
 import android.net.Uri
 import android.text.TextUtils
 import com.google.firebase.Timestamp
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 class post_model{
     var id:String?=null

@@ -118,7 +118,7 @@ class home_fragment : Fragment(), PostClick {
                             blockerList as ArrayList<String>,
                             useLinkList as ArrayList<String>
                         )
-                    }?.addOnFailureListener { exp->
+                    }?.addOnFailureListener { exp ->
                         var useLinkList = ArrayList<String>()
                         var blockerList = documents["blockers"]
                         var blockedList = documents["blocked"]
@@ -165,8 +165,8 @@ class home_fragment : Fragment(), PostClick {
                                     SliderImagePageAdapter(context, thePost.uImage)
                                 thePost.slider_adapter = sliderImagePageAdapter
                             }
-                            thePost.hasLiked=currentUserLikeList.contains(thePost.id)
-                            thePost.likesCount=thePost.likes?.size
+                            thePost.hasLiked = currentUserLikeList.contains(thePost.id)
+                            thePost.likesCount = thePost.likes?.size
                             post_list.add(thePost)
                         }
                     }
@@ -179,7 +179,7 @@ class home_fragment : Fragment(), PostClick {
     override fun favClick(position: Int) {
         var theClickPost = post_list.get(position)
         if (MainActivity.stateOfInternet!!) {
-            isPostClick(theClickPost.id!!, this)
+            isPostClick(theClickPost.id!!, this,theClickPost.likes!!)
         } else {
             var theDB = DbElements(requireContext(), 1, "likes")
             var writeElement = theDB.writableDatabase
@@ -192,7 +192,7 @@ class home_fragment : Fragment(), PostClick {
         }
     }
 
-    override fun isPostClick(isExist: Boolean, pid: String, likeList: ArrayList<String>) {
+    override fun isPostClick(isExist: Boolean, pid: String, likeList: ArrayList<String>,likedListForUser:ArrayList<String>) {
         if (!isExist) {
             var dataMap = HashMap<String, Any>()
             var dataMapForUser = HashMap<String, Any>()
@@ -228,25 +228,32 @@ class home_fragment : Fragment(), PostClick {
             }
         } else {
             var theLikeList = ArrayList<String>()
+            var theLikeListForPost=ArrayList<String>()
+
             theLikeList.addAll(likeList)
+            theLikeListForPost.addAll(likedListForUser)
+
             theLikeList.remove(pid)
             mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.update("postOfLiked", theLikeList)
+
+            theLikeListForPost.remove(pid)
+            mFsAuthDb?.collection("Post")?.document(pid)?.update("likes",theLikeListForPost)
         }
 
     }
 
-    fun isPostClick(pid: String, theExistPostCheck: PostClick) {
-        mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.get()?.addOnFailureListener(OnFailureListener {
-            FirebaseFirestoreException.Code.CANCELLED
-            Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
-        })?.addOnCompleteListener {
-                var thePost = it.result?.toObject(UsersModel::class.java)
-                if (thePost?.postOfLiked?.contains(pid)!!){
-                    theExistPostCheck.isPostClick(true, pid, thePost.postOfLiked!!)
-                }else{
-                    theExistPostCheck.isPostClick(false, pid, thePost.postOfLiked!!)
-                }
-
+    fun isPostClick(pid: String, theExistPostCheck: PostClick,likedListForUser:ArrayList<String>) {
+        mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.get()
+            ?.addOnFailureListener(OnFailureListener {
+                FirebaseFirestoreException.Code.CANCELLED
+                Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
+            })?.addOnCompleteListener {
+            var thePost = it.result?.toObject(UsersModel::class.java)
+            if (thePost?.postOfLiked?.contains(pid)!!) {
+                theExistPostCheck.isPostClick(true, pid, thePost.postOfLiked!!,likedListForUser)
+            } else {
+                theExistPostCheck.isPostClick(false, pid, thePost.postOfLiked!!,likedListForUser)
+            }
         }
     }
 
