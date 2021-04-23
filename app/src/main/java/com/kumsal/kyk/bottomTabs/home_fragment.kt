@@ -103,7 +103,7 @@ class home_fragment : Fragment(), PostClick {
                 mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.get()
                     ?.addOnSuccessListener { documentForLiked ->
 
-                        var useLinkList = documentForLiked["likes'"]
+                        var useLinkList = documentForLiked["postOfLiked'"]
                         var blockerList = documents["blockers"]
                         var blockedList = documents["blocked"]
 
@@ -165,7 +165,7 @@ class home_fragment : Fragment(), PostClick {
                                     SliderImagePageAdapter(context, thePost.uImage)
                                 thePost.slider_adapter = sliderImagePageAdapter
                             }
-                            thePost.hasLiked=currentUserLikeList.contains(Globals.ınstance?.uid)
+                            thePost.hasLiked=currentUserLikeList.contains(thePost.id)
                             post_list.add(thePost)
                         }
                     }
