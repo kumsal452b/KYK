@@ -3,6 +3,7 @@ package com.kumsal.kyk.bottomTabs
 import android.content.BroadcastReceiver
 import android.content.ContentValues
 import android.content.IntentFilter
+import android.graphics.Color
 import android.icu.number.IntegerWidth
 import android.net.ConnectivityManager
 import android.os.Build
@@ -36,6 +37,7 @@ import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.checkInternet
 import com.kumsal.voice_newspaper.DbElements
+import com.sackcentury.shinebuttonlib.ShineButton
 import java.time.Duration
 import kotlin.collections.ArrayList
 
@@ -178,12 +180,13 @@ class home_fragment : Fragment(), PostClick {
         }
     }
 
-    override fun favClick(position: Int,countTextView: TextView) {
+    override fun favClick(position: Int,countTextView: TextView,favButton: ShineButton) {
         var theClickPost = post_list.get(position)
         if (MainActivity.stateOfInternet!!) {
             isPostClick(theClickPost.id!!, this,theClickPost.likes!!)
             var text=countTextView.text.toString()
             var count=Integer.valueOf(text)
+            if(favButton.color==Color.RED) count-- else count++
             count++
             countTextView.setText(count.toString())
         } else {
