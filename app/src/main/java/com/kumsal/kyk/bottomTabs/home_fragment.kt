@@ -3,6 +3,7 @@ package com.kumsal.kyk.bottomTabs
 import android.content.BroadcastReceiver
 import android.content.ContentValues
 import android.content.IntentFilter
+import android.icu.number.IntegerWidth
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -181,9 +182,10 @@ class home_fragment : Fragment(), PostClick {
         var theClickPost = post_list.get(position)
         if (MainActivity.stateOfInternet!!) {
             isPostClick(theClickPost.id!!, this,theClickPost.likes!!)
-            countTextView.text.toString()
-            var count=Integer.parseInt(countTextView.text.toString())
-            countTextView.setText(count+1)
+            var text=countTextView.text.toString()
+            var count=Integer.valueOf(text)
+            count++
+            countTextView.setText(count.toString())
         } else {
             var theDB = DbElements(requireContext(), 1, "likes")
             var writeElement = theDB.writableDatabase
