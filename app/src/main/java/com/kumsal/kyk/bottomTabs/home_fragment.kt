@@ -166,7 +166,7 @@ class home_fragment : Fragment(), PostClick {
                                 thePost.slider_adapter = sliderImagePageAdapter
                             }
                             thePost.hasLiked=currentUserLikeList.contains(thePost.id)
-                            
+                            thePost.likesCount=thePost.likes?.size
                             post_list.add(thePost)
                         }
                     }
