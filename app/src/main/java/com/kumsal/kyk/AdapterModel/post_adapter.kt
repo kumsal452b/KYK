@@ -99,7 +99,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                 if (position != RecyclerView.NO_POSITION) {
                     when (v?.id){
                         favorite.id->{
-                            thePostClick!!.favClick(position)
+                            thePostClick!!.favClick(position,favoriteCount)
                         }
                         commit.id->{
                             thePostClick!!.commClick(position)

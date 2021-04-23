@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -176,10 +177,13 @@ class home_fragment : Fragment(), PostClick {
         }
     }
 
-    override fun favClick(position: Int) {
+    override fun favClick(position: Int,countTextView: TextView) {
         var theClickPost = post_list.get(position)
         if (MainActivity.stateOfInternet!!) {
             isPostClick(theClickPost.id!!, this,theClickPost.likes!!)
+            countTextView.text.toString()
+            var count=Integer.parseInt(countTextView.text.toString())
+            countTextView.setText(count+1)
         } else {
             var theDB = DbElements(requireContext(), 1, "likes")
             var writeElement = theDB.writableDatabase

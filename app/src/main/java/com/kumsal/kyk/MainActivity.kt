@@ -465,7 +465,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                         println(it.localizedMessage)
                     })
                 }
-
                 println("is online funtion have runn")
                 connectionState.startAnimation(fadeIn)
                 connectionState.text = "Connection"
