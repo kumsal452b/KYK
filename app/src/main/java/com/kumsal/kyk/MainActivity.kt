@@ -436,15 +436,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                                 Log.d("Error", it.localizedMessage)
                             })?.addOnCompleteListener {
                                 if (it.isSuccessful!!) {
-//                                    var test=cursor.getColumnIndex("uid")
-//                                    var theDbWritable = theDbElement.writableDatabase
-//                                    var theUID = cursor.getString(test)
-//                                    var thePID = cursor.getString(cursor.getColumnIndex("pid"))
-//                                    theDbWritable.delete(
-//                                        home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
-//                                        "uid=? AND pid=?",
-//                                        arrayOf(theUID,thePID)
-//                                    )
+//                                    var cursorForDelete = theDBReadElement.rawQuery("SELECT * from likes", null)
+//                                    var test=cursorForDelete.getColumnIndex("uid")
+                                    var theDbWritable = theDbElement.writableDatabase
+//                                    var theUID = cursorForDelete.getString(test)
+//                                    var thePID = cursorForDelete.getString(cursorForDelete.getColumnIndex("pid"))
+//
+                                    for(item in deletedDataStorageOnSQL)
                                     println(countCircle)
                                     countCircle++
                                     Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)

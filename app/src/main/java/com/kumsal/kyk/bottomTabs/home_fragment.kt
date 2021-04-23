@@ -236,7 +236,7 @@ class home_fragment : Fragment(), PostClick {
             theLikeList.remove(pid)
             mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.update("postOfLiked", theLikeList)
 
-            theLikeListForPost.remove(pid)
+            theLikeListForPost.remove(Globals.ınstance?.uid)
             mFsAuthDb?.collection("Post")?.document(pid)?.update("likes",theLikeListForPost)
         }
 
