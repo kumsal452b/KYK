@@ -18,7 +18,7 @@ class post_model{
     var hasLiked:Boolean?=null
     var uImageThmb:ArrayList<String>?=null
     var uImage:ArrayList<String>?=null
-
+    var likesCount:Int?=null
     constructor(){}
     constructor(
         name: String?,
@@ -48,6 +48,10 @@ class post_model{
 
     constructor(hasLiked: Boolean?) {
         this.hasLiked = hasLiked
+    }
+
+    constructor(likesCount: Int?) {
+        this.likesCount = likesCount
     }
 
 
