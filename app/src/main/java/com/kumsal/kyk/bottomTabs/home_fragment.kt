@@ -232,7 +232,7 @@ class home_fragment : Fragment(), PostClick {
             var theLikeList = ArrayList<String>()
             theLikeList.addAll(likeList)
             theLikeList.remove(pid)
-            mFsPostDb?.collection("Users")?.document(pid)?.update("postOfLiked", theLikeList)
+            mFsPostDb?.collection("Users")?.document(Globals.ınstance?.uid!!)?.update("postOfLiked", theLikeList)
         }
 
     }
@@ -243,9 +243,12 @@ class home_fragment : Fragment(), PostClick {
             Log.d("Error in fav element", it.localizedMessage, it.fillInStackTrace())
         })?.addOnCompleteListener {
                 var thePost = it.result?.toObject(UsersModel::class.java)
-                if (thePost?.postOfLiked?.contains(pid)!!)
+                if (thePost?.postOfLiked?.contains(pid)!!){
                     theExistPostCheck.isPostClick(true, pid, thePost.postOfLiked!!)
-                theExistPostCheck.isPostClick(false, pid, thePost.postOfLiked!!)
+                }else{
+                    theExistPostCheck.isPostClick(false, pid, thePost.postOfLiked!!)
+                }
+
         }
     }
 
