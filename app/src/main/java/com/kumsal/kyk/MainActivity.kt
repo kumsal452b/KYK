@@ -442,7 +442,13 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
 //                                    var theUID = cursorForDelete.getString(test)
 //                                    var thePID = cursorForDelete.getString(cursorForDelete.getColumnIndex("pid"))
 //
-                                    for(item in deletedDataStorageOnSQL)
+                                    for(item in deletedDataStorageOnSQL!!){
+                                        theDbWritable.delete(
+                                            home_fragment.FeedReaderContract.FeedEntry.TABLE_NAME,
+                                            "uid=? AND pid=?",
+                                            arrayOf(item.uid,item.pid)
+                                        )
+                                    }
                                     println(countCircle)
                                     countCircle++
                                     Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
