@@ -74,11 +74,16 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             username.setText(model.username)
             favoriteCount.setText(model.likesCount.toString())
             if (model.hasLiked!!){
-                favorite.setBtnColor(Color.RED);
+                favorite.setBtnFillColor(Color.RED)
+                favorite.setBtnColor(Color.RED)
+                var red1=favorite.color
+                var red2=Color.RED
 //                favorite.setBtnFillColor(Color.GRAY)
                 favorite.setAllowRandomColor(true)
             }else{
-                favorite.setBtnColor(Color.GRAY);
+                favorite.setBtnFillColor(Color.GRAY)
+                favorite.setBtnColor(Color.GRAY)
+
 //                favorite.setBtnFillColor(Color.RED)
                 favorite.setAllowRandomColor(true)
             }
