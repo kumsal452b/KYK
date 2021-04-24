@@ -82,4 +82,5 @@ dependencies {
     implementation 'com.github.nguyenhoanglam:ImagePicker:1.4.3'
     implementation 'com.airbnb.android:lottie:3.4.1'
     implementation 'com.sackcentury:shinebutton:1.0.0'
+    implementation 'com.github.stfalcon:stfalcon-imageviewer:1.0.1'
 }
