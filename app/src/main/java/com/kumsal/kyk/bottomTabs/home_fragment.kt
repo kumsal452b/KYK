@@ -186,7 +186,13 @@ class home_fragment : Fragment(), PostClick {
             isPostClick(theClickPost.id!!, this,theClickPost.likes!!)
             var text=countTextView.text.toString()
             var count=Integer.valueOf(text)
-            if(favButton.color==Color.RED)  count-- else count++
+            if(favButton.color==Color.RED){
+                favButton.setBtnFillColor(Color.GRAY)
+                count--
+            }  else {
+                favButton.setBtnFillColor(Color.RED)
+                count++
+            }
             countTextView.setText(count.toString())
         } else {
             var theDB = DbElements(requireContext(), 1, "likes")
