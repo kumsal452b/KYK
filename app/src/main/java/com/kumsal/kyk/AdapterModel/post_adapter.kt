@@ -75,11 +75,11 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             favoriteCount.setText(model.likesCount.toString())
             if (model.hasLiked!!){
                 favorite.setBtnColor(Color.RED);
-                favorite.setBtnFillColor(Color.GRAY)
+//                favorite.setBtnFillColor(Color.GRAY)
                 favorite.setAllowRandomColor(true)
             }else{
                 favorite.setBtnColor(Color.GRAY);
-                favorite.setBtnFillColor(Color.RED)
+//                favorite.setBtnFillColor(Color.RED)
                 favorite.setAllowRandomColor(true)
             }
             if (model.slider_adapter!=null){
