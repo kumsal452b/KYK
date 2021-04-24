@@ -107,6 +107,9 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                         expanded.id->{
                             thePostClick!!.expandClick(position)
                         }
+                        pagerView.id->{
+                            thePostClick!!.imageSliderClick(position)
+                        }
                     }
                 }
             }
