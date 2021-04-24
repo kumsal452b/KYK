@@ -3,12 +3,17 @@ package com.kumsal.kyk.bottomTabs
 import android.content.BroadcastReceiver
 import android.content.ContentValues
 import android.content.IntentFilter
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.icu.number.IntegerWidth
+import android.media.Image
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.BaseColumns
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +43,10 @@ import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.checkInternet
 import com.kumsal.voice_newspaper.DbElements
 import com.sackcentury.shinebuttonlib.ShineButton
+import com.squareup.picasso.Picasso
+import com.stfalcon.imageviewer.StfalconImageViewer
+import com.stfalcon.imageviewer.loader.ImageLoader
+import java.io.InputStream
 import java.time.Duration
 import kotlin.collections.ArrayList
 
@@ -279,4 +288,15 @@ class home_fragment : Fragment(), PostClick {
 
     }
 
+    override fun imageSliderClick(position: Int) {
+        var theClickPost = post_list.get(position)
+//        var imageList=ArrayList<Bitmap>()
+//        for (image in theClickPost.uImage!!){
+//            var theImage= MediaStore.Images.Media.getBitmap(context.getContentResolver(),Uri.parse(image))
+//            imageList.add(theImage)
+//        }
+        StfalconImageViewer.Builder<String>(context,theClickPost.uImage, ImageLoader<String> { imageView, image ->
+            Picasso.get().load(image).into(imageView)
+        }).show()
+    }
 }
