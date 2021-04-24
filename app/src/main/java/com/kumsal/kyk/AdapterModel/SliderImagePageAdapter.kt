@@ -25,7 +25,10 @@ class SliderImagePageAdapter : PagerAdapter {
     var uriList: ArrayList<String>? = null
     var mlayoutInflater: LayoutInflater? = null
     var postClickItem:PostClick?=null
-    
+    fun setOnClickListener(thePostClick: PostClick) {
+        this.postClickItem = thePostClick
+    }
+
     constructor(context: Context?, uriList: ArrayList<String>?) : super() {
         this.context = context
         this.uriList = uriList
@@ -47,6 +50,14 @@ class SliderImagePageAdapter : PagerAdapter {
         var itemView =
             mlayoutInflater?.inflate(R.layout.slider_image_for_post, container, false) as View
         var imageView = itemView.findViewById<ImageView>(R.id.slider_image_for_post_imageView)
+        imageView.setOnClickListener{
+            if (postClickItem!=null){
+                var position=position
+                if (position!= POSITION_NONE){
+                    
+                }
+            }
+        }
         val dip = 430f
         val r: Resources = Resources.getSystem()
         val px = TypedValue.applyDimension(
