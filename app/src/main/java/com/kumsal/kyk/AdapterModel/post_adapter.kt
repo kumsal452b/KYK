@@ -76,15 +76,10 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
             if (model.hasLiked!!){
                 favorite.setBtnFillColor(Color.RED)
                 favorite.setBtnColor(Color.RED)
-                var red1=favorite.color
-                var red2=Color.RED
-//                favorite.setBtnFillColor(Color.GRAY)
                 favorite.setAllowRandomColor(true)
             }else{
                 favorite.setBtnFillColor(Color.GRAY)
                 favorite.setBtnColor(Color.GRAY)
-
-//                favorite.setBtnFillColor(Color.RED)
                 favorite.setAllowRandomColor(true)
             }
             if (model.slider_adapter!=null){
