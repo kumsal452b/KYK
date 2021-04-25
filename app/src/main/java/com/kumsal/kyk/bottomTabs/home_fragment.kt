@@ -290,11 +290,6 @@ class home_fragment : Fragment(), PostClick {
 
     override fun imageSliderClick(position: Int) {
         var theClickPost = post_list.get(position)
-//        var imageList=ArrayList<Bitmap>()
-//        for (image in theClickPost.uImage!!){
-//            var theImage= MediaStore.Images.Media.getBitmap(context.getContentResolver(),Uri.parse(image))
-//            imageList.add(theImage)
-//        }
         StfalconImageViewer.Builder<String>(context,theClickPost.uImage, ImageLoader<String> { imageView, image ->
             Picasso.get().load(image).into(imageView)
         }).show()
