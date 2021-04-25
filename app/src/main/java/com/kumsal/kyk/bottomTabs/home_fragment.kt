@@ -292,6 +292,7 @@ class home_fragment : Fragment(), PostClick {
         var theClickPost = post_list.get(position)
         StfalconImageViewer.Builder<String>(context,theClickPost.uImage, ImageLoader<String> { imageView, image ->
             Picasso.get().load(image).into(imageView)
-        }).show()
+        }).withStartPosition(imagePosition)
+        
     }
 }
