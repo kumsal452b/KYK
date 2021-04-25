@@ -47,8 +47,9 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var pagerItemCountForImage:TextView=itemView.findViewById(R.id.post_layout_piecesOfPicture)
         init {
             favorite.setOnClickListener(this)
-            commit.setOnClickListener(this)
+            postc.setOnClickListener(this)
             expanded.setOnClickListener(this)
+            itemView.setOnClickListener(this)
             pagerView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {
                 }
@@ -110,15 +111,15 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                         favorite.id->{
                             thePostClick!!.favClick(position,favoriteCount,favorite)
                         }
-                        itemView.id->{
+                        postc.id->{
                             thePostClick!!.commClick(position)
                         }
                         expanded.id->{
                             thePostClick!!.expandClick(position)
                         }
-//                        pagerView.id->{
-//                            thePostClick!!.imageSliderClick(position)
-//                        }
+                        itemView.id->{
+                            thePostClick!!.commClick(position)
+                        }
                     }
                 }
             }
