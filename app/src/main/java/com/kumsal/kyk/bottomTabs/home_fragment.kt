@@ -293,6 +293,8 @@ class home_fragment : Fragment(), PostClick {
         StfalconImageViewer.Builder<String>(context,theClickPost.uImage, ImageLoader<String> { imageView, image ->
             Picasso.get().load(image).into(imageView)
         }).withStartPosition(imagePosition)
-        
+            .withHiddenStatusBar(true)
+            .allowZooming(true)
+            .show(true)
     }
 }
