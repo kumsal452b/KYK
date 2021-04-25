@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
@@ -45,11 +46,12 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
         var pagerView:ViewPager=itemView.findViewById(R.id.post_layout_pagerView)
         var pagerItemCountForImage:TextView=itemView.findViewById(R.id.post_layout_piecesOfPicture)
+        var relativeFor:RelativeLayout=itemView.findViewById(R.id.relative1)
         init {
             favorite.setOnClickListener(this)
             postc.setOnClickListener(this)
             expanded.setOnClickListener(this)
-            itemView.setOnClickListener(this)
+            relativeFor.setOnClickListener(this)
             pagerView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {
                 }
@@ -117,7 +119,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                         expanded.id->{
                             thePostClick!!.expandClick(position)
                         }
-                        itemView.id->{
+                        relativeFor.id->{
                             thePostClick!!.commClick(position)
                         }
                     }
