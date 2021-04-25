@@ -295,6 +295,7 @@ class home_fragment : Fragment(), PostClick {
         }).withStartPosition(imagePosition)
             .withHiddenStatusBar(true)
             .allowZooming(true)
+            .
             .show(true)
     }
 }
