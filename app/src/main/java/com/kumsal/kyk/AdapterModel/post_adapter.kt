@@ -18,6 +18,7 @@ import com.hendraanggrian.appcompat.widget.SocialEditText
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
+import com.kumsal.kyk.interfaces.SliderClick
 import com.sackcentury.shinebuttonlib.ShineButton
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -31,7 +32,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
     }
 
     inner class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        View.OnClickListener {
+        View.OnClickListener,SliderClick {
         var image: CircleImageView = itemView.findViewById(R.id.post_layout_imageView)
         var postc: SocialTextView = itemView.findViewById(R.id.post_layout_imageView_postContent)
         var name: TextView = itemView.findViewById(R.id.post_layout_name)
@@ -65,6 +66,13 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
 
             })
         }
+
+        override fun SliderClickItem(position: Int) {
+            if (thePostClick!=null){
+                thePostClick?.imageSliderClick(adapterPosition)
+            }
+        }
+
         fun BindElement(model: post_model) {
             if (!TextUtils.isEmpty(model.thmbImageUri))
                 Picasso.get().load(model.thmbImageUri).placeholder(R.drawable.persontwo).into(image)
@@ -108,9 +116,9 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                         expanded.id->{
                             thePostClick!!.expandClick(position)
                         }
-                        pagerView.id->{
-                            thePostClick!!.imageSliderClick(position)
-                        }
+//                        pagerView.id->{
+//                            thePostClick!!.imageSliderClick(position)
+//                        }
                     }
                 }
             }

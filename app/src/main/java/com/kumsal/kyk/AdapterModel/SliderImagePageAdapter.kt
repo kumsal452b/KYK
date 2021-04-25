@@ -13,6 +13,7 @@ import androidx.core.graphics.PathUtils
 import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
+import com.kumsal.kyk.interfaces.SliderClick
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
 import com.theartofdev.edmodo.cropper.CropImage
@@ -24,8 +25,8 @@ class SliderImagePageAdapter : PagerAdapter {
     var context: Context? = null
     var uriList: ArrayList<String>? = null
     var mlayoutInflater: LayoutInflater? = null
-    var postClickItem:PostClick?=null
-    fun setOnClickListener(thePostClick: PostClick) {
+    var postClickItem:SliderClick?=null
+    fun setOnClickListener(thePostClick: SliderClick) {
         this.postClickItem = thePostClick
     }
 
@@ -54,7 +55,7 @@ class SliderImagePageAdapter : PagerAdapter {
             if (postClickItem!=null){
                 var position=position
                 if (position!= POSITION_NONE){
-                    postClickItem?.imageSliderClick(position)
+                    postClickItem?.SliderClickItem(position)
                 }
             }
         }
