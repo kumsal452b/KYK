@@ -110,7 +110,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                         favorite.id->{
                             thePostClick!!.favClick(position,favoriteCount,favorite)
                         }
-                        commit.id->{
+                        itemView.id->{
                             thePostClick!!.commClick(position)
                         }
                         expanded.id->{
