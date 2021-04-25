@@ -69,7 +69,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
 
         override fun SliderClickItem(position: Int) {
             if (thePostClick!=null){
-                thePostClick?.imageSliderClick(adapterPosition)
+                thePostClick?.imageSliderClick(adapterPosition,position)
             }
         }
 
