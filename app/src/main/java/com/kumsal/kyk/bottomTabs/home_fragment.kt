@@ -288,7 +288,7 @@ class home_fragment : Fragment(), PostClick {
 
     }
 
-    override fun imageSliderClick(position: Int) {
+    override fun imageSliderClick(position: Int,imagePosition:Int) {
         var theClickPost = post_list.get(position)
         StfalconImageViewer.Builder<String>(context,theClickPost.uImage, ImageLoader<String> { imageView, image ->
             Picasso.get().load(image).into(imageView)
