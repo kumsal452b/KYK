@@ -86,6 +86,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                 pagerView.visibility=View.VISIBLE
                 pagerItemCountForImage.visibility=View.VISIBLE
                 pagerView.adapter=model.slider_adapter
+                model.slider_adapter?.setOnClickListener(this)
             }else{
                 pagerView.visibility=View.GONE
                 pagerItemCountForImage.visibility=View.GONE

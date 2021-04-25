@@ -54,7 +54,7 @@ class SliderImagePageAdapter : PagerAdapter {
             if (postClickItem!=null){
                 var position=position
                 if (position!= POSITION_NONE){
-                    
+                    postClickItem?.imageSliderClick(position)
                 }
             }
         }
