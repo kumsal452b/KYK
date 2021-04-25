@@ -8,5 +8,5 @@ interface PostClick {
     fun commClick(position: Int)
     fun expandClick(position: Int)
     fun isPostClick(isExist:Boolean,pid:String,likeList:ArrayList<String>,likedListForUser:ArrayList<String>)
-    fun imageSliderClick(position: Int)
+    fun imageSliderClick(position: Int,imagePosition:Int)
 }
