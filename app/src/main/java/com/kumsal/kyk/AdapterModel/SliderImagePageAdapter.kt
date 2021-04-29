@@ -62,7 +62,7 @@ class SliderImagePageAdapter : PagerAdapter {
                 }
             }
         }
-        val tmpBitmap= MediaStore.Images.Media.getBitmap(context?.getContentResolver(), Uri.parse(uriList?.get(position)))
+        val tmpBitmap= BitmapFactory.decodeStream()
 
         val dip = 430f
         val r: Resources = Resources.getSystem()
