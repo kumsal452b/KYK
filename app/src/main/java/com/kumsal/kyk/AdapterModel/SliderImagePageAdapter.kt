@@ -5,6 +5,8 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -76,6 +78,10 @@ class SliderImagePageAdapter : PagerAdapter {
         )
         var theImage=Picasso.get().load(uriList?.get(position))
         var bitmap=theImage.get()
+        var handler=Handler(Looper.getMainLooper())
+        handler.post(Runnable {
+
+        })
         Picasso.get().load(uriList?.get(position)).resize(px.toInt(), px.toInt()).transform(CropSquareTransformation()).into(imageView)
         container.addView(itemView)
         return itemView
