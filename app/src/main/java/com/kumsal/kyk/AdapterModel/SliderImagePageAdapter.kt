@@ -2,7 +2,10 @@ package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.provider.MediaStore
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -59,6 +62,8 @@ class SliderImagePageAdapter : PagerAdapter {
                 }
             }
         }
+        val tmpBitmap= MediaStore.Images.Media.getBitmap(context?.getContentResolver(), Uri.parse(uriList?.get(position)))
+
         val dip = 430f
         val r: Resources = Resources.getSystem()
         val px = TypedValue.applyDimension(
