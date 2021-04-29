@@ -23,6 +23,8 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.CropSquareTransformation
+import java.io.InputStream
+import java.net.URL
 
 class SliderImagePageAdapter : PagerAdapter {
     var context: Context? = null
@@ -62,7 +64,11 @@ class SliderImagePageAdapter : PagerAdapter {
                 }
             }
         }
-        val tmpBitmap= BitmapFactory.decodeStream()
+        var url=URL(uriList?.get(position))
+        var connection=url.openConnection()
+        connection.connect()
+        var istream=connection.getInputStream()
+        val tmpBitmap= BitmapFactory.decodeStream(istream)
 
         val dip = 430f
         val r: Resources = Resources.getSystem()
