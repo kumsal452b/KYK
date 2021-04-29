@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.graphics.PathUtils
 import androidx.viewpager.widget.PagerAdapter
-import com.kumsal.kyk.Internet.AsyncTask
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.SliderClick
@@ -66,7 +65,7 @@ class SliderImagePageAdapter : PagerAdapter {
             }
         }
 
-        val tmpBitmap= BitmapFactory.decodeStream(AsyncTask().)
+
 
         val dip = 430f
         val r: Resources = Resources.getSystem()
@@ -75,8 +74,8 @@ class SliderImagePageAdapter : PagerAdapter {
             dip,
             r.displayMetrics
         )
-        var image=Picasso.get().load(uriList?.get(position))
-        image.
+        var theImage=Picasso.get().load(uriList?.get(position))
+        var bitmap=theImage.get()
         Picasso.get().load(uriList?.get(position)).resize(px.toInt(), px.toInt()).transform(CropSquareTransformation()).into(imageView)
         container.addView(itemView)
         return itemView
