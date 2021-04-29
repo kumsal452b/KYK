@@ -61,4 +61,5 @@
     <string name="checkInternet">Please check internet connection</string>
     <string name="success">Success</string>
     <string name="warnconnection">No internet connection! Changes will be processed when you are online</string>
+    <string name="comment">Comment...</string>
 </resources>
