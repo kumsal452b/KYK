@@ -77,11 +77,14 @@ class SliderImagePageAdapter : PagerAdapter {
             r.displayMetrics
         )
         var theImage=Picasso.get().load(uriList?.get(position))
-        var bitmap=theImage.get()
-        var handler=Handler(Looper.getMainLooper())
-        handler.post(Runnable {
 
+        var handler=Handler(Looper.getMainLooper())
+        println("basla")
+        handler.post(Runnable {
+            var bitmap=theImage.get()
+            println("icinde")
         })
+        println("bitir")
         Picasso.get().load(uriList?.get(position)).resize(px.toInt(), px.toInt()).transform(CropSquareTransformation()).into(imageView)
         container.addView(itemView)
         return itemView
