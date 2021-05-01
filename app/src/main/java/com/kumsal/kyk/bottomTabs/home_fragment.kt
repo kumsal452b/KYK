@@ -2,6 +2,7 @@ package com.kumsal.kyk.bottomTabs
 
 import android.content.BroadcastReceiver
 import android.content.ContentValues
+import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -41,6 +42,7 @@ import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.checkInternet
+import com.kumsal.kyk.screns.PostDetail
 import com.kumsal.voice_newspaper.DbElements
 import com.sackcentury.shinebuttonlib.ShineButton
 import com.squareup.picasso.Picasso
@@ -281,7 +283,8 @@ class home_fragment : Fragment(), PostClick {
     }
 
     override fun commClick(position: Int) {
-
+        var forPostDetailIntent=Intent(context,PostDetail::class.java)
+        startActivity(forPostDetailIntent)
     }
 
     override fun expandClick(position: Int) {
