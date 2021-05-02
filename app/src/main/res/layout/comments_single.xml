@@ -90,7 +90,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/comment"
             android:layout_below="@id/comments_single_Content"
-            android:layout_="@id/comments_single_Content"
+            android:layout_toEndOf="@id/post_layout_favorite_count"
             />
 
         <TextView
@@ -100,7 +100,15 @@
             android:layout_marginStart="5dp"
             android:text="0"
             android:textColor="#070505"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:layout_below="@id/comments_single_Content"
+            android:layout_toEndOf="@id/comments_single_comment"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/divider"
+            android:layout_below="@id/post_layout_favorite_count"
+            android:layout_marginTop="2dp"/>
 
 
     </RelativeLayout>
