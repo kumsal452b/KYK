@@ -23,9 +23,10 @@ class PostDetail : AppCompatActivity() {
         pagerView=findViewById(R.id.activity_post_detail_pagerView)
         commentContent=findViewById(R.id.activity_post_detail_edttext)
         shareCommentBtn=findViewById(R.id.activity_post_detail_commentBtn)
-        
+
         sharedImages=intent.getStringArrayListExtra("images")
         adapter=SliderImagePageAdapter(this,sharedImages)
+        adapter.set
         pagerView?.adapter=adapter
     }
 }
