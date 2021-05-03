@@ -38,6 +38,7 @@ class SliderImagePageAdapter : PagerAdapter {
     fun setOnClickListener(thePostClick: SliderClick) {
         this.postClickItem = thePostClick
     }
+    fun set
 
     constructor(context: Context?, uriList: ArrayList<String>?) : super() {
         this.context = context
@@ -80,7 +81,9 @@ class SliderImagePageAdapter : PagerAdapter {
         )
         Picasso.get().load(uriList?.get(position)).into(imageView,object:Callback{
             override fun onSuccess() {
-                if (position==count)
+                if (position==count){
+
+                }
             }
 
             override fun onError(e: Exception?) {
