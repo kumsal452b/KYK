@@ -9,13 +9,8 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
-import com.airbnb.lottie.LottieAnimationView
-import com.google.firebase.firestore.FirebaseFirestore
-import com.hendraanggrian.appcompat.widget.SocialEditText
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
@@ -44,7 +39,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var favoriteCount: TextView = itemView.findViewById(R.id.post_layout_favorite_count)
         var commit: ImageButton = itemView.findViewById(R.id.post_layout_comment)
         var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
-        var pagerView:ViewPager=itemView.findViewById(R.id.post_layout_pagerView)
+        var pagerView:ViewPager=itemView.findViewById(R.id.activity_post_detail_pagerView)
         var pagerItemCountForImage:TextView=itemView.findViewById(R.id.post_layout_piecesOfPicture)
         var relativeFor:RelativeLayout=itemView.findViewById(R.id.relative1)
         init {
