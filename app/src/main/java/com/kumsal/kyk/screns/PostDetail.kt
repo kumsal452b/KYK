@@ -26,7 +26,6 @@ class PostDetail : AppCompatActivity() {
 
         sharedImages=intent.getStringArrayListExtra("images")
         adapter=SliderImagePageAdapter(this,sharedImages)
-        adapter.set
         pagerView?.adapter=adapter
     }
 }

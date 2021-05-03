@@ -19,6 +19,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.SliderClick
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
 import com.theartofdev.edmodo.cropper.CropImage
@@ -26,6 +27,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import jp.wasabeef.picasso.transformations.CropSquareTransformation
 import java.io.InputStream
+import java.lang.Exception
 import java.net.URL
 
 class SliderImagePageAdapter : PagerAdapter {
@@ -76,7 +78,15 @@ class SliderImagePageAdapter : PagerAdapter {
             dip,
             r.displayMetrics
         )
-        Picasso.get().load(uriList?.get(position)).into(imageView)
+        Picasso.get().load(uriList?.get(position)).into(imageView,object:Callback{
+            override fun onSuccess() {
+                if (position==count)
+            }
+
+            override fun onError(e: Exception?) {
+
+            }
+        })
         container.addView(itemView)
         return itemView
     }
