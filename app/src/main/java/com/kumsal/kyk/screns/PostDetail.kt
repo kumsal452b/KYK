@@ -19,6 +19,11 @@ class PostDetail : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
+        recyclerView=findViewById(R.id.activity_post_detail_recyclerView)
+        pagerView=findViewById(R.id.activity_post_detail_pagerView)
+        commentContent=findViewById(R.id.activity_post_detail_edttext)
+        shareCommentBtn=findViewById(R.id.activity_post_detail_commentBtn)
+        
         sharedImages=intent.getStringArrayListExtra("images")
         adapter=SliderImagePageAdapter(this,sharedImages)
         pagerView?.adapter=adapter
