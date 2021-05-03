@@ -283,7 +283,9 @@ class home_fragment : Fragment(), PostClick {
     }
 
     override fun commClick(position: Int) {
+        var theClickPost = post_list.get(position)
         var forPostDetailIntent=Intent(context,PostDetail::class.java)
+        forPostDetailIntent.putExtra("images",theClickPost.uImageThmb)
         startActivity(forPostDetailIntent)
     }
 
