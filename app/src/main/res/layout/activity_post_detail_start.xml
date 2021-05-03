@@ -7,7 +7,7 @@
     tools:context=".screns.PostDetail">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/post_layout_pagerView"
+        android:id="@+id/activity_post_detail_pagerView"
         android:layout_width="match_parent"
         android:layout_height="370dp"
         android:visibility="visible"
@@ -24,7 +24,7 @@
         android:background="@drawable/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/post_layout_pagerView" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_pagerView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="0dp"
@@ -49,7 +49,7 @@
             tools:layout_editor_absoluteY="371dp">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/activity_post_detail_edttext"
                 android:layout_width="326dp"
                 android:layout_height="29dp"
                 android:background="@drawable/forcommendedittext"
@@ -60,7 +60,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/activity_post_detail_commentBtn"
                 android:layout_width="match_parent"
                 android:layout_height="28dp"
                 android:paddingTop="1dp"
