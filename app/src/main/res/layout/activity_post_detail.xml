@@ -33,15 +33,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/view">
+
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="150dp"
             android:layout_height="150dp"
-            app:lottie_fileName="emptyAlert.json"
-            app:lottie_autoPlay="true"
             android:layout_gravity="center"
-            />
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="emptyAlert.json" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="We couldn't find anything here"
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 
