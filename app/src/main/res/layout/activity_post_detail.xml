@@ -40,13 +40,17 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             app:lottie_autoPlay="true"
-            app:lottie_fileName="emptyAlert.json" />
+            app:lottie_fileName="emptyAlert.json"
+            app:lottie_loop="true"
+            android:scaleType="fitXY"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="We couldn't find anything here"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:textSize="16dp"
+            android:fontFamily="@font/aclonica"/>
 
     </LinearLayout>
 
