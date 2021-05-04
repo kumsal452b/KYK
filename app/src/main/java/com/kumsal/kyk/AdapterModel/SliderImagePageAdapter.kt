@@ -42,7 +42,7 @@ class SliderImagePageAdapter : PagerAdapter {
         this.postClickItem = thePostClick
     }
     fun setOnCallbackListener(theCallback: imageCallback){
-        this.imageLoadDoneCallback-theCallback
+        this.imageLoadDoneCallback=theCallback
     }
 
     constructor(context: Context?, uriList: ArrayList<String>?) : super() {

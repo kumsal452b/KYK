@@ -2,8 +2,11 @@ package com.kumsal.kyk.screns
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
@@ -17,6 +20,7 @@ class PostDetail : AppCompatActivity(),imageCallback {
     var shareCommentBtn:Button?=null
     var sharedImages:ArrayList<String>?=null
     var adapter:SliderImagePageAdapter?=null
+    var animatedLayout:LinearLayout?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
@@ -24,7 +28,9 @@ class PostDetail : AppCompatActivity(),imageCallback {
         pagerView=findViewById(R.id.activity_post_detail_pagerView)
         commentContent=findViewById(R.id.activity_post_detail_edttext)
         shareCommentBtn=findViewById(R.id.activity_post_detail_commentBtn)
+        animatedLayout=findViewById(R.id.activity_post_detail_animationLay)
 
+        animatedLayout?.startAnimation(AnimationUtils.loadAnimation(this,R.anim.placeholder))
         sharedImages=intent.getStringArrayListExtra("images")
         adapter=SliderImagePageAdapter(this,sharedImages)
         adapter?.setOnCallbackListener(this)
@@ -32,6 +38,6 @@ class PostDetail : AppCompatActivity(),imageCallback {
     }
 
     override fun imageLoadDoneCallback() {
-
+        animatedLayout.visibility= View.INVISIBLE
     }
 }
