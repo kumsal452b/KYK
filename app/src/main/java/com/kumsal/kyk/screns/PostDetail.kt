@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import com.kumsal.kyk.R
+import com.kumsal.kyk.interfaces.imageCallback
 
-class PostDetail : AppCompatActivity() {
+class PostDetail : AppCompatActivity(),imageCallback {
     var pagerView:ViewPager?=null
     var recyclerView:RecyclerView?=null
     var commentContent:EditText?=null
@@ -26,6 +27,11 @@ class PostDetail : AppCompatActivity() {
 
         sharedImages=intent.getStringArrayListExtra("images")
         adapter=SliderImagePageAdapter(this,sharedImages)
+        adapter?.setOnCallbackListener(this)
         pagerView?.adapter=adapter
+    }
+
+    override fun imageLoadDoneCallback() {
+
     }
 }

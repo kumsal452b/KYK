@@ -19,6 +19,7 @@ import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.SliderClick
+import com.kumsal.kyk.interfaces.imageCallback
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
@@ -35,10 +36,14 @@ class SliderImagePageAdapter : PagerAdapter {
     var uriList: ArrayList<String>? = null
     var mlayoutInflater: LayoutInflater? = null
     var postClickItem:SliderClick?=null
+    var imageLoadDoneCallback:imageCallback?=null
+
     fun setOnClickListener(thePostClick: SliderClick) {
         this.postClickItem = thePostClick
     }
-    fun set
+    fun setOnCallbackListener(theCallback: imageCallback){
+        this.imageLoadDoneCallback-theCallback
+    }
 
     constructor(context: Context?, uriList: ArrayList<String>?) : super() {
         this.context = context
@@ -81,13 +86,19 @@ class SliderImagePageAdapter : PagerAdapter {
         )
         Picasso.get().load(uriList?.get(position)).into(imageView,object:Callback{
             override fun onSuccess() {
-                if (position==count){
-
+                if (position==count-1){
+                    if (imageLoadDoneCallback!=null){
+                        imageLoadDoneCallback?.imageLoadDoneCallback()
+                    }
                 }
             }
 
             override fun onError(e: Exception?) {
-
+                if (position==count-1){
+                    if (imageLoadDoneCallback!=null){
+                        imageLoadDoneCallback?.imageLoadDoneCallback()
+                    }
+                }
             }
         })
         container.addView(itemView)
