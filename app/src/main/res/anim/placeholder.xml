@@ -8,8 +8,8 @@
         android:repeatMode="reverse"
         android:toAlpha="0.1" />
     <scale
-        android:fromYScale="1"
-        android:toYScale="0"
+        android:fromYScale="@dimen/bb_fake_shadow_height"
+        android:toYScale="1dp"
         android:repeatCount="infinite"
         android:repeatMode="reverse"/>
 </set>
