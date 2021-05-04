@@ -1,5 +1,6 @@
 package com.kumsal.kyk.screns
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -30,7 +31,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         commentContent = findViewById(R.id.activity_post_detail_edttext)
         shareCommentBtn = findViewById(R.id.activity_post_detail_commentBtn)
         animatedLayout = findViewById(R.id.activity_post_detail_animationLay)
-
+        animatedLayout?.setBackgroundColor(Color.BLUE)
         animatedLayout?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.placeholder))
         sharedImages = intent.getStringArrayListExtra("images")
         adapter = SliderImagePageAdapter(this, sharedImages)
