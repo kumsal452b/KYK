@@ -38,6 +38,6 @@ class PostDetail : AppCompatActivity(),imageCallback {
     }
 
     override fun imageLoadDoneCallback() {
-        animatedLayout.visibility= View.INVISIBLE
+        animatedLayout?.visibility= View.GONE
     }
 }
