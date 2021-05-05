@@ -23,7 +23,6 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     var shareCommentBtn: Button? = null
     var sharedImages: ArrayList<String>? = null
     var adapter: SliderImagePageAdapter? = null
-    var animatedLayout: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
@@ -31,9 +30,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         pagerView = findViewById(R.id.activity_post_detail_pagerView)
         commentContent = findViewById(R.id.activity_post_detail_edttext)
         shareCommentBtn = findViewById(R.id.activity_post_detail_commentBtn)
-        animatedLayout = findViewById(R.id.activity_post_detail_animationLay)
-        animatedLayout?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.placeholder))
-//        animatedLayout?.isVisible = false
+
         sharedImages = intent.getStringArrayListExtra("images")
         adapter = SliderImagePageAdapter(this, sharedImages)
         adapter?.setOnCallbackListener(this)
@@ -41,9 +38,6 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     }
 
     override fun imageLoadDoneCallback() {
-        animatedLayout?.isVisible = false
-        animatedLayout?.animation?.cancel()
-        animatedLayout?.setBackgroundColor(Color.GREEN)
-        animatedLayout?.visibility=View.INVISIBLE
+
     }
 }

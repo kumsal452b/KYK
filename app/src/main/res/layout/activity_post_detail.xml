@@ -6,267 +6,285 @@
     android:layout_height="match_parent"
     tools:context=".screns.PostDetail">
 
-    <RelativeLayout
-        android:id="@+id/activity_post_detail_relative"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/activity_post_detail_recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/activity_post_detail_imageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:paddingStart="7dp"
-            android:src="@mipmap/emptyuser"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/activity_post_detail_constraint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/activity_post_detail_imageView">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_max="150dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ScrollView
-                    android:fillViewport="true"
-                    android:id="@+id/activity_post_detail_scrolElement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/activity_post_detail_imageView"
-                    app:layout_constraintHeight_max="150dp">
-
-                    <com.hendraanggrian.appcompat.widget.SocialTextView
-                        android:id="@+id/activity_post_detail_postContent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:contextClickable="false"
-                        android:elegantTextHeight="false"
-                        android:freezesText="true"
-                        android:paddingStart="7dp"
-                        android:text="asaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasa"
-                        android:textAlignment="inherit"
-                        android:textAllCaps="false"
-                        android:textColor="#100C0C"
-                        android:textSize="15sp"
-                        android:textStyle="normal" />
-                </ScrollView>
-            </androidx.cardview.widget.CardView>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <RelativeLayout
-            android:id="@+id/activity_post_detail_relative2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/activity_post_detail_imageView">
-
-            <TextView
-                android:id="@+id/post_layout_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="4dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Yahya Alatas"
-                android:textColor="#090606"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/post_layout_username"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/post_layout_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/post_layout_name"
-                android:fontFamily="@font/rubikvariablevontwght"
-                android:text="@yahya"
-                android:textColor="@color/black"
-                android:textSize="13sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/post_layout_name"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/post_layout_dot"
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:layout_centerVertical="true"
-
-                android:layout_marginStart="2dp"
-                android:layout_marginBottom="2dp"
-                android:layout_toEndOf="@id/post_layout_username"
-
-                android:textColor="@color/black"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/post_layout_sinceTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="2dp"
-                android:layout_toEndOf="@id/post_layout_dot"
-                android:fontFamily="sans-serif-thin"
-                android:text="4h"
-                android:textColor="@color/black"
-                android:textSize="13sp"
-                android:textStyle="bold" />
-
-            <ImageButton
-                android:id="@+id/post_layout_expanded"
-                android:layout_width="23dp"
-                android:layout_height="28dp"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center_horizontal"
-                android:background="#00816666"
-                android:src="@drawable/ic_baseline_expand_more_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-
-                />
-        </RelativeLayout>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/activity_post_detail_pagerView"
-            android:layout_width="match_parent"
-            android:layout_height="370dp"
-            android:layout_below="@id/activity_post_detail_constraint"
-            android:visibility="invisible">
-
-        </androidx.viewpager.widget.ViewPager>
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_below="@id/activity_post_detail_pagerView"
-            android:background="@drawable/divider" />
-
-        <LinearLayout
-            android:id="@+id/activity_post_detail_linearlayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/activity_post_detail_pagerView"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp">
-
-            <com.sackcentury.shinebuttonlib.ShineButton
-                android:id="@+id/activity_post_detail_favorite"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="5dp"
-                android:src="@android:color/darker_gray"
-                app:allow_random_color="false"
-                app:big_shine_color="#FF6666"
-                app:btn_color="@android:color/darker_gray"
-                app:btn_fill_color="#FF6666"
-                app:click_animation_duration="200"
-                app:enable_flashing="false"
-                app:shine_animation_duration="1500"
-                app:shine_count="8"
-                app:shine_distance_multiple="1.5"
-                app:shine_turn_angle="10"
-                app:siShape="@raw/fav"
-                app:small_shine_color="#CC9999"
-                app:small_shine_offset_angle="20" />
-
-            <TextView
-                android:id="@+id/activity_post_detail_favorite_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="0"
-                android:textColor="#020101"
-                android:textSize="16sp" />
-
-            <ImageButton
-                android:id="@+id/activity_post_detail_comment"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="75dp"
-                android:layout_toEndOf="@id/activity_post_detail_favorite"
-                android:background="#00FFFFFF"
-                android:scaleType="fitXY"
-                android:src="@drawable/comment" />
-
-            <TextView
-                android:id="@+id/activity_post_detail_comment_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="0"
-                android:textColor="#070505"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <View
-
-            android:id="@+id/view"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_below="@id/activity_post_detail_linearlayout"
-            android:background="@drawable/divider" />
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/activity_post_detail_emty"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/activity_post_detail_recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_relative">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center"
-            android:scaleType="fitXY"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="emptyAlert.json"
-            app:lottie_loop="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/aclonica"
-            android:text="We couldn't find anything here"
-            android:textSize="16dp" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/activity_post_detail_recyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_relative">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="30dp">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <RelativeLayout
+                android:id="@+id/activity_post_detail_relative"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/activity_post_detail_recyclerView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/activity_post_detail_imageView"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:paddingStart="7dp"
+                    android:src="@mipmap/emptyuser"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/activity_post_detail_constraint"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activity_post_detail_imageView">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constrainedHeight="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHeight_max="150dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <ScrollView
+                            android:id="@+id/activity_post_detail_scrolElement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/activity_post_detail_imageView"
+                            android:fillViewport="true"
+                            app:layout_constraintHeight_max="150dp">
+
+                            <com.hendraanggrian.appcompat.widget.SocialTextView
+                                android:id="@+id/activity_post_detail_postContent"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contextClickable="false"
+                                android:elegantTextHeight="false"
+                                android:freezesText="true"
+                                android:paddingStart="7dp"
+                                android:text="asaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasa"
+                                android:textAlignment="inherit"
+                                android:textAllCaps="false"
+                                android:textColor="#100C0C"
+                                android:textSize="15sp"
+                                android:textStyle="normal" />
+                        </ScrollView>
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <RelativeLayout
+                    android:id="@+id/activity_post_detail_relative2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/activity_post_detail_imageView">
+
+                    <TextView
+                        android:id="@+id/post_layout_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Yahya Alatas"
+                        android:textColor="#090606"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/post_layout_username"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/post_layout_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@id/post_layout_name"
+                        android:fontFamily="@font/rubikvariablevontwght"
+                        android:text="@yahya"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toEndOf="@+id/post_layout_name"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/post_layout_dot"
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
+                        android:layout_centerVertical="true"
+
+                        android:layout_marginStart="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_toEndOf="@id/post_layout_username"
+
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/post_layout_sinceTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="2dp"
+                        android:layout_toEndOf="@id/post_layout_dot"
+                        android:fontFamily="sans-serif-thin"
+                        android:text="4h"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/post_layout_expanded"
+                        android:layout_width="23dp"
+                        android:layout_height="28dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_horizontal"
+                        android:background="#00816666"
+                        android:src="@drawable/ic_baseline_expand_more_24"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        />
+                </RelativeLayout>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/activity_post_detail_pagerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="370dp"
+                    android:layout_below="@id/activity_post_detail_constraint"
+                    android:visibility="invisible">
+
+                </androidx.viewpager.widget.ViewPager>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/activity_post_detail_pagerView"
+                    android:background="@drawable/divider" />
+
+                <LinearLayout
+                    android:id="@+id/activity_post_detail_linearlayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/activity_post_detail_pagerView"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp">
+
+                    <com.sackcentury.shinebuttonlib.ShineButton
+                        android:id="@+id/activity_post_detail_favorite"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="5dp"
+                        android:src="@android:color/darker_gray"
+                        app:allow_random_color="false"
+                        app:big_shine_color="#FF6666"
+                        app:btn_color="@android:color/darker_gray"
+                        app:btn_fill_color="#FF6666"
+                        app:click_animation_duration="200"
+                        app:enable_flashing="false"
+                        app:shine_animation_duration="1500"
+                        app:shine_count="8"
+                        app:shine_distance_multiple="1.5"
+                        app:shine_turn_angle="10"
+                        app:siShape="@raw/fav"
+                        app:small_shine_color="#CC9999"
+                        app:small_shine_offset_angle="20" />
+
+                    <TextView
+                        android:id="@+id/activity_post_detail_favorite_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="0"
+                        android:textColor="#020101"
+                        android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/activity_post_detail_comment"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="75dp"
+                        android:layout_toEndOf="@id/activity_post_detail_favorite"
+                        android:background="#00FFFFFF"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/comment" />
+
+                    <TextView
+                        android:id="@+id/activity_post_detail_comment_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:text="0"
+                        android:textColor="#070505"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <View
+
+                    android:id="@+id/view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/activity_post_detail_linearlayout"
+                    android:background="@drawable/divider" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/activity_post_detail_emty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@+id/activity_post_detail_recyclerView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_relative">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    app:lottie_autoPlay="true"
+                    app:lottie_fileName="emptyAlert.json"
+                    app:lottie_loop="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/aclonica"
+                    android:text="We couldn't find anything here"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/activity_post_detail_recyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_relative">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
     <LinearLayout
         android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
