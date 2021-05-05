@@ -30,7 +30,7 @@
             android:textSize="15sp"
             android:textStyle="bold" />
         <com.sackcentury.shinebuttonlib.ShineButton
-            android:id="@+id/post_layout_favorite"
+            android:id="@+id/activity_post_detail_favorite"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerHorizontal="true"
@@ -54,7 +54,7 @@
             />
 
         <TextView
-            android:id="@+id/post_layout_favorite_count"
+            android:id="@+id/activity_post_detail_favorite_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -62,7 +62,7 @@
             android:textColor="#020101"
             android:textSize="16sp"
             android:layout_below="@id/comments_single_Content"
-            android:layout_toEndOf="@id/post_layout_favorite"/>
+            android:layout_toEndOf="@id/activity_post_detail_favorite"/>
 
         <com.hendraanggrian.appcompat.widget.SocialTextView
             android:id="@+id/comments_single_Content"
@@ -90,7 +90,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/comment"
             android:layout_below="@id/comments_single_Content"
-            android:layout_toEndOf="@id/post_layout_favorite_count"
+            android:layout_toEndOf="@id/activity_post_detail_favorite_count"
             />
 
         <TextView
@@ -107,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@drawable/divider"
-            android:layout_below="@id/post_layout_favorite_count"
+            android:layout_below="@id/activity_post_detail_favorite_count"
             android:layout_marginTop="2dp"/>
 
 

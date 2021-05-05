@@ -29,16 +29,16 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
 
     inner class postHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener,SliderClick {
-        var image: CircleImageView = itemView.findViewById(R.id.post_layout_imageView)
+        var image: CircleImageView = itemView.findViewById(R.id.activity_post_detail_imageView)
         var postc: SocialTextView = itemView.findViewById(R.id.post_layout_imageView_postContent)
         var name: TextView = itemView.findViewById(R.id.post_layout_name)
         var username: TextView = itemView.findViewById(R.id.post_layout_username)
         var since: TextView = itemView.findViewById(R.id.post_layout_sinceTime)
         var expanded: ImageButton = itemView.findViewById(R.id.post_layout_expanded)
-        var favorite: ShineButton = itemView.findViewById(R.id.post_layout_favorite)
-        var favoriteCount: TextView = itemView.findViewById(R.id.post_layout_favorite_count)
-        var commit: ImageButton = itemView.findViewById(R.id.post_layout_comment)
-        var commitCount: TextView = itemView.findViewById(R.id.post_layout_comment_count)
+        var favorite: ShineButton = itemView.findViewById(R.id.activity_post_detail_favorite)
+        var favoriteCount: TextView = itemView.findViewById(R.id.activity_post_detail_favorite_count)
+        var commit: ImageButton = itemView.findViewById(R.id.activity_post_detail_comment)
+        var commitCount: TextView = itemView.findViewById(R.id.activity_post_detail_comment_count)
         var pagerView:ViewPager=itemView.findViewById(R.id.activity_post_detail_pagerView)
         var pagerItemCountForImage:TextView=itemView.findViewById(R.id.post_layout_piecesOfPicture)
         var relativeFor:RelativeLayout=itemView.findViewById(R.id.relative1)

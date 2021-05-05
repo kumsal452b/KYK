@@ -17,20 +17,20 @@
         android:background="#FFFFFF">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/post_layout_imageView"
+            android:id="@+id/activity_post_detail_imageView"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:paddingStart="7dp"
             android:src="@mipmap/emptyuser"
-            app:layout_constraintEnd_toStartOf="@id/relative2"
+            app:layout_constraintEnd_toStartOf="@id/activity_post_detail_relative2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
-            android:id="@+id/relative2"
+            android:id="@+id/activity_post_detail_relative2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/post_layout_imageView">
+            android:layout_toEndOf="@id/activity_post_detail_imageView">
 
             <TextView
                 android:id="@+id/post_layout_name"
@@ -106,11 +106,11 @@
             android:id="@+id/linearLayout32"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/post_layout_imageView"
+            android:layout_below="@+id/activity_post_detail_imageView"
             android:layout_marginTop="0dp"
             android:orientation="vertical"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@id/post_layout_imageView">
+            app:layout_constraintTop_toBottomOf="@id/activity_post_detail_imageView">
 
             <com.hendraanggrian.appcompat.widget.SocialTextView
                 android:id="@+id/post_layout_imageView_postContent"
@@ -153,10 +153,10 @@
             android:layout_below="@id/linearLayout32"
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
-            android:layout_toEndOf="@id/post_layout_imageView">
+            android:layout_toEndOf="@id/activity_post_detail_imageView">
 
             <com.sackcentury.shinebuttonlib.ShineButton
-                android:id="@+id/post_layout_favorite"
+                android:id="@+id/activity_post_detail_favorite"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_centerHorizontal="true"
@@ -178,7 +178,7 @@
                 />
 
             <TextView
-                android:id="@+id/post_layout_favorite_count"
+                android:id="@+id/activity_post_detail_favorite_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -187,17 +187,17 @@
                 android:textSize="16sp" />
 
             <ImageButton
-                android:id="@+id/post_layout_comment"
+                android:id="@+id/activity_post_detail_comment"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="75dp"
-                android:layout_toEndOf="@id/post_layout_favorite"
+                android:layout_toEndOf="@id/activity_post_detail_favorite"
                 android:background="#00FFFFFF"
                 android:scaleType="fitXY"
                 android:src="@drawable/comment" />
 
             <TextView
-                android:id="@+id/post_layout_comment_count"
+                android:id="@+id/activity_post_detail_comment_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
