@@ -24,22 +24,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.hendraanggrian.appcompat.widget.SocialTextView
-            android:id="@+id/activity_post_detail_postContent"
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:id="@+id/activity_post_detail_scrolElement"
+            app:layout_constraintHeight_max="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contextClickable="false"
-            android:elegantTextHeight="false"
-            android:freezesText="true"
-            android:paddingStart="7dp"
-            android:text="dfgdfgdf"
-            android:textAlignment="inherit"
-            android:textAllCaps="false"
-            android:textColor="#100C0C"
-            android:textSize="15sp"
-            android:textStyle="normal"
-            android:layout_below="@id/activity_post_detail_imageView"
-             />
+            android:layout_below="@id/activity_post_detail_imageView">
+
+            <com.hendraanggrian.appcompat.widget.SocialTextView
+                android:id="@+id/activity_post_detail_postContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contextClickable="false"
+                android:elegantTextHeight="false"
+                android:freezesText="true"
+                android:paddingStart="7dp"
+                android:text="sdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsds"
+                android:textAlignment="inherit"
+                android:textAllCaps="false"
+                android:textColor="#100C0C"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+        </ScrollView>
 
         <RelativeLayout
             android:id="@+id/activity_post_detail_relative2"
@@ -121,8 +127,8 @@
             android:id="@+id/activity_post_detail_pagerView"
             android:layout_width="match_parent"
             android:layout_height="370dp"
-            android:layout_below="@id/activity_post_detail_postContent"
-            android:visibility="gone">
+            android:layout_below="@id/activity_post_detail_scrolElement"
+            android:visibility="invisible">
 
         </androidx.viewpager.widget.ViewPager>
         <View
