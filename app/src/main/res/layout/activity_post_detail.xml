@@ -6,67 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".screns.PostDetail">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/activity_post_detail_pagerView"
+    <RelativeLayout
+        android:id="@+id/activity_post_detail_relative"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </androidx.viewpager.widget.ViewPager>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="61dp"
-        android:orientation="vertical"
-        android:padding="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/activity_post_detail_pagerView"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <View
-            android:id="@+id/activity_post_detail_animationLay"
-            android:layout_width="300dp"
-            android:layout_height="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/my_place_holder" />
-
-        <View
-            android:layout_width="200dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/my_place_holder" />
-
-        <View
-            android:layout_width="200dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/my_place_holder" />
-
-        <View
-            android:layout_width="200dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/my_place_holder" />
-
-        <View
-            android:layout_width="200dp"
-            android:layout_height="20dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/my_place_holder" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="@drawable/divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_pagerView" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/activity_post_detail_recyclerView">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/activity_post_detail_pagerView"
+            android:layout_width="match_parent"
+            android:layout_height="370dp"
+            android:visibility="visible"
+            >
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/activity_post_detail_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/activity_post_detail_pagerView">
+
+            <com.sackcentury.shinebuttonlib.ShineButton
+                android:id="@+id/post_layout_favorite"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="5dp"
+                android:src="@android:color/darker_gray"
+                app:allow_random_color="false"
+                app:big_shine_color="#FF6666"
+                app:btn_color="@android:color/darker_gray"
+                app:btn_fill_color="#FF6666"
+                app:click_animation_duration="200"
+                app:enable_flashing="false"
+                app:shine_animation_duration="1500"
+                app:shine_count="8"
+                app:shine_distance_multiple="1.5"
+                app:shine_turn_angle="10"
+                app:siShape="@raw/fav"
+                app:small_shine_color="#CC9999"
+                app:small_shine_offset_angle="20" />
+
+            <TextView
+                android:id="@+id/post_layout_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="0"
+                android:textColor="#020101"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/post_layout_comment"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="75dp"
+                android:layout_toEndOf="@id/post_layout_favorite"
+                android:background="#00FFFFFF"
+                android:scaleType="fitXY"
+                android:src="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/post_layout_comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="0"
+                android:textColor="#070505"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <View
+
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@drawable/divider"
+            />
+    </RelativeLayout>
+
+
 
     <LinearLayout
         android:id="@+id/activity_post_detail_emty"
@@ -76,24 +101,24 @@
         app:layout_constraintBottom_toBottomOf="@+id/activity_post_detail_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout">
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
+            android:scaleType="fitXY"
             app:lottie_autoPlay="true"
             app:lottie_fileName="emptyAlert.json"
-            app:lottie_loop="true"
-            android:scaleType="fitXY"/>
+            app:lottie_loop="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="We couldn't find anything here"
             android:layout_gravity="center"
-            android:textSize="16dp"
-            android:fontFamily="@font/aclonica"/>
+            android:fontFamily="@font/aclonica"
+            android:text="We couldn't find anything here"
+            android:textSize="16dp" />
 
     </LinearLayout>
 
@@ -104,7 +129,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view">
+        app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_relative">
 
     </androidx.recyclerview.widget.RecyclerView>
 
