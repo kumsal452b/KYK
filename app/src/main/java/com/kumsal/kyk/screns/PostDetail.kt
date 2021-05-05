@@ -31,7 +31,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         commentContent = findViewById(R.id.activity_post_detail_edttext)
         shareCommentBtn = findViewById(R.id.activity_post_detail_commentBtn)
         animatedLayout = findViewById(R.id.activity_post_detail_animationLay)
-        this.animatedLayout?.isVisible = false
+//        this.animatedLayout?.isVisible = false
         animatedLayout?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.placeholder))
         sharedImages = intent.getStringArrayListExtra("images")
         adapter = SliderImagePageAdapter(this, sharedImages)
@@ -40,7 +40,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     }
 
     override fun imageLoadDoneCallback() {
-//        animatedLayout?.setBackgroundColor(Color.BLUE)
+        animatedLayout?.animation?.cancel()
 
     }
 }
