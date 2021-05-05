@@ -10,10 +10,10 @@
         android:id="@+id/activity_post_detail_relative"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/activity_post_detail_recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/activity_post_detail_recyclerView">
+        app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/activity_post_detail_imageView"
@@ -24,28 +24,48 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:id="@+id/activity_post_detail_scrolElement"
-            app:layout_constraintHeight_max="150dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/activity_post_detail_constraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/activity_post_detail_imageView">
 
-            <com.hendraanggrian.appcompat.widget.SocialTextView
-                android:id="@+id/activity_post_detail_postContent"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:contextClickable="false"
-                android:elegantTextHeight="false"
-                android:freezesText="true"
-                android:paddingStart="7dp"
-                android:text="sdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsdssdssdsds"
-                android:textAlignment="inherit"
-                android:textAllCaps="false"
-                android:textColor="#100C0C"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-        </ScrollView>
+                app:layout_constrainedHeight="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_max="150dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ScrollView
+                    android:fillViewport="true"
+                    android:id="@+id/activity_post_detail_scrolElement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activity_post_detail_imageView"
+                    app:layout_constraintHeight_max="150dp">
+
+                    <com.hendraanggrian.appcompat.widget.SocialTextView
+                        android:id="@+id/activity_post_detail_postContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contextClickable="false"
+                        android:elegantTextHeight="false"
+                        android:freezesText="true"
+                        android:paddingStart="7dp"
+                        android:text="asaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasa"
+                        android:textAlignment="inherit"
+                        android:textAllCaps="false"
+                        android:textColor="#100C0C"
+                        android:textSize="15sp"
+                        android:textStyle="normal" />
+                </ScrollView>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <RelativeLayout
             android:id="@+id/activity_post_detail_relative2"
@@ -127,25 +147,25 @@
             android:id="@+id/activity_post_detail_pagerView"
             android:layout_width="match_parent"
             android:layout_height="370dp"
-            android:layout_below="@id/activity_post_detail_scrolElement"
+            android:layout_below="@id/activity_post_detail_constraint"
             android:visibility="invisible">
 
         </androidx.viewpager.widget.ViewPager>
+
         <View
             android:id="@+id/view2"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:background="@drawable/divider"
             android:layout_below="@id/activity_post_detail_pagerView"
-            />
+            android:background="@drawable/divider" />
 
         <LinearLayout
             android:id="@+id/activity_post_detail_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/activity_post_detail_pagerView"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:layout_below="@+id/activity_post_detail_pagerView">
+            android:layout_marginTop="5dp">
 
             <com.sackcentury.shinebuttonlib.ShineButton
                 android:id="@+id/activity_post_detail_favorite"
@@ -202,9 +222,8 @@
             android:id="@+id/view"
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:background="@drawable/divider"
             android:layout_below="@id/activity_post_detail_linearlayout"
-            />
+            android:background="@drawable/divider" />
     </RelativeLayout>
 
 
