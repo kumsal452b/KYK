@@ -11,7 +11,7 @@
         android:id="@+id/activity_post_detail_scrolElement2"
         android:layout_width="match_parent"
 
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@+id/linearLayout5"
         android:layout_alignParentTop="true"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
@@ -73,12 +73,13 @@
                                 android:elegantTextHeight="false"
                                 android:freezesText="true"
                                 android:paddingStart="7dp"
+                                android:text="sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd"
                                 android:textAlignment="inherit"
                                 android:textAllCaps="false"
                                 android:textColor="#100C0C"
                                 android:textSize="15sp"
                                 android:textStyle="normal"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
                         </ScrollView>
                     </androidx.cardview.widget.CardView>
 
@@ -165,7 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="370dp"
                     android:layout_below="@id/activity_post_detail_constraint"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                 </androidx.viewpager.widget.ViewPager>
 
@@ -247,7 +248,8 @@
             <LinearLayout
                 android:id="@+id/activity_post_detail_emty"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="167dp"
+                android:layout_below="@id/activity_post_detail_relative"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="@+id/activity_post_detail_recyclerView"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -275,12 +277,18 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activity_post_detail_recyclerView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/activity_post_detail_relative"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+
+                android:layout_alignParentBottom="true"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/activity_post_detail_emty"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/activity_post_detail_relative">
+                app:layout_constraintTop_toBottomOf="@id/activity_post_detail_relative">
+
 
             </androidx.recyclerview.widget.RecyclerView>
 
