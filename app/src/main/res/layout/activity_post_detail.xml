@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout5"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,12 +73,12 @@
                                 android:elegantTextHeight="false"
                                 android:freezesText="true"
                                 android:paddingStart="7dp"
-                                android:text="asaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasaasa"
                                 android:textAlignment="inherit"
                                 android:textAllCaps="false"
                                 android:textColor="#100C0C"
                                 android:textSize="15sp"
-                                android:textStyle="normal" />
+                                android:textStyle="normal"
+                                android:visibility="gone" />
                         </ScrollView>
                     </androidx.cardview.widget.CardView>
 
@@ -165,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="370dp"
                     android:layout_below="@id/activity_post_detail_constraint"
-                    android:visibility="invisible">
+                    android:visibility="gone">
 
                 </androidx.viewpager.widget.ViewPager>
 
