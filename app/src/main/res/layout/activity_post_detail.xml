@@ -74,7 +74,7 @@
                                 android:elegantTextHeight="false"
                                 android:freezesText="true"
                                 android:paddingStart="7dp"
-                                android:text="sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd"
+                                android:text="sdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd"
                                 android:textAlignment="inherit"
                                 android:textAllCaps="false"
                                 android:textColor="#100C0C"
@@ -176,6 +176,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"
                     android:layout_below="@id/activity_post_detail_pagerView"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/divider" />
 
                 <LinearLayout
@@ -184,14 +186,15 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/activity_post_detail_pagerView"
                     android:layout_alignParentRight="true"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp">
 
                     <com.sackcentury.shinebuttonlib.ShineButton
                         android:id="@+id/activity_post_detail_favorite"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginStart="5dp"
+                        android:layout_marginStart="15dp"
                         android:src="@android:color/darker_gray"
                         app:allow_random_color="false"
                         app:big_shine_color="#FF6666"
@@ -242,6 +245,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="1dp"
                     android:layout_below="@id/activity_post_detail_linearlayout"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
                     android:background="@drawable/divider" />
             </RelativeLayout>
 
