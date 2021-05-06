@@ -64,7 +64,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/activity_post_detail_imageView"
                             android:fillViewport="true"
-                            app:layout_constraintHeight_max="150dp">
+                            app:layout_constraintHeight_max="150dp"
+                            android:nestedScrollingEnabled="true">
 
                             <com.hendraanggrian.appcompat.widget.SocialTextView
                                 android:id="@+id/activity_post_detail_postContent"
