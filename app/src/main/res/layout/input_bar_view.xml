@@ -16,7 +16,7 @@
             android:layout_height="0.3dp"
 
             android:layout_alignParentTop="true"
-            android:background="@color/ligthGray" />
+            android:background="@color/colorAccent" />
         <RelativeLayout
             android:id="@+id/inputbar"
 
