@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:id="@+id/msgText"
-                android:background="@drawable/textview_back"
+                android:background="@drawable/editbox_dialog_bkg_ios"
                 android:maxLines="4"
                 android:minHeight="35dp"
                 android:layout_centerVertical="true"
@@ -83,7 +83,7 @@
                 <ImageButton
                     android:visibility="visible"
                     android:onClick="mediaClik"
-                    android:src="@drawable/mic"
+
                     android:scaleType="fitXY"
                     android:id="@+id/audio"
                     android:layout_centerVertical="true"
