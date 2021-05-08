@@ -326,9 +326,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/forcommendedittext"
+                android:elegantTextHeight="false"
                 android:ems="10"
+                android:enabled="true"
+                android:fadeScrollbars="false"
+                android:freezesText="false"
                 android:hint="@string/comment"
                 android:inputType="textPersonName"
+                android:text="sdssssssssssssssssssssssssssssssssssssssssssssssssssssssdsssssssssssssssssssssssssssssssssssssssssssssssssssss"
+                android:textAllCaps="true"
+                android:textDirection="firstStrongRtl"
+                android:textIsSelectable="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
