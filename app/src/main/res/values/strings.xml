@@ -62,4 +62,5 @@
     <string name="success">Success</string>
     <string name="warnconnection">No internet connection! Changes will be processed when you are online</string>
     <string name="comment">Comment...</string>
+    <string name="try_to_write_something">Try to write something</string>
 </resources>
