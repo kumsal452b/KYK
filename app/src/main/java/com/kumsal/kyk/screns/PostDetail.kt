@@ -13,6 +13,8 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.snapshot.StringNode
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.imageCallback
@@ -25,6 +27,8 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     var sharedImages: ArrayList<String>? = null
     var adapter: SliderImagePageAdapter? = null
     var send_message:TextInputEditText?=null
+    var fsReferenceForComment:FirebaseFirestore?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
@@ -38,10 +42,21 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         adapter = SliderImagePageAdapter(this, sharedImages)
         adapter?.setOnCallbackListener(this)
         pagerView?.adapter = adapter
-        
+
+        //Firebase
+        fsReferenceForComment= FirebaseFirestore.getInstance()
+        send_message?.setOnClickListener{
+            println("test is succesfuly")
+        }
     }
 
     override fun imageLoadDoneCallback() {
 
+    }
+     fun activityPostDetailSend(v:View){
+
+         var dataMap=HashMap<String,Any>()
+         dataMap.put("childFrom","")
+         var key=fsReferenceForComment?.collection("Comments")?.id
     }
 }
