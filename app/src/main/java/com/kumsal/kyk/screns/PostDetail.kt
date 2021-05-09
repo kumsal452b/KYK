@@ -27,8 +27,8 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     var shareCommentBtn: Button? = null
     var sharedImages: ArrayList<String>? = null
     var adapter: SliderImagePageAdapter? = null
-    var send_message:TextInputEditText?=null
-    var fsReferenceForComment:FirebaseFirestore?=null
+    var send_message: TextInputEditText? = null
+    var fsReferenceForComment: FirebaseFirestore? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         pagerView = findViewById(R.id.activity_post_detail_pagerView)
         commentContent = findViewById(R.id.activity_post_detail_edttext)
         shareCommentBtn = findViewById(R.id.activity_post_detail_commentBtn)
-        send_message=findViewById(R.id.activity_post_detail_msgText)
+        send_message = findViewById(R.id.activity_post_detail_msgText)
 
         sharedImages = intent.getStringArrayListExtra("images")
         adapter = SliderImagePageAdapter(this, sharedImages)
@@ -45,8 +45,8 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         pagerView?.adapter = adapter
 
         //Firebase
-        fsReferenceForComment= FirebaseFirestore.getInstance()
-        send_message?.setOnClickListener{
+        fsReferenceForComment = FirebaseFirestore.getInstance()
+        send_message?.setOnClickListener {
             println("test is succesfuly")
         }
     }
@@ -54,15 +54,16 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     override fun imageLoadDoneCallback() {
 
     }
-     fun activityPostDetailSend(v:View){
 
-         var dataMap=HashMap<String,Any>()
-         dataMap.put("childFrom","")
-         var key=fsReferenceForComment?.collection("Comments")?.id
+    fun activityPostDetailSend(v: View) {
+
+        var dataMap = HashMap<String, Any>()
+        dataMap.put("childFrom", "")
+        var key = fsReferenceForComment?.collection("Comments")?.id
     }
 
     fun doCommit(view: View) {
-        send_message?.isActivated=true
+        send_message?.setText("Deneme")
 
     }
 }

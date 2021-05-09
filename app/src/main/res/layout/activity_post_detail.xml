@@ -221,7 +221,7 @@
                         android:textSize="16sp" />
 
                     <ImageButton
-                        
+
                         android:onClick="doCommit"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
