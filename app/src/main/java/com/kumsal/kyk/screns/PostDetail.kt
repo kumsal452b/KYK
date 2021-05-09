@@ -8,6 +8,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -58,5 +59,10 @@ open class PostDetail : AppCompatActivity(), imageCallback {
          var dataMap=HashMap<String,Any>()
          dataMap.put("childFrom","")
          var key=fsReferenceForComment?.collection("Comments")?.id
+    }
+
+    fun doCommit(view: View) {
+        send_message?.isActivated=true
+
     }
 }

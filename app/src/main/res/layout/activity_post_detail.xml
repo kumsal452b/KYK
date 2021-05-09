@@ -221,7 +221,8 @@
                         android:textSize="16sp" />
 
                     <ImageButton
-                        android:id="@+id/activity_post_detail_comment"
+                        
+                        android:onClick="doCommit"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_marginStart="75dp"
