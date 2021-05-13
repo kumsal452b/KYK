@@ -103,7 +103,7 @@ class home_fragment : Fragment(), PostClick {
         recyclerViewAnimator.addDuration=1000
         recyclerViewAnimator.removeDuration=1000
         recyclerViewAnimator.changeDuration=1000
-        recyclerView.itemAnimator
+        recyclerView.itemAnimator=recyclerViewAnimator
 
         //
         mPostDb = FirebaseDatabase.getInstance().getReference("Post")
