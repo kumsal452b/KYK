@@ -22,6 +22,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.tasks.OnCompleteListener
@@ -98,7 +99,11 @@ class home_fragment : Fragment(), PostClick {
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.adapter = adapter
-
+        var recyclerViewAnimator:RecyclerView.ItemAnimator=DefaultItemAnimator()
+        recyclerViewAnimator.addDuration=1000
+        recyclerViewAnimator.removeDuration=1000
+        recyclerViewAnimator.changeDuration=1000
+        
         //
         mPostDb = FirebaseDatabase.getInstance().getReference("Post")
         mFsPostDb = FirebaseFirestore.getInstance()
@@ -177,7 +182,7 @@ class home_fragment : Fragment(), PostClick {
                         if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
                             if (thePost.uImageThmb?.size!! > 0) {
                                 var sliderImagePageAdapter =
-                                    SliderImagePageAdapter(context, thePost.uImage)
+                                    SliderImagePageAdapter(context, thePost.uImageThmb)
                                 thePost.slider_adapter = sliderImagePageAdapter
                             }
                             thePost.hasLiked = currentUserLikeList.contains(thePost.id)
