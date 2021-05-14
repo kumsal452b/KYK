@@ -93,7 +93,10 @@ open class PostDetail : AppCompatActivity(), imageCallback {
             }
         }
         if (Globals?.ınstance?.uid!=gettedPostArguman?.post_own_id){
-            send_message?.setText(gettedPostArguman?.post_username)
+            if (!send_message?.text?.contains(gettedPostArguman?.post_username!!)!!){
+                send_message?.setText(send_message?.text+" "+gettedPostArguman?.post_username)
+                send_message?.setSelection(send_message?.text.toString().length)
+            }
         }
     }
 }
