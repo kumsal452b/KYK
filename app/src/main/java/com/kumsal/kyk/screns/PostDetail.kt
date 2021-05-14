@@ -37,6 +37,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     var post_name_surname:TextView?=null
     var post_username:TextView?=null
     var post_since:TextView?=null
+    var post_expand:ImageButton?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +53,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         post_name_surname=findViewById(R.id.activity_post_detail_name)
         post_username=findViewById(R.id.activity_post_detail_username)
         post_since=findViewById(R.id.activity_post_detail_sinceTime)
-
+        post_expand=findViewById(R.id.activity_post_detail_expanded)
 
         gettedPostArguman = intent.getParcelableExtra<SendPostDataModel>("images")!!
         if (gettedPostArguman?.post_HasImage!!){
@@ -64,6 +65,9 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         }
 
         post_content?.setText(gettedPostArguman?.post_Textcontent)
+        post_username?.setText(gettedPostArguman?.post_username)
+        post_name_surname?.setText(gettedPostArguman?.post_name_surname)
+
         //Firebase
         fsReferenceForComment = FirebaseFirestore.getInstance()
     }

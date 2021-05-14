@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/comments_cardview">
+    android:id="@+id/comments_cardview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/comments_single_relative"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#DAD7D7">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/comments_single_imageProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/emptyuser"
             android:scaleType="fitXY"
-            />
+            android:src="@mipmap/emptyuser" />
 
         <TextView
             android:id="@+id/comments_single_name"
@@ -29,12 +29,15 @@
             android:textColor="#2E2222"
             android:textSize="15sp"
             android:textStyle="bold" />
+
         <com.sackcentury.shinebuttonlib.ShineButton
             android:id="@+id/activity_post_detail_favorite"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_below="@id/comments_single_Content"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/comments_single_imageProfile"
             android:src="@android:color/darker_gray"
             app:allow_random_color="false"
             app:big_shine_color="#FF6666"
@@ -48,26 +51,26 @@
             app:shine_turn_angle="10"
             app:siShape="@raw/fav"
             app:small_shine_color="#CC9999"
-            app:small_shine_offset_angle="20"
-            android:layout_below="@id/comments_single_Content"
-            android:layout_toEndOf="@id/comments_single_imageProfile"
-            />
+            app:small_shine_offset_angle="20" />
 
         <TextView
             android:id="@+id/activity_post_detail_favorite_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/comments_single_Content"
             android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/activity_post_detail_favorite"
             android:text="0"
             android:textColor="#020101"
-            android:textSize="16sp"
-            android:layout_below="@id/comments_single_Content"
-            android:layout_toEndOf="@id/activity_post_detail_favorite"/>
+            android:textSize="16sp" />
 
         <com.hendraanggrian.appcompat.widget.SocialTextView
             android:id="@+id/comments_single_Content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/comments_single_name"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/comments_single_imageProfile"
             android:contextClickable="false"
             android:elegantTextHeight="false"
             android:freezesText="true"
@@ -76,39 +79,37 @@
             android:textAllCaps="false"
             android:textColor="#100C0C"
             android:textSize="15sp"
-            android:textStyle="normal"
-            android:layout_below="@id/comments_single_name"
-            android:layout_toEndOf="@id/comments_single_imageProfile"
-            android:layout_marginStart="10dp"/>
+            android:textStyle="normal" />
+
         <ImageButton
             android:id="@+id/comments_single_comment"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_marginStart="75dp"
+            android:layout_below="@id/comments_single_Content"
 
+            android:layout_marginStart="75dp"
+            android:layout_toEndOf="@id/activity_post_detail_favorite_count"
             android:background="#00FFFFFF"
             android:scaleType="fitXY"
-            android:src="@drawable/comment"
-            android:layout_below="@id/comments_single_Content"
-            android:layout_toEndOf="@id/activity_post_detail_favorite_count"
-            />
+            android:src="@drawable/comment" />
 
         <TextView
             android:id="@+id/comments_single_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/comments_single_Content"
             android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/comments_single_comment"
             android:text="0"
             android:textColor="#070505"
-            android:textSize="16sp"
-            android:layout_below="@id/comments_single_Content"
-            android:layout_toEndOf="@id/comments_single_comment"/>
+            android:textSize="16sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@drawable/divider"
             android:layout_below="@id/activity_post_detail_favorite_count"
-            android:layout_marginTop="2dp"/>
+            android:layout_marginTop="2dp"
+            android:background="@drawable/divider" />
 
 
     </RelativeLayout>

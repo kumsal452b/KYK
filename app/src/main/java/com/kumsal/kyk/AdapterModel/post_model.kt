@@ -19,6 +19,7 @@ class post_model{
     var uImageThmb:ArrayList<String>?=null
     var uImage:ArrayList<String>?=null
     var likesCount:Int?=null
+    var uid:String?=null
     constructor(){}
     constructor(
         name: String?,
@@ -42,8 +43,9 @@ class post_model{
         this.slider_adapter=slider_adapter
     }
 
-    constructor(id: String?) {
+    constructor(id: String?,uid:String?) {
         this.id = id
+        this.id=uid
     }
 
     constructor(hasLiked: Boolean?) {
