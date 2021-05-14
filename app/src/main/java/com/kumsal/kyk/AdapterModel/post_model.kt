@@ -45,7 +45,7 @@ class post_model{
 
     constructor(id: String?,uid:String?) {
         this.id = id
-        this.id=uid
+        this.uid=uid
     }
 
     constructor(hasLiked: Boolean?) {
