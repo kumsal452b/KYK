@@ -63,7 +63,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     }
 
     fun doCommit(view: View) {
-        send_message?.setText("Deneme")
+        send_message?.isCursorVisible=true
 
     }
 }
