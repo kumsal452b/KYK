@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Parcel
+import android.os.Parcelable
 import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.util.Log
@@ -290,15 +291,9 @@ class home_fragment : Fragment(), PostClick {
         var theClickPost = post_list.get(position)
         var forPostDetailIntent=Intent(context,PostDetail::class.java)
         var hasImage=(theClickPost.uImageThmb?.size!=0 ||theClickPost.uImageThmb!=null)
-        var parcel=getpar
-        var theSendPostModel=SendPostDataModel(
-            theClickPost.pc,
-            theClickPost.uImageThmb,
-            theClickPost.username,
-            theClickPost.thmbImageUri,
-            hasImage,
-            theClickPost.name
-        )
+        var theSendPostModel=SendPostDataModel()
+        var parcel=Parcel()
+        theSendPostModel.
 
         forPostDetailIntent.putExtra("images",theSendPostModel)
         startActivity(forPostDetailIntent)
