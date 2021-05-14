@@ -10,7 +10,7 @@ class SendPostDataModel() :Parcelable {
     var post_profile_imagePath:String?=null
     var post_HasImage:Boolean?=null
     var post_name_surname:String?=null
-
+    var post_own_id:String?=null
     constructor(parcel: Parcel) : this() {
         post_Textcontent = parcel.readString()
         post_username = parcel.readString()
@@ -18,6 +18,7 @@ class SendPostDataModel() :Parcelable {
         post_HasImage = parcel.readValue(Boolean::class.java.classLoader) as? Boolean
         post_name_surname = parcel.readString()
         post_image_Url=parcel.readArrayList(ArrayList::class.java.classLoader) as? ArrayList<String>
+        post_own_id=parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -27,6 +28,7 @@ class SendPostDataModel() :Parcelable {
         parcel.writeValue(post_HasImage)
         parcel.writeString(post_name_surname)
         parcel.writeArray(post_image_Url?.toArray())
+        parcel.writeString(post_own_id)
     }
 
     override fun describeContents(): Int {

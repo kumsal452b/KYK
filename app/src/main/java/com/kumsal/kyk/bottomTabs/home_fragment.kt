@@ -292,12 +292,15 @@ class home_fragment : Fragment(), PostClick {
         var forPostDetailIntent=Intent(context,PostDetail::class.java)
         var hasImage=(theClickPost.uImageThmb?.size!=0 && theClickPost.uImageThmb!=null)
         var theSendPostModel=SendPostDataModel()
+
         theSendPostModel.post_image_Url=theClickPost.uImageThmb
         theSendPostModel.post_HasImage=hasImage
         theSendPostModel.post_Textcontent=theClickPost.pc
         theSendPostModel.post_profile_imagePath=theClickPost.thmbImageUri
         theSendPostModel.post_name_surname=theClickPost.name
         theSendPostModel.post_username=theClickPost.username
+        theSendPostModel.post_own_id=theClickPost.uid
+
         forPostDetailIntent.putExtra("images",theSendPostModel)
         startActivity(forPostDetailIntent)
     }

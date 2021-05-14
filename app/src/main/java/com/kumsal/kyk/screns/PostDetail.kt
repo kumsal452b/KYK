@@ -19,6 +19,7 @@ import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.AdapterModel.SendPostDataModel
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
+import com.kumsal.kyk.Globals
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.imageCallback
 import de.hdodenhof.circleimageview.CircleImageView
@@ -91,6 +92,8 @@ open class PostDetail : AppCompatActivity(), imageCallback {
                 imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
             }
         }
-
+        if (Globals?.ınstance?.uid!=gettedPostArguman?.post_own_id){
+            send_message?.setText(gettedPostArguman?.post_username)
+        }
     }
 }
