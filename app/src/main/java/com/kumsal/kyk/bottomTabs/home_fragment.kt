@@ -13,6 +13,7 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcel
 import android.provider.BaseColumns
 import android.provider.MediaStore
 import android.util.Log
@@ -32,10 +33,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.Query
 import com.google.firebase.firestore.*
-import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
-import com.kumsal.kyk.AdapterModel.UsersModel
-import com.kumsal.kyk.AdapterModel.post_adapter
-import com.kumsal.kyk.AdapterModel.post_model
+import com.kumsal.kyk.AdapterModel.*
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.MainActivity
@@ -291,7 +289,18 @@ class home_fragment : Fragment(), PostClick {
     override fun commClick(position: Int) {
         var theClickPost = post_list.get(position)
         var forPostDetailIntent=Intent(context,PostDetail::class.java)
-        forPostDetailIntent.putExtra("images",theClickPost.uImageThmb)
+        var hasImage=(theClickPost.uImageThmb?.size!=0 ||theClickPost.uImageThmb!=null)
+        var parcel=getpar
+        var theSendPostModel=SendPostDataModel(
+            theClickPost.pc,
+            theClickPost.uImageThmb,
+            theClickPost.username,
+            theClickPost.thmbImageUri,
+            hasImage,
+            theClickPost.name
+        )
+
+        forPostDetailIntent.putExtra("images",theSendPostModel)
         startActivity(forPostDetailIntent)
     }
 

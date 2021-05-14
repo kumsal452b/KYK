@@ -17,6 +17,7 @@ class SendPostDataModel() :Parcelable {
         post_profile_imagePath = parcel.readString()
         post_HasImage = parcel.readValue(Boolean::class.java.classLoader) as? Boolean
         post_name_surname = parcel.readString()
+        post_image_Url=parcel.readArrayList(ArrayList::class.java.classLoader) as? ArrayList<String>
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -25,6 +26,7 @@ class SendPostDataModel() :Parcelable {
         parcel.writeString(post_profile_imagePath)
         parcel.writeValue(post_HasImage)
         parcel.writeString(post_name_surname)
+        parcel.writeArray(post_image_Url?.toArray())
     }
 
     override fun describeContents(): Int {
