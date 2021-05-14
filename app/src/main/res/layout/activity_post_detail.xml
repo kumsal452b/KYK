@@ -94,7 +94,7 @@
                     android:layout_toEndOf="@id/activity_post_detail_imageView">
 
                     <TextView
-                        android:id="@+id/post_layout_name"
+                        android:id="@+id/activity_post_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -104,22 +104,22 @@
                         android:textColor="#090606"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toStartOf="@id/post_layout_username"
+                        app:layout_constraintEnd_toStartOf="@id/activity_post_detail_username"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/post_layout_username"
+                        android:id="@+id/activity_post_detail_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="8dp"
-                        android:layout_toEndOf="@id/post_layout_name"
+                        android:layout_toEndOf="@id/activity_post_detail_name"
                         android:fontFamily="@font/rubikvariablevontwght"
                         android:text="@yahya"
                         android:textColor="@color/black"
                         android:textSize="13sp"
                         android:textStyle="bold"
-                        app:layout_constraintStart_toEndOf="@+id/post_layout_name"
+                        app:layout_constraintStart_toEndOf="@+id/activity_post_detail_name"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -130,14 +130,14 @@
 
                         android:layout_marginStart="2dp"
                         android:layout_marginBottom="2dp"
-                        android:layout_toEndOf="@id/post_layout_username"
+                        android:layout_toEndOf="@id/activity_post_detail_username"
 
                         android:textColor="@color/black"
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/post_layout_sinceTime"
+                        android:id="@+id/activity_post_detail_sinceTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -150,7 +150,7 @@
                         android:textStyle="bold" />
 
                     <ImageButton
-                        android:id="@+id/post_layout_expanded"
+                        android:id="@+id/activity_post_detail_expanded"
                         android:layout_width="23dp"
                         android:layout_height="28dp"
                         android:layout_alignParentRight="true"

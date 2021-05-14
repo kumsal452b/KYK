@@ -290,7 +290,7 @@ class home_fragment : Fragment(), PostClick {
     override fun commClick(position: Int) {
         var theClickPost = post_list.get(position)
         var forPostDetailIntent=Intent(context,PostDetail::class.java)
-        var hasImage=(theClickPost.uImageThmb?.size!=0 ||theClickPost.uImageThmb!=null)
+        var hasImage=(theClickPost.uImageThmb?.size!=0 && theClickPost.uImageThmb!=null)
         var theSendPostModel=SendPostDataModel()
         theSendPostModel.post_image_Url=theClickPost.uImageThmb
         theSendPostModel.post_HasImage=hasImage
