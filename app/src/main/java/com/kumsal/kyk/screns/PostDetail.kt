@@ -1,11 +1,13 @@
 package com.kumsal.kyk.screns
 
+import android.content.Context
 import android.graphics.Color
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -46,9 +48,6 @@ open class PostDetail : AppCompatActivity(), imageCallback {
 
         //Firebase
         fsReferenceForComment = FirebaseFirestore.getInstance()
-        send_message?.setOnClickListener {
-            println("test is succesfuly")
-        }
     }
 
     override fun imageLoadDoneCallback() {
@@ -63,7 +62,13 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     }
 
     fun doCommit(view: View) {
-        send_message?.isCursorVisible=true
+        send_message?.let {
+            if (it.requestFocus()) {
+                val imm =
+                    view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+                imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            }
+        }
 
     }
 }
