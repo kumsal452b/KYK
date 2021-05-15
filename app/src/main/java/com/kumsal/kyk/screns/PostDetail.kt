@@ -75,17 +75,17 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         //Firebase
         fsReferenceForComment = FirebaseFirestore.getInstance()
 
-        send_message?.addTextChangedListener(object:TextWatcher{
+        send_message?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                TODO("Not yet implemented")
+                println("before "+s)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                TODO("Not yet implemented")
+                println("now "+s)
             }
 
             override fun afterTextChanged(s: Editable?) {
-                TODO("Not yet implemented")
+                println("after "+s)
             }
         })
     }
