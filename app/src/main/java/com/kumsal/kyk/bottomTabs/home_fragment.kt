@@ -178,7 +178,6 @@ class home_fragment : Fragment(), PostClick {
                         var thePost = doc.toObject(post_model::class.java)
 
                         thePost.id = doc.id
-                        println(thePost.id)
                         if (!blocked.contains(thePost.username) && !blocker.contains(thePost.username)) {
                             if (thePost.uImageThmb?.size!! > 0) {
                                 var sliderImagePageAdapter =

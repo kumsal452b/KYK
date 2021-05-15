@@ -54,6 +54,7 @@ import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickListener,
@@ -449,7 +450,6 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                                             arrayOf(item.uid,item.pid)
                                         )
                                     }
-                                    println(countCircle)
                                     countCircle++
                                     Toast.makeText(this, "Sync. succesful", Toast.LENGTH_LONG)
                                         .show()
@@ -462,10 +462,9 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
                         }
                     }
                     task?.addOnFailureListener(OnFailureListener {
-                        println(it.localizedMessage)
+                        Log.d("MainAct",it.localizedMessage)
                     })
                 }
-                println("is online funtion have runn")
                 connectionState.startAnimation(fadeIn)
                 connectionState.text = "Connection"
                 connectionState.setBackgroundColor(Color.GREEN)
