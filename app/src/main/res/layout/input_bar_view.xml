@@ -37,7 +37,7 @@
                 android:background="@android:color/transparent"
                 android:layout_height="25dp"
                 android:layout_alignParentEnd="true" />
-            <com.google.android.material.textfield.TextInputEditText
+            <com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
                 android:layout_marginLeft="6dp"
                 android:layout_marginTop="4dp"
                 android:layout_width="match_parent"

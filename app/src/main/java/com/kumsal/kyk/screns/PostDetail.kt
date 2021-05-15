@@ -5,7 +5,9 @@ import android.graphics.Color
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.SpannableStringBuilder
+import android.text.TextWatcher
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
@@ -32,7 +34,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     var shareCommentBtn: Button? = null
     var gettedPostArguman: SendPostDataModel? = null
     var adapter: SliderImagePageAdapter? = null
-    var send_message: TextInputEditText? = null
+    var send_message: AutoCompleteTextView? = null
     var fsReferenceForComment: FirebaseFirestore? = null
     var post_content: SocialTextView?=null
     var post_circleImageView:CircleImageView?=null
@@ -72,6 +74,20 @@ open class PostDetail : AppCompatActivity(), imageCallback {
 
         //Firebase
         fsReferenceForComment = FirebaseFirestore.getInstance()
+
+        send_message?.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 
     override fun imageLoadDoneCallback() {
@@ -97,7 +113,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
             if (!send_message?.text?.contains(gettedPostArguman?.post_username!!)!!){
                 var completeString=send_message?.text as SpannableStringBuilder
                 var originalString=completeString.toString()
-                originalString+=" "+gettedPostArguman?.post_username
+                originalString+=" @"+gettedPostArguman?.post_username
                 send_message?.setText(originalString)
                 send_message?.setSelection(send_message?.text.toString().length)
             }
