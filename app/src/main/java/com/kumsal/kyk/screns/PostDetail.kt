@@ -48,6 +48,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
 
+        //Android components
         recyclerView = findViewById(R.id.activity_post_detail_recyclerView)
         pagerView = findViewById(R.id.activity_post_detail_pagerView)
         commentContent = findViewById(R.id.activity_post_detail_edttext)
@@ -60,6 +61,9 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         post_since = findViewById(R.id.activity_post_detail_sinceTime)
         post_expand = findViewById(R.id.activity_post_detail_expanded)
 
+        //List initialize
+        listOfSendMessages=ArrayList()
+        
         gettedPostArguman = intent.getParcelableExtra<SendPostDataModel>("images")!!
         if (gettedPostArguman?.post_HasImage!!) {
             adapter = SliderImagePageAdapter(this, gettedPostArguman?.post_image_Url)
@@ -82,7 +86,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                println("now " + s)
+                println("now: "+s+" start "+start+" count "+count+" before "+before)
             }
 
             override fun afterTextChanged(s: Editable?) {
