@@ -36,13 +36,14 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     var adapter: SliderImagePageAdapter? = null
     var send_message: AutoCompleteTextView? = null
     var fsReferenceForComment: FirebaseFirestore? = null
-    var post_content: SocialTextView?=null
-    var post_circleImageView:CircleImageView?=null
-    var post_name_surname:TextView?=null
-    var post_username:TextView?=null
-    var post_since:TextView?=null
-    var post_expand:ImageButton?=null
-
+    var post_content: SocialTextView? = null
+    var post_circleImageView: CircleImageView? = null
+    var post_name_surname: TextView? = null
+    var post_username: TextView? = null
+    var post_since: TextView? = null
+    var post_expand: ImageButton? = null
+    var listOfSendMessages: ArrayList<String>? = null
+    var isStarting=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
@@ -52,20 +53,20 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         commentContent = findViewById(R.id.activity_post_detail_edttext)
         shareCommentBtn = findViewById(R.id.activity_post_detail_commentBtn)
         send_message = findViewById(R.id.activity_post_detail_msgText)
-        post_content=findViewById(R.id.activity_post_detail_postContent)
-        post_circleImageView=findViewById(R.id.activity_post_detail_imageView)
-        post_name_surname=findViewById(R.id.activity_post_detail_name)
-        post_username=findViewById(R.id.activity_post_detail_username)
-        post_since=findViewById(R.id.activity_post_detail_sinceTime)
-        post_expand=findViewById(R.id.activity_post_detail_expanded)
+        post_content = findViewById(R.id.activity_post_detail_postContent)
+        post_circleImageView = findViewById(R.id.activity_post_detail_imageView)
+        post_name_surname = findViewById(R.id.activity_post_detail_name)
+        post_username = findViewById(R.id.activity_post_detail_username)
+        post_since = findViewById(R.id.activity_post_detail_sinceTime)
+        post_expand = findViewById(R.id.activity_post_detail_expanded)
 
         gettedPostArguman = intent.getParcelableExtra<SendPostDataModel>("images")!!
-        if (gettedPostArguman?.post_HasImage!!){
+        if (gettedPostArguman?.post_HasImage!!) {
             adapter = SliderImagePageAdapter(this, gettedPostArguman?.post_image_Url)
             adapter?.setOnCallbackListener(this)
             pagerView?.adapter = adapter
-        }else{
-            pagerView?.visibility=View.GONE
+        } else {
+            pagerView?.visibility = View.GONE
         }
 
         post_content?.setText(gettedPostArguman?.post_Textcontent)
@@ -77,15 +78,15 @@ open class PostDetail : AppCompatActivity(), imageCallback {
 
         send_message?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                println("before "+s)
+                println("once: "+s+" start "+start+" count "+count+" after "+after)
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                println("now "+s)
+                println("now " + s)
             }
 
             override fun afterTextChanged(s: Editable?) {
-                println("after "+s)
+                println("after " + s)
             }
         })
     }
@@ -109,13 +110,17 @@ open class PostDetail : AppCompatActivity(), imageCallback {
                 imm?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
             }
         }
-        if (Globals?.ınstance?.uid!=gettedPostArguman?.post_own_id){
-            if (!send_message?.text?.contains(gettedPostArguman?.post_username!!)!!){
-                var completeString=send_message?.text as SpannableStringBuilder
-                var originalString=completeString.toString()
-                originalString+=" @"+gettedPostArguman?.post_username
+        if (Globals?.ınstance?.uid != gettedPostArguman?.post_own_id) {
+            if (!send_message?.text?.contains(gettedPostArguman?.post_username!!)!!) {
+                var completeString = send_message?.text as SpannableStringBuilder
+                var originalString = completeString.toString()
+                originalString += " @" + gettedPostArguman?.post_username
                 send_message?.setText(originalString)
                 send_message?.setSelection(send_message?.text.toString().length)
+                if (!listOfSendMessages?.contains(gettedPostArguman?.post_username!!)!!){
+                    listOfSendMessages?.add(gettedPostArguman?.post_username!!)
+                }
+
             }
         }
     }
