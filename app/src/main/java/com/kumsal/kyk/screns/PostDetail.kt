@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
@@ -94,9 +95,10 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         }
         if (Globals?.ınstance?.uid!=gettedPostArguman?.post_own_id){
             if (!send_message?.text?.contains(gettedPostArguman?.post_username!!)!!){
-                var completeString=send_message?.text
-//                completeString+=gettedPostArguman?.post_username
-//                send_message?.setText(completeString)
+                var completeString=send_message?.text as SpannableStringBuilder
+                var originalString=completeString.toString()
+                originalString+=" "+gettedPostArguman?.post_username
+                send_message?.setText(originalString)
                 send_message?.setSelection(send_message?.text.toString().length)
             }
         }
