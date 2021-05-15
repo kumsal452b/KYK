@@ -94,7 +94,9 @@ open class PostDetail : AppCompatActivity(), imageCallback {
         }
         if (Globals?.ınstance?.uid!=gettedPostArguman?.post_own_id){
             if (!send_message?.text?.contains(gettedPostArguman?.post_username!!)!!){
-                send_message?.setText(send_message?.text+" "+gettedPostArguman?.post_username)
+                var completeString=send_message?.text
+//                completeString+=gettedPostArguman?.post_username
+//                send_message?.setText(completeString)
                 send_message?.setSelection(send_message?.text.toString().length)
             }
         }
