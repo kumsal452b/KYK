@@ -41,12 +41,10 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var commitCount: TextView = itemView.findViewById(R.id.activity_post_detail_comment_count)
         var pagerView:ViewPager=itemView.findViewById(R.id.activity_post_detail_pagerView)
         var pagerItemCountForImage:TextView=itemView.findViewById(R.id.post_layout_piecesOfPicture)
-        var relativeFor:RelativeLayout=itemView.findViewById(R.id.relative1)
         init {
             favorite.setOnClickListener(this)
             postc.setOnClickListener(this)
             expanded.setOnClickListener(this)
-            relativeFor.setOnClickListener(this)
             pagerView.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
                 override fun onPageScrollStateChanged(state: Int) {
                 }
@@ -113,9 +111,6 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
                         }
                         expanded.id->{
                             thePostClick!!.expandClick(position)
-                        }
-                        relativeFor.id->{
-                            thePostClick!!.commClick(position)
                         }
                     }
                 }

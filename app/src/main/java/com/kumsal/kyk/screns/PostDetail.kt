@@ -89,7 +89,7 @@ open class PostDetail : AppCompatActivity(), imageCallback {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (before==0){
-                    
+
                 }
             }
 

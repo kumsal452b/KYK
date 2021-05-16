@@ -131,7 +131,8 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/activity_post_detail_pagerView"
                 android:layout_width="match_parent"
-                android:layout_height="430dp"
+                android:layout_height="wrap_content"
+
                 android:visibility="visible">
 
             </androidx.viewpager.widget.ViewPager>
