@@ -44,6 +44,8 @@ open class PostDetail : AppCompatActivity(), imageCallback {
     var post_expand: ImageButton? = null
     var listOfSendMessages: ArrayList<String>? = null
     var isStarting=false
+    var dedectUserName= ""
+    var isCycle=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post_detail)
@@ -82,11 +84,13 @@ open class PostDetail : AppCompatActivity(), imageCallback {
 
         send_message?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                
+
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                println("now: "+s+" start "+start+" count "+count+" before "+before)
+                if (before==0){
+                    
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
