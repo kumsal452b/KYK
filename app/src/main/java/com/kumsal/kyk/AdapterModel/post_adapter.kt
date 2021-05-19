@@ -39,7 +39,7 @@ class post_adapter(private var list: ArrayList<post_model>, private var context:
         var favoriteCount: TextView = itemView.findViewById(R.id.activity_post_detail_favorite_count)
         var commit: ImageButton = itemView.findViewById(R.id.activity_post_detail_comment)
         var commitCount: TextView = itemView.findViewById(R.id.activity_post_detail_comment_count)
-        var pagerView:ViewPager=itemView.findViewById(R.id.activity_post_detail_pagerView)
+        var pagerView:ViewPager=itemView.findViewById(R.id.post_layout_pagerInclude)
         var pagerItemCountForImage:TextView=itemView.findViewById(R.id.post_layout_piecesOfPicture)
         init {
             favorite.setOnClickListener(this)
