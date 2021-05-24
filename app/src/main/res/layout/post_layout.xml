@@ -8,8 +8,6 @@
     android:layout_marginTop="5dp"
     app:cardBackgroundColor="#120909"
     app:cardCornerRadius="8dp">
-
-
     <RelativeLayout
         android:id="@+id/relative1"
         android:layout_width="match_parent"
@@ -25,7 +23,6 @@
             app:layout_constraintEnd_toStartOf="@id/activity_post_detail_relative2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <RelativeLayout
             android:id="@+id/activity_post_detail_relative2"
             android:layout_width="match_parent"
@@ -101,7 +98,6 @@
 
                 />
         </RelativeLayout>
-
         <com.hendraanggrian.appcompat.widget.SocialTextView
             android:id="@+id/post_layout_imageView_postContent"
             android:layout_width="wrap_content"
@@ -118,16 +114,13 @@
             android:textStyle="normal"
             android:layout_below="@id/activity_post_detail_imageView"
             />
-
         <include
             android:id="@+id/post_layout_pagerInclude"
             layout="@layout/pagerview_layout"
-            android:layout_below="@id/post_layout_imageView_postContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="60dp"
-            />
-
+            android:layout_height="430dp"
+            android:layout_below="@id/post_layout_imageView_postContent"
+            android:layout_marginBottom="60dp" />
         <TextView
             android:id="@+id/post_layout_piecesOfPicture"
             android:layout_width="match_parent"
@@ -135,7 +128,6 @@
             android:text="1/1"
             android:textAlignment="center"
             android:visibility="gone" />
-
         <LinearLayout
 
             android:layout_width="match_parent"
@@ -193,5 +185,6 @@
                 android:textColor="#070505"
                 android:textSize="16sp" />
         </LinearLayout>
+        
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
