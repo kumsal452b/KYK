@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterDetailActivity"
-    android:background="@drawable/background_starter"
+    android:background="@drawable/bacground_is"
     >
     <RelativeLayout
         android:id="@+id/parentRelative"
@@ -23,7 +23,6 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_marginBottom="400dp"
-        android:background="@drawable/layout_backgorund"
         android:padding="5dp"
         android:src="@mipmap/emptyuser"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -89,7 +88,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/layout_backgorund"
         android:padding="5dp"
         android:shadowColor="@color/white"
         android:text="@string/i_want_to_use_the_recommended_username"
