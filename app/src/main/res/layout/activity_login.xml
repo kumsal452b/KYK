@@ -8,7 +8,7 @@
     tools:context=".screns.LoginActivity">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -29,7 +29,7 @@
                 />
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_below="@id/login_imageView"
                 android:paddingLeft="20dp"
@@ -102,34 +102,11 @@
                         app:layout_constraintTop_toBottomOf="@+id/register_activity_detail_regBtn"
                         android:transitionName="button"/>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"
-                        
-                        >
-                        <TextView
-                            android:id="@+id/login_forgot_textView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20sp"
-                            android:text="@string/forgot_passwod"
-                            android:textAlignment="center"
-                            android:textColor="@color/white"
-                            app:layout_constraintEnd_toEndOf="@+id/login_register_button"
-                            app:layout_constraintStart_toStartOf="@+id/login_register_button"
-                            app:layout_constraintTop_toBottomOf="@+id/login_register_button" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/white"
-                            android:textAlignment="center"
-                            android:layout_marginTop="20sp"
-                            android:layout_marginStart="20dp"
-                            android:text="Do you have new account?"/>
-                    </LinearLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
+
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
