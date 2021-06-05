@@ -39,12 +39,14 @@
 
 
         </LinearLayout>
+
         <RelativeLayout
-            android:background="@color/black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/linearLayout"
-            android:layout_marginBottom="56dp">
+            android:layout_marginBottom="50dp"
+            android:background="@color/black">
+
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/main_activity_pager_view"
                 android:layout_width="match_parent"
@@ -58,17 +60,17 @@
         <TextView
             android:id="@+id/main_page_connectionStatte"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
+            android:layout_below="@id/linearLayout"
             android:background="#10A35E"
             android:gravity="center"
             android:text="@string/connection"
             android:textColor="#F3F3F3"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout"
-            android:layout_below="@id/linearLayout"/>
+            app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
 
 
