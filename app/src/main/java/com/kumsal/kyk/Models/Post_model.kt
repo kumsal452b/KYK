@@ -1,8 +1,7 @@
-package com.kumsal.kyk.AdapterModel
+package com.kumsal.kyk.Models
 
-import android.net.Uri
-import android.text.TextUtils
 import com.google.firebase.Timestamp
+import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import kotlin.collections.ArrayList
 
 class post_model{
@@ -14,7 +13,7 @@ class post_model{
     var time :Timestamp?=null
     var comments:Int?=null
     var likes:ArrayList<String>?=null
-    var slider_adapter:SliderImagePageAdapter?=null
+    var slider_adapter: SliderImagePageAdapter?=null
     var hasLiked:Boolean?=null
     var uImageThmb:ArrayList<String>?=null
     var uImage:ArrayList<String>?=null
@@ -29,7 +28,7 @@ class post_model{
         time: Timestamp?,
         comments: Int,
         likes: ArrayList<String>?,
-        slider_adapter:SliderImagePageAdapter?=null,
+        slider_adapter: SliderImagePageAdapter?=null,
         uImageThmb:ArrayList<String>?=null,
         uImage:ArrayList<String>?=null
     ) {

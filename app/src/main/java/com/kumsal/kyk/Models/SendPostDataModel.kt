@@ -1,4 +1,4 @@
-package com.kumsal.kyk.AdapterModel
+package com.kumsal.kyk.Models
 
 import android.os.Parcel
 import android.os.Parcelable

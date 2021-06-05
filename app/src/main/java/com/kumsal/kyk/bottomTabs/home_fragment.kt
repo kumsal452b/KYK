@@ -3,20 +3,9 @@ package com.kumsal.kyk.bottomTabs
 import android.content.BroadcastReceiver
 import android.content.ContentValues
 import android.content.Intent
-import android.content.IntentFilter
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
-import android.icu.number.IntegerWidth
-import android.media.Image
-import android.net.ConnectivityManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.provider.BaseColumns
-import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -36,20 +25,19 @@ import com.google.firebase.database.Query
 import com.google.firebase.firestore.*
 import com.kumsal.kyk.AdapterModel.*
 import com.kumsal.kyk.Globals
-import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.MainActivity
+import com.kumsal.kyk.Models.SendPostDataModel
+import com.kumsal.kyk.Models.UsersModel
+import com.kumsal.kyk.Models.post_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.GetCenter
 import com.kumsal.kyk.interfaces.PostClick
-import com.kumsal.kyk.interfaces.checkInternet
 import com.kumsal.kyk.screns.PostDetail
 import com.kumsal.voice_newspaper.DbElements
 import com.sackcentury.shinebuttonlib.ShineButton
 import com.squareup.picasso.Picasso
 import com.stfalcon.imageviewer.StfalconImageViewer
 import com.stfalcon.imageviewer.loader.ImageLoader
-import java.io.InputStream
-import java.time.Duration
 import kotlin.collections.ArrayList
 
 
@@ -290,7 +278,7 @@ class home_fragment : Fragment(), PostClick {
         var theClickPost = post_list.get(position)
         var forPostDetailIntent=Intent(context,PostDetail::class.java)
         var hasImage=(theClickPost.uImageThmb?.size!=0 && theClickPost.uImageThmb!=null)
-        var theSendPostModel=SendPostDataModel()
+        var theSendPostModel= SendPostDataModel()
 
         theSendPostModel.post_image_Url=theClickPost.uImageThmb
         theSendPostModel.post_HasImage=hasImage

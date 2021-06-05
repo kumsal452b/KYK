@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.kumsal.kyk.Models.postImage_model
 import com.kumsal.kyk.R
 import com.squareup.picasso.Picasso
 
@@ -17,7 +18,7 @@ class postImage_adapter :RecyclerView.Adapter<postImage_adapter.postImageHolder>
 
     inner class postImageHolder(itemView:View) : RecyclerView.ViewHolder(itemView){
         var imageView:ImageView=itemView.findViewById(R.id.post_single_image)
-        fun bindElement(theEl:postImage_model){
+        fun bindElement(theEl: postImage_model){
             Picasso.get().load(theEl.imageUri).into(imageView)
         }
     }

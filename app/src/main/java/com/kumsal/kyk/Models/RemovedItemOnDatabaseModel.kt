@@ -1,4 +1,4 @@
-package com.kumsal.kyk.AdapterModel
+package com.kumsal.kyk.Models
 
 class RemovedItemOnDatabaseModel{
     var pid:String?=null

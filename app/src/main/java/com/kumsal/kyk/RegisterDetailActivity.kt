@@ -33,7 +33,7 @@ import com.kongzue.dialog.interfaces.OnMenuItemClickListener
 import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
-import com.kumsal.kyk.AdapterModel.UsersModel
+import com.kumsal.kyk.Models.UsersModel
 import com.kumsal.kyk.interfaces.LoadImage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -41,10 +41,6 @@ import de.hdodenhof.circleimageview.CircleImageView
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
-import java.nio.channels.FileChannel
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
 import kotlin.collections.ArrayList
@@ -124,7 +120,8 @@ class RegisterDetailActivity : AppCompatActivity() {
                         getImagePath(object : LoadImage {
                             override fun getImagePath(path: String, path2: String) {
                                 var time=Timestamp.now()
-                                var theUserForPush=UsersModel(theEmail,theName,theUserNames,path2,time,path)
+                                var theUserForPush=
+                                    UsersModel(theEmail,theName,theUserNames,path2,time,path)
                                 theUserForPush.theId=currId
                                 theUserForPush.toMap()
                                 mFstoreDb.collection("Users").document(currId).set(theUserForPush).addOnSuccessListener(

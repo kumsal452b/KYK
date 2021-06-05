@@ -1,17 +1,13 @@
 package com.kumsal.kyk
 
 
-import android.app.job.JobScheduler
 import android.content.BroadcastReceiver
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
-import android.opengl.Visibility
 import android.os.*
-import android.support.v4.media.session.PlaybackStateCompat
 import android.text.TextUtils
-import android.util.AttributeSet
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -25,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.viewpager.widget.ViewPager
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,8 +31,8 @@ import com.google.firebase.database.*
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.kumsal.kyk.AdapterModel.RemovedItemOnDatabaseModel
-import com.kumsal.kyk.AdapterModel.UsersModel
+import com.kumsal.kyk.Models.RemovedItemOnDatabaseModel
+import com.kumsal.kyk.Models.UsersModel
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
 import com.kumsal.kyk.bottomTabs.SectionPagerAdapter
@@ -49,12 +44,10 @@ import com.kumsal.kyk.screns.StarterActivity
 import com.kumsal.voice_newspaper.DbElements
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
-import io.grpc.SynchronizationContext
 import me.ibrahimsn.lib.OnItemSelectedListener
 import me.ibrahimsn.lib.SmoothBottomBar
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickListener,

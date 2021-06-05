@@ -1,4 +1,4 @@
-package com.kumsal.kyk.AdapterModel
+package com.kumsal.kyk.Models
 
 import android.text.TextUtils
 import com.google.gson.JsonObject

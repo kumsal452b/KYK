@@ -9,23 +9,15 @@ import android.view.View
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
-import com.google.firebase.firestore.QuerySnapshot
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
-import com.kumsal.kyk.AdapterModel.UsersModel
+import com.kumsal.kyk.Models.UsersModel
 import com.kumsal.kyk.interfaces.UserListCallback
-import java.lang.Exception
 import java.util.ArrayList
 
 class RegisterActivity : AppCompatActivity() {

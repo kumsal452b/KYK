@@ -1,14 +1,12 @@
 package com.kumsal.kyk.AdapterModel
 
 import android.content.Context
-import android.opengl.Visibility
-import android.text.TextUtils
 import android.view.*
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.kumsal.kyk.Models.security_model
 import com.kumsal.kyk.R
-import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.screns.CreatePost
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView

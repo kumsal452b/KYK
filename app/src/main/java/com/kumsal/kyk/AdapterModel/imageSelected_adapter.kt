@@ -1,11 +1,11 @@
 package com.kumsal.kyk.AdapterModel
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.kumsal.kyk.Models.newDataPosModel
 import com.kumsal.kyk.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.ArrayList

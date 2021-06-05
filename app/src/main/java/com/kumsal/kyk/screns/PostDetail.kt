@@ -1,26 +1,19 @@
 package com.kumsal.kyk.screns
 
 import android.content.Context
-import android.graphics.Color
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.textfield.TextInputEditText
-import com.google.firebase.database.snapshot.StringNode
 import com.google.firebase.firestore.FirebaseFirestore
-import com.hendraanggrian.appcompat.widget.SocialAutoCompleteTextView
 import com.hendraanggrian.appcompat.widget.SocialTextView
-import com.kumsal.kyk.AdapterModel.SendPostDataModel
+import com.kumsal.kyk.Models.SendPostDataModel
 import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.R

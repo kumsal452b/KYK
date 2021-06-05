@@ -4,13 +4,11 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.media.audiofx.DynamicsProcessing
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Config
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -23,7 +21,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableList
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,11 +43,13 @@ import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.AdapterModel.*
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
+import com.kumsal.kyk.Models.UsersModel
+import com.kumsal.kyk.Models.newDataPosModel
+import com.kumsal.kyk.Models.security_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.animation.Animation
 import com.kumsal.kyk.interfaces.GetCenterSimilar
 import com.kumsal.kyk.interfaces.imageLoadCall
-import com.kumsal.kyk.interfaces.myObservableCallBack
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
 import com.nguyenhoanglam.imagepicker.model.Image
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
@@ -62,7 +61,6 @@ import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
 import kotlinx.coroutines.launch
 import java.io.*
-import java.lang.Throwable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.Any
@@ -214,7 +212,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                 for (a in uriList){
                     val file=File(a.path)
                     val uri=Uri.fromFile(file)
-                    val theModel=newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
+                    val theModel= newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
                     mAllFileDataModel.add(theModel)
                 }
                 mlistAdapter.notifyDataSetChanged()

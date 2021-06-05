@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.hendraanggrian.appcompat.widget.SocialTextView
+import com.kumsal.kyk.Models.post_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.SliderClick
