@@ -1,4 +1,4 @@
-package com.kumsal.kyk.AdapterModel
+package com.kumsal.kyk.Adapter
 
 import android.view.LayoutInflater
 import android.view.View

@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.firebase.firestore.FirebaseFirestore
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.Models.SendPostDataModel
-import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
+import com.kumsal.kyk.Adapter.SliderImagePageAdapter
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.R
 import com.kumsal.kyk.interfaces.imageCallback

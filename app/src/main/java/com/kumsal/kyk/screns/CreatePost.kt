@@ -40,7 +40,7 @@ import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.FullScreenDialog
 import com.kongzue.dialog.v3.TipDialog
 import com.kongzue.dialog.v3.WaitDialog
-import com.kumsal.kyk.AdapterModel.*
+import com.kumsal.kyk.Adapter.*
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.Models.UsersModel

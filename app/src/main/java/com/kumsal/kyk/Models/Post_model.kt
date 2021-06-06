@@ -1,7 +1,7 @@
 package com.kumsal.kyk.Models
 
 import com.google.firebase.Timestamp
-import com.kumsal.kyk.AdapterModel.SliderImagePageAdapter
+import com.kumsal.kyk.Adapter.SliderImagePageAdapter
 import kotlin.collections.ArrayList
 
 class post_model{

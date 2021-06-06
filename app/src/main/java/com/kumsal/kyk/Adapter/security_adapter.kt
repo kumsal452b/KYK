@@ -1,10 +1,11 @@
-package com.kumsal.kyk.AdapterModel
+package com.kumsal.kyk.Adapter
 
 import android.content.Context
 import android.view.*
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.kumsal.kyk.Models.security_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.screns.CreatePost
@@ -48,14 +49,17 @@ class security_adapter(
         var imageUrl: CircleImageView = itemView.findViewById(R.id.secure_image)
         var name: TextView = itemView.findViewById(R.id.secure_name)
         var username: TextView = itemView.findViewById(R.id.secure_username)
-        var checkBox: CheckBox = itemView.findViewById(R.id.secure_single_check_box)
+        var checkBox: LottieAnimationView = itemView.findViewById(R.id.secure_single_check_box)
         var cardView: CardView = itemView.findViewById(R.id.secure_single_cardsingle)
         fun bindElement(theModel: security_model) {
             var checkEmpty=theModel.theimage
                 Picasso.get().load(checkEmpty).into(imageUrl)
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
-            checkBox.isChecked=theModel.theisChecked!!
+            if (theModel.theisChecked!!){
+                checkBox.repeatCount=1
+                checkBox.playAnimation()
+            }
         }
 
         init {

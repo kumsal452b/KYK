@@ -1,35 +1,20 @@
-package com.kumsal.kyk.AdapterModel
+package com.kumsal.kyk.Adapter
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.os.Handler
-import android.os.Looper
-import android.provider.MediaStore
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.graphics.PathUtils
 import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
-import com.kumsal.kyk.interfaces.PostClick
 import com.kumsal.kyk.interfaces.SliderClick
 import com.kumsal.kyk.interfaces.imageCallback
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.squareup.picasso.Transformation
-import com.theartofdev.edmodo.cropper.CropImage
-import com.theartofdev.edmodo.cropper.CropImageView
-import jp.wasabeef.picasso.transformations.CropCircleTransformation
-import jp.wasabeef.picasso.transformations.CropSquareTransformation
-import java.io.InputStream
 import java.lang.Exception
-import java.net.URL
 
 class SliderImagePageAdapter : PagerAdapter {
     var context: Context? = null

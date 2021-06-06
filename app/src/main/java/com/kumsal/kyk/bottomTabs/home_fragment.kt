@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.database.Query
 import com.google.firebase.firestore.*
-import com.kumsal.kyk.AdapterModel.*
+import com.kumsal.kyk.Adapter.*
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.MainActivity
 import com.kumsal.kyk.Models.SendPostDataModel
