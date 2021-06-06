@@ -78,7 +78,7 @@ class security_adapter(
         p0.bindElement(theModel)
         p0.cardView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?){
-                CPElement?.startSelection(p1)
+                CPElement?.startSelection(p1,p0.checkBox)
             }
         })
     }

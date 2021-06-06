@@ -25,6 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.Timestamp
@@ -748,7 +749,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //            }
         }
     }
-    public fun startSelection(index: Int) {
+    public fun startSelection(index: Int,checkBox:LottieAnimationView) {
             isActionMode = true
             if (selectedlistElement == null) {
                 selectedlistElement = ArrayList<security_model>()
