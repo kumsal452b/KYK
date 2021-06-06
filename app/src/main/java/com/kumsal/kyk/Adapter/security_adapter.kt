@@ -57,6 +57,8 @@ class security_adapter(
             username.setText(theModel.theusername)
             if (theModel.theisChecked!!){
                 checkBox.frame=36
+            }else{
+                checkBox.frame=0
             }
         }
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {

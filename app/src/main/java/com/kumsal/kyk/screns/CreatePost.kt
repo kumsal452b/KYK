@@ -781,14 +781,42 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         selectedAll.visibility = View.VISIBLE
         updateToolbarText(mcounter)
 //        mAdapter.notifyDataSetChanged()
-        if (checkBox.frame==0){
+        if (checkBox.frame == 0) {
+            checkBox.speed=1.0f
             checkBox.playAnimation()
-            mAdapter.items[index].theisChecked=true
-        }else{
-
-            mAdapter.items[index].theisChecked=false
-            checkBox.repeatMode=LottieDrawable.REVERSE
+            mAdapter.items[index].theisChecked = true
+        } else {
+            mAdapter.items[index].theisChecked = false
+            checkBox.speed=-2.5f
             checkBox.playAnimation()
+        }
+        if (!selectedlistElement.contains(listElement.get(index))) {
+            selectedlistElement.add(listElement.get(index))
+            mcounter++
+            updateToolbarText(mcounter)
+            var theSecureM = listElement.get(index);
+            theSecureM.theisChecked = true
+            listElement.set(index, theSecureM)
+        } else {
+            selectedAll.isChecked = false
+            mcounter--
+            updateToolbarText(mcounter)
+            if (mcounter == 0) {
+                isActionMode = false
+                mAdapter.notifyDataSetChanged()
+                textView.visibility = View.GONE
+                selectedAll.visibility = View.GONE
+            }
+            selectedlistElement.remove(listElement.get(index))
+            var theSecureM = listElement.get(index);
+            theSecureM.theisChecked = false
+            listElement.set(index, theSecureM)
+        }
+        accept_selected_name.isEnabled = !selectedlistElement.isEmpty()
+        if (listElement.size == selectedlistElement.size) {
+            selectedAll.isChecked = true
+        } else if (listElement.size > selectedlistElement.size) {
+            selectedAll.isChecked = false
         }
     }
 
