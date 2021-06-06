@@ -19,16 +19,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <CheckBox
-                android:id="@+id/secure_single_check_box"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"
-                android:buttonTint="@color/white"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/secure_image"
