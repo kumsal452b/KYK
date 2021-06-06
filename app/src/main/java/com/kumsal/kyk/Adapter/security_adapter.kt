@@ -56,15 +56,9 @@ class security_adapter(
             name.setText(theModel.thename)
             username.setText(theModel.theusername)
             if (theModel.theisChecked!!){
-                checkBox.repeatCount=1
-                checkBox.playAnimation()
+                checkBox.frame=36
             }
         }
-
-        init {
-            checkBox.setOnClickListener(this)
-        }
-
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
 
         }
@@ -81,15 +75,6 @@ class security_adapter(
 
     override fun onBindViewHolder(p0: secureHolder, p1: Int) {
         var theModel = filerList.get(p1)
-        if (CreatePost.isActionMode) {
-//            var anim=Animation(100,p0.checkBox)
-//            anim.duration=100
-//            p0.checkBox.animation=anim
-            p0.checkBox.visibility = View.VISIBLE
-
-        } else {
-            p0.checkBox.visibility = View.GONE
-        }
         p0.bindElement(theModel)
         p0.cardView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?){

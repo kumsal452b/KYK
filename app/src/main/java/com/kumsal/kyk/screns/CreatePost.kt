@@ -749,7 +749,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         }
     }
     public fun startSelection(index: Int) {
-        if (!isActionMode) {
             isActionMode = true
             if (selectedlistElement == null) {
                 selectedlistElement = ArrayList<security_model>()
@@ -761,7 +760,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             selectedAll.visibility = View.VISIBLE
             updateToolbarText(mcounter)
             mAdapter.notifyDataSetChanged()
-        }
     }
     private fun updateToolbarText(counter: Int) {
         if (counter == 0) {
