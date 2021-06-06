@@ -32,14 +32,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/secure_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Name Surname"
+                android:text="Name Surname Deneme"
+                android:maxWidth="140dp"
                 android:textColor="#FDFBFB"
                 android:textSize="18sp" />
 
@@ -48,16 +50,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
+                android:maxWidth="140dp"
                 android:textColor="#FFE6E6"
                 android:textSize="16sp" />
         </LinearLayout>
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/secure_single_check_box"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="170dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="20dp"
-            android:background="@color/white"
             app:lottie_fileName="checkbox.json"/>
     </LinearLayout>
 

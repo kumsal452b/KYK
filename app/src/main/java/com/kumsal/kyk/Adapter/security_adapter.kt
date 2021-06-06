@@ -44,8 +44,7 @@ class security_adapter(
         this.mitemClickListener = clickListener
     }
 
-    inner class secureHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
-        CompoundButton.OnCheckedChangeListener, View.OnClickListener{
+    inner class secureHolder(itemView: View) : RecyclerView.ViewHolder(itemView),CompoundButton.OnCheckedChangeListener, View.OnClickListener{
         var imageUrl: CircleImageView = itemView.findViewById(R.id.secure_image)
         var name: TextView = itemView.findViewById(R.id.secure_name)
         var username: TextView = itemView.findViewById(R.id.secure_username)
@@ -92,10 +91,9 @@ class security_adapter(
             p0.checkBox.visibility = View.GONE
         }
         p0.bindElement(theModel)
-        p0.cardView.setOnLongClickListener(object : View.OnLongClickListener {
-            override fun onLongClick(v: View?): Boolean {
+        p0.cardView.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?){
                 CPElement?.startSelection(p1)
-                return true
             }
         })
     }

@@ -749,9 +749,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         }
     }
     public fun startSelection(index: Int) {
-
         if (!isActionMode) {
-
             isActionMode = true
             if (selectedlistElement == null) {
                 selectedlistElement = ArrayList<security_model>()
@@ -770,13 +768,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             textView.setText("0 person selected ")
         } else {
             textView.setText("$counter person selected ")
-
         }
-
     }
     override fun clickCheckBox(position: Int) {
         if (!selectedlistElement.contains(listElement.get(position))) {
-
             selectedlistElement.add(listElement.get(position))
             mcounter++
             updateToolbarText(mcounter)
