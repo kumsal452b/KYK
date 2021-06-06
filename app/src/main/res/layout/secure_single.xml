@@ -15,24 +15,25 @@
         android:layout_height="wrap_content"
         android:background="@drawable/post_create_background"
         android:orientation="horizontal"
-        android:padding="8dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:padding="8dp"
+        android:layout_weight="3"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/secure_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/persontwo"
+            android:layout_weight="0"
             />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:layout_marginEnd="45dp"
             android:orientation="vertical"
+            android:layout_weight="2"
             >
 
             <TextView
@@ -40,16 +41,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:text="Name Surname Deneme"
-                android:maxWidth="140dp"
+                android:text="Name Surname Deneme "
+                android:maxWidth="270dp"
                 android:textColor="#FDFBFB"
+                android:layout_weight="1"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/secure_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
+                android:text="yahyaAlatas8756"
+                android:layout_weight="1"
                 android:maxWidth="140dp"
                 android:textColor="#FFE6E6"
                 android:textSize="16sp" />
@@ -58,8 +61,6 @@
             android:id="@+id/secure_single_check_box"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="130dp"
-            android:layout_marginTop="20dp"
             app:lottie_fileName="checkbox.json"/>
     </LinearLayout>
 
