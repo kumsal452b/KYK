@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
+import com.airbnb.lottie.LottieDrawable
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.Timestamp
@@ -77,7 +78,8 @@ import kotlin.collections.HashMap
 import kotlin.toString
 
 
-class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,imageSelected_adapter.ItemClickListner {
+class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
+    imageSelected_adapter.ItemClickListner {
     private lateinit var profile_image: CircleImageView
     private lateinit var select_image: ImageButton
     private lateinit var share_button: Button
@@ -91,10 +93,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var mlistAdapter: imageSelected_adapter
 
     private lateinit var mImageListView: java.util.ArrayList<String>
-    private lateinit var mthmbImageList:java.util.ArrayList<String>
-    private lateinit var mAllFileDataModel:ArrayList<newDataPosModel>
+    private lateinit var mthmbImageList: java.util.ArrayList<String>
+    private lateinit var mAllFileDataModel: ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
-    private lateinit var uriList:ArrayList<Image>
+    private lateinit var uriList: ArrayList<Image>
+
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -128,7 +131,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
     private lateinit var mFsSaveSecurity: FirebaseFirestore
     private lateinit var mFsDenied: FirebaseFirestore
     private lateinit var mFsPostDb: FirebaseFirestore
-    private lateinit var currentUri:Uri
+    private lateinit var currentUri: Uri
 
     var perm = Array<String>(1) { i: Int ->
         Manifest.permission.READ_EXTERNAL_STORAGE
@@ -201,19 +204,21 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode==100){
+        if (requestCode == 100) {
             uriList.clear()
-            if(resultCode== RESULT_OK){
-                uriList=ImagePicker.getImages(data)
-                if (uriList.size>0){
-                    share_button.isEnabled=true
+            if (resultCode == RESULT_OK) {
+                uriList = ImagePicker.getImages(data)
+                if (uriList.size > 0) {
+                    share_button.isEnabled = true
                 }
 //                var getdata=data?.getParcelableArrayListExtra<ImageFile>(Constant.RESULT_PICK_IMAGE) as ArrayList<ImageFile>
-                for (a in uriList){
-                    val file=File(a.path)
-                    val uri=Uri.fromFile(file)
-                    val theModel= newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
+                for (a in uriList) {
+                    val file = File(a.path)
+                    val uri = Uri.fromFile(file)
+                    val theModel =
+                        newDataPosModel(file.name, uri, a.path, null, ".jpg", "Image/jpg")
                     mAllFileDataModel.add(theModel)
                 }
                 mlistAdapter.notifyDataSetChanged()
@@ -221,65 +226,69 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
-    private var freeCount=0;
-    private fun getImagesList(theList: imageLoadCall){
-        var tempArray=ArrayList<Uri>()
-        if (mAllFileDataModel.size>0){
+
+    private var freeCount = 0;
+    private fun getImagesList(theList: imageLoadCall) {
+        var tempArray = ArrayList<Uri>()
+        if (mAllFileDataModel.size > 0) {
             for (an in mAllFileDataModel) {
-                var theModel=an
-                var isEnd=mAllFileDataModel.indexOf(an)==mAllFileDataModel.size-1
+                var theModel = an
+                var isEnd = mAllFileDataModel.indexOf(an) == mAllFileDataModel.size - 1
                 uploadData(theModel.mimeType!!, "images/jpg", an.file!!, isEnd, theList)
             }
-        }else{
+        } else {
             theList.getLoadImage(ArrayList<String>(), ArrayList<String>())
         }
     }
+
     private fun uploadData(
         mimeType: String,
         contentType: String,
         fileUri: Uri,
         isEnd: Boolean,
         theList: imageLoadCall
-    ){
-        var storageMD=StorageMetadata.Builder()
-        storageMD.contentType=contentType
+    ) {
+        var storageMD = StorageMetadata.Builder()
+        storageMD.contentType = contentType
         storageMD.build()
-        var file=File(fileUri.path)
+        var file = File(fileUri.path)
         lifecycleScope.launch() {
-            var imagePath = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) +UUID.randomUUID()
-            var filePath=mStorageReference.child("PostImage").child(imagePath + ".jpg")
+            var imagePath =
+                SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()) + UUID.randomUUID()
+            var filePath = mStorageReference.child("PostImage").child(imagePath + ".jpg")
 
             //referance for thmb
-            var filePathForThmn=mStorageReference.child("PostImageThmb").child(imagePath + ".jpg")
+            var filePathForThmn = mStorageReference.child("PostImageThmb").child(imagePath + ".jpg")
 
             val compressedImageFile = Compressor.compress(this@CreatePost, file) {
                 resolution(430, 430)
                 quality(80)
                 format(Bitmap.CompressFormat.JPEG)
             }
-           filePath.putFile(file.toUri(), storageMD.build()).
-           addOnCompleteListener(OnCompleteListener { forfile ->
-               if (forfile.isSuccessful) {
-                   filePath.downloadUrl.addOnCompleteListener { urlForFile ->
-                       filePathForThmn.putFile(compressedImageFile.toUri(), storageMD.build())
-                           .addOnCompleteListener(OnCompleteListener { forfileThmb ->
-                               if (forfileThmb.isSuccessful) {
-                                   filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail ->
-                                       mImageListView.add(urlForFile.result.toString())
-                                       mthmbImageList.add(urlForThumnail.result.toString())
-                                       if ((mthmbImageList.size == mAllFileDataModel.size || mthmbImageList.size == mAllFileDataModel.size)) {
-                                           theList.getLoadImage(mImageListView, mthmbImageList)
-                                       }
-                                   }
-                               }
-                           })
-                   }
-               }
-           })
+            filePath.putFile(file.toUri(), storageMD.build())
+                .addOnCompleteListener(OnCompleteListener { forfile ->
+                    if (forfile.isSuccessful) {
+                        filePath.downloadUrl.addOnCompleteListener { urlForFile ->
+                            filePathForThmn.putFile(compressedImageFile.toUri(), storageMD.build())
+                                .addOnCompleteListener(OnCompleteListener { forfileThmb ->
+                                    if (forfileThmb.isSuccessful) {
+                                        filePathForThmn.downloadUrl.addOnCompleteListener { urlForThumnail ->
+                                            mImageListView.add(urlForFile.result.toString())
+                                            mthmbImageList.add(urlForThumnail.result.toString())
+                                            if ((mthmbImageList.size == mAllFileDataModel.size || mthmbImageList.size == mAllFileDataModel.size)) {
+                                                theList.getLoadImage(mImageListView, mthmbImageList)
+                                            }
+                                        }
+                                    }
+                                })
+                        }
+                    }
+                })
         }
 
 
     }
+
     private fun getUserList(listInterface: GetCenterSimilar<UsersModel>) {
         mFirestore.collection("Users").addSnapshotListener { document, error ->
             if (error != null) {
@@ -294,6 +303,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             listInterface.getUsers(userList)
         }
     }
+
     private fun share() {
         share_button.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -348,6 +358,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             }
         })
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_action, menu)
@@ -383,6 +394,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         })
         return super.onCreateOptionsMenu(menu)
     }
+
     private fun canBeSent() {
         post_text_element.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -390,7 +402,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                share_button.isEnabled = post_text_element.length() > 0 || uriList.size>0
+                share_button.isEnabled = post_text_element.length() > 0 || uriList.size > 0
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -399,6 +411,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 
         })
     }
+
     private fun initialComponent() {
         profile_image = findViewById(R.id.activity_create_post_image)
         select_image = findViewById(R.id.activity_create_post_select_image)
@@ -411,20 +424,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         firstControl = true
         selectedlistElement = ArrayList<security_model>()
 //        var names = ArrayList<Mention>()
-        currentUri= Uri.EMPTY
-        mStorageReference=FirebaseStorage.getInstance().getReference()
+        currentUri = Uri.EMPTY
+        mStorageReference = FirebaseStorage.getInstance().getReference()
         mImageListRecyclerView = findViewById(R.id.activity_create_post_imageSelected)
         mImageListRecyclerView.setHasFixedSize(true)
-        
+
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
 
-        uriList= ObservableArrayList()
+        uriList = ObservableArrayList()
         mImageListView = ArrayList()
-        mthmbImageList= ArrayList()
-        mAllFileDataModel= ArrayList()
+        mthmbImageList = ArrayList()
+        mAllFileDataModel = ArrayList()
 
         mlistAdapter = imageSelected_adapter(mAllFileDataModel)
-        mlistAdapter.itemClickElement=this
+        mlistAdapter.itemClickElement = this
         mImageListRecyclerView.adapter = mlistAdapter
 
         name = intent.getStringExtra("name") as String
@@ -511,12 +524,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         }
 
 
-
     }
+
     override fun onItemClickListener(position: Int) {
         mAllFileDataModel.removeAt(position)
         mlistAdapter.notifyDataSetChanged()
     }
+
     private fun checkAndRequestPermissions(): Boolean {
         var permCam = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
         var permWrtStrg =
@@ -544,6 +558,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         }
         return true
     }
+
     private fun accesList(theDeniedElement: GetDeniedList) {
         deniedListListener = mFsDenied.collection("Users").document(userid)
             .addSnapshotListener { document, e ->
@@ -557,6 +572,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
                 theDeniedElement.accedDenied(theuser?.blocked)
             }
     }
+
     private fun secure_initial() {
 
         select_privacy.setOnClickListener(object : View.OnClickListener {
@@ -625,6 +641,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 
         })
     }
+
     private fun securityPanelEventClick() {
         if (alfriends.isChecked) {
             recyclerView.visibility = View.GONE
@@ -721,6 +738,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             }
         }
     }
+
     private fun securityPanelInitialzed(rootView: View?) {
         recyclerView = rootView?.findViewById(R.id.secure_recycler)!!
         recyclerView.setHasFixedSize(true)
@@ -738,6 +756,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
         setSupportActionBar(toolbar)
         recyclerView.adapter = mAdapter
     }
+
     private fun checkSecurePanel() {
         if (selectedlistElement.size > 0) {
             isActionMode = true
@@ -749,19 +768,30 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
 //            }
         }
     }
-    public fun startSelection(index: Int,checkBox:LottieAnimationView) {
-            isActionMode = true
-            if (selectedlistElement == null) {
-                selectedlistElement = ArrayList<security_model>()
-            }
-            textView.visibility = View.VISIBLE
-            currentWith = textView.measuredWidth;
-            var anim = Animation(currentWith, textView)
-            textView.animation = anim
-            selectedAll.visibility = View.VISIBLE
-            updateToolbarText(mcounter)
-            mAdapter.notifyDataSetChanged()
+
+    public fun startSelection(index: Int, checkBox: LottieAnimationView) {
+        isActionMode = true
+        if (selectedlistElement == null) {
+            selectedlistElement = ArrayList<security_model>()
+        }
+        textView.visibility = View.VISIBLE
+        currentWith = textView.measuredWidth;
+        var anim = Animation(currentWith, textView)
+        textView.animation = anim
+        selectedAll.visibility = View.VISIBLE
+        updateToolbarText(mcounter)
+//        mAdapter.notifyDataSetChanged()
+        if (checkBox.frame==0){
+            checkBox.playAnimation()
+            mAdapter.items[index].theisChecked=true
+        }else{
+
+            mAdapter.items[index].theisChecked=false
+            checkBox.repeatMode=LottieDrawable.REVERSE
+            checkBox.playAnimation()
+        }
     }
+
     private fun updateToolbarText(counter: Int) {
         if (counter == 0) {
             textView.setText("0 person selected ")
@@ -769,6 +799,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             textView.setText("$counter person selected ")
         }
     }
+
     override fun clickCheckBox(position: Int) {
         if (!selectedlistElement.contains(listElement.get(position))) {
             selectedlistElement.add(listElement.get(position))
@@ -799,6 +830,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             selectedAll.isChecked = false
         }
     }
+
     private fun initialDynamic() {
         var hint = "What's on your mind, " + name + "?"
         post_text_element.hint = hint
@@ -806,10 +838,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,ima
             Picasso.get().load(imageUri).into(profile_image)
         }
     }
+
     override fun onStop() {
         listener.remove()
         super.onStop()
     }
+
     override fun onDestroy() {
         listener.remove()
         super.onDestroy()
