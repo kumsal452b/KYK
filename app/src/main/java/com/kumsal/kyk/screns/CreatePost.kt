@@ -690,8 +690,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                 var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
                 var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
                 blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
-                fsBlockedBatch.set(curUsRef, blocked, SetOptions.merge())
-                fsBlockersBatch.set(dbRef, blockers, SetOptions.merge())
+                fsBlockedBatch.set(curUsRef, blocked)
+                fsBlockersBatch.set(dbRef, blockers)
             }
             fsBlockersBatch.commit().addOnSuccessListener {
                 fsBlockedBatch.commit().addOnSuccessListener {
@@ -782,12 +782,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         updateToolbarText(mcounter)
 //        mAdapter.notifyDataSetChanged()
         if (checkBox.frame == 0) {
-            checkBox.speed=1.0f
+            checkBox.speed = 1.0f
             checkBox.playAnimation()
             mAdapter.items[index].theisChecked = true
         } else {
             mAdapter.items[index].theisChecked = false
-            checkBox.speed=-2.5f
+            checkBox.speed = -2.5f
             checkBox.playAnimation()
         }
         if (!selectedlistElement.contains(listElement.get(index))) {
