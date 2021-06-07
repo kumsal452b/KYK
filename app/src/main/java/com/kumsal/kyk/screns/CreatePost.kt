@@ -569,7 +569,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                 var theuser = document?.toObject(UsersModel::class.java)
                 if (theuser?.blocked == null)
                     theuser?.blocked = ArrayList<String>()
-                theDeniedElement.accedDenied(theuser?.blocked)
+                theDeniedElement.accedDenied(theuser?.blockers)
             }
     }
 
@@ -591,8 +591,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                         listElement.clear()
                                         accesList(object : GetDeniedList {
                                             override fun accedDenied(map: ArrayList<String>?) {
-
-                                                var mUserName = ArrayList<String>()
+                                                val mUserName = ArrayList<String>()
                                                 if (selectedlistElement.size > 0) {
                                                     for (i in 0..selectedlistElement.size - 1) {
                                                         mUserName.add(selectedlistElement[i].theusername.toString())
@@ -606,9 +605,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                         doc.toObject(UsersModel::class.java)
                                                     theData.theId = doc.id
                                                     var theSecureData = security_model(
-                                                        theData!!.theNameSurname!!,
-                                                        theData!!.theUserName!!,
-                                                        theData!!.theThmbImage!!,
+                                                        theData.theNameSurname!!,
+                                                        theData.theUserName!!,
+                                                        theData.theThmbImage!!,
                                                         false,
                                                         theData.theId!!
                                                     )
@@ -638,7 +637,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                         })
                 fullScreenDialog.show()
             }
-
         })
     }
 
