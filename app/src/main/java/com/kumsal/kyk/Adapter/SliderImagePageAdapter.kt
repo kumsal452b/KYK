@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.kumsal.kyk.R
-import com.kumsal.kyk.interfaces.SliderClick
-import com.kumsal.kyk.interfaces.imageCallback
+import com.kumsal.kyk.IInterfaces.SliderClick
+import com.kumsal.kyk.IInterfaces.imageCallback
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import java.lang.Exception

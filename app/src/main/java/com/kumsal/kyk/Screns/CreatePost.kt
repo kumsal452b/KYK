@@ -48,9 +48,9 @@ import com.kumsal.kyk.Models.UsersModel
 import com.kumsal.kyk.Models.newDataPosModel
 import com.kumsal.kyk.Models.security_model
 import com.kumsal.kyk.R
-import com.kumsal.kyk.Animation.Animation
-import com.kumsal.kyk.Interfaces.GetCenterSimilar
-import com.kumsal.kyk.Interfaces.imageLoadCall
+import com.kumsal.kyk.CustomAnimation.Animation
+import com.kumsal.kyk.IInterfaces.GetCenterSimilar
+import com.kumsal.kyk.IInterfaces.imageLoadCall
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
 import com.nguyenhoanglam.imagepicker.model.Image
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
@@ -155,20 +155,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         var userAdapter: ArrayAdapter<Mention>
         userAdapter = MentionArrayAdapter<Mention>(this)
         post_text_element.mentionAdapter = userAdapter
-        getUserList(object : GetCenterSimilar<UsersModel> {
-            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
-                for (theUser in array) {
-                    userAdapter.add(
-                        Mention(
-                            theUser.theUserName!!,
-                            theUser.theNameSurname,
-                            theUser.theThmbImage
-                        )
-                    )
-                }
-                userAdapter.notifyDataSetChanged()
-            }
-        })
+//        getUserList(object : GetCenterSimilar<UsersModel> {
+//            override fun getUsers(array: java.util.ArrayList<UsersModel>) {
+//                for (theUser in array) {
+//                    userAdapter.add(
+//                        Mention(
+//                            theUser.theUserName!!,
+//                            theUser.theNameSurname,
+//                            theUser.theThmbImage
+//                        )
+//                    )
+//                }
+//                userAdapter.notifyDataSetChanged()
+//            }
+//        })
     }
 
     override fun onRequestPermissionsResult(
@@ -226,7 +226,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private var freeCount = 0;
     private fun getImagesList(theList: imageLoadCall) {
         var tempArray = ArrayList<Uri>()
         if (mAllFileDataModel.size > 0) {

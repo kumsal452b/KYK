@@ -1,4 +1,4 @@
-package com.kumsal.kyk.Interfaces
+package com.kumsal.kyk.IInterfaces
 
 import java.util.ArrayList
 

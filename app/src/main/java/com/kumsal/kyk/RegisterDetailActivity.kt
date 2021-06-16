@@ -34,7 +34,7 @@ import com.kongzue.dialog.v3.BottomMenu
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.Models.UsersModel
-import com.kumsal.kyk.interfaces.LoadImage
+import com.kumsal.kyk.IInterfaces.LoadImage
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import de.hdodenhof.circleimageview.CircleImageView

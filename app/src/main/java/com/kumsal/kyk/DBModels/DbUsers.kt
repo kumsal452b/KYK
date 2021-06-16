@@ -3,8 +3,7 @@ package com.kumsal.kyk.DBModels
 import android.text.TextUtils
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
-import com.kumsal.kyk.interfaces.GetCenter
-import com.kumsal.kyk.interfaces.GetCenterSimilar
+import com.kumsal.kyk.IInterfaces.GetCenterSimilar
 import java.util.ArrayList
 
 class DbUsers<Model> {

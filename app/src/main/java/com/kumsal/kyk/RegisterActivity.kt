@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.kongzue.dialog.v3.MessageDialog
 import com.kongzue.dialog.v3.WaitDialog
 import com.kumsal.kyk.Models.UsersModel
-import com.kumsal.kyk.interfaces.UserListCallback
+import com.kumsal.kyk.IInterfaces.UserListCallback
 import java.util.ArrayList
 
 class RegisterActivity : AppCompatActivity() {

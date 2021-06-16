@@ -1,4 +1,4 @@
-package com.kumsal.kyk.Animation
+package com.kumsal.kyk.CustomAnimation
 
 import android.view.View
 import android.view.animation.Animation

@@ -13,8 +13,8 @@ import androidx.viewpager.widget.ViewPager
 import com.hendraanggrian.appcompat.widget.SocialTextView
 import com.kumsal.kyk.Models.post_model
 import com.kumsal.kyk.R
-import com.kumsal.kyk.interfaces.PostClick
-import com.kumsal.kyk.interfaces.SliderClick
+import com.kumsal.kyk.IInterfaces.PostClick
+import com.kumsal.kyk.IInterfaces.SliderClick
 import com.sackcentury.shinebuttonlib.ShineButton
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
