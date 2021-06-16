@@ -1,4 +1,4 @@
-package com.kumsal.kyk.screns
+package com.kumsal.kyk.Screns
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

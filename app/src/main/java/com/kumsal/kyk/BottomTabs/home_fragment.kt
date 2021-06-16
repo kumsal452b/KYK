@@ -1,4 +1,4 @@
-package com.kumsal.kyk.bottomTabs
+package com.kumsal.kyk.BottomTabs
 
 import android.content.BroadcastReceiver
 import android.content.ContentValues
@@ -30,9 +30,9 @@ import com.kumsal.kyk.Models.SendPostDataModel
 import com.kumsal.kyk.Models.UsersModel
 import com.kumsal.kyk.Models.post_model
 import com.kumsal.kyk.R
-import com.kumsal.kyk.interfaces.GetCenter
-import com.kumsal.kyk.interfaces.PostClick
-import com.kumsal.kyk.screns.PostDetail
+import com.kumsal.kyk.Interfaces.GetCenter
+import com.kumsal.kyk.Interfaces.PostClick
+import com.kumsal.kyk.Screns.PostDetail
 import com.kumsal.voice_newspaper.DbElements
 import com.sackcentury.shinebuttonlib.ShineButton
 import com.squareup.picasso.Picasso

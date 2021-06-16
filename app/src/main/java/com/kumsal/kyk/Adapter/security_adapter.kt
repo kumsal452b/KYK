@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.kumsal.kyk.Models.security_model
 import com.kumsal.kyk.R
-import com.kumsal.kyk.screns.CreatePost
+import com.kumsal.kyk.Screns.CreatePost
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*

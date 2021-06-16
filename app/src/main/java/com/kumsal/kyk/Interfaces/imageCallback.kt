@@ -1,4 +1,4 @@
-package com.kumsal.kyk.interfaces
+package com.kumsal.kyk.Interfaces
 
 interface imageCallback{
     fun imageLoadDoneCallback()

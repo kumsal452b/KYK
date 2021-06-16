@@ -26,7 +26,7 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".screns.PostDetail"></activity>
+        <activity android:name=".Screns.PostDetail"></activity>
 
         <receiver android:name=".NetworkChangeReceiver">
             <intent-filter>
@@ -36,7 +36,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.kumsal.kyk.screns.fileprovider"
+            android:authorities="com.kumsal.kyk.Screns.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
@@ -48,15 +48,15 @@
                 tools:replace="android:resource"></meta-data>
         </provider>
 
-        <activity android:name=".screns.CreatePost" />
+        <activity android:name=".Screns.CreatePost" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".RegisterDetailActivity" />
-        <activity android:name=".screns.ForgotPasswordActivity" />
-        <activity android:name=".screns.LoginActivity" />
+        <activity android:name=".Screns.ForgotPasswordActivity" />
+        <activity android:name=".Screns.LoginActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".screns.StarterActivity" />
+        <activity android:name=".Screns.StarterActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

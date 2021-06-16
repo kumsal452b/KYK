@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/post_create_background"
     android:scrollbarStyle="insideOverlay"
-    tools:context=".screns.CreatePost">
+    tools:context=".Screns.CreatePost">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

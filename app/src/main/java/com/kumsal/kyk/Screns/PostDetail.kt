@@ -1,4 +1,4 @@
-package com.kumsal.kyk.screns
+package com.kumsal.kyk.Screns
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +17,7 @@ import com.kumsal.kyk.Models.SendPostDataModel
 import com.kumsal.kyk.Adapter.SliderImagePageAdapter
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.R
-import com.kumsal.kyk.interfaces.imageCallback
+import com.kumsal.kyk.Interfaces.imageCallback
 import de.hdodenhof.circleimageview.CircleImageView
 
 open class PostDetail : AppCompatActivity(), imageCallback {

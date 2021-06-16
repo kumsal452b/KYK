@@ -1,11 +1,10 @@
-package com.kumsal.kyk.bottomTabs
+package com.kumsal.kyk.BottomTabs
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import com.kumsal.kyk.R
 
 class message_fragment : Fragment() {

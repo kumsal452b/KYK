@@ -1,4 +1,4 @@
-package com.kumsal.kyk.bottomTabs
+package com.kumsal.kyk.BottomTabs
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

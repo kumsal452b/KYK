@@ -1,4 +1,4 @@
-package com.kumsal.kyk.interfaces
+package com.kumsal.kyk.Interfaces
 
 import android.widget.TextView
 import com.sackcentury.shinebuttonlib.ShineButton

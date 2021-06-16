@@ -1,4 +1,4 @@
-package com.kumsal.kyk.screns
+package com.kumsal.kyk.Screns
 
 import android.Manifest
 import android.content.Intent
@@ -26,7 +26,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
-import com.airbnb.lottie.LottieDrawable
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.Timestamp
@@ -49,9 +48,9 @@ import com.kumsal.kyk.Models.UsersModel
 import com.kumsal.kyk.Models.newDataPosModel
 import com.kumsal.kyk.Models.security_model
 import com.kumsal.kyk.R
-import com.kumsal.kyk.animation.Animation
-import com.kumsal.kyk.interfaces.GetCenterSimilar
-import com.kumsal.kyk.interfaces.imageLoadCall
+import com.kumsal.kyk.Animation.Animation
+import com.kumsal.kyk.Interfaces.GetCenterSimilar
+import com.kumsal.kyk.Interfaces.imageLoadCall
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
 import com.nguyenhoanglam.imagepicker.model.Image
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
