@@ -35,10 +35,10 @@ import com.kumsal.kyk.Models.RemovedItemOnDatabaseModel
 import com.kumsal.kyk.Models.UsersModel
 import com.kumsal.kyk.DBModels.DbUsers
 import com.kumsal.kyk.Internet.NetworkChangeReceiver
-import com.kumsal.kyk.BottomTabs.SectionPagerAdapter
-import com.kumsal.kyk.BottomTabs.home_fragment
-import com.kumsal.kyk.Interfaces.GetCenterSimilar
-import com.kumsal.kyk.Interfaces.checkInternet
+import com.kumsal.kyk.CustomBottomTabs.SectionPagerAdapter
+import com.kumsal.kyk.CustomBottomTabs.home_fragment
+import com.kumsal.kyk.IInterfaces.GetCenterSimilar
+import com.kumsal.kyk.IInterfaces.checkInternet
 import com.kumsal.kyk.Screns.CreatePost
 import com.kumsal.kyk.Screns.StarterActivity
 import com.kumsal.voice_newspaper.DbElements

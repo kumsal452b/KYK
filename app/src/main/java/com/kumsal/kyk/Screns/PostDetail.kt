@@ -17,7 +17,7 @@ import com.kumsal.kyk.Models.SendPostDataModel
 import com.kumsal.kyk.Adapter.SliderImagePageAdapter
 import com.kumsal.kyk.Globals
 import com.kumsal.kyk.R
-import com.kumsal.kyk.Interfaces.imageCallback
+import com.kumsal.kyk.IInterfaces.imageCallback
 import de.hdodenhof.circleimageview.CircleImageView
 
 open class PostDetail : AppCompatActivity(), imageCallback {

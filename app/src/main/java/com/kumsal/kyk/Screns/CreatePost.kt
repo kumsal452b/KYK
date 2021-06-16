@@ -565,8 +565,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                     return@addSnapshotListener
                 }
                 var theuser = document?.toObject(UsersModel::class.java)
-                if (theuser?.blocked == null)
-                    theuser?.blocked = ArrayList<String>()
+                if (theuser?.blockers == null)
+                    theuser?.blockers = ArrayList<String>()
                 theDeniedElement.accedDenied(theuser?.blockers)
             }
     }
