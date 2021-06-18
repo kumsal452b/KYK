@@ -97,6 +97,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var mStorageReference: StorageReference
     private lateinit var uriList: ArrayList<Image>
     private lateinit var listOfRemoveMember:ArrayList<String>
+    private lateinit var listOfBlockedMember:ArrayList<String>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
