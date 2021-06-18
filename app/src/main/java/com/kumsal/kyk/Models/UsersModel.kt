@@ -12,7 +12,7 @@ class UsersModel {
     var theImage: String? = null
     var theId:String?=null
     var blocked:ArrayList<String>?=null
-    var blockers:ArrayList<String>?=null
+    var blockBy:ArrayList<String>?=null
     var postOfLiked:ArrayList<String>?=null
     constructor() {
 
@@ -51,9 +51,9 @@ class UsersModel {
         this.theImage = theImage
     }
 
-    constructor(blocked: ArrayList<String>?, blockers: ArrayList<String>?) {
+    constructor(blocked: ArrayList<String>?, blockBy: ArrayList<String>?) {
         this.blocked = blocked
-        this.blockers = blockers
+        this.blockBy = blockBy
     }
 
     constructor(postOfLiked: ArrayList<String>?) {
