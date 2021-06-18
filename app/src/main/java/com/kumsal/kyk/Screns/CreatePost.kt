@@ -684,40 +684,42 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             }
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
+            //Yarin burada bir test yapilacak ve veriler analiz dilecek
             for (member in listOfRemoveMember){
-
+                fsRemoveMemberBacth.update()
             }
 
-            WaitDialog.show(this, getString(R.string.please_wait))
-            var blockers = HashMap<String, Any>()
-            blockers.put("blockBy", FieldValue.arrayUnion(username))
 
-            var blocked = HashMap<String, Any>()
-            blocked.put("blocked", FieldValue.arrayUnion(selectedlistElement))
-
-
-            var fsBlockByBatch = mFsSaveSecurity.batch()
-            var fsBlockedBatch = mFsSaveSecurity.batch()
-            for (get in selectedlistElement) {
-                var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
-                var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
-                blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
-                fsBlockedBatch.set(curUsRef, blocked,Set)
-                fsBlockByBatch.set(dbRef, blockers)
-            }
-            fsBlockersBatch.commit().addOnSuccessListener {
-                fsBlockedBatch.commit().addOnSuccessListener {
-                    fullScreenDialog.doDismiss()
-                    securityTag.text = "Someone"
-                    WaitDialog.dismiss()
-                }.addOnFailureListener { exp ->
-                    Log.d("Load denied error", exp.message!!)
-                    WaitDialog.dismiss()
-                }
-            }.addOnFailureListener { exp ->
-                Log.d("Load denied error", exp.message!!)
-                WaitDialog.dismiss()
-            }
+//            WaitDialog.show(this, getString(R.string.please_wait))
+//            var blockers = HashMap<String, Any>()
+//            blockers.put("blockBy", FieldValue.arrayUnion(username))
+//
+//            var blocked = HashMap<String, Any>()
+//            blocked.put("blocked", FieldValue.arrayUnion(selectedlistElement))
+//
+//
+//            var fsBlockByBatch = mFsSaveSecurity.batch()
+//            var fsBlockedBatch = mFsSaveSecurity.batch()
+//            for (get in selectedlistElement) {
+//                var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
+//                var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
+//                blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
+//                fsBlockedBatch.set(curUsRef, blocked)
+//                fsBlockByBatch.set(dbRef, blockers)
+//            }
+//            fsBlockersBatch.commit().addOnSuccessListener {
+//                fsBlockedBatch.commit().addOnSuccessListener {
+//                    fullScreenDialog.doDismiss()
+//                    securityTag.text = "Someone"
+//                    WaitDialog.dismiss()
+//                }.addOnFailureListener { exp ->
+//                    Log.d("Load denied error", exp.message!!)
+//                    WaitDialog.dismiss()
+//                }
+//            }.addOnFailureListener { exp ->
+//                Log.d("Load denied error", exp.message!!)
+//                WaitDialog.dismiss()
+//            }
         }
         selectedAll.setOnClickListener {
             if (selectedAll.isChecked) {
