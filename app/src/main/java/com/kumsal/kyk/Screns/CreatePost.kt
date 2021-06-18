@@ -566,9 +566,12 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                     return@addSnapshotListener
                 }
                 var theuser = document?.toObject(UsersModel::class.java)
-                if (theuser?.blockBy == null)
+                if (theuser?.blockBy == null || theuser.blocked==null){
                     theuser?.blockBy = ArrayList<String>()
-                theDeniedElement.accedDenied(theuser?.blockBy)
+                    theuser?.blocked= ArrayList();
+                }
+
+                theDeniedElement.accedDenied(theuser?.blockBy,theuser?.blocked)
             }
     }
 
@@ -589,8 +592,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
                                         accesList(object : GetDeniedList {
-                                            override fun accedDenied(map: ArrayList<String>?) {
+                                            override fun accedDenied(blockBy: ArrayList<String>?,blocked: ArrayList<String>?) {
                                                 val mUserName = ArrayList<String>()
+                                                listOfBlockedMember=blocked as ArrayList<String>
                                                 if (selectedlistElement.size > 0) {
                                                     for (i in 0..selectedlistElement.size - 1) {
                                                         mUserName.add(selectedlistElement[i].theusername.toString())
@@ -612,7 +616,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                     )
 
                                                     if (firstControl) {
-                                                        if (map!!.contains(theSecureData.theusername!!)) {
+                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
                                                             theSecureData.theisChecked = true
                                                             selectedlistElement.add(theSecureData)
                                                             mcounter++
@@ -673,6 +677,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
 
         }
         accept_selected_name.setOnClickListener {
+            //Dedected removable l'st
             WaitDialog.show(this, getString(R.string.please_wait))
             var blockers = HashMap<String, Any>()
             blockers.put("blockBy", FieldValue.arrayUnion(username))
