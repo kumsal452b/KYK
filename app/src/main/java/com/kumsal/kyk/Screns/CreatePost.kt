@@ -682,7 +682,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                 if(!selectedlistElement.contains(thePerson))
                     listOfRemoveMember.add(thePerson)
             }
-            
+            // delet'ng member from BlockBy lists
+            var fsRemoveMemberBacth=mFsSaveSecurity.batch()
+            for (member in listOfRemoveMember){
+
+            }
 
             WaitDialog.show(this, getString(R.string.please_wait))
             var blockers = HashMap<String, Any>()
@@ -698,7 +702,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                 var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
                 var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
                 blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
-                fsBlockedBatch.set(curUsRef, blocked,)
+                fsBlockedBatch.set(curUsRef, blocked,Set)
                 fsBlockByBatch.set(dbRef, blockers)
             }
             fsBlockersBatch.commit().addOnSuccessListener {
