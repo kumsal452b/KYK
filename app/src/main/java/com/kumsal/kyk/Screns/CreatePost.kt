@@ -96,7 +96,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var mAllFileDataModel: ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
     private lateinit var uriList: ArrayList<Image>
-
+    private lateinit var listOfRemoveMember:ArrayList<String>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -565,9 +565,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                     return@addSnapshotListener
                 }
                 var theuser = document?.toObject(UsersModel::class.java)
-                if (theuser?.blockers == null)
-                    theuser?.blockers = ArrayList<String>()
-                theDeniedElement.accedDenied(theuser?.blockers)
+                if (theuser?.blockBy == null)
+                    theuser?.blockBy = ArrayList<String>()
+                theDeniedElement.accedDenied(theuser?.blockBy)
             }
     }
 
@@ -674,20 +674,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         accept_selected_name.setOnClickListener {
             WaitDialog.show(this, getString(R.string.please_wait))
             var blockers = HashMap<String, Any>()
-            blockers.put("blockers", FieldValue.arrayUnion(username))
+            blockers.put("blockBy", FieldValue.arrayUnion(username))
 
             var blocked = HashMap<String, Any>()
             blocked.put("blocked", FieldValue.arrayUnion(selectedlistElement))
 
 
-            var fsBlockersBatch = mFsSaveSecurity.batch()
+            var fsBlockByBatch = mFsSaveSecurity.batch()
             var fsBlockedBatch = mFsSaveSecurity.batch()
             for (get in selectedlistElement) {
                 var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
                 var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
                 blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
-                fsBlockedBatch.set(curUsRef, blocked)
-                fsBlockersBatch.set(dbRef, blockers)
+                fsBlockedBatch.set(curUsRef, blocked,)
+                fsBlockByBatch.set(dbRef, blockers)
             }
             fsBlockersBatch.commit().addOnSuccessListener {
                 fsBlockedBatch.commit().addOnSuccessListener {
