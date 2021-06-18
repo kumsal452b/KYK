@@ -677,7 +677,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
 
         }
         accept_selected_name.setOnClickListener {
-            //Dedected removable l'st
+            //Dedected removable list
+            for (thePerson in listOfBlockedMember){
+                if(!selectedlistElement.contains(thePerson))
+                    listOfRemoveMember.add(thePerson)
+            }
+            
+
             WaitDialog.show(this, getString(R.string.please_wait))
             var blockers = HashMap<String, Any>()
             blockers.put("blockBy", FieldValue.arrayUnion(username))
