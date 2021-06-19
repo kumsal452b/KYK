@@ -678,10 +678,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         }
         accept_selected_name.setOnClickListener {
             //Dedected removable list
-            for (thePerson in listOfBlockedMember){
-                if(!selectedlistElement.contains(thePerson))
-                    listOfRemoveMember.add(thePerson)
-            }
+//            for (thePerson in listOfBlockedMember){
+//                if(!selectedlistElement.contains(thePerson))
+//                    listOfRemoveMember.add(thePerson)
+//            }
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
             //Yarin burada bir test yapilacak ve veriler analiz dilecek
@@ -690,7 +690,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             testMap.set("test",FieldValue.arrayRemove("as"))
             fsRemoveMemberBacth.set(removeRef,testMap)
             fsRemoveMemberBacth.commit()
-            
+
 //            for (member in listOfRemoveMember){
 //
 //                fsRemoveMemberBacth.set()
