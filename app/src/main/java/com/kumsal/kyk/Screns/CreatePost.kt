@@ -686,8 +686,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
             //Yarin burada bir test yapilacak ve veriler analiz dilecek
             var removeRef=mFsSaveSecurity.collection("Users").document("rjMV2PNoeEawgXg1N3zQNjn1ThT2")
+            var listTest=ArrayList<String>()
+            listTest.add("deneme")
+            listTest.add("add")
             var testMap=HashMap<String,Any>()
-            testMap.set("test",FieldValue.arrayRemove("sa"))
+            testMap.set("test",listTest)
             fsRemoveMemberBacth.set(removeRef,testMap,SetOptions.merge())
             fsRemoveMemberBacth.commit()
 
