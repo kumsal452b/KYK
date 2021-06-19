@@ -685,9 +685,13 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
             //Yarin burada bir test yapilacak ve veriler analiz dilecek
-            for (member in listOfRemoveMember){
-                fsRemoveMemberBacth.update()
-            }
+            var removeRef=mFsSaveSecurity.collection("Users").document("tJcSpS1oZRPQiwUVdfJq8375NNV2")
+            var testMap=
+            fsRemoveMemberBacth.set(removeRef,"test",)
+//            for (member in listOfRemoveMember){
+//
+//                fsRemoveMemberBacth.set()
+//            }
 
 
 //            WaitDialog.show(this, getString(R.string.please_wait))
