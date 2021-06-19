@@ -685,10 +685,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
             //Yarin burada bir test yapilacak ve veriler analiz dilecek
-            var removeRef=mFsSaveSecurity.collection("Users").document("tJcSpS1oZRPQiwUVdfJq8375NNV2")
+            var removeRef=mFsSaveSecurity.collection("Users").document("rjMV2PNoeEawgXg1N3zQNjn1ThT2")
             var testMap=HashMap<String,Any>()
             testMap.set("test",FieldValue.arrayRemove("as"))
-            fsRemoveMemberBacth.set(removeRef,testMap)
+            fsRemoveMemberBacth.set(removeRef,testMap,SetOptions.merge())
             fsRemoveMemberBacth.commit()
 
 //            for (member in listOfRemoveMember){
