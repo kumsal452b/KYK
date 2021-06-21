@@ -457,6 +457,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
 
+        listOfBlockedMember= ArrayList()
+        listOfRemoveMember=ArrayList()
         //Test section
         secure_initial()
         select_image.setOnClickListener {
