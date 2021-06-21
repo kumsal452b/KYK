@@ -608,6 +608,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                     var theData =
                                                         doc.toObject(UsersModel::class.java)
                                                     theData.theId = doc.id
+                                                    if (blocked.contains())
                                                     var theSecureData = security_model(
                                                         theData.theNameSurname!!,
                                                         theData.theUserName!!,
@@ -616,18 +617,18 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                         theData.theId!!
                                                     )
 
-                                                    if (firstControl) {
-                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
-                                                            theSecureData.theisChecked = true
-                                                            selectedlistElement.add(theSecureData)
-                                                            mcounter++
-                                                        }
-                                                    } else {
-                                                        if (mUserName.contains(theSecureData.theusername)) {
-                                                            theSecureData.theisChecked = true
-                                                            selectedlistElement.add(theSecureData)
-                                                        }
-                                                    }
+//                                                    if (firstControl) {
+//                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
+//                                                            theSecureData.theisChecked = true
+//                                                            selectedlistElement.add(theSecureData)
+//                                                            mcounter++
+//                                                        }
+//                                                    } else {
+//                                                        if (mUserName.contains(theSecureData.theusername)) {
+//                                                            theSecureData.theisChecked = true
+//                                                            selectedlistElement.add(theSecureData)
+//                                                        }
+//                                                    }
 
                                                     listElement.add(theSecureData)
                                                 }
@@ -685,36 +686,22 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             }
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
-
             for(thePerson in listOfRemoveMember){
-                   var userId=selectedlistElement.filter { p->p.theusername==thePerson}.get(0).thePersonId
-                var removeRef=mFsSaveSecurity.collection("Users").document(userid)
-                var theUserMap=HashMap<String,Any>()
+                val userId=selectedlistElement.filter { p->p.theusername==thePerson}.get(0).thePersonId
+                val removeRef=mFsSaveSecurity.collection("Users").document(userId as String)
+                val theUserMap=HashMap<String,Any>()
                 theUserMap.set("blockBy",FieldValue.arrayRemove(Globals.ınstance?.uid))
                 fsRemoveMemberBacth.set(removeRef,theUserMap,SetOptions.merge())
-
             }
-            //Yarin burada bir test yapilacak ve veriler analiz dilecek
-           var listTest=ArrayList<String>()
-            listTest.add("deneme")
-            listTest.add("add")
-            var testMap=HashMap<String,Any>()
-            testMap.set("test",listTest)
 
             fsRemoveMemberBacth.commit()
 
-//            for (member in listOfRemoveMember){
-//
-//                fsRemoveMemberBacth.set()
-//            }
+            WaitDialog.show(this, getString(R.string.please_wait))
+            var blockers = HashMap<String, Any>()
+            blockers.put("blockBy", FieldValue.arrayUnion(username))
 
-
-//            WaitDialog.show(this, getString(R.string.please_wait))
-//            var blockers = HashMap<String, Any>()
-//            blockers.put("blockBy", FieldValue.arrayUnion(username))
-//
-//            var blocked = HashMap<String, Any>()
-//            blocked.put("blocked", FieldValue.arrayUnion(selectedlistElement))
+            var blocked = HashMap<String, Any>()
+            blocked.put("blocked", selectedlistElement)
 //
 //
 //            var fsBlockByBatch = mFsSaveSecurity.batch()
