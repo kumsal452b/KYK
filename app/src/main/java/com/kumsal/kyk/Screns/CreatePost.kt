@@ -609,16 +609,19 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                     var theData =
                                                         doc.toObject(UsersModel::class.java)
                                                     theData.theId = doc.id
-                                                    if (blocked.contains(theData.theUserName))
-
+                                                    if (blocked.contains(theData.theUserName)){
+                                                        isCheck=true
+                                                    }
                                                     var theSecureData = security_model(
                                                         theData.theNameSurname!!,
                                                         theData.theUserName!!,
                                                         theData.theThmbImage!!,
-                                                        false,
+                                                        isCheck,
                                                         theData.theId!!
                                                     )
-
+                                                    if (isCheck)
+                                                        selectedlistElement.add(theSecureData)
+                                                    
 //                                                    if (firstControl) {
 //                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
 //                                                            theSecureData.theisChecked = true
