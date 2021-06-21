@@ -687,17 +687,20 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
 
             for(thePerson in listOfRemoveMember){
-                   selectedlistElement.filter { p->p.theusername==thePerson}
-                
+                   var userId=selectedlistElement.filter { p->p.theusername==thePerson}.get(0).thePersonId
+                var removeRef=mFsSaveSecurity.collection("Users").document(userid)
+                var theUserMap=HashMap<String,Any>()
+                theUserMap.set("blockBy",FieldValue.arrayRemove(Globals.ınstance?.uid))
+                fsRemoveMemberBacth.set(removeRef,theUserMap,SetOptions.merge())
+
             }
             //Yarin burada bir test yapilacak ve veriler analiz dilecek
-            var removeRef=mFsSaveSecurity.collection("Users").document("rjMV2PNoeEawgXg1N3zQNjn1ThT2")
-            var listTest=ArrayList<String>()
+           var listTest=ArrayList<String>()
             listTest.add("deneme")
             listTest.add("add")
             var testMap=HashMap<String,Any>()
             testMap.set("test",listTest)
-            fsRemoveMemberBacth.set(removeRef,testMap,SetOptions.merge())
+
             fsRemoveMemberBacth.commit()
 
 //            for (member in listOfRemoveMember){
