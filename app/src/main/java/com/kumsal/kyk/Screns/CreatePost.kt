@@ -98,7 +98,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var mStorageReference: StorageReference
     private lateinit var uriList: ArrayList<Image>
     private lateinit var listOfRemoveMember:ArrayList<String>
-    private lateinit var listOfBlockedMember:ArrayList<String>
+    private lateinit var listOfBlockedMember:ArrayList<security_model>
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -621,7 +621,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                     )
                                                     if (isCheck)
                                                         selectedlistElement.add(theSecureData)
-                                                    
+
 //                                                    if (firstControl) {
 //                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
 //                                                            theSecureData.theisChecked = true
