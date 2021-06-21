@@ -75,6 +75,7 @@ import kotlin.String
 import kotlin.arrayOf
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import kotlin.math.log
 import kotlin.toString
 
 
@@ -97,7 +98,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var mAllFileDataModel: ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
     private lateinit var uriList: ArrayList<Image>
-    private lateinit var listOfRemoveMember:ArrayList<String>
+    private lateinit var listOfRemoveMember:ArrayList<security_model>
     private lateinit var listOfBlockedMember:ArrayList<security_model>
     companion object {
         private var listElement = ArrayList<security_model>()
@@ -595,7 +596,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                         accesList(object : GetDeniedList {
                                             override fun accedDenied(blockBy: ArrayList<String>?,blocked: ArrayList<String>?) {
                                                 val mUserName = ArrayList<String>()
-                                                listOfBlockedMember=blocked as ArrayList<String>
                                                 if (selectedlistElement.size > 0) {
                                                     for (i in 0..selectedlistElement.size - 1) {
                                                         mUserName.add(selectedlistElement[i].theusername.toString())
@@ -609,7 +609,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                     var theData =
                                                         doc.toObject(UsersModel::class.java)
                                                     theData.theId = doc.id
-                                                    if (blocked.contains(theData.theUserName)){
+                                                    if (blocked?.contains(theData.theUserName)!!){
                                                         isCheck=true
                                                     }
                                                     var theSecureData = security_model(
@@ -619,8 +619,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                         isCheck,
                                                         theData.theId!!
                                                     )
-                                                    if (isCheck)
+                                                    if (isCheck){
                                                         selectedlistElement.add(theSecureData)
+                                                        listOfBlockedMember.add(theSecureData)
+                                                    }
+
 
 //                                                    if (firstControl) {
 //                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
@@ -692,45 +695,33 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
             for(thePerson in listOfRemoveMember){
-                val userId=selectedlistElement.filter { p->p.theusername==thePerson}.get(0).thePersonId
-                val removeRef=mFsSaveSecurity.collection("Users").document(userId as String)
+                val removeRef=mFsSaveSecurity.collection("Users").document(thePerson.thePersonId!!)
                 val theUserMap=HashMap<String,Any>()
                 theUserMap.set("blockBy",FieldValue.arrayRemove(Globals.ınstance?.uid))
                 fsRemoveMemberBacth.set(removeRef,theUserMap,SetOptions.merge())
             }
-
             fsRemoveMemberBacth.commit()
-
             WaitDialog.show(this, getString(R.string.please_wait))
             var blockers = HashMap<String, Any>()
             blockers.put("blockBy", FieldValue.arrayUnion(username))
 
+            val fsBlockByBatch = mFsSaveSecurity.batch()
+            for (thePerson in selectedlistElement){
+                val blockByRef=mFsSaveSecurity.collection("Users").document(thePerson.thePersonId!!)
+                val theUserMap=HashMap<String,Any>()
+                theUserMap.set("blockBy",FieldValue.arrayUnion(Globals.ınstance?.uid))
+                fsBlockByBatch.set(blockByRef,theUserMap,SetOptions.merge())
+            }
+            fsBlockByBatch.commit()
+
             var blocked = HashMap<String, Any>()
             blocked.put("blocked", selectedlistElement)
-//
-//
-//            var fsBlockByBatch = mFsSaveSecurity.batch()
-//            var fsBlockedBatch = mFsSaveSecurity.batch()
-//            for (get in selectedlistElement) {
-//                var dbRef = mFsSaveSecurity.collection("Users").document(get.thePersonId!!)
-//                var curUsRef = mFsSaveSecurity.collection("Users").document(userid)
-//                blocked.put("blocked", FieldValue.arrayUnion(get.theusername))
-//                fsBlockedBatch.set(curUsRef, blocked)
-//                fsBlockByBatch.set(dbRef, blockers)
-//            }
-//            fsBlockersBatch.commit().addOnSuccessListener {
-//                fsBlockedBatch.commit().addOnSuccessListener {
-//                    fullScreenDialog.doDismiss()
-//                    securityTag.text = "Someone"
-//                    WaitDialog.dismiss()
-//                }.addOnFailureListener { exp ->
-//                    Log.d("Load denied error", exp.message!!)
-//                    WaitDialog.dismiss()
-//                }
-//            }.addOnFailureListener { exp ->
-//                Log.d("Load denied error", exp.message!!)
-//                WaitDialog.dismiss()
-//            }
+            mFsSaveSecurity.collection("Users").document(Globals.ınstance?.uid!!).set(blocked).addOnSuccessListener {
+                println("missin is syccesfuly")
+            }.addOnFailureListener {
+                error->
+                Log.d("error in create post",error.localizedMessage!!)
+            }
         }
         selectedAll.setOnClickListener {
             if (selectedAll.isChecked) {
