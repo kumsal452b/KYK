@@ -104,17 +104,17 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         private var selectedlistElement = ArrayList<security_model>()
         private var mcounter = 0
         private var currentWith = 0
+        private lateinit var listener: ListenerRegistration
+        private lateinit var deniedListListener: ListenerRegistration
+        private lateinit var search: MenuItem
         private lateinit var textView: TextView
         private lateinit var radioGroup: RadioGroup
         private lateinit var mAdapter: security_adapter
-        private lateinit var listener: ListenerRegistration
-        private lateinit var deniedListListener: ListenerRegistration
         private lateinit var mRadioGroup: RadioGroup
         private lateinit var alfriends: RadioButton
         private lateinit var excpection: RadioButton
         private lateinit var accept_selected_name: Button
         private lateinit var selectedAll: CheckBox
-        private lateinit var search: MenuItem
         lateinit var fullScreenDialog: FullScreenDialog
     }
 
@@ -678,10 +678,10 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         }
         accept_selected_name.setOnClickListener {
             //Dedected removable list
-//            for (thePerson in listOfBlockedMember){
-//                if(!selectedlistElement.contains(thePerson))
-//                    listOfRemoveMember.add(thePerson)
-//            }
+            for (thePerson in listOfBlockedMember){
+                if(!selectedlistElement.contains(thePerson))
+                    listOfRemoveMember.add(thePerson)
+            }
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
             //Yarin burada bir test yapilacak ve veriler analiz dilecek
