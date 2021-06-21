@@ -9,8 +9,6 @@ class security_model{
     var theimage:String?=null
     var theisChecked:Boolean?=null
     var thePersonId:String?=null
-    var keys11:JsonObject?=null
-    constructor(){}
     constructor(
 
         thename: String,

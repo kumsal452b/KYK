@@ -602,13 +602,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                     }
                                                 }
                                                 selectedlistElement.clear()
+                                                var isCheck=false
                                                 for (doc in it!!) {
                                                     if (doc.id == Globals.ınstance?.uid)
                                                         continue
                                                     var theData =
                                                         doc.toObject(UsersModel::class.java)
                                                     theData.theId = doc.id
-                                                    if (blocked.contains())
+                                                    if (blocked.contains(theData.theUserName))
+
                                                     var theSecureData = security_model(
                                                         theData.theNameSurname!!,
                                                         theData.theUserName!!,
