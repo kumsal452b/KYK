@@ -64,6 +64,7 @@ import kotlinx.coroutines.launch
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.function.Predicate
 import kotlin.Any
 import kotlin.Array
 import kotlin.Boolean
@@ -684,6 +685,11 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             }
             // delet'ng member from BlockBy lists
             var fsRemoveMemberBacth=mFsSaveSecurity.batch()
+
+            for(thePerson in listOfRemoveMember){
+                   selectedlistElement.filter { p->p.theusername==thePerson}
+                
+            }
             //Yarin burada bir test yapilacak ve veriler analiz dilecek
             var removeRef=mFsSaveSecurity.collection("Users").document("rjMV2PNoeEawgXg1N3zQNjn1ThT2")
             var listTest=ArrayList<String>()
