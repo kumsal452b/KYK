@@ -101,7 +101,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var listOfRemoveMember: ArrayList<security_model>
     private lateinit var listOfBlockedMember: ArrayList<security_model>
 
-    var textView: TextView=TextView()
+    lateinit var textView: TextView
     private lateinit var radioGroup: RadioGroup
     private lateinit var mAdapter: security_adapter
     private lateinit var mRadioGroup: RadioGroup
@@ -807,7 +807,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         if (selectedlistElement == null) {
             selectedlistElement = ArrayList<security_model>()
         }
-        textView.visibility = View.VISIBLE
+        this.textView.visibility = View.VISIBLE
         currentWith = textView.measuredWidth;
         var anim = Animation(currentWith, textView)
         textView.animation = anim
