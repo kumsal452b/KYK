@@ -200,6 +200,8 @@ class MainActivity : AppCompatActivity(), OnItemSelectedListener, View.OnClickLi
         mFstoreUserDb = FirebaseFirestore.getInstance()
         mFsPostDb = FirebaseFirestore.getInstance()
 
+//        mAuth!!.signOut()
+
         userId = mUser?.uid.toString()
         Globals.ınstance?.uid = userId
         setSupportActionBar(toolbar)

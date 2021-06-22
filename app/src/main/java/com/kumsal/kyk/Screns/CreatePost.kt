@@ -98,8 +98,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var mAllFileDataModel: ArrayList<newDataPosModel>
     private lateinit var mStorageReference: StorageReference
     private lateinit var uriList: ArrayList<Image>
-    private lateinit var listOfRemoveMember:ArrayList<security_model>
-    private lateinit var listOfBlockedMember:ArrayList<security_model>
+    private lateinit var listOfRemoveMember: ArrayList<security_model>
+    private lateinit var listOfBlockedMember: ArrayList<security_model>
+
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -457,8 +458,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         mAdapter = security_adapter(listElement, this, CreatePost())
         mAdapter.setOnITemClickListener(this)
 
-        listOfBlockedMember= ArrayList()
-        listOfRemoveMember=ArrayList()
+        listOfBlockedMember = ArrayList()
+        listOfRemoveMember = ArrayList()
         //Test section
         secure_initial()
         select_image.setOnClickListener {
@@ -570,12 +571,14 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                     return@addSnapshotListener
                 }
                 var theuser = document?.toObject(UsersModel::class.java)
-                if (theuser?.blockBy == null || theuser.blocked==null){
+                if (theuser?.blockBy == null) {
                     theuser?.blockBy = ArrayList<String>()
-                    theuser?.blocked= ArrayList();
+                }
+                if(theuser?.blocked == null){
+                    theuser?.blocked = ArrayList();
                 }
 
-                theDeniedElement.accedDenied(theuser?.blockBy,theuser?.blocked)
+                theDeniedElement.accedDenied(theuser?.blockBy, theuser?.blocked)
             }
     }
 
@@ -596,23 +599,28 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                     .addSnapshotListener { it, error ->
                                         listElement.clear()
                                         accesList(object : GetDeniedList {
-                                            override fun accedDenied(blockBy: ArrayList<String>?,blocked: ArrayList<String>?) {
-                                                val mUserName = ArrayList<String>()
+                                            override fun accedDenied(
+                                                blockBy: ArrayList<String>?,
+                                                blocked: ArrayList<String>?
+                                            ) {
+                                                val mUserIDs = ArrayList<String>()
                                                 if (selectedlistElement.size > 0) {
                                                     for (i in 0..selectedlistElement.size - 1) {
-                                                        mUserName.add(selectedlistElement[i].theusername.toString())
+                                                        mUserIDs.add(selectedlistElement[i].thePersonId.toString())
                                                     }
                                                 }
                                                 selectedlistElement.clear()
-                                                var isCheck=false
+                                                var isCheck = false
                                                 for (doc in it!!) {
                                                     if (doc.id == Globals.ınstance?.uid)
                                                         continue
                                                     var theData =
                                                         doc.toObject(UsersModel::class.java)
                                                     theData.theId = doc.id
-                                                    if (blocked?.contains(theData.theUserName)!!){
-                                                        isCheck=true
+                                                    if (blocked?.contains(theData.theId)!!) {
+                                                        isCheck = true
+                                                    }else{
+                                                        isCheck=false
                                                     }
                                                     var theSecureData = security_model(
                                                         theData.theNameSurname!!,
@@ -621,7 +629,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                         isCheck,
                                                         theData.theId!!
                                                     )
-                                                    if (isCheck){
+                                                    if (isCheck) {
                                                         selectedlistElement.add(theSecureData)
                                                         listOfBlockedMember.add(theSecureData)
                                                     }
@@ -634,7 +642,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
 //                                                            mcounter++
 //                                                        }
 //                                                    } else {
-//                                                        if (mUserName.contains(theSecureData.theusername)) {
+//                                                        if (mUserIDs.contains(theSecureData.theusername)) {
 //                                                            theSecureData.theisChecked = true
 //                                                            selectedlistElement.add(theSecureData)
 //                                                        }
@@ -690,39 +698,48 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         }
         accept_selected_name.setOnClickListener {
             //Dedected removable list
-            for (thePerson in listOfBlockedMember){
-                if(!selectedlistElement.contains(thePerson))
+            WaitDialog.show(this, getString(R.string.please_wait))
+            for (thePerson in listOfBlockedMember) {
+                if (!selectedlistElement.contains(thePerson))
                     listOfRemoveMember.add(thePerson)
             }
             // delet'ng member from BlockBy lists
-            var fsRemoveMemberBacth=mFsSaveSecurity.batch()
-            for(thePerson in listOfRemoveMember){
-                val removeRef=mFsSaveSecurity.collection("Users").document(thePerson.thePersonId!!)
-                val theUserMap=HashMap<String,Any>()
-                theUserMap.set("blockBy",FieldValue.arrayRemove(Globals.ınstance?.uid))
-                fsRemoveMemberBacth.set(removeRef,theUserMap,SetOptions.merge())
+            var fsRemoveMemberBacth = mFsSaveSecurity.batch()
+            for (thePerson in listOfRemoveMember) {
+                val removeRef =
+                    mFsSaveSecurity.collection("Users").document(thePerson.thePersonId!!)
+                val theUserMap = HashMap<String, Any>()
+                theUserMap.set("blockBy", FieldValue.arrayRemove(Globals.ınstance?.uid))
+                fsRemoveMemberBacth.set(removeRef, theUserMap, SetOptions.merge())
             }
             fsRemoveMemberBacth.commit()
-            WaitDialog.show(this, getString(R.string.please_wait))
+
             var blockers = HashMap<String, Any>()
             blockers.put("blockBy", FieldValue.arrayUnion(username))
 
             val fsBlockByBatch = mFsSaveSecurity.batch()
-            for (thePerson in selectedlistElement){
-                val blockByRef=mFsSaveSecurity.collection("Users").document(thePerson.thePersonId!!)
-                val theUserMap=HashMap<String,Any>()
-                theUserMap.set("blockBy",FieldValue.arrayUnion(Globals.ınstance?.uid))
-                fsBlockByBatch.set(blockByRef,theUserMap,SetOptions.merge())
+            for (thePerson in selectedlistElement) {
+                val blockByRef =
+                    mFsSaveSecurity.collection("Users").document(thePerson.thePersonId!!)
+                val theUserMap = HashMap<String, Any>()
+                theUserMap.set("blockBy", FieldValue.arrayUnion(Globals.ınstance?.uid))
+                fsBlockByBatch.set(blockByRef, theUserMap, SetOptions.merge())
             }
             fsBlockByBatch.commit()
 
-            var blocked = HashMap<String, Any>()
-            blocked.put("blocked", selectedlistElement)
-            mFsSaveSecurity.collection("Users").document(Globals.ınstance?.uid!!).set(blocked).addOnSuccessListener {
-                println("missin is syccesfuly")
-            }.addOnFailureListener {
-                error->
-                Log.d("error in create post",error.localizedMessage!!)
+            var blocked = HashMap<String, ArrayList<String>>()
+            var blockedList=ArrayList<String>()
+            for (item in selectedlistElement) {
+                blockedList.add(item.thePersonId!!)
+            }
+            blocked.put("blocked",blockedList)
+            mFsSaveSecurity.collection("Users").document(Globals.ınstance?.uid!!).set(
+                blocked,
+                SetOptions.merge()
+            ).addOnSuccessListener {
+                WaitDialog.dismiss()
+            }.addOnFailureListener { error ->
+               WaitDialog.dismiss()
             }
         }
         selectedAll.setOnClickListener {
