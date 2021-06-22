@@ -101,6 +101,16 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var listOfRemoveMember: ArrayList<security_model>
     private lateinit var listOfBlockedMember: ArrayList<security_model>
 
+    var textView: TextView=TextView()
+    private lateinit var radioGroup: RadioGroup
+    private lateinit var mAdapter: security_adapter
+    private lateinit var mRadioGroup: RadioGroup
+    private lateinit var alfriends: RadioButton
+    private lateinit var excpection: RadioButton
+    private lateinit var accept_selected_name: Button
+    private lateinit var selectedAll: CheckBox
+
+    lateinit var fullScreenDialog: FullScreenDialog
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
@@ -110,15 +120,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         private lateinit var listener: ListenerRegistration
         private lateinit var deniedListListener: ListenerRegistration
         private lateinit var search: MenuItem
-        private lateinit var textView: TextView
-        private lateinit var radioGroup: RadioGroup
-        private lateinit var mAdapter: security_adapter
-        private lateinit var mRadioGroup: RadioGroup
-        private lateinit var alfriends: RadioButton
-        private lateinit var excpection: RadioButton
-        private lateinit var accept_selected_name: Button
-        private lateinit var selectedAll: CheckBox
-        lateinit var fullScreenDialog: FullScreenDialog
+
     }
 
     //add intent element varíable
