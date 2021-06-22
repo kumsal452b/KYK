@@ -617,11 +617,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                                                     var theData =
                                                         doc.toObject(UsersModel::class.java)
                                                     theData.theId = doc.id
-                                                    if (blocked?.contains(theData.theId)!!) {
-                                                        isCheck = true
-                                                    }else{
-                                                        isCheck=false
-                                                    }
+                                                    isCheck=blocked?.contains(theData.theId)!!
                                                     var theSecureData = security_model(
                                                         theData.theNameSurname!!,
                                                         theData.theUserName!!,
