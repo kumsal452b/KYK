@@ -101,7 +101,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var listOfRemoveMember: ArrayList<security_model>
     private lateinit var listOfBlockedMember: ArrayList<security_model>
 
-    private lateinit var textView: TextView
+
     private lateinit var radioGroup: RadioGroup
     private lateinit var mAdapter: security_adapter
     private lateinit var mRadioGroup: RadioGroup
@@ -109,6 +109,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     private lateinit var excpection: RadioButton
     private lateinit var accept_selected_name: Button
     private lateinit var selectedAll: CheckBox
+    lateinit var textView:TextView;
 
     lateinit var fullScreenDialog: FullScreenDialog
     companion object {
@@ -434,6 +435,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         mImageListRecyclerView.setHasFixedSize(true)
 
         mImageListRecyclerView.layoutManager = GridLayoutManager(this, 3)
+        textView=TextView(this)
 
         uriList = ObservableArrayList()
         mImageListView = ArrayList()
@@ -670,6 +672,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             recyclerView.visibility = View.GONE
         }
 
+
         alfriends.setOnClickListener {
             recyclerView.visibility = View.GONE
             selectedAll.visibility = View.GONE
@@ -792,6 +795,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         checkSecurePanel()
         setSupportActionBar(toolbar)
         recyclerView.adapter = mAdapter
+        test()
     }
 
     private fun checkSecurePanel() {
@@ -805,14 +809,15 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
 //            }
         }
     }
+    fun test(){
+        println(textView)
+    }
 
-    public fun startSelection(index: Int, checkBox: LottieAnimationView) {
+    fun startSelection(index: Int, checkBox: LottieAnimationView) {
         isActionMode = true
         if (selectedlistElement == null) {
             selectedlistElement = ArrayList<security_model>()
         }
-        alfriends.text="deneme";
-        accept_selected_name.text="Deneme"
         this.textView.visibility = View.VISIBLE
         currentWith = textView.measuredWidth;
         var anim = Animation(currentWith, textView)
