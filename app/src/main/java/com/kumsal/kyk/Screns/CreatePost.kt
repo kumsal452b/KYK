@@ -115,9 +115,9 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
     companion object {
         private var listElement = ArrayList<security_model>()
         var isActionMode = false
-        private var selectedlistElement = ArrayList<security_model>()
+        var selectedlistElement = ArrayList<security_model>()
         private var mcounter = 0
-        private var currentWith = 0
+        var currentWith = 0
         private lateinit var listener: ListenerRegistration
         private lateinit var deniedListListener: ListenerRegistration
         lateinit var search: MenuItem

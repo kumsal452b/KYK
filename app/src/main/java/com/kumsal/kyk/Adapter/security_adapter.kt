@@ -17,7 +17,7 @@ import java.util.*
 class security_adapter(
     var items: ArrayList<security_model>,
     private val context: Context?,
-    private val CPElement: SecurityScreen?
+    private val SSElement: SecurityScreen?
 ) :
     RecyclerView.Adapter<security_adapter.secureHolder>(), Filterable {
     lateinit var mitemClickListener: OnITemClickListener
@@ -81,7 +81,7 @@ class security_adapter(
         p0.bindElement(theModel)
         p0.cardView.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?){
-                CPElement?.startSelection(p1,p0.checkBox)
+                SSElement?.startSelection(p1,p0.checkBox)
             }
         })
     }
