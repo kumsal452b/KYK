@@ -1,5 +1,6 @@
 package com.kumsal.kyk.Security
 
+import android.content.Context
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
@@ -28,12 +29,14 @@ import com.kumsal.kyk.Screns.GetDeniedList
 
 class SecurityScreen :AppCompatActivity,security_adapter.OnITemClickListener{
     var securityView:View?=null
-    constructor(securityView: View?) {
+    var context: Context?=null
+    constructor(securityView: View?,context: Context?) {
         this.securityView = securityView
+        this.context=context
     }
     constructor()
     var recyclerElement:RecyclerView?=null
-    var acceptButton:Button?=null   
+    var acceptButton:Button?=null
     var textForInfo: TextView?=null
     var allFriends: RadioButton?=null
     var expectFriedns:RadioButton?=null
@@ -54,22 +57,7 @@ class SecurityScreen :AppCompatActivity,security_adapter.OnITemClickListener{
     }
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         super.onCreate(savedInstanceState, persistentState)
-        recyclerElement = securityView?.findViewById(R.id.secure_recycler)!!
-        recyclerElement!!.setHasFixedSize(true)
-        recyclerElement!!.layoutManager = LinearLayoutManager(securityView!!.context)
-//        mRadioGroup = securityView?.findViewById(R.id.secure_rg)
-        allFriends = securityView?.findViewById(R.id.secure_allfriends)
-        expectFriedns = securityView?.findViewById(R.id.secure_except)
-        textForInfo = securityView?.findViewById(R.id.secure_bind_element_size)
-        textForInfo?.measure(0, 0);       //must call measure!
-        toolbar = securityView!!.findViewById(R.id.secure_bind_toolbar)
-        acceptButton =
-            securityView!!.findViewById(R.id.secure_bind_accept)
-        select_all = securityView!!.findViewById(R.id.secure_bind_selectAll)
-        mAdapter=security_adapter(listElement,this,SecurityScreen())
-//        checkSecurePanel()
-        setSupportActionBar(toolbar)
-        recyclerElement!!.adapter = mAdapter
+
         initialized();
 
     }
@@ -92,7 +80,28 @@ class SecurityScreen :AppCompatActivity,security_adapter.OnITemClickListener{
             }
     }
 
-    private fun initialized() {
+     fun initialized() {
+         listOfBlockedMember= ArrayList()
+         listOfRemoveMember=ArrayList()
+         mFirestore= FirebaseFirestore.getInstance()
+        recyclerElement = securityView?.findViewById(R.id.secure_recycler)!!
+        recyclerElement!!.setHasFixedSize(true)
+        recyclerElement!!.layoutManager = LinearLayoutManager(securityView!!.context)
+//        mRadioGroup = securityView?.findViewById(R.id.secure_rg)
+        allFriends = securityView?.findViewById(R.id.secure_allfriends)
+        expectFriedns = securityView?.findViewById(R.id.secure_except)
+        textForInfo = securityView?.findViewById(R.id.secure_bind_element_size)
+        textForInfo?.measure(0, 0);       //must call measure!
+        toolbar = securityView!!.findViewById(R.id.secure_bind_toolbar)
+        acceptButton =
+            securityView!!.findViewById(R.id.secure_bind_accept)
+        select_all = securityView!!.findViewById(R.id.secure_bind_selectAll)
+        mAdapter=security_adapter(listElement,this,SecurityScreen())
+//        checkSecurePanel()
+//         applicationInfo
+//        context.setSupportActionBar(toolbar)
+        recyclerElement!!.adapter = mAdapter
+
        mFirestore.collection("Users")
             .addSnapshotListener { it, error ->
               listElement.clear()

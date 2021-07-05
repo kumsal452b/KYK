@@ -605,7 +605,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
                     override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
 //                        securityPanelInitialzed(rootView)
 //                        securityPanelEventClick()
-                            SecurityScreen(rootView)
+                        var deneme=SecurityScreen(rootView,this@CreatePost)
+                        deneme.initialized()
 //                        listener = mFirestore.collection("Users")
 //                            .addSnapshotListener { it, error ->
 //                                listElement.clear()
