@@ -120,7 +120,7 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         private var currentWith = 0
         private lateinit var listener: ListenerRegistration
         private lateinit var deniedListListener: ListenerRegistration
-        private lateinit var search: MenuItem
+        lateinit var search: MenuItem
 
     }
 

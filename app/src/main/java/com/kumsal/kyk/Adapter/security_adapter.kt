@@ -9,6 +9,7 @@ import com.airbnb.lottie.LottieAnimationView
 import com.kumsal.kyk.Models.security_model
 import com.kumsal.kyk.R
 import com.kumsal.kyk.Screns.CreatePost
+import com.kumsal.kyk.Security.SecurityScreen
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.*
@@ -16,7 +17,7 @@ import java.util.*
 class security_adapter(
     var items: ArrayList<security_model>,
     private val context: Context?,
-    private val CPElement: CreatePost?
+    private val CPElement: SecurityScreen?
 ) :
     RecyclerView.Adapter<security_adapter.secureHolder>(), Filterable {
     lateinit var mitemClickListener: OnITemClickListener
