@@ -51,6 +51,7 @@ import com.kumsal.kyk.R
 import com.kumsal.kyk.CustomAnimation.Animation
 import com.kumsal.kyk.IInterfaces.GetCenterSimilar
 import com.kumsal.kyk.IInterfaces.imageLoadCall
+import com.kumsal.kyk.Security.SecurityScreen
 import com.nguyenhoanglam.imagepicker.model.Config.CREATOR.ROOT_DIR_DCIM
 import com.nguyenhoanglam.imagepicker.model.Image
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker
@@ -459,8 +460,8 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         mFsPostDb = FirebaseFirestore.getInstance()
         listener = ListenerRegistration {}
         //secure initialize section
-        mAdapter = security_adapter(listElement, this, CreatePost())
-        mAdapter.setOnITemClickListener(this)
+//        mAdapter = security_adapter(listElement, this, CreatePost())
+//        mAdapter.setOnITemClickListener(this)
 
         listOfBlockedMember = ArrayList()
         listOfRemoveMember = ArrayList()
@@ -602,66 +603,66 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
             .setCustomView(R.layout.security_bind_element,
                 object : FullScreenDialog.OnBindView {
                     override fun onBind(dialog: FullScreenDialog?, rootView: View?) {
-                        securityPanelInitialzed(rootView)
-                        securityPanelEventClick()
-
-                        listener = mFirestore.collection("Users")
-                            .addSnapshotListener { it, error ->
-                                listElement.clear()
-                                accesList(object : GetDeniedList {
-                                    override fun accedDenied(
-                                        blockBy: ArrayList<String>?,
-                                        blocked: ArrayList<String>?
-                                    ) {
-                                        val mUserIDs = ArrayList<String>()
-                                        if (selectedlistElement.size > 0) {
-                                            for (i in 0..selectedlistElement.size - 1) {
-                                                mUserIDs.add(selectedlistElement[i].thePersonId.toString())
-                                            }
-                                        }
-                                        selectedlistElement.clear()
-                                        var isCheck = false
-                                        for (doc in it!!) {
-                                            if (doc.id == Globals.ınstance?.uid)
-                                                continue
-                                            var theData =
-                                                doc.toObject(UsersModel::class.java)
-                                            theData.theId = doc.id
-                                            isCheck = blocked?.contains(theData.theId)!!
-                                            var theSecureData = security_model(
-                                                theData.theNameSurname!!,
-                                                theData.theUserName!!,
-                                                theData.theThmbImage!!,
-                                                isCheck,
-                                                theData.theId!!
-                                            )
-                                            if (isCheck) {
-                                                selectedlistElement.add(theSecureData)
-                                                listOfBlockedMember.add(theSecureData)
-                                            }
-
-
-    //                                                    if (firstControl) {
-    //                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
-    //                                                            theSecureData.theisChecked = true
-    //                                                            selectedlistElement.add(theSecureData)
-    //                                                            mcounter++
-    //                                                        }
-    //                                                    } else {
-    //                                                        if (mUserIDs.contains(theSecureData.theusername)) {
-    //                                                            theSecureData.theisChecked = true
-    //                                                            selectedlistElement.add(theSecureData)
-    //                                                        }
-    //                                                    }
-
-                                            listElement.add(theSecureData)
-                                        }
-                                        firstControl = false
-                                    }
-                                })
-
-                                mAdapter.notifyDataSetChanged()
-                            }
+//                        securityPanelInitialzed(rootView)
+//                        securityPanelEventClick()
+                            SecurityScreen(rootView)
+//                        listener = mFirestore.collection("Users")
+//                            .addSnapshotListener { it, error ->
+//                                listElement.clear()
+//                                accesList(object : GetDeniedList {
+//                                    override fun accedDenied(
+//                                        blockBy: ArrayList<String>?,
+//                                        blocked: ArrayList<String>?
+//                                    ) {
+//                                        val mUserIDs = ArrayList<String>()
+//                                        if (selectedlistElement.size > 0) {
+//                                            for (i in 0..selectedlistElement.size - 1) {
+//                                                mUserIDs.add(selectedlistElement[i].thePersonId.toString())
+//                                            }
+//                                        }
+//                                        selectedlistElement.clear()
+//                                        var isCheck = false
+//                                        for (doc in it!!) {
+//                                            if (doc.id == Globals.ınstance?.uid)
+//                                                continue
+//                                            var theData =
+//                                                doc.toObject(UsersModel::class.java)
+//                                            theData.theId = doc.id
+//                                            isCheck = blocked?.contains(theData.theId)!!
+//                                            var theSecureData = security_model(
+//                                                theData.theNameSurname!!,
+//                                                theData.theUserName!!,
+//                                                theData.theThmbImage!!,
+//                                                isCheck,
+//                                                theData.theId!!
+//                                            )
+//                                            if (isCheck) {
+//                                                selectedlistElement.add(theSecureData)
+//                                                listOfBlockedMember.add(theSecureData)
+//                                            }
+//
+//
+//    //                                                    if (firstControl) {
+//    //                                                        if (blockBy!!.contains(theSecureData.theusername!!)) {
+//    //                                                            theSecureData.theisChecked = true
+//    //                                                            selectedlistElement.add(theSecureData)
+//    //                                                            mcounter++
+//    //                                                        }
+//    //                                                    } else {
+//    //                                                        if (mUserIDs.contains(theSecureData.theusername)) {
+//    //                                                            theSecureData.theisChecked = true
+//    //                                                            selectedlistElement.add(theSecureData)
+//    //                                                        }
+//    //                                                    }
+//
+//                                            listElement.add(theSecureData)
+//                                        }
+//                                        firstControl = false
+//                                    }
+//                                })
+//
+//                                mAdapter.notifyDataSetChanged()
+//                            }
                     }
                 })
         fullScreenDialog.show()
@@ -795,7 +796,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
         checkSecurePanel()
         setSupportActionBar(toolbar)
         recyclerView.adapter = mAdapter
-        test()
     }
 
     private fun checkSecurePanel() {
@@ -808,9 +808,6 @@ class CreatePost : AppCompatActivity(), security_adapter.OnITemClickListener,
 //                listElement.set(i, theSecureM)
 //            }
         }
-    }
-    fun test(){
-        println(textView)
     }
 
     fun startSelection(index: Int, checkBox: LottieAnimationView) {
