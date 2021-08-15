@@ -10,7 +10,6 @@ class security_model{
     var theisChecked:Boolean?=null
     var thePersonId:String?=null
     constructor(
-
         thename: String,
         theusername: String,
         theimage: String,
